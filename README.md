@@ -1,2 +1,1 @@
 # flutter-mall
-flutter-mall
