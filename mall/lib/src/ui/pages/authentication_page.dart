@@ -12,7 +12,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[Text("TODO")],
+          children: <Widget>[Text('TODO')],
         ),
       ),
     );

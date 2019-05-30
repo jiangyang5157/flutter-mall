@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:mall/src/app/app.dart';
 import 'package:mall/src/blocs/blocs.dart';
 
 class InitializationPage extends StatefulWidget {
@@ -17,26 +18,18 @@ class _InitializationPageState extends State<InitializationPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("TODO"),
-            RaisedButton(
-              onPressed: () {},
-              child: Text("en"),
-            ),
-            RaisedButton(
-              onPressed: () {},
-              child: Text("zh"),
-            ),
+            Text(AppLocalizations.of(context).hello),
             RaisedButton(
               onPressed: () {
                 appBloc.inDarkTheme.add(false);
               },
-              child: Text("light"),
+              child: Text('light'),
             ),
             RaisedButton(
               onPressed: () {
                 appBloc.inDarkTheme.add(true);
               },
-              child: Text("dark"),
+              child: Text('dark'),
             ),
           ],
         ),

@@ -35,8 +35,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  intl_translation: ^0.17.1
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -51,8 +49,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - res/values/strings_en.json
-    - res/values/strings_zh.json
+    - res/values/strings.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -1,1 +1,1 @@
-export 'package:mall/src/data/entity/entity.dart';
+export 'package:mall/src/data/models/models.dart';

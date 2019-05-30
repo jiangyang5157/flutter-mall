@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'package:mall/src/app/app.dart';
 import 'package:mall/src/blocs/blocs.dart';
 import 'package:mall/src/ui/pages/pages.dart';
 
@@ -18,8 +20,14 @@ class _AppPageState extends State<AppPage> {
     return StreamBuilder<bool>(
         stream: appBloc.outDarkTheme,
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          print("snapshot=${snapshot.hasData}");
           return MaterialApp(
+            localizationsDelegates: [
+              const AppLocalizationsDelegate(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLanguageCodes
+                .map<Locale>((languageCode) => Locale(languageCode)),
             theme: ThemeData(
                 brightness: snapshot.data ? Brightness.dark : Brightness.light),
             home: InitializationPage(),
