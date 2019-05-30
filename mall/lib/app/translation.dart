@@ -25,7 +25,7 @@ class Translation {
     }
     Translation translation = Translation();
     String jsonContent =
-        await rootBundle.loadString("res/strings_$languageCode.json");
+        await rootBundle.loadString("res/values/strings_$languageCode.json");
     _strings = json.decode(jsonContent);
     return translation;
   }
