@@ -26,7 +26,7 @@ class _AppPageState extends State<AppPage> {
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
             ],
-            supportedLocales: AppLocalizations.supportedLanguageCodes
+            supportedLocales: AppLocalizationsDelegate.supportedLanguageCodes
                 .map<Locale>((languageCode) => Locale(languageCode)),
             theme: ThemeData(
                 brightness: snapshot.data ? Brightness.dark : Brightness.light),
