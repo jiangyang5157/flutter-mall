@@ -7,11 +7,10 @@ typedef void ThemeDataChangeCallback(ThemeData themeData);
 class Config {
   static final Config _config = Config._internal();
 
-  factory Config() {
-    return _config;
-  }
+  factory Config() => _config
 
-  Config._internal();
+  Config._internal() {
+  }
 
   final List<String> supportedLanguageCodes = ["en", "zh"];
 
