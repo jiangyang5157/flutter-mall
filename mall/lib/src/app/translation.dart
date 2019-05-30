@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'package:mall/app/import.dart';
+import 'package:mall/app/src.dart';
 
 class Translation {
   static Map<dynamic, dynamic> _strings;

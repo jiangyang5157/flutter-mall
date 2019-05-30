@@ -1,0 +1,1 @@
+export 'package:mall/src/data/entity/entity.dart';

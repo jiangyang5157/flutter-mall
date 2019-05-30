@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:mall/page/import.dart';
+import 'package:mall/src/pages/pages.dart';
 
 class ApplicationPage extends StatefulWidget {
   @override
