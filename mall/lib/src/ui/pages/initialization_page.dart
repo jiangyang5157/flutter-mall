@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:mall/src/blocs/blocs.dart';
+
 class InitializationPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _InitializationPageState();
@@ -8,6 +10,8 @@ class InitializationPage extends StatefulWidget {
 class _InitializationPageState extends State<InitializationPage> {
   @override
   Widget build(BuildContext context) {
+    final ApplicationBloc appBloc = BlocProvider.of<ApplicationBloc>(context);
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -23,11 +27,15 @@ class _InitializationPageState extends State<InitializationPage> {
               child: Text("zh"),
             ),
             RaisedButton(
-              onPressed: () {},
+              onPressed: () {
+                appBloc.inDarkTheme.add(false);
+              },
               child: Text("light"),
             ),
             RaisedButton(
-              onPressed: () {},
+              onPressed: () {
+                appBloc.inDarkTheme.add(true);
+              },
               child: Text("dark"),
             ),
           ],

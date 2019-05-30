@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 
 typedef void LanguageCodeChangeCallback(String languageCode);
 
-typedef void ThemeDataChangeCallback(ThemeData themeData);
-
 class Config {
   static final Config _config = Config._internal();
 
-  factory Config() => _config
+  factory Config() => _config;
 
   Config._internal() {
   }
@@ -18,8 +16,6 @@ class Config {
       .map<Locale>((languageCode) => Locale(languageCode));
 
   LanguageCodeChangeCallback onLanguageCodeChanged;
-
-  ThemeDataChangeCallback onThemeDataChanged;
 }
 
 Config config = Config();
