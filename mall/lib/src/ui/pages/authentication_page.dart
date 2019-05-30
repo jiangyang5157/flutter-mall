@@ -18,19 +18,26 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(AppLocalization.of(context).string('appName')),
+            Text(AppLocalization.of(context).string('hello')),
             RaisedButton(
               onPressed: () {
                 appBloc.inDarkTheme.add(false);
               },
-              child: Text('light'),
+              child: Text('lights on'),
             ),
             RaisedButton(
               onPressed: () {
                 appBloc.inDarkTheme.add(true);
               },
-              child: Text('dark'),
+              child: Text('lights off'),
             ),
+            RaisedButton(
+              onPressed: () {
+                appBloc.inDarkTheme.add(true);
+              },
+              child: Text('test parse'),
+            ),
+            Text('logs'),
           ],
         ),
       ),
