@@ -4,7 +4,7 @@ import 'package:rxdart/rxdart.dart';
 
 import 'package:mall/src/blocs/blocs.dart';
 
-class ApplicationBloc implements BlocBase {
+class AppBloc implements BlocBase {
   static const String _prefsKey_bool_darkTheme = 'darkTheme';
 
   BehaviorSubject<bool> _darkThemeController = BehaviorSubject<bool>();
@@ -13,7 +13,7 @@ class ApplicationBloc implements BlocBase {
 
   Sink<bool> get inDarkTheme => _darkThemeController.sink;
 
-  ApplicationBloc() {
+  AppBloc() {
     outDarkTheme.listen(_setDarkTheme);
     _loadDarkTheme();
   }

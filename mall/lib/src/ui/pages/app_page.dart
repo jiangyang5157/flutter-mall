@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:mall/src/blocs/blocs.dart';
 import 'package:mall/src/ui/pages/pages.dart';
 
-class ApplicationPage extends StatefulWidget {
-  ApplicationPage({Key key}) : super(key: key);
+class AppPage extends StatefulWidget {
+  AppPage({Key key}) : super(key: key);
 
   @override
-  _ApplicationPageState createState() => _ApplicationPageState();
+  _AppPageState createState() => _AppPageState();
 }
 
-class _ApplicationPageState extends State<ApplicationPage> {
+class _AppPageState extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
-    final ApplicationBloc appBloc = BlocProvider.of<ApplicationBloc>(context);
+    final AppBloc appBloc = BlocProvider.of<AppBloc>(context);
 
     return StreamBuilder<bool>(
         stream: appBloc.outDarkTheme,

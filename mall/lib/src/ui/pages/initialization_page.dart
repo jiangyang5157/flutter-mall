@@ -10,7 +10,7 @@ class InitializationPage extends StatefulWidget {
 class _InitializationPageState extends State<InitializationPage> {
   @override
   Widget build(BuildContext context) {
-    final ApplicationBloc appBloc = BlocProvider.of<ApplicationBloc>(context);
+    final AppBloc appBloc = BlocProvider.of<AppBloc>(context);
 
     return Scaffold(
       body: Center(
