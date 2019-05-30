@@ -18,7 +18,7 @@ class _InitializationPageState extends State<InitializationPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(AppLocalizations.of(context).hello),
+            Text(AppLocalization.of(context).string('hello')),
             RaisedButton(
               onPressed: () {
                 appBloc.inDarkTheme.add(false);

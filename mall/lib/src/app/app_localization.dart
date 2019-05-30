@@ -4,23 +4,21 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:flutter/material.dart';
 
-class AppLocalizations {
-  AppLocalizations(this.locale, this.localizedValues);
+class AppLocalization {
+  AppLocalization(this.locale, this.localizedValues);
 
   final Locale locale;
 
-  Map<String, dynamic> localizedValues;
+  final Map<String, dynamic> localizedValues;
 
-  static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  static AppLocalization of(BuildContext context) {
+    return Localizations.of<AppLocalization>(context, AppLocalization);
   }
 
-  String get hello {
-    return localizedValues[locale.languageCode]['hello'];
-  }
+  String string(String id) => localizedValues[locale.languageCode][id];
 }
 
-class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
   const AppLocalizationsDelegate();
 
   static final String localizedValuesPath = 'res/values/strings.json';
@@ -32,12 +30,12 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
       supportedLanguageCodes.contains(locale.languageCode);
 
   @override
-  Future<AppLocalizations> load(Locale locale) async {
+  Future<AppLocalization> load(Locale locale) async {
     String localizedValuesJson =
         await rootBundle.loadString(localizedValuesPath);
     Map<String, dynamic> localizedValues = json.decode(localizedValuesJson);
 
-    return AppLocalizations(locale, localizedValues);
+    return AppLocalization(locale, localizedValues);
   }
 
   @override

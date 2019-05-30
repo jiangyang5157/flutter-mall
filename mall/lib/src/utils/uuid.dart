@@ -1,7 +1,6 @@
 import 'dart:math';
 
 class Uuid {
-
   final Random _random = Random();
 
   /// Generate a version 4 (random) uuid: xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx (8-4-4-4-12)
