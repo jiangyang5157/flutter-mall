@@ -1,8 +1,8 @@
 {
   "en": {
-    "hello": "Hello"
+    "appName": "Click Me"
   },
   "zh": {
-    "hello": "你好"
+    "appName": "点我"
   }
 }

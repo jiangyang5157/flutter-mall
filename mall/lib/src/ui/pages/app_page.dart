@@ -30,7 +30,12 @@ class _AppPageState extends State<AppPage> {
                 .map<Locale>((languageCode) => Locale(languageCode)),
             theme: ThemeData(
                 brightness: snapshot.data ? Brightness.dark : Brightness.light),
-            home: InitializationPage(),
+            initialRoute: "/",
+            routes: <String, WidgetBuilder>{
+              "/": (BuildContext context) => SplashPage(),
+              "/AuthenticationPage": (BuildContext context) =>
+                  AuthenticationPage(),
+            },
           );
         });
   }
