@@ -16,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future todo() async {
-    await Future.delayed(const Duration(seconds: 10));
+    await Future.delayed(const Duration(milliseconds: 1000));
     Navigator.of(context).pushReplacementNamed('/AuthenticationPage');
   }
 

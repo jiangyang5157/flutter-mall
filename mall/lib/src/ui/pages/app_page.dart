@@ -20,6 +20,9 @@ class _AppPageState extends State<AppPage> {
     return StreamBuilder<bool>(
         stream: appBloc.outDarkTheme,
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          if (!snapshot.hasData) {
+            return Container();
+          }
           return MaterialApp(
             localizationsDelegates: [
               const AppLocalizationsDelegate(),
