@@ -5,7 +5,7 @@ import 'package:sembast/sembast_io.dart';
 
 Future<Database> getDb() async {
   final String dbDirectory = (await getApplicationDocumentsDirectory()).path;
-  final String dbPath = join(dbDirectory, 'no_sql');
+  final String dbPath = join(dbDirectory, 'database');
   print('#### dbDirectory=$dbDirectory');
   print('#### dbPath=$dbPath');
   final DatabaseFactory dbFactory = databaseFactoryIo;
