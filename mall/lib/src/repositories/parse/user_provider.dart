@@ -1,4 +1,4 @@
-import 'package:mall/src/models/parse/parse.dart';
+import 'package:mall/src.dart';
 
 abstract class UserProvider {
   Future<PUser> createUser(

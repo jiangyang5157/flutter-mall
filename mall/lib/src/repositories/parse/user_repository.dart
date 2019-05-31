@@ -1,6 +1,6 @@
 import 'package:sembast/sembast.dart';
-import 'package:mall/src/models/parse/parse.dart';
-import 'parse.dart';
+
+import 'package:mall/src.dart';
 
 class UserRepository implements UserProvider {
   static UserRepository init(Database dbConnection,

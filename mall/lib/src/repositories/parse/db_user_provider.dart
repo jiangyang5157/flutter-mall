@@ -2,8 +2,8 @@ import 'dart:convert' as json;
 
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:sembast/sembast.dart';
-import 'package:mall/src/models/models.dart';
-import 'parse.dart';
+
+import 'package:mall/src.dart';
 
 class DbUserProvider implements UserProvider {
   DbUserProvider(this._db, this._store);

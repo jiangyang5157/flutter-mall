@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mall/src/app/app.dart';
-import 'package:mall/src/blocs/blocs.dart';
+
+import 'package:mall/src.dart';
 
 class AuthenticationPage extends StatefulWidget {
   @override
@@ -31,9 +31,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               child: Text('lights off'),
             ),
             RaisedButton(
-              onPressed: () {
-                appBloc.inDarkTheme.add(true);
-              },
+              onPressed: () {},
               child: Text('test parse'),
             ),
             Text('logs'),

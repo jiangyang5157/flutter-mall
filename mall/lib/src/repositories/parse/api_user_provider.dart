@@ -1,6 +1,6 @@
 import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:mall/src/models/models.dart';
-import 'parse.dart';
+
+import 'package:mall/src.dart';
 
 class ApiUserProvider implements UserProvider {
   @override
