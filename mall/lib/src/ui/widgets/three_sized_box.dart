@@ -1,8 +1,8 @@
 import 'dart:math' as math show sin, pi;
 import 'package:flutter/widgets.dart';
 
-class ThreeBounce extends StatefulWidget {
-  ThreeBounce({
+class ThreeSizedBox extends StatefulWidget {
+  ThreeSizedBox({
     Key key,
     this.widgetBuilder,
     this.size = 40.0,
@@ -17,10 +17,10 @@ class ThreeBounce extends StatefulWidget {
   final Duration duration;
 
   @override
-  _ThreeBounceState createState() => _ThreeBounceState();
+  _ThreeSizeBoxState createState() => _ThreeSizeBoxState();
 }
 
-class _ThreeBounceState extends State<ThreeBounce>
+class _ThreeSizeBoxState extends State<ThreeSizedBox>
     with SingleTickerProviderStateMixin {
   AnimationController animationController;
 

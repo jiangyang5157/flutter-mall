@@ -19,27 +19,28 @@ class _AppPageState extends State<AppPage> {
 
     return StreamBuilder<bool>(
         stream: appBloc.outDarkTheme,
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          }
-          return MaterialApp(
-            localizationsDelegates: [
-              const AppLocalizationsDelegate(),
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            supportedLocales: AppLocalizationsDelegate.supportedLanguageCodes
-                .map<Locale>((languageCode) => Locale(languageCode)),
-            theme: ThemeData(
-                brightness: snapshot.data ? Brightness.dark : Brightness.light),
-            initialRoute: '/',
-            routes: <String, WidgetBuilder>{
-              '/': (BuildContext context) => SplashPage(),
-              '/AuthenticationPage': (BuildContext context) =>
-                  AuthenticationPage(),
-            },
-          );
+        builder: (context, snapshot) {
+          return !snapshot.hasData
+              ? Container()
+              : MaterialApp(
+                  localizationsDelegates: [
+                    const AppLocalizationsDelegate(),
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                  ],
+                  supportedLocales: AppLocalizationsDelegate
+                      .supportedLanguageCodes
+                      .map<Locale>((languageCode) => Locale(languageCode)),
+                  theme: ThemeData(
+                      brightness:
+                          snapshot.data ? Brightness.dark : Brightness.light),
+                  initialRoute: '/',
+                  routes: <String, WidgetBuilder>{
+                    '/': (BuildContext context) => SplashPage(),
+                    '/AuthenticationPage': (BuildContext context) =>
+                        AuthenticationPage(),
+                  },
+                );
         });
   }
 }
