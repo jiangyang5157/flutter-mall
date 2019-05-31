@@ -56,18 +56,20 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
     // Initialize repository
     await initRepository();
     Parse().initialize(parseApplicationId, parseServerUrl,
-        masterKey: parseMasterKey, debug: true);
-    // Check server is healthy and live - Debug is on in this instance so check logs for result
+        appName: parseApplicationName, masterKey: parseMasterKey, debug: true);
     final ParseResponse response = await Parse().healthCheck();
     if (response.success) {
       await runTestQueries();
-      print('runTestQueries');
+      print('#### runTestQueries');
     } else {
-      print('Server health check failed');
+      print(
+          '#### Server health check failed: ${response.error.code}: ${response.error.message}');
     }
   }
 
   Future<void> runTestQueries() async {
+    test();
+
     // Basic repository example
     //await repositoryAddUser();
     //await repositoryAddItems();
@@ -86,12 +88,12 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 //    print(rees);
     //function();
     //functionWithParameters();
-    // test();
   }
 
   Future<void> test() async {
     PUser user = PUser('test_user', 'test_password', 'test@gmail.com');
     final ParseResponse signUpResponse = await user.signUp();
+    print('#### signUpResponse=${signUpResponse.result}');
 
     if (signUpResponse.success) {
       user = signUpResponse.result;
