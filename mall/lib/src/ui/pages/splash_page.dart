@@ -30,11 +30,11 @@ class _SplashPageState extends State<SplashPage> {
             ThreeBounceDot(
                 shape: BoxShape.circle
             ),
-            ThreeSizeDot(
-                shape: BoxShape.circle
-            ),
             ThreeBounceDot(
                 shape: BoxShape.rectangle
+            ),
+            ThreeSizeDot(
+                shape: BoxShape.circle
             ),
             ThreeSizeDot(
                 shape: BoxShape.rectangle
