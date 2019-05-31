@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'pages.dart';
 import 'package:mall/src/app/app.dart';
 import 'package:mall/src/blocs/blocs.dart';
-import 'package:mall/src/ui/pages/pages.dart';
 
 class AppPage extends StatefulWidget {
   AppPage({Key key}) : super(key: key);

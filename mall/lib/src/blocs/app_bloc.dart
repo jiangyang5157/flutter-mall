@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'package:mall/src/blocs/blocs.dart';
+import 'blocs.dart';
 
 class AppBloc implements BlocBase {
   static const String _prefsKey_bool_darkTheme = 'darkTheme';

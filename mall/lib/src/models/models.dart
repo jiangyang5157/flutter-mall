@@ -1,1 +1,1 @@
-export 'package:mall/src/models/exceptions/exceptions.dart';
+export 'package:mall/src/models/parse/parse.dart';
