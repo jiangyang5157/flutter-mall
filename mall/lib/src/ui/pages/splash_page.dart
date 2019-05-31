@@ -13,6 +13,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    parse.initialize();
     todo();
   }
 
@@ -28,18 +29,7 @@ class _SplashPageState extends State<SplashPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ThreeBounceDot(
-                shape: BoxShape.circle
-            ),
-            ThreeBounceDot(
-                shape: BoxShape.rectangle
-            ),
-            ThreeSizeDot(
-                shape: BoxShape.circle
-            ),
-            ThreeSizeDot(
-                shape: BoxShape.rectangle
-            ),
+            ThreeSizeDot(shape: BoxShape.circle),
           ],
         ),
       ),
