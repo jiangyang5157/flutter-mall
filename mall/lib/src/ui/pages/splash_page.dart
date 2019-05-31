@@ -16,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future todo() async {
-    await Future.delayed(const Duration(milliseconds: 100000));
+    await Future.delayed(const Duration(milliseconds: 2000));
     Navigator.of(context).pushReplacementNamed('/AuthenticationPage');
   }
 
@@ -27,21 +27,17 @@ class _SplashPageState extends State<SplashPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ThreeBouncedBox(
-//              dotOneColor: Colors.red,
-//              dotTwoColor: Colors.green,
-//              dotThreeColor: Colors.blue,
-//              dotType: DotType.circle,
+            ThreeBounceDot(
+                shape: BoxShape.circle
             ),
-            ThreeSizedBox(
-              widgetBuilder: (_, int index) {
-                return DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: [Colors.red, Colors.green, Colors.blue][index],
-                    shape: BoxShape.circle,
-                  ),
-                );
-              },
+            ThreeSizeDot(
+                shape: BoxShape.circle
+            ),
+            ThreeBounceDot(
+                shape: BoxShape.rectangle
+            ),
+            ThreeSizeDot(
+                shape: BoxShape.rectangle
             ),
           ],
         ),
