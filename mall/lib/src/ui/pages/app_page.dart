@@ -20,25 +20,23 @@ class _AppPageState extends State<AppPage> {
         builder: (context, snapshot) {
           return !snapshot.hasData
               ? Container()
-              : MaterialApp(
-                  localizationsDelegates: [
-                    const AppLocalizationsDelegate(),
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                  ],
-                  supportedLocales: AppLocalizationsDelegate
-                      .supportedLanguageCodes
-                      .map<Locale>((languageCode) => Locale(languageCode)),
-                  theme: ThemeData(
-                      brightness:
-                          snapshot.data ? Brightness.dark : Brightness.light),
-                  initialRoute: '/',
-                  routes: <String, WidgetBuilder>{
-                    '/': (BuildContext context) => SplashPage(),
-                    '/AuthenticationPage': (BuildContext context) =>
-                        AuthenticationPage(),
-                  },
-                );
+              : BlocProvider<UserBloc>(
+                  bloc: UserBloc(),
+                  child: MaterialApp(
+                    localizationsDelegates: [
+                      const AppLocalizationsDelegate(),
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                    ],
+                    supportedLocales: AppLocalizationsDelegate
+                        .supportedLanguageCodes
+                        .map<Locale>((languageCode) => Locale(languageCode)),
+                    theme: ThemeData(
+                        brightness:
+                            snapshot.data ? Brightness.dark : Brightness.light),
+                    home: BlocProvider<AuthBloc>(
+                        bloc: AuthBloc(), child: AuthenticationPage()),
+                  ));
         });
   }
 }

@@ -6,6 +6,7 @@ import 'blocs.dart';
 
 class AppBloc implements BlocBase {
   static const String _prefs_DarkTheme = '_prefs_DarkTheme';
+  static const bool _prefs_DarkTheme_default = false;
 
   BehaviorSubject<bool> _darkThemeController = BehaviorSubject<bool>();
 
@@ -18,6 +19,11 @@ class AppBloc implements BlocBase {
     _loadDarkTheme();
   }
 
+  @override
+  void dispose() {
+    _darkThemeController.close();
+  }
+
   Future<void> _loadDarkTheme() async {
     bool darkTheme = await _getDarkTheme();
     inDarkTheme.add(darkTheme);
@@ -25,16 +31,11 @@ class AppBloc implements BlocBase {
 
   Future<bool> _getDarkTheme() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_prefs_DarkTheme) ?? false;
+    return prefs.getBool(_prefs_DarkTheme) ?? _prefs_DarkTheme_default;
   }
 
   Future<void> _setDarkTheme(bool data) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_prefs_DarkTheme, data);
-  }
-
-  @override
-  void dispose() {
-    _darkThemeController.close();
   }
 }

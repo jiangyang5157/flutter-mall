@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_stetho/flutter_stetho.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
@@ -11,35 +12,46 @@ class AuthenticationPage extends StatefulWidget {
 }
 
 class _AuthenticationPageState extends State<AuthenticationPage> {
+  final UserBloc userBloc = UserBloc();
+  final AuthBloc authBloc = AuthBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    parse.initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     final AppBloc appBloc = BlocProvider.of<AppBloc>(context);
+    final UserBloc userBloc = BlocProvider.of<UserBloc>(context);
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
 
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(AppLocalization.of(context).string('hello')),
+            TextField(
+                decoration: InputDecoration(hintText: 'user name hint'),
+                obscureText: false,
+                onChanged: (text) {
+                  print('user name change: $text');
+                }),
+            TextField(
+                decoration: InputDecoration(hintText: 'password hint'),
+                obscureText: true,
+                onChanged: (text) {
+                  print('password change: $text');
+                }),
             RaisedButton(
-              onPressed: () {
-                appBloc.inDarkTheme.add(false);
-              },
-              child: Text('lights on'),
+              onPressed: () {},
+              child: Text('sign up'),
             ),
             RaisedButton(
-              onPressed: () {
-                appBloc.inDarkTheme.add(true);
-              },
-              child: Text('lights off'),
+              onPressed: () {},
+              child: Text('login'),
             ),
-            RaisedButton(
-              onPressed: () {
-                initData();
-              },
-              child: Text('test parse'),
-            ),
-            Text('logs'),
           ],
         ),
       ),
