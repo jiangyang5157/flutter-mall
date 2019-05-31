@@ -1,11 +1,11 @@
 import 'dart:async';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rxdart/rxdart.dart';
-
 import 'blocs.dart';
 
 class AppBloc implements BlocBase {
-  static const String _prefsKey_bool_darkTheme = 'darkTheme';
+  static const String _prefs_DarkTheme = '_prefs_DarkTheme';
 
   BehaviorSubject<bool> _darkThemeController = BehaviorSubject<bool>();
 
@@ -25,12 +25,12 @@ class AppBloc implements BlocBase {
 
   Future<bool> _getDarkTheme() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_prefsKey_bool_darkTheme) ?? false;
+    return prefs.getBool(_prefs_DarkTheme) ?? false;
   }
 
   Future<void> _setDarkTheme(bool data) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_prefsKey_bool_darkTheme, data);
+    await prefs.setBool(_prefs_DarkTheme, data);
   }
 
   @override

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 
 class AppLocalization {
