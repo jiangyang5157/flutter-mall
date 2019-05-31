@@ -1,3 +1,3 @@
-export 'package:mall/src/models/parse/api_error.dart';
-export 'package:mall/src/models/parse/api_response.dart';
-export 'package:mall/src/models/parse/p_user.dart';
+export 'api_error.dart';
+export 'api_response.dart';
+export 'p_user.dart';

@@ -1,2 +1,2 @@
-export 'package:mall/src/ui/pages/pages.dart';
-export 'package:mall/src/ui/widgets/widgets.dart';
+export 'pages/pages.dart';
+export 'widgets/widgets.dart';

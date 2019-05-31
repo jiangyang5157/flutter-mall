@@ -1,1 +1,1 @@
-export 'package:mall/src/app/app_localization.dart';
+export 'app_localization.dart';

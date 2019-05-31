@@ -1,1 +1,1 @@
-export 'package:mall/src/models/parse/parse.dart';
+export 'parse/parse.dart';
