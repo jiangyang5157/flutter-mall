@@ -11,17 +11,27 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
+  final UserBloc userBloc = UserBloc();
+  final AuthBloc authBloc = AuthBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    parse.initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     final AppBloc appBloc = BlocProvider.of<AppBloc>(context);
 
     return StreamBuilder<bool>(
+        initialData: AppBloc.prefs_DarkTheme_default,
         stream: appBloc.outDarkTheme,
         builder: (context, snapshot) {
           return !snapshot.hasData
               ? Container()
               : BlocProvider<UserBloc>(
-                  bloc: UserBloc(),
+                  bloc: userBloc,
                   child: MaterialApp(
                     localizationsDelegates: [
                       const AppLocalizationsDelegate(),
@@ -35,7 +45,7 @@ class _AppPageState extends State<AppPage> {
                         brightness:
                             snapshot.data ? Brightness.dark : Brightness.light),
                     home: BlocProvider<AuthBloc>(
-                        bloc: AuthBloc(), child: AuthenticationPage()),
+                        bloc: authBloc, child: AuthenticationPage()),
                   ));
         });
   }

@@ -6,7 +6,7 @@ import 'blocs.dart';
 
 class AppBloc implements BlocBase {
   static const String _prefs_DarkTheme = '_prefs_DarkTheme';
-  static const bool _prefs_DarkTheme_default = false;
+  static const bool prefs_DarkTheme_default = false;
 
   BehaviorSubject<bool> _darkThemeController = BehaviorSubject<bool>();
 
@@ -15,6 +15,7 @@ class AppBloc implements BlocBase {
   Sink<bool> get inDarkTheme => _darkThemeController.sink;
 
   AppBloc() {
+    print('#### New instance of ${this} created');
     outDarkTheme.listen(_setDarkTheme);
     _loadDarkTheme();
   }
@@ -31,7 +32,7 @@ class AppBloc implements BlocBase {
 
   Future<bool> _getDarkTheme() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_prefs_DarkTheme) ?? _prefs_DarkTheme_default;
+    return prefs.getBool(_prefs_DarkTheme) ?? prefs_DarkTheme_default;
   }
 
   Future<void> _setDarkTheme(bool data) async {

@@ -7,18 +7,16 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:mall/src.dart';
 
 class AuthenticationPage extends StatefulWidget {
+  AuthenticationPage({Key key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _AuthenticationPageState();
 }
 
 class _AuthenticationPageState extends State<AuthenticationPage> {
-  final UserBloc userBloc = UserBloc();
-  final AuthBloc authBloc = AuthBloc();
-
   @override
   void initState() {
     super.initState();
-    parse.initialize();
   }
 
   @override
@@ -36,13 +34,13 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 decoration: InputDecoration(hintText: 'user name hint'),
                 obscureText: false,
                 onChanged: (text) {
-                  print('user name change: $text');
+                  print('#### user name change: $text');
                 }),
             TextField(
                 decoration: InputDecoration(hintText: 'password hint'),
                 obscureText: true,
                 onChanged: (text) {
-                  print('password change: $text');
+                  print('#### password change: $text');
                 }),
             RaisedButton(
               onPressed: () {},
@@ -51,6 +49,18 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             RaisedButton(
               onPressed: () {},
               child: Text('login'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                appBloc.inDarkTheme.add(false);
+              },
+              child: Text('light'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                appBloc.inDarkTheme.add(true);
+              },
+              child: Text('dark'),
             ),
           ],
         ),
