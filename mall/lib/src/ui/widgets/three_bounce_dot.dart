@@ -40,7 +40,7 @@ class _ThreeBounceDotState extends State<ThreeBounceDot>
   void initState() {
     super.initState();
     animationController =
-        AnimationController(vsync: this, duration: widget.duration);
+        AnimationController(vsync: this, duration: widget.duration)..repeat();
     animation_1 = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
@@ -63,8 +63,6 @@ class _ThreeBounceDotState extends State<ThreeBounceDot>
     animationController.addListener(() {
       setState(() => {});
     });
-
-    animationController.repeat();
   }
 
   @override

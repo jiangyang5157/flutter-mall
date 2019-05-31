@@ -1,5 +1,5 @@
-class ApiError {
-  ApiError(this.code, this.message, this.isTypeOfException, this.type);
+class PError {
+  PError(this.code, this.message, this.isTypeOfException, this.type);
 
   final int code;
   final String message;

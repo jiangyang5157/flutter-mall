@@ -38,14 +38,13 @@ class _ThreeSizeDotState extends State<ThreeSizeDot>
   void initState() {
     super.initState();
     animationController =
-        AnimationController(vsync: this, duration: widget.duration);
+        AnimationController(vsync: this, duration: widget.duration)..repeat();
     animation_1 = DelayTween(begin: 0.0, end: 1.0, delay: 0.0)
         .animate(animationController);
     animation_2 = DelayTween(begin: 0.0, end: 1.0, delay: 0.2)
         .animate(animationController);
     animation_3 = DelayTween(begin: 0.0, end: 1.0, delay: 0.4)
         .animate(animationController);
-    animationController.repeat();
   }
 
   @override
