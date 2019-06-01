@@ -7,6 +7,7 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 import 'package:mall/src/pages/login/login.dart';
 import 'package:mall/src/pages/app/app.dart';
+import 'package:mall/src/pages/home/home.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -16,19 +17,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  AppBloc _appBloc;
+  HomeBloc _appBloc;
   LoginBloc _loginBloc;
 
   @override
   void initState() {
-    _appBloc = BlocProvider.of<AppBloc>(context);
+    _appBloc = BlocProvider.of<HomeBloc>(context);
     _loginBloc = LoginBloc(_appBloc);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    AppBloc _appBloc = BlocProvider.of<AppBloc>(context);
+    HomeBloc _appBloc = BlocProvider.of<HomeBloc>(context);
     LoginBloc _authBloc = LoginBloc(_appBloc);
 
     return Scaffold(

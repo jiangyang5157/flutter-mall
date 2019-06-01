@@ -3,8 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:mall/src/pages/app/app.dart';
-import 'package:mall/src/pages/login/login.dart';
-import 'package:mall/src/theme/theme.dart';
+import 'package:mall/src/pages/home/home.dart';
 import 'package:mall/src/core/core.dart';
 
 class AppPage extends StatefulWidget {
@@ -15,13 +14,13 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
-  ThemeBloc _themeBloc;
   AppBloc _appBloc;
+  HomeBloc _homeBloc;
 
   @override
   void initState() {
-    _themeBloc = ThemeBloc();
     _appBloc = AppBloc();
+    _homeBloc = HomeBloc();
     super.initState();
   }
 
@@ -29,11 +28,11 @@ class _AppPageState extends State<AppPage> {
   Widget build(BuildContext context) {
     return BlocProviderTree(
       blocProviders: [
-        BlocProvider<ThemeBloc>(bloc: _themeBloc),
+        BlocProvider<AppBloc>(bloc: _appBloc),
       ],
       child: BlocBuilder(
-        bloc: _themeBloc,
-        builder: (_, ThemeState state) {
+        bloc: _appBloc,
+        builder: (_, AppState state) {
           return MaterialApp(
               localizationsDelegates: [
                 const AppLocalizationsDelegate(),
@@ -42,8 +41,8 @@ class _AppPageState extends State<AppPage> {
               ],
               supportedLocales: AppLocalizationsDelegate.supportedLanguageCodes
                   .map<Locale>((languageCode) => Locale(languageCode)),
-              theme: state.theme,
-              home: LoginPage());
+//              theme: state.theme,
+              home: HomePage());
         },
       ),
     );
@@ -51,8 +50,8 @@ class _AppPageState extends State<AppPage> {
 
   @override
   void dispose() {
-    _themeBloc.dispose();
     _appBloc.dispose();
+    _homeBloc.dispose();
     super.dispose();
   }
 }

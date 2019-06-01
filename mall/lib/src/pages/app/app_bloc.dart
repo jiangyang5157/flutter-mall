@@ -1,45 +1,50 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mall/src/pages/app/app.dart';
-import 'package:mall/src/parse/parse.dart';
-import 'package:mall/src/core/core.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
+  static const String _prefs_IsDarkTheme = '_prefs_IsDarkTheme';
+  static const bool _prefs_IsDarkTheme_default = false;
+
   Future<void> initialize() async {
-    // init Parse
-    Parse().initialize(parseApplicationId, parseServerUrl,
-        appName: parseApplicationName, masterKey: parseMasterKey, debug: true);
+    if (await _isDarkTheme()) {
+      dispatch(AppDarkThemeEvent());
+    } else {
+      dispatch(AppLightThemeEvent());
+    }
+  }
 
-    // init database
-    await DbProvider().initialize();
+  Future<bool> _isDarkTheme() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_prefs_IsDarkTheme) ?? _prefs_IsDarkTheme_default;
+  }
 
-    // init repositories
-    UserRepository().initialize(DbProvider().db);
-
-    dispatch(AppInitializedEvent());
+  Future<void> _setIsDarkTheme(bool isDarkTheme) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_prefs_IsDarkTheme, isDarkTheme);
   }
 
   @override
   AppState get initialState {
     initialize();
-    return AppUninitializedState();
+    return _prefs_IsDarkTheme_default
+        ? AppDarkThemeState()
+        : AppLightThemeState();
   }
 
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
-    if (event is AppInitializedEvent) {
-      yield AppInitializedState();
+    if (event is AppDarkThemeEvent) {
+      await _setIsDarkTheme(true);
+      yield AppDarkThemeState();
     }
 
-    if (event is AppSignedInEvent) {
-      yield AppAuthenticatedState();
-    }
-
-    if (event is AppSignedOutEvent) {
-      yield AppUnauthenticatedState();
+    if (event is AppLightThemeEvent) {
+      await _setIsDarkTheme(false);
+      yield AppLightThemeState();
     }
   }
 }

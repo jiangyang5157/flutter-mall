@@ -5,10 +5,11 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 import 'package:mall/src/pages/login/login.dart';
 import 'package:mall/src/pages/app/app.dart';
+import 'package:mall/src/pages/home/home.dart';
 import 'package:mall/src/parse/parse.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final AppBloc appBloc;
+  final HomeBloc appBloc;
 
   LoginBloc(this.appBloc) : assert(appBloc != null);
 

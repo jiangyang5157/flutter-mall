@@ -1,20 +1,15 @@
 import 'package:equatable/equatable.dart';
 
 abstract class AppEvent extends Equatable {
-  AppEvent([List props = const []]) : super(props);
+  AppEvent([List props = const []]) : super([props]);
 }
 
-class AppInitializedEvent extends AppEvent {
+class AppLightThemeEvent extends AppEvent {
   @override
-  String toString() => 'AppInitializedEvent';
+  String toString() => 'AppLightThemeEvent';
 }
 
-class AppSignedInEvent extends AppEvent {
+class AppDarkThemeEvent extends AppEvent {
   @override
-  String toString() => 'AppSignedInEvent';
-}
-
-class AppSignedOutEvent extends AppEvent {
-  @override
-  String toString() => 'AppSignedOutEvent';
+  String toString() => 'AppDarkThemeEvent';
 }
