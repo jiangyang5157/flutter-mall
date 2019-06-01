@@ -2,17 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:mall/src.dart';
+import 'package:mall/src/pages/app/app.dart';
+import 'package:mall/src/pages/login/login.dart';
+import 'package:mall/src/theme/theme.dart';
+import 'package:mall/src/core/core.dart';
 
-class ApplicationPage extends StatefulWidget {
-  ApplicationPage({Key key}) : super(key: key);
+class AppPage extends StatefulWidget {
+  AppPage({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ApplicationPageState();
+  State<StatefulWidget> createState() => _AppPageState();
 }
 
-class _ApplicationPageState extends State<ApplicationPage> {
-  final ThemeBloc _themeBloc = ThemeBloc();
+class _AppPageState extends State<AppPage> {
+  ThemeBloc _themeBloc;
+  AppBloc _appBloc;
+
+  @override
+  void initState() {
+    _themeBloc = ThemeBloc();
+    _appBloc = AppBloc();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +43,7 @@ class _ApplicationPageState extends State<ApplicationPage> {
               supportedLocales: AppLocalizationsDelegate.supportedLanguageCodes
                   .map<Locale>((languageCode) => Locale(languageCode)),
               theme: state.theme,
-              home: AuthenticationPage());
+              home: LoginPage());
         },
       ),
     );
@@ -41,6 +52,7 @@ class _ApplicationPageState extends State<ApplicationPage> {
   @override
   void dispose() {
     _themeBloc.dispose();
+    _appBloc.dispose();
     super.dispose();
   }
 }

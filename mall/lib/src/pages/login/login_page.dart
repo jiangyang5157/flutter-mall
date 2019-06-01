@@ -5,21 +5,31 @@ import 'package:flutter_stetho/flutter_stetho.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
-import 'package:mall/src.dart';
+import 'package:mall/src/pages/login/login.dart';
+import 'package:mall/src/pages/app/app.dart';
 
-class AuthenticationPage extends StatefulWidget {
-  AuthenticationPage({Key key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  LoginPage({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _AuthenticationPageState();
+  State<StatefulWidget> createState() => _LoginPageState();
 }
 
-class _AuthenticationPageState extends State<AuthenticationPage> {
-  final AuthenticationBloc _authBloc = AuthenticationBloc();
+class _LoginPageState extends State<LoginPage> {
+  AppBloc _appBloc;
+  LoginBloc _loginBloc;
+
+  @override
+  void initState() {
+    _appBloc = BlocProvider.of<AppBloc>(context);
+    _loginBloc = LoginBloc(_appBloc);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final ThemeBloc _themeBloc = BlocProvider.of<ThemeBloc>(context);
+    AppBloc _appBloc = BlocProvider.of<AppBloc>(context);
+    LoginBloc _authBloc = LoginBloc(_appBloc);
 
     return Scaffold(
       body: Center(
@@ -46,22 +56,6 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               onPressed: () {},
               child: Text('sign in'),
             ),
-            RaisedButton(
-              onPressed: () {},
-              child: Text('sign out'),
-            ),
-            RaisedButton(
-              onPressed: () {
-                _themeBloc.dispatch(LightThemeEvent());
-              },
-              child: Text('light'),
-            ),
-            RaisedButton(
-              onPressed: () {
-                _themeBloc.dispatch(DarkThemeEvent());
-              },
-              child: Text('dark'),
-            ),
           ],
         ),
       ),
@@ -70,7 +64,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 
   @override
   void dispose() {
-    _authBloc.dispose();
+    _loginBloc.dispose();
     super.dispose();
   }
 

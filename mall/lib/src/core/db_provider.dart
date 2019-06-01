@@ -15,15 +15,9 @@ class DbProvider {
   static Database _db;
   static const String _db_name = 'database';
 
-  Future<Database> get db async {
-    if (_db != null) {
-      return _db;
-    }
-    _db = await _initialize();
-    return _db;
-  }
+  Database get db => _db;
 
-  Future<Database> _initialize() async {
+  Future<Database> initialize() async {
     final String dbDirectory = (await getApplicationDocumentsDirectory()).path;
     final String dbPath = join(dbDirectory, _db_name);
     final DatabaseFactory dbFactory = databaseFactoryIo;
