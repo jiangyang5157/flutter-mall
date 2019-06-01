@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'src.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:bloc/bloc.dart';
+
+import 'package:mall/src.dart';
 
 void main() {
-  runApp(BlocProvider<AppBloc>(
-    bloc: AppBloc(),
-    child: AppPage(),
-  ));
+  BlocSupervisor.delegate = BlocSupervisorDelegate();
+
+  Parse().initialize(parseApplicationId, parseServerUrl,
+      appName: parseApplicationName, masterKey: parseMasterKey, debug: true);
+
+  runApp(ApplicationPage());
 }

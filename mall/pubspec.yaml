@@ -5,7 +5,7 @@ homepage: https://github.com/jiangyang5157/flutter-mall/tree/master/mall
 author: Yang JIANG <jiangyang5157@gmail.com>
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: '>=2.2.2 <3.0.0'
 
 dependencies:
   flutter:
@@ -15,6 +15,10 @@ dependencies:
     sdk: flutter
 
   rxdart: '^0.22.0'
+
+  flutter_bloc: '0.15.0'
+
+  equatable: '^0.2.0'
 
   parse_server_sdk: '^1.0.21'
 
