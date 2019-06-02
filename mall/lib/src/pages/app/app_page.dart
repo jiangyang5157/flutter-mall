@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:mall/src/pages/app/app.dart';
 import 'package:mall/src/pages/home/home.dart';
+import 'package:mall/src/pages/splash/splash.dart';
+import 'package:mall/src/pages/login/login.dart';
 import 'package:mall/src/core/core.dart';
 
 class AppPage extends StatefulWidget {
@@ -15,34 +17,32 @@ class AppPage extends StatefulWidget {
 
 class _AppPageState extends State<AppPage> {
   AppBloc _appBloc;
-  HomeBloc _homeBloc;
 
   @override
   void initState() {
     _appBloc = AppBloc();
-    _homeBloc = HomeBloc();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      blocProviders: [
-        BlocProvider<AppBloc>(bloc: _appBloc),
-      ],
+    return BlocProvider<AppBloc>(
+      bloc: _appBloc,
       child: BlocBuilder(
         bloc: _appBloc,
         builder: (_, AppState state) {
-          return MaterialApp(
-              localizationsDelegates: [
-                const AppLocalizationsDelegate(),
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              supportedLocales: AppLocalizationsDelegate.supportedLanguageCodes
-                  .map<Locale>((languageCode) => Locale(languageCode)),
-//              theme: state.theme,
-              home: HomePage());
+          if (state is AppUninitializedState) {
+            return SplashPage();
+          }
+          if (state is AppInitializedState) {
+            return LoginPage();
+          }
+          if (state is AppUnauthenticatedState) {
+            return LoginPage();
+          }
+          if (state is AppAuthenticatedState) {
+            return HomePage();
+          }
         },
       ),
     );
@@ -51,7 +51,6 @@ class _AppPageState extends State<AppPage> {
   @override
   void dispose() {
     _appBloc.dispose();
-    _homeBloc.dispose();
     super.dispose();
   }
 }

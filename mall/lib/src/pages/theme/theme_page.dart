@@ -24,20 +24,23 @@ class _ThemePageState extends State<ThemePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
+    return BlocProvider<ThemeBloc>(
       bloc: _themeBloc,
-      builder: (_, ThemeState state) {
-        return MaterialApp(
-            localizationsDelegates: [
-              const AppLocalizationsDelegate(),
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            supportedLocales: AppLocalizationsDelegate.supportedLanguageCodes
-                .map<Locale>((languageCode) => Locale(languageCode)),
-            theme: state.theme,
-            home: AppPage());
-      },
+      child: BlocBuilder(
+        bloc: _themeBloc,
+        builder: (_, ThemeState state) {
+          return MaterialApp(
+              localizationsDelegates: [
+                const AppLocalizationsDelegate(),
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizationsDelegate.supportedLanguageCodes
+                  .map<Locale>((languageCode) => Locale(languageCode)),
+              theme: state.theme,
+              home: AppPage());
+        },
+      ),
     );
   }
 
