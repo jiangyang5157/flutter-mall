@@ -10,51 +10,51 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Future<void> initialize() async {
     User user = await UserRepository().currentUser();
     if (user != null) {
-      dispatch(LoginSignInCurrentUserEvent(user));
+      dispatch(CurrentUserSignInEvent(user));
     }
   }
 
   @override
   LoginState get initialState {
     initialize();
-    return LoginInitialState();
+    return InitialLoginState();
   }
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    if (event is LoginSignUpEvent) {
-      yield LoginStartState();
+    if (event is SignUpEvent) {
+      yield StartSignUpState();
 
       User user = UserRepository()
           .createUser(event.username, event.password, event.emailAddress);
       ParseResponse response = await user.signUp();
       if (response.success) {
-        yield LoginSuccessState();
+        yield SignUpSuccessState();
       } else {
-        yield LoginFailureState(response.error.message);
+        yield SignUpFailureState(response.error.message);
       }
     }
 
-    if (event is LoginSignInEvent) {
-      yield LoginStartState();
+    if (event is SignInEvent) {
+      yield StartSignInState();
 
       User user = UserRepository().createUser(event.username, event.password);
       ParseResponse response = await user.login();
       if (response.success) {
-        yield LoginSuccessState();
+        yield SignInSuccessState();
       } else {
-        yield LoginFailureState(response.error.message);
+        yield SignInFailureState(response.error.message);
       }
     }
 
-    if (event is LoginSignInCurrentUserEvent) {
-      yield LoginCurrentUserStartState(event.user);
+    if (event is CurrentUserSignInEvent) {
+      yield InitialLoginState(event.user);
 
       ParseResponse response = await event.user.login();
       if (response.success) {
-        yield LoginSuccessState();
+        yield SignInSuccessState();
       } else {
-        yield LoginFailureState(response.error.message);
+        yield SignInFailureState(response.error.message);
       }
     }
   }

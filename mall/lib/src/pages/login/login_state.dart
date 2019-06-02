@@ -6,20 +6,28 @@ abstract class LoginState extends Equatable {
   LoginState([List props = const []]) : super(props);
 }
 
-class LoginInitialState extends LoginState {}
-
-class LoginStartState extends LoginState {}
-
-class LoginCurrentUserStartState extends LoginState {
+class InitialLoginState extends LoginState {
   final User user;
 
-  LoginCurrentUserStartState(this.user) : super([user]);
+  InitialLoginState([this.user]) : super([user]);
 }
 
-class LoginSuccessState extends LoginState {}
+class StartSignInState extends LoginState {}
 
-class LoginFailureState extends LoginState {
+class StartSignUpState extends LoginState {}
+
+class SignInSuccessState extends LoginState {}
+
+class SignUpSuccessState extends LoginState {}
+
+class SignInFailureState extends LoginState {
   final String error;
 
-  LoginFailureState([this.error]) : super([error]);
+  SignInFailureState([this.error]) : super([error]);
+}
+
+class SignUpFailureState extends LoginState {
+  final String error;
+
+  SignUpFailureState([this.error]) : super([error]);
 }

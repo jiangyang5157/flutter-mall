@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                       User user = await UserRepository().currentUser();
                       print('#### currentUser=$user');
                     },
-                    child: Text('check current user'),
+                    child: Text('print current user info'),
                   ),
                 ],
               ),

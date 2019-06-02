@@ -29,34 +29,46 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SignUpForm(appBloc: _appBloc, loginBloc: _loginBloc),
-            SignInForm(appBloc: _appBloc, loginBloc: _loginBloc),
-            RaisedButton(
-              onPressed: () {
-                _themeBloc.dispatch(LightAppThemeEvent());
-              },
-              child: Text('light'),
+    return BlocProvider<LoginBloc>(
+      bloc: _loginBloc,
+      child: BlocBuilder(
+        bloc: _loginBloc,
+        builder: (_, LoginState state) {
+          if (state is SignInSuccessState || state is SignUpSuccessState) {
+            _appBloc.dispatch(AppSignedInEvent());
+          }
+
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SignUpForm(loginBloc: _loginBloc),
+                  SignInForm(loginBloc: _loginBloc),
+                  RaisedButton(
+                    onPressed: () {
+                      _themeBloc.dispatch(LightAppThemeEvent());
+                    },
+                    child: Text('light'),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      _themeBloc.dispatch(DarkAppThemeEvent());
+                    },
+                    child: Text('dark'),
+                  ),
+                  RaisedButton(
+                    onPressed: () async {
+                      User user = await UserRepository().currentUser();
+                      print('#### currentUser=$user');
+                    },
+                    child: Text('print current user info'),
+                  ),
+                ],
+              ),
             ),
-            RaisedButton(
-              onPressed: () {
-                _themeBloc.dispatch(DarkAppThemeEvent());
-              },
-              child: Text('dark'),
-            ),
-            RaisedButton(
-              onPressed: () async {
-                User user = await UserRepository().currentUser();
-                print('#### currentUser=$user');
-              },
-              child: Text('check current user'),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
