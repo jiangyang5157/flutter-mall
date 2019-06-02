@@ -94,6 +94,6 @@ class UserRepository implements UserProviderContract {
 
   @override
   User fromParseUser(ParseUser parseUser) {
-    return mapToParseObject<User>(User(), parseObjectToMap(parseUser));
+    return userFromMap(parseObjectToMap(parseUser));
   }
 }

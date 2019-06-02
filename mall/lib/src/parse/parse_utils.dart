@@ -2,6 +2,8 @@ import 'dart:convert' as json;
 
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
+import 'package:mall/src/parse/parse.dart';
+
 const String parseApplicationName = 'MyApp';
 const String parseApplicationId = 'myAppId';
 const String parseMasterKey = 'myMasterKey';
@@ -28,15 +30,12 @@ Map<String, dynamic> parseObjectToMap(ParseObject object) {
   }
 }
 
-T mapToParseObject<T extends ParseObject>(T object, Map<String, dynamic> data) {
-  if (object == null) {
+User userFromMap(Map<String, dynamic> data) {
+  if (data == null) {
     return null;
   }
-  if (data == null) {
-    return object;
-  }
   try {
-    final T ret = object.clone(json.jsonDecode(data[keyVarParseObject]));
+    final User ret = User().clone(json.jsonDecode(data[keyVarParseObject]));
     return ret;
   } catch (e) {
     return null;
