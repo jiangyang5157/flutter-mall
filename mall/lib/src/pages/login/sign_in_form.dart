@@ -5,23 +5,25 @@ import 'package:flutter_stetho/flutter_stetho.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
+import 'package:mall/src/parse/parse.dart';
 import 'package:mall/src/pages/login/login.dart';
 import 'package:mall/src/pages/theme_app/theme_app.dart';
 import 'package:mall/src/pages/app/app.dart';
 import 'package:mall/src/pages/home/home.dart';
 import 'package:mall/src/widgets/widgets.dart';
 
-class SignUpForm extends StatefulWidget {
+class SignInForm extends StatefulWidget {
   final AppBloc appBloc;
   final LoginBloc loginBloc;
 
-  SignUpForm({Key key, @required this.appBloc, @required this.loginBloc}) : super(key: key);
+  SignInForm({Key key, @required this.appBloc, @required this.loginBloc})
+      : super(key: key);
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
+  State<SignInForm> createState() => _SignInFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _SignInFormState extends State<SignInForm> {
   @override
   void initState() {
     super.initState();
@@ -29,18 +31,22 @@ class _SignUpFormState extends State<SignUpForm> {
 
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _emailAddressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginEvent, LoginState>(
       bloc: widget.loginBloc,
       builder: (_, LoginState state) {
+        if (state is LoginSuccessState) {
+          widget.appBloc.dispatch(AppSignedInEvent());
+          test();
+        }
+
         return Form(
           child: Column(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'username'),
+                decoration: InputDecoration(labelText: 'username / email'),
                 obscureText: false,
                 controller: _usernameController,
               ),
@@ -49,24 +55,22 @@ class _SignUpFormState extends State<SignUpForm> {
                 obscureText: true,
                 controller: _passwordController,
               ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'email address'),
-                obscureText: true,
-                controller: _emailAddressController,
-              ),
               RaisedButton(
                 onPressed: () {
-                  widget.loginBloc.dispatch(SignUpEvent(
-                      _usernameController.text,
-                      _passwordController.text,
-                      _emailAddressController.text));
+                  widget.loginBloc.dispatch(SignInEvent(
+                      _usernameController.text, _passwordController.text));
                 },
-                child: Text('sign up'),
+                child: Text('sign in'),
               ),
             ],
           ),
         );
       },
     );
+  }
+
+  Future test() async {
+    ParseUser user = await UserRepository().currentUser();
+    print("#### curr=$user");
   }
 }

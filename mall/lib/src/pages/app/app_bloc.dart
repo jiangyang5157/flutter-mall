@@ -12,6 +12,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     // init Parse
     Parse().initialize(parseApplicationId, parseServerUrl,
         appName: parseApplicationName, masterKey: parseMasterKey, debug: true);
+    Parse().healthCheck();
 
     // init database
     await DbProvider().initialize();
