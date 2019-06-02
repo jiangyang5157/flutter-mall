@@ -54,13 +54,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                   RaisedButton(
                     onPressed: () {
-                      _themeBloc.dispatch(ThemeAppLightEvent());
+                      _themeBloc.dispatch(LightAppThemeEvent());
                     },
                     child: Text('light'),
                   ),
                   RaisedButton(
                     onPressed: () {
-                      _themeBloc.dispatch(ThemeAppDarkEvent());
+                      _themeBloc.dispatch(DarkAppThemeEvent());
                     },
                     child: Text('dark'),
                   ),

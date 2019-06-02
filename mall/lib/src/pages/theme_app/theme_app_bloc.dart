@@ -11,9 +11,9 @@ class ThemeAppBloc extends Bloc<ThemeAppEvent, ThemeAppState> {
 
   Future<void> initialize() async {
     if (await _isDarkTheme()) {
-      dispatch(ThemeAppDarkEvent());
+      dispatch(DarkAppThemeEvent());
     } else {
-      dispatch(ThemeAppLightEvent());
+      dispatch(LightAppThemeEvent());
     }
   }
 
@@ -30,19 +30,19 @@ class ThemeAppBloc extends Bloc<ThemeAppEvent, ThemeAppState> {
   @override
   ThemeAppState get initialState {
     initialize();
-    return _prefs_IsDarkTheme_default ? ThemeAppDarkState() : ThemeAppLightState();
+    return _prefs_IsDarkTheme_default ? DarkAppThemeState() : LightAppThemeState();
   }
 
   @override
   Stream<ThemeAppState> mapEventToState(ThemeAppEvent event) async* {
-    if (event is ThemeAppDarkEvent) {
+    if (event is DarkAppThemeEvent) {
       await _setIsDarkTheme(true);
-      yield ThemeAppDarkState();
+      yield DarkAppThemeState();
     }
 
-    if (event is ThemeAppLightEvent) {
+    if (event is LightAppThemeEvent) {
       await _setIsDarkTheme(false);
-      yield ThemeAppLightState();
+      yield LightAppThemeState();
     }
   }
 }
