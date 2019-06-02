@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 import 'package:mall/src/pages/login/login.dart';
+import 'package:mall/src/pages/theme/theme.dart';
 import 'package:mall/src/pages/app/app.dart';
 import 'package:mall/src/pages/home/home.dart';
 
@@ -17,21 +18,20 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  HomeBloc _appBloc;
+  ThemeBloc _themeBloc;
+  AppBloc _appBloc;
   LoginBloc _loginBloc;
 
   @override
   void initState() {
-    _appBloc = BlocProvider.of<HomeBloc>(context);
-    _loginBloc = LoginBloc(_appBloc);
+    _themeBloc = BlocProvider.of<ThemeBloc>(context);
+    _appBloc = BlocProvider.of<AppBloc>(context);
+    _loginBloc = LoginBloc();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    HomeBloc _appBloc = BlocProvider.of<HomeBloc>(context);
-    LoginBloc _authBloc = LoginBloc(_appBloc);
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -56,6 +56,18 @@ class _LoginPageState extends State<LoginPage> {
             RaisedButton(
               onPressed: () {},
               child: Text('sign in'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                _themeBloc.dispatch(LightThemeEvent());
+              },
+              child: Text('light'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                _themeBloc.dispatch(DarkThemeEvent());
+              },
+              child: Text('dark'),
             ),
           ],
         ),

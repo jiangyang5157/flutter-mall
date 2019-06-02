@@ -17,10 +17,10 @@ class DbProvider {
 
   Database get db => _db;
 
-  Future<Database> initialize() async {
+  Future<void> initialize() async {
     final String dbDirectory = (await getApplicationDocumentsDirectory()).path;
     final String dbPath = join(dbDirectory, _db_name);
     final DatabaseFactory dbFactory = databaseFactoryIo;
-    return await dbFactory.openDatabase(dbPath);
+    _db = await dbFactory.openDatabase(dbPath);
   }
 }
