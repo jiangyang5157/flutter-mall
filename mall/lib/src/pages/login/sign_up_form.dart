@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:mall/src/pages/login/login.dart';
-import 'package:mall/src/pages/app/app.dart';
 
 class SignUpForm extends StatefulWidget {
-  final LoginBloc loginBloc;
-
-  SignUpForm({Key key, @required this.loginBloc}) : super(key: key);
+  SignUpForm({Key key}) : super(key: key);
 
   @override
   State<SignUpForm> createState() => _SignUpFormState();
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  LoginBloc _loginBloc;
+
   @override
   void initState() {
+    _loginBloc = BlocProvider.of<LoginBloc>(context);
     super.initState();
   }
 
@@ -27,7 +27,7 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginEvent, LoginState>(
-      bloc: widget.loginBloc,
+      bloc: _loginBloc,
       builder: (_, LoginState state) {
         if (state is InitialLoginState) {
           _usernameController.text = null;
@@ -56,10 +56,8 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               RaisedButton(
                 onPressed: () {
-                  widget.loginBloc.dispatch(SignUpEvent(
-                      _usernameController.text,
-                      _passwordController.text,
-                      _emailAddressController.text));
+                  _loginBloc.dispatch(SignUpEvent(_usernameController.text,
+                      _passwordController.text, _emailAddressController.text));
                 },
                 child: Text('sign up'),
               ),

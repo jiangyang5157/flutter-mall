@@ -43,8 +43,8 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SignUpForm(loginBloc: _loginBloc),
-                  SignInForm(loginBloc: _loginBloc),
+                  SignUpForm(),
+                  SignInForm(),
                   RaisedButton(
                     onPressed: () {
                       _themeBloc.dispatch(LightAppThemeEvent());
