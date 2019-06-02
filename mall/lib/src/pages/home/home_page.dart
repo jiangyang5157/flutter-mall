@@ -59,14 +59,34 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   ListTile(
-                    title: Text('ListTile 1'),
+                    title: Text('light'),
                     trailing: Icon(Icons.launch),
-                    onTap: () {},
+                    onTap: () {
+                      _themeBloc.dispatch(LightAppThemeEvent());
+                    },
+                  ),
+                  ListTile(
+                    title: Text('dark'),
+                    trailing: Icon(Icons.launch),
+                    onTap: () {
+                      _themeBloc.dispatch(DarkAppThemeEvent());
+                    },
                   ),
                   Divider(),
                   ListTile(
-                    title: Text('ListTile 2'),
+                    title: Text('print current user info'),
                     trailing: Icon(Icons.settings),
+                    onTap: () async {
+                      User user = await UserRepository().currentUser();
+                      print('#### currentUser=$user');
+                    },
+                  ),
+                  ListTile(
+                    title: Text('sign out'),
+                    trailing: Icon(Icons.settings),
+                    onTap: () async {
+                      _homeBloc.dispatch(SignOutEvent());
+                    },
                   ),
                 ],
               ),
@@ -75,31 +95,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  RaisedButton(
-                    onPressed: () async {
-                      _homeBloc.dispatch(SignOutEvent());
-                    },
-                    child: Text('sign out'),
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      _themeBloc.dispatch(LightAppThemeEvent());
-                    },
-                    child: Text('light'),
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      _themeBloc.dispatch(DarkAppThemeEvent());
-                    },
-                    child: Text('dark'),
-                  ),
-                  RaisedButton(
-                    onPressed: () async {
-                      User user = await UserRepository().currentUser();
-                      print('#### currentUser=$user');
-                    },
-                    child: Text('print current user info'),
-                  ),
+                  // todo
                 ],
               ),
             ),
