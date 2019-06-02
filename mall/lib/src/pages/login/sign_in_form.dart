@@ -37,6 +37,11 @@ class _SignInFormState extends State<SignInForm> {
     return BlocBuilder<LoginEvent, LoginState>(
       bloc: widget.loginBloc,
       builder: (_, LoginState state) {
+        if (state is LoginCurrentUserStartState) {
+          _usernameController.text = state.user.username;
+          _passwordController.text = state.user.password;
+        }
+
         if (state is LoginSuccessState) {
           widget.appBloc.dispatch(AppSignedInEvent());
         }
