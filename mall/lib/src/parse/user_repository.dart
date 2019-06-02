@@ -16,6 +16,7 @@ class UserRepository implements UserProviderContract {
   Store _store;
   static const String _db_store_User = '_db_store_User';
 
+  /// Must initialize before use
   void initialize(Database db) async {
     _db = db;
     _store = db.getStore(_db_store_User);
@@ -73,9 +74,6 @@ class UserRepository implements UserProviderContract {
   @override
   Future<User> currentUser() async {
     ParseUser parseUser = await ParseUser.currentUser();
-    if (parseUser == null) {
-      return null;
-    }
     return fromParseUser(parseUser);
   }
 
