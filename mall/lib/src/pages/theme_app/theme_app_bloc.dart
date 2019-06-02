@@ -3,17 +3,17 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:mall/src/pages/theme/theme.dart';
+import 'package:mall/src/pages/theme_app/theme_app.dart';
 
-class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
+class ThemeAppBloc extends Bloc<ThemeAppEvent, ThemeAppState> {
   static const String _prefs_IsDarkTheme = '_prefs_IsDarkTheme';
   static const bool _prefs_IsDarkTheme_default = false;
 
   Future<void> initialize() async {
     if (await _isDarkTheme()) {
-      dispatch(DarkThemeEvent());
+      dispatch(ThemeAppDarkEvent());
     } else {
-      dispatch(LightThemeEvent());
+      dispatch(ThemeAppLightEvent());
     }
   }
 
@@ -28,21 +28,21 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   }
 
   @override
-  ThemeState get initialState {
+  ThemeAppState get initialState {
     initialize();
-    return _prefs_IsDarkTheme_default ? DarkThemeState() : LightThemeState();
+    return _prefs_IsDarkTheme_default ? ThemeAppDarkState() : ThemeAppLightState();
   }
 
   @override
-  Stream<ThemeState> mapEventToState(ThemeEvent event) async* {
-    if (event is DarkThemeEvent) {
+  Stream<ThemeAppState> mapEventToState(ThemeAppEvent event) async* {
+    if (event is ThemeAppDarkEvent) {
       await _setIsDarkTheme(true);
-      yield DarkThemeState();
+      yield ThemeAppDarkState();
     }
 
-    if (event is LightThemeEvent) {
+    if (event is ThemeAppLightEvent) {
       await _setIsDarkTheme(false);
-      yield LightThemeState();
+      yield ThemeAppLightState();
     }
   }
 }

@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 import 'package:mall/src/pages/login/login.dart';
-import 'package:mall/src/pages/theme/theme.dart';
+import 'package:mall/src/pages/theme_app/theme_app.dart';
 import 'package:mall/src/pages/app/app.dart';
 import 'package:mall/src/pages/home/home.dart';
 
@@ -18,13 +18,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  ThemeBloc _themeBloc;
+  ThemeAppBloc _themeBloc;
   AppBloc _appBloc;
   LoginBloc _loginBloc;
 
   @override
   void initState() {
-    _themeBloc = BlocProvider.of<ThemeBloc>(context);
+    _themeBloc = BlocProvider.of<ThemeAppBloc>(context);
     _appBloc = BlocProvider.of<AppBloc>(context);
     _loginBloc = LoginBloc();
     super.initState();
@@ -59,13 +59,13 @@ class _LoginPageState extends State<LoginPage> {
             ),
             RaisedButton(
               onPressed: () {
-                _themeBloc.dispatch(LightThemeEvent());
+                _themeBloc.dispatch(ThemeAppLightEvent());
               },
               child: Text('light'),
             ),
             RaisedButton(
               onPressed: () {
-                _themeBloc.dispatch(DarkThemeEvent());
+                _themeBloc.dispatch(ThemeAppDarkEvent());
               },
               child: Text('dark'),
             ),

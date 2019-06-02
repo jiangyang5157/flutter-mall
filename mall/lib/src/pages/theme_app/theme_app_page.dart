@@ -2,33 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:mall/src/pages/theme/theme.dart';
+import 'package:mall/src/pages/theme_app/theme_app.dart';
 import 'package:mall/src/pages/app/app.dart';
 import 'package:mall/src/core/core.dart';
 
-class ThemePage extends StatefulWidget {
-  ThemePage({Key key}) : super(key: key);
+class ThemeAppPage extends StatefulWidget {
+  ThemeAppPage({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ThemePageState();
+  State<StatefulWidget> createState() => _ThemeAppPageState();
 }
 
-class _ThemePageState extends State<ThemePage> {
-  ThemeBloc _themeBloc;
+class _ThemeAppPageState extends State<ThemeAppPage> {
+  ThemeAppBloc _themeBloc;
 
   @override
   void initState() {
-    _themeBloc = ThemeBloc();
+    _themeBloc = ThemeAppBloc();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ThemeBloc>(
+    return BlocProvider<ThemeAppBloc>(
       bloc: _themeBloc,
       child: BlocBuilder(
         bloc: _themeBloc,
-        builder: (_, ThemeState state) {
+        builder: (_, ThemeAppState state) {
           return MaterialApp(
               localizationsDelegates: [
                 const AppLocalizationsDelegate(),
