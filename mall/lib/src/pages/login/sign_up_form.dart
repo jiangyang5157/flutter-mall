@@ -38,6 +38,7 @@ class _SignUpFormState extends State<SignUpForm> {
       builder: (_, LoginState state) {
         return Form(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
                 decoration: InputDecoration(labelText: 'username'),
@@ -56,7 +57,7 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               RaisedButton(
                 onPressed: () {
-                  widget.loginBloc.dispatch(SignUpEvent(
+                  widget.loginBloc.dispatch(LoginSignUpEvent(
                       _usernameController.text,
                       _passwordController.text,
                       _emailAddressController.text));

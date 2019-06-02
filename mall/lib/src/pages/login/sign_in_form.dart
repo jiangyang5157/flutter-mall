@@ -48,6 +48,7 @@ class _SignInFormState extends State<SignInForm> {
 
         return Form(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
                 decoration: InputDecoration(labelText: 'username / email'),
@@ -61,7 +62,7 @@ class _SignInFormState extends State<SignInForm> {
               ),
               RaisedButton(
                 onPressed: () {
-                  widget.loginBloc.dispatch(SignInEvent(
+                  widget.loginBloc.dispatch(LoginSignInEvent(
                       _usernameController.text, _passwordController.text));
                 },
                 child: Text('sign in'),

@@ -6,24 +6,24 @@ abstract class LoginEvent extends Equatable {
   LoginEvent([List props = const []]) : super(props);
 }
 
-class SignUpEvent extends LoginEvent {
+class LoginSignUpEvent extends LoginEvent {
   final String username;
   final String password;
   final String emailAddress;
 
-  SignUpEvent(this.username, this.password, this.emailAddress)
+  LoginSignUpEvent(this.username, this.password, this.emailAddress)
       : super([username, password, emailAddress]);
 }
 
-class SignInEvent extends LoginEvent {
+class LoginSignInEvent extends LoginEvent {
   final String username;
   final String password;
 
-  SignInEvent(this.username, this.password) : super([username, password]);
+  LoginSignInEvent(this.username, this.password) : super([username, password]);
 }
 
-class SignInCurrentUserEvent extends LoginEvent {
+class LoginSignInCurrentUserEvent extends LoginEvent {
   final User user;
 
-  SignInCurrentUserEvent(this.user) : super([user]);
+  LoginSignInCurrentUserEvent(this.user) : super([user]);
 }

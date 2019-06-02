@@ -10,7 +10,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Future<void> initialize() async {
     User user = await UserRepository().currentUser();
     if (user != null) {
-      dispatch(SignInCurrentUserEvent(user));
+      dispatch(LoginSignInCurrentUserEvent(user));
     }
   }
 
@@ -22,7 +22,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    if (event is SignUpEvent) {
+    if (event is LoginSignUpEvent) {
       yield LoginStartState();
 
       User user = UserRepository()
@@ -35,7 +35,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     }
 
-    if (event is SignInEvent) {
+    if (event is LoginSignInEvent) {
       yield LoginStartState();
 
       User user = UserRepository().createUser(event.username, event.password);
@@ -47,7 +47,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     }
 
-    if (event is SignInCurrentUserEvent) {
+    if (event is LoginSignInCurrentUserEvent) {
       yield LoginCurrentUserStartState(event.user);
 
       ParseResponse response = await event.user.login();

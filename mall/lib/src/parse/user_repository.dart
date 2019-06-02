@@ -46,13 +46,23 @@ class UserRepository implements UserProviderContract {
   }
 
   @override
-  Future<ParseResponse> signUp(User user) {
-    return user.signUp();
+  Future<ParseResponse> signUp(User user) async {
+    ParseResponse ret = await user.signUp();
+    if (ret.success) {
+      await _db
+          .putRecord(Record(_store, parseObjectToMap(user), user.objectId));
+    }
+    return ret;
   }
 
   @override
-  Future<ParseResponse> signIn(User user) {
-    return user.login();
+  Future<ParseResponse> signIn(User user) async {
+    ParseResponse ret = await user.login();
+    if (ret.success) {
+      await _db
+          .putRecord(Record(_store, parseObjectToMap(user), user.objectId));
+    }
+    return ret;
   }
 
   @override
@@ -62,7 +72,11 @@ class UserRepository implements UserProviderContract {
 
   @override
   Future<User> currentUser() async {
-    return fromParseUser(await ParseUser.currentUser());
+    ParseUser parseUser = await ParseUser.currentUser();
+    if (parseUser == null) {
+      return null;
+    }
+    return fromParseUser(parseUser);
   }
 
   @override
