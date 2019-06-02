@@ -4,20 +4,11 @@ abstract class LoginState extends Equatable {
   LoginState([List props = const []]) : super(props);
 }
 
-class LoginInitialState extends LoginState {
-  @override
-  String toString() => 'LoginInitialState';
-}
+class LoginInitialState extends LoginState {}
 
-class LoginStartState extends LoginState {
-  @override
-  String toString() => 'LoginStartState';
-}
+class LoginStartState extends LoginState {}
 
-class LoginSuccessState extends LoginState {
-  @override
-  String toString() => 'LoginSuccessState';
-}
+class LoginSuccessState extends LoginState {}
 
 class LoginFailureState extends LoginState {
   final String error;

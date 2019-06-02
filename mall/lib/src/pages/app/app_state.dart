@@ -1,24 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AppState extends Equatable {
   AppState([List props = const []]) : super([props]);
 }
 
-class AppLightThemeState extends AppState {
-  static final ThemeData theme = ThemeData(brightness: Brightness.light);
+class AppUninitializedState extends AppState {}
 
-  AppLightThemeState() : super([theme]);
+class AppInitializedState extends AppState {}
 
-  @override
-  String toString() => 'AppLightThemeState';
-}
+class AppUnauthenticatedState extends AppState {}
 
-class AppDarkThemeState extends AppState {
-  static final ThemeData theme = ThemeData(brightness: Brightness.dark);
-
-  AppDarkThemeState() : super([theme]);
-
-  @override
-  String toString() => 'AppDarkThemeState';
-}
+class AppAuthenticatedState extends AppState {}

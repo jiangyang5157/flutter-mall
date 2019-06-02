@@ -26,7 +26,7 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProviderTree(
+    return BlocProvider(
       blocProviders: [
         BlocProvider<AppBloc>(bloc: _appBloc),
       ],
