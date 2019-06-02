@@ -37,26 +37,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-                decoration: InputDecoration(hintText: 'user name hint'),
-                obscureText: false,
-                onChanged: (text) {
-                  print('#### user name change: $text');
-                }),
-            TextField(
-                decoration: InputDecoration(hintText: 'password hint'),
-                obscureText: true,
-                onChanged: (text) {
-                  print('#### password change: $text');
-                }),
-            RaisedButton(
-              onPressed: () {},
-              child: Text('sign up'),
-            ),
-            RaisedButton(
-              onPressed: () {},
-              child: Text('sign in'),
-            ),
+            SignUpForm(loginBloc: _loginBloc),
             RaisedButton(
               onPressed: () {
                 _themeBloc.dispatch(ThemeAppLightEvent());
