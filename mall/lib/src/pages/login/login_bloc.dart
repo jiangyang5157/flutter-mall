@@ -23,7 +23,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is SignUpEvent) {
-      yield StartSignUpState();
+      yield SignUpStartState();
 
       User user = UserRepository()
           .createUser(event.username, event.password, event.emailAddress);
@@ -36,7 +36,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
 
     if (event is SignInEvent) {
-      yield StartSignInState();
+      yield SignInStartState();
 
       User user = UserRepository().createUser(event.username, event.password);
       ParseResponse response = await user.login();

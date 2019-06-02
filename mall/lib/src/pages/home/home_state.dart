@@ -4,8 +4,8 @@ abstract class HomeState extends Equatable {
   HomeState([List props = const []]) : super([props]);
 }
 
-class HomeInitialState extends HomeState {}
+class InitialHomeState extends HomeState {}
 
-class HomeLogoutStartState extends HomeState {}
+class SignOutStartState extends HomeState {}
 
-class HomeLogoutCompletedState extends HomeState {}
+class SignOutFinishState extends HomeState {}

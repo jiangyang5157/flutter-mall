@@ -11,17 +11,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   @override
   HomeState get initialState {
     initialize();
-    return HomeInitialState();
+    return InitialHomeState();
   }
 
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
-    if (event is HomeSignOutEvent) {
-      yield HomeLogoutStartState();
+    if (event is SignOutEvent) {
+      yield SignOutStartState();
 
       User user = await UserRepository().currentUser();
       await user.logout();
-      yield HomeLogoutCompletedState();
+      yield SignOutFinishState();
     }
   }
 }

@@ -6,6 +6,7 @@ import 'package:mall/src/pages/home/home.dart';
 import 'package:mall/src/pages/theme_app/theme_app.dart';
 import 'package:mall/src/pages/app/app.dart';
 import 'package:mall/src/parse/parse.dart';
+import 'package:mall/src/core/core.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -29,18 +30,46 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeBloc>(
-      bloc: _homeBloc,
+    return BlocProviderTree(
+      blocProviders: [
+        BlocProvider<HomeBloc>(bloc: _homeBloc),
+      ],
       child: BlocBuilder(
         bloc: _homeBloc,
         builder: (_, HomeState state) {
-          if (state is HomeLogoutCompletedState) {
+          if (state is SignOutFinishState) {
             _appBloc.dispatch(AppSignedOutEvent());
           }
 
           return Scaffold(
             appBar: AppBar(
-              title: Text('Home'),
+              title: Text(AppLocalization.of(context).string('title_home')),
+            ),
+            drawer: Drawer(
+              child: ListView(
+                padding: const EdgeInsets.all(0.0),
+                children: <Widget>[
+                  UserAccountsDrawerHeader(
+                    accountName: Text('accountName'),
+                    accountEmail: Text('accountEmail'),
+                    currentAccountPicture: GestureDetector(
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('ListTile 1'),
+                    trailing: Icon(Icons.launch),
+                    onTap: () {},
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text('ListTile 2'),
+                    trailing: Icon(Icons.settings),
+                  ),
+                ],
+              ),
             ),
             body: Center(
               child: Column(
@@ -48,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   RaisedButton(
                     onPressed: () async {
-                      _homeBloc.dispatch(HomeSignOutEvent());
+                      _homeBloc.dispatch(SignOutEvent());
                     },
                     child: Text('sign out'),
                   ),
@@ -78,5 +107,11 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _homeBloc.dispose();
+    super.dispose();
   }
 }

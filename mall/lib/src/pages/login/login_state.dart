@@ -12,9 +12,9 @@ class InitialLoginState extends LoginState {
   InitialLoginState([this.user]) : super([user]);
 }
 
-class StartSignInState extends LoginState {}
+class SignInStartState extends LoginState {}
 
-class StartSignUpState extends LoginState {}
+class SignUpStartState extends LoginState {}
 
 class SignInSuccessState extends LoginState {}
 
