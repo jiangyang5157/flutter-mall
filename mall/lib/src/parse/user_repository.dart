@@ -61,8 +61,8 @@ class UserRepository implements UserProviderContract {
   }
 
   @override
-  Future<dynamic> currentUser() async {
-    return ParseUser.currentUser();
+  Future<User> currentUser() async {
+    return fromParseUser(await ParseUser.currentUser());
   }
 
   @override
@@ -78,5 +78,10 @@ class UserRepository implements UserProviderContract {
   @override
   Future<ParseResponse> verificationEmailRequest(User user) {
     return user.verificationEmailRequest();
+  }
+
+  @override
+  User fromParseUser(ParseUser parseUser) {
+    return mapToParseObject<User>(User(), parseObjectToMap(parseUser));
   }
 }

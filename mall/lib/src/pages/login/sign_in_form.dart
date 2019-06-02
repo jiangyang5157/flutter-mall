@@ -39,7 +39,6 @@ class _SignInFormState extends State<SignInForm> {
       builder: (_, LoginState state) {
         if (state is LoginSuccessState) {
           widget.appBloc.dispatch(AppSignedInEvent());
-          test();
         }
 
         return Form(
@@ -67,10 +66,5 @@ class _SignInFormState extends State<SignInForm> {
         );
       },
     );
-  }
-
-  Future test() async {
-    ParseUser user = await UserRepository().currentUser();
-    print("#### curr=$user");
   }
 }

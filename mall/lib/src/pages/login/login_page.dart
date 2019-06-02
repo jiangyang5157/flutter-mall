@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SignUpForm(appBloc: _appBloc,loginBloc: _loginBloc),
+            SignUpForm(appBloc: _appBloc, loginBloc: _loginBloc),
             SignInForm(appBloc: _appBloc, loginBloc: _loginBloc),
             RaisedButton(
               onPressed: () {
@@ -54,8 +54,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             RaisedButton(
               onPressed: () async {
-                ParseUser user = await UserRepository().currentUser();
-                print("#### curr=$user");
+                User user = await UserRepository().currentUser();
+                print("#### currentUser=$user");
               },
               child: Text('check current user'),
             ),

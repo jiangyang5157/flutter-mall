@@ -15,11 +15,13 @@ abstract class UserProviderContract {
 
   Future<ParseResponse> signOut(User user);
 
-  Future<dynamic> currentUser();
+  Future<User> currentUser();
 
   Future<ParseResponse> getCurrentUserFromServer();
 
   Future<ParseResponse> requestPasswordReset(User user);
 
   Future<ParseResponse> verificationEmailRequest(User user);
+
+  User fromParseUser(ParseUser parseUser);
 }
