@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                   RaisedButton(
                     onPressed: () async {
                       User user = await UserRepository().currentUser();
-                      print("#### currentUser=$user");
+                      print('#### currentUser=$user');
                     },
                     child: Text('check current user'),
                   ),

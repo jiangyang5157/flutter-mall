@@ -8,6 +8,8 @@ const String parseMasterKey = 'myMasterKey';
 //const String parseServerUrl = 'http://localhost:1337/parse';
 const String parseServerUrl = 'http://10.0.2.2:1337/parse'; // Android emulator
 
+const String keyVarParseObject = 'parseObject';
+
 Map<String, dynamic> parseObjectToMap(ParseObject object) {
   if (object == null) {
     return null;
@@ -15,7 +17,7 @@ Map<String, dynamic> parseObjectToMap(ParseObject object) {
   try {
     final Map<String, dynamic> ret = Map<String, dynamic>();
     // ignore: invalid_use_of_protected_member
-    ret['ParseObject'] = json.jsonEncode(object.toJson(full: true));
+    ret[keyVarParseObject] = json.jsonEncode(object.toJson(full: true));
     ret[keyVarObjectId] = object.objectId;
     object.updatedAt != null
         ? ret[keyVarUpdatedAt] = object.updatedAt.millisecondsSinceEpoch
@@ -34,7 +36,7 @@ T mapToParseObject<T extends ParseObject>(T object, Map<String, dynamic> data) {
     return object;
   }
   try {
-    final T ret = object.clone(json.jsonDecode(data['ParseObject']));
+    final T ret = object.clone(json.jsonDecode(data[keyVarParseObject]));
     return ret;
   } catch (e) {
     return null;

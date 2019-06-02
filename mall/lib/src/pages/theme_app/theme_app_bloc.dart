@@ -30,7 +30,9 @@ class ThemeAppBloc extends Bloc<ThemeAppEvent, ThemeAppState> {
   @override
   ThemeAppState get initialState {
     initialize();
-    return _prefs_IsDarkTheme_default ? DarkAppThemeState() : LightAppThemeState();
+    return _prefs_IsDarkTheme_default
+        ? DarkAppThemeState()
+        : LightAppThemeState();
   }
 
   @override
