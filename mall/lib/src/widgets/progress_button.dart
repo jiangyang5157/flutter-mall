@@ -52,10 +52,8 @@ class _ProgressButtonState extends State<ProgressButton>
             padding: EdgeInsets.all(0.0),
             color: _state == 2 ? Colors.green : Colors.blue,
             child: buildButtonChild(),
-            onPressed: () {},
-            onHighlightChanged: (isPressed) {
+            onPressed: () {
               setState(() {
-                _isPressed = isPressed;
                 if (_state == 0) {
                   animateButton();
                 }
