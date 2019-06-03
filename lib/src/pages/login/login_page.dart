@@ -6,7 +6,7 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:mall/src/parse/parse.dart';
 import 'package:mall/src/pages/login/login.dart';
 import 'package:mall/src/pages/app/app.dart';
-import 'package:mall/src/widgets/widgets.dart';
+import 'package:flutter_progress_button/flutter_progress_button.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
