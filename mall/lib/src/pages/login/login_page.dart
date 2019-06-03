@@ -6,6 +6,7 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:mall/src/parse/parse.dart';
 import 'package:mall/src/pages/login/login.dart';
 import 'package:mall/src/pages/app/app.dart';
+import 'package:mall/src/widgets/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -53,15 +54,10 @@ class _LoginPageState extends State<LoginPage> {
                   SignInForm(),
                   RaisedButton(
                     onPressed: () async {
-                      User user = User();
-                      user.set<bool>('anonymous', true);
-                      ParseResponse response = await user.loginAnonymous();
-                      print('loginAnonymous response=$response');
-                      if (response.success) {
-                        _appBloc.dispatch(AppSignedInEvent());
-                      }
+                      User user = await UserRepository().currentUser();
+                      print(user);
                     },
-                    child: Text('login with anonymous user'),
+                    child: Text('print current user info'),
                   ),
                   RaisedButton(
                     onPressed: () async {
@@ -72,12 +68,47 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text('forget user'),
                   ),
-                  RaisedButton(
-                    onPressed: () async {
-                      User currentUser = await UserRepository().currentUser();
-                      print('currentUser=$currentUser');
-                    },
-                    child: Text('print current user info'),
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: ProgressButton(
+                      'login with anonymous user',
+                      width: 196,
+                      onProcess: () async {
+                        User user = User();
+                        user.set<bool>('anonymous', true);
+                        ParseResponse response = await user.loginAnonymous();
+                        return () {
+                          print('loginAnonymous response=$response');
+                          if (response.success) {
+                            _appBloc.dispatch(AppSignedInEvent());
+                          }
+                        };
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: ProgressButton(
+                      'await 1 second',
+                      width: 196,
+                      onProcess: () async {
+                        await Future.delayed(
+                            const Duration(milliseconds: 1000));
+                        return () {
+                          print('1 second await done');
+                        };
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: ProgressButton(
+                      'no await',
+                      width: 196,
+                      onProcess: () {
+                        print('no await');
+                      },
+                    ),
                   ),
                 ],
               ),

@@ -7,7 +7,6 @@ import 'package:mall/src/pages/theme_app/theme_app.dart';
 import 'package:mall/src/pages/app/app.dart';
 import 'package:mall/src/parse/parse.dart';
 import 'package:mall/src/core/core.dart';
-import 'package:mall/src/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -102,12 +101,6 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  BlocBuilder(
-                    bloc: _themeBloc,
-                    builder: (_, ThemeAppState state) {
-                      return ProgressButton('click me');
-                    },
-                  ),
                   RaisedButton(
                     onPressed: () async {},
                     child: Text('test TestPage'),

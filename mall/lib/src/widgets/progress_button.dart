@@ -4,6 +4,7 @@ import 'dart:async';
 enum ProgressButtonState { Default, Process }
 
 class ProgressButton extends StatefulWidget {
+  final Function onProcess;
   final Color color;
   final Color textColor;
   final String text;
@@ -14,6 +15,7 @@ class ProgressButton extends StatefulWidget {
   ProgressButton(
     this.text, {
     Key key,
+    this.onProcess,
     this.color,
     this.textColor,
     this.width = double.infinity,
@@ -45,17 +47,22 @@ class _ProgressButtonState extends State<ProgressButton>
 
   @override
   void deactivate() {
+    _reset();
     super.deactivate();
   }
 
   @override
   void initState() {
+    _reset();
+    super.initState();
+  }
+
+  void _reset() {
     _state = ProgressButtonState.Default;
     _color = widget.color;
     _textColor = widget.textColor;
     _width = widget.width;
     _height = widget.height;
-    super.initState();
   }
 
   @override
@@ -75,10 +82,27 @@ class _ProgressButtonState extends State<ProgressButton>
           color: _color,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius)),
-          child: buildChildren(context),
-          onPressed: () {
-            setState(() {
-              process();
+          child: _buildChildren(context),
+          onPressed: () async {
+            if (_state != ProgressButtonState.Default) {
+              return;
+            }
+
+            _forward(() async {
+              _state = ProgressButtonState.Process;
+            });
+
+            var onProcessCompleted;
+            if (widget.onProcess != null) {
+              onProcessCompleted = await widget.onProcess();
+            }
+
+            _reverse(() {
+              _state = ProgressButtonState.Default;
+              if (onProcessCompleted != null &&
+                  onProcessCompleted is Function) {
+                onProcessCompleted();
+              }
             });
           },
         ),
@@ -86,33 +110,27 @@ class _ProgressButtonState extends State<ProgressButton>
     );
   }
 
-  void process() {
-    if (_state == ProgressButtonState.Default) {
-      double initialWidth = _globalKey.currentContext.size.width;
-
-      _animController = AnimationController(duration: _duration, vsync: this);
-      _anim = Tween(begin: 0.0, end: 1.0).animate(_animController)
-        ..addListener(() {
-          setState(() {
-            _width = initialWidth - ((initialWidth - _height) * _anim.value);
-          });
-        });
-      _animController.forward();
-
-      setState(() {
-        _state = ProgressButtonState.Process;
-      });
-    } else {
-      _animController.reverse();
-      Timer(_duration, () {
+  void _forward(Function onStart) {
+    double initialWidth = _globalKey.currentContext.size.width;
+    _animController = AnimationController(duration: _duration, vsync: this);
+    _anim = Tween(begin: 0.0, end: 1.0).animate(_animController)
+      ..addListener(() {
         setState(() {
-          _state = ProgressButtonState.Default;
+          _width = initialWidth - ((initialWidth - _height) * _anim.value);
         });
       });
-    }
+    _animController.forward();
+    onStart();
   }
 
-  Widget buildChildren(BuildContext context) {
+  void _reverse(Function onFinish) {
+    _animController.reverse();
+    Timer(_duration, () {
+      onFinish();
+    });
+  }
+
+  Widget _buildChildren(BuildContext context) {
     switch (_state) {
       case ProgressButtonState.Default:
         return Text(widget.text, style: TextStyle(color: _textColor));
