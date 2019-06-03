@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+enum ProgressButtonState { Initial, Process, Terminal }
+
 class ProgressButton extends StatefulWidget {
+  final Color color;
+  final Color textColor;
+  final String text;
   final Function callback;
 
-  ProgressButton(this.callback);
+  ProgressButton({
+    Key key,
+    this.text = 'Click Me',
+    this.color = Colors.blue,
+    this.textColor = Colors.white,
+    this.callback,
+  }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ProgressButtonState();
+  _ProgressButtonState createState() => _ProgressButtonState();
 }
 
 class _ProgressButtonState extends State<ProgressButton>
@@ -41,7 +52,7 @@ class _ProgressButtonState extends State<ProgressButton>
   @override
   Widget build(BuildContext context) {
     return PhysicalModel(
-        color: Colors.blue,
+        color: widget.color,
         elevation: calculateElevation(),
         borderRadius: BorderRadius.circular(25.0),
         child: Container(
@@ -50,7 +61,7 @@ class _ProgressButtonState extends State<ProgressButton>
           width: _width,
           child: RaisedButton(
             padding: EdgeInsets.all(0.0),
-            color: _state == 2 ? Colors.green : Colors.blue,
+            color: _state == 2 ? Colors.green : widget.color,
             child: buildButtonChild(),
             onPressed: () {
               setState(() {
@@ -96,7 +107,7 @@ class _ProgressButtonState extends State<ProgressButton>
     if (_state == 0) {
       return Text(
         'Login',
-        style: TextStyle(color: Colors.white, fontSize: 16.0),
+        style: TextStyle(color: widget.textColor, fontSize: 16.0),
       );
     } else if (_state == 1) {
       return SizedBox(
@@ -104,11 +115,11 @@ class _ProgressButtonState extends State<ProgressButton>
         width: 36.0,
         child: CircularProgressIndicator(
           value: null,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          valueColor: AlwaysStoppedAnimation<Color>(widget.textColor),
         ),
       );
     } else {
-      return Icon(Icons.check, color: Colors.white);
+      return Icon(Icons.check, color: widget.textColor);
     }
   }
 

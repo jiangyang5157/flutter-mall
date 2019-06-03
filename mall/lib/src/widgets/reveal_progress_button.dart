@@ -5,8 +5,10 @@ import 'package:mall/src/core/core.dart';
 import 'package:mall/src/widgets/widgets.dart';
 
 class RevealProgressButton extends StatefulWidget {
+  RevealProgressButton({Key key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => _RevealProgressButtonState();
+  _RevealProgressButtonState createState() => _RevealProgressButtonState();
 }
 
 class _RevealProgressButtonState extends State<RevealProgressButton>
@@ -36,7 +38,7 @@ class _RevealProgressButtonState extends State<RevealProgressButton>
     return CustomPaint(
       painter:
           RevealProgressButtonPainter(MediaQuery.of(context).size, _fraction),
-      child: ProgressButton(reveal),
+      child: ProgressButton(callback: reveal),
     );
   }
 
