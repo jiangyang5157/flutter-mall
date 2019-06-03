@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
 
+import 'package:mall/src/parse/parse.dart';
 import 'package:mall/src/pages/login/login.dart';
 import 'package:mall/src/pages/app/app.dart';
 
@@ -41,6 +43,31 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   SignUpForm(),
                   SignInForm(),
+                  RaisedButton(
+                    onPressed: () async {
+                      User user = User();
+                      user.set<bool>('anonymous', true);
+                      ParseResponse response = await user.loginAnonymous();
+                      print('loginAnonymous response=$response');
+                    },
+                    child: Text('anonymous user'),
+                  ),
+                  RaisedButton(
+                    onPressed: () async {
+                      User currentUser = await UserRepository().currentUser();
+                      print('currentUser=$currentUser');
+                    },
+                    child: Text('currentUser user'),
+                  ),
+                  RaisedButton(
+                    onPressed: () async {
+                      User currentUser = await UserRepository().currentUser();
+                      ParseResponse response = await currentUser.destroy();
+                      print('destroy response=$response');
+
+                    },
+                    child: Text('destroy user'),
+                  ),
                 ],
               ),
             ),

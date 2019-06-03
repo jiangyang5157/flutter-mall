@@ -1,3 +1,5 @@
+import 'dart:convert' as json;
+
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:sembast/sembast.dart';
 
@@ -23,8 +25,18 @@ class UserRepository implements UserProviderContract {
   }
 
   @override
-  User createUser([String username, String password, String emailAddress]) {
-    return User(username, password, emailAddress);
+  User createUser({String username, String password, String emailAddress}) {
+    return User(
+        username: username, password: password, emailAddress: emailAddress);
+  }
+
+  @override
+  Future<User> currentUser() async {
+    ParseUser parseUser = await ParseUser.currentUser();
+    if (parseUser == null) {
+      return null;
+    }
+    return User().clone(json.jsonDecode(json.jsonEncode(parseUser.toJson(full: true))));
   }
 
   @override
@@ -32,7 +44,7 @@ class UserRepository implements UserProviderContract {
     ParseResponse ret = await user.save();
     if (ret.success) {
       await _db
-          .putRecord(Record(_store, parseObjectToMap(user), user.objectId));
+          .putRecord(Record(_store, user.toJson(full: true), user.objectId));
     }
     return ret;
   }
@@ -51,7 +63,7 @@ class UserRepository implements UserProviderContract {
     ParseResponse ret = await user.signUp();
     if (ret.success) {
       await _db
-          .putRecord(Record(_store, parseObjectToMap(user), user.objectId));
+          .putRecord(Record(_store, user.toJson(full: true), user.objectId));
     }
     return ret;
   }
@@ -61,7 +73,7 @@ class UserRepository implements UserProviderContract {
     ParseResponse ret = await user.login();
     if (ret.success) {
       await _db
-          .putRecord(Record(_store, parseObjectToMap(user), user.objectId));
+          .putRecord(Record(_store, user.toJson(full: true), user.objectId));
     }
     return ret;
   }
@@ -69,12 +81,6 @@ class UserRepository implements UserProviderContract {
   @override
   Future<ParseResponse> signOut(User user) {
     return user.logout();
-  }
-
-  @override
-  Future<User> currentUser() async {
-    ParseUser parseUser = await ParseUser.currentUser();
-    return fromParseUser(parseUser);
   }
 
   @override
@@ -90,10 +96,5 @@ class UserRepository implements UserProviderContract {
   @override
   Future<ParseResponse> verificationEmailRequest(User user) {
     return user.verificationEmailRequest();
-  }
-
-  @override
-  User fromParseUser(ParseUser parseUser) {
-    return userFromMap(parseObjectToMap(parseUser));
   }
 }
