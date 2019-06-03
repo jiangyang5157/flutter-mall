@@ -20,7 +20,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield SignOutStartState();
 
       User user = await UserRepository().currentUser();
-      await user?.logout();
+      if (user != null) {
+        await user.logout();
+      }
       yield SignOutFinishState();
     }
   }
