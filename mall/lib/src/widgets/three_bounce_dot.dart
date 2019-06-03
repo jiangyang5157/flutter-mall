@@ -31,42 +31,42 @@ class ThreeBounceDot extends StatefulWidget {
 
 class _ThreeBounceDotState extends State<ThreeBounceDot>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<double> animation_1;
-  Animation<double> animation_2;
-  Animation<double> animation_3;
+  AnimationController _animController;
+  Animation<double> _anim_1;
+  Animation<double> _anim_2;
+  Animation<double> _anim_3;
 
   @override
   void dispose() {
-    animationController.dispose();
+    _animController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    animationController =
+    _animController =
         AnimationController(vsync: this, duration: widget.duration)..repeat();
-    animation_1 = Tween(begin: 0.0, end: 1.0).animate(
+    _anim_1 = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
-        parent: animationController,
+        parent: _animController,
         curve: Interval(0.0, 0.8, curve: Curves.ease),
       ),
     );
-    animation_2 = Tween(begin: 0.0, end: 1.0).animate(
+    _anim_2 = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
-        parent: animationController,
+        parent: _animController,
         curve: Interval(0.1, 0.9, curve: Curves.ease),
       ),
     );
-    animation_3 = Tween(begin: 0.0, end: 1.0).animate(
+    _anim_3 = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
-        parent: animationController,
+        parent: _animController,
         curve: Interval(0.2, 1.0, curve: Curves.ease),
       ),
     );
 
-    animationController.addListener(() {
+    _animController.addListener(() {
       setState(() => {});
     });
   }
@@ -81,9 +81,9 @@ class _ThreeBounceDotState extends State<ThreeBounceDot>
             offset: Offset(
               0.0,
               widget.bounce *
-                  (animation_1.value <= 0.5
-                      ? animation_1.value
-                      : 1.0 - animation_1.value),
+                  (_anim_1.value <= 0.5
+                      ? _anim_1.value
+                      : 1.0 - _anim_1.value),
             ),
             child: Padding(
               padding: widget.padding,
@@ -98,9 +98,9 @@ class _ThreeBounceDotState extends State<ThreeBounceDot>
             offset: Offset(
               0.0,
               widget.bounce *
-                  (animation_2.value <= 0.5
-                      ? animation_2.value
-                      : 1.0 - animation_2.value),
+                  (_anim_2.value <= 0.5
+                      ? _anim_2.value
+                      : 1.0 - _anim_2.value),
             ),
             child: Padding(
               padding: widget.padding,
@@ -115,9 +115,9 @@ class _ThreeBounceDotState extends State<ThreeBounceDot>
             offset: Offset(
               0.0,
               widget.bounce *
-                  (animation_3.value <= 0.5
-                      ? animation_3.value
-                      : 1.0 - animation_3.value),
+                  (_anim_3.value <= 0.5
+                      ? _anim_3.value
+                      : 1.0 - _anim_3.value),
             ),
             child: Padding(
               padding: widget.padding,

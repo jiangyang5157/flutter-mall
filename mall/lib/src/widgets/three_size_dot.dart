@@ -29,28 +29,28 @@ class ThreeSizeDot extends StatefulWidget {
 
 class _ThreeSizeDotState extends State<ThreeSizeDot>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<double> animation_1;
-  Animation<double> animation_2;
-  Animation<double> animation_3;
+  AnimationController _animController;
+  Animation<double> _anim_1;
+  Animation<double> _anim_2;
+  Animation<double> _anim_3;
 
   @override
   void dispose() {
-    animationController.dispose();
+    _animController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    animationController =
+    _animController =
         AnimationController(vsync: this, duration: widget.duration)..repeat();
-    animation_1 = DelayTween(begin: 0.0, end: 1.0, delay: 0.0)
-        .animate(animationController);
-    animation_2 = DelayTween(begin: 0.0, end: 1.0, delay: 0.2)
-        .animate(animationController);
-    animation_3 = DelayTween(begin: 0.0, end: 1.0, delay: 0.4)
-        .animate(animationController);
+    _anim_1 = DelayTween(begin: 0.0, end: 1.0, delay: 0.0)
+        .animate(_animController);
+    _anim_2 = DelayTween(begin: 0.0, end: 1.0, delay: 0.2)
+        .animate(_animController);
+    _anim_3 = DelayTween(begin: 0.0, end: 1.0, delay: 0.4)
+        .animate(_animController);
   }
 
   @override
@@ -60,7 +60,7 @@ class _ThreeSizeDotState extends State<ThreeSizeDot>
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           ScaleTransition(
-            scale: animation_1,
+            scale: _anim_1,
             child: Padding(
               padding: widget.padding,
               child: Dot(
@@ -71,7 +71,7 @@ class _ThreeSizeDotState extends State<ThreeSizeDot>
             ),
           ),
           ScaleTransition(
-            scale: animation_2,
+            scale: _anim_2,
             child: Padding(
               padding: widget.padding,
               child: Dot(
@@ -82,7 +82,7 @@ class _ThreeSizeDotState extends State<ThreeSizeDot>
             ),
           ),
           ScaleTransition(
-            scale: animation_3,
+            scale: _anim_3,
             child: Padding(
               padding: widget.padding,
               child: Dot(

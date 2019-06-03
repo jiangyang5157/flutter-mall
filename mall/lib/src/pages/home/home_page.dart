@@ -102,7 +102,12 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  RevealProgressButton(),
+                  BlocBuilder(
+                    bloc: _themeBloc,
+                    builder: (_, ThemeAppState state) {
+                      return ProgressButton('click me');
+                    },
+                  ),
                   RaisedButton(
                     onPressed: () async {},
                     child: Text('test TestPage'),

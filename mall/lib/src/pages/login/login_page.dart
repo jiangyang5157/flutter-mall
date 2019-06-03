@@ -57,6 +57,9 @@ class _LoginPageState extends State<LoginPage> {
                       user.set<bool>('anonymous', true);
                       ParseResponse response = await user.loginAnonymous();
                       print('loginAnonymous response=$response');
+                      if (response.success) {
+                        _appBloc.dispatch(AppSignedInEvent());
+                      }
                     },
                     child: Text('login with anonymous user'),
                   ),

@@ -4,5 +4,3 @@ export 'package:mall/src/widgets/three_bounce_dot.dart';
 export 'package:mall/src/widgets/three_size_dot.dart';
 export 'package:mall/src/widgets/loading_indicator.dart';
 export 'package:mall/src/widgets/progress_button.dart';
-export 'package:mall/src/widgets/reveal_progress_button.dart';
-export 'package:mall/src/widgets/reveal_progress_button_painter.dart';

@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-enum ProgressButtonState { Initial, Process, Terminal }
+enum ProgressButtonState { Default, Process }
 
 class ProgressButton extends StatefulWidget {
   final Color color;
   final Color textColor;
   final String text;
-  final Function callback;
+  final double width;
+  final double height;
+  final double borderRadius;
 
-  ProgressButton({
+  ProgressButton(
+    this.text, {
     Key key,
-    this.text = 'Click Me',
-    this.color = Colors.blue,
-    this.textColor = Colors.white,
-    this.callback,
+    this.color,
+    this.textColor,
+    this.width = double.infinity,
+    this.height = 48,
+    this.borderRadius = 24.0,
   }) : super(key: key);
 
   @override
@@ -23,99 +27,103 @@ class ProgressButton extends StatefulWidget {
 
 class _ProgressButtonState extends State<ProgressButton>
     with TickerProviderStateMixin {
-  Animation _animation;
-  AnimationController _controller;
   GlobalKey _globalKey = GlobalKey();
-  double _height = 48;
-  double _width = 200;
-  ProgressButtonState _state = ProgressButtonState.Initial;
-  bool _animatingReveal = false;
+  Animation _anim;
+  AnimationController _animController;
+  Duration _duration = const Duration(milliseconds: 250);
+  ProgressButtonState _state;
+  Color _color;
+  Color _textColor;
+  double _width;
+  double _height;
 
   @override
   dispose() {
-    _controller.dispose();
+    _animController.dispose();
     super.dispose();
   }
 
   @override
   void deactivate() {
-    reset();
     super.deactivate();
   }
 
-  void reset() {
-    _width = 200;
-    _animatingReveal = false;
-    _state = ProgressButtonState.Initial;
+  @override
+  void initState() {
+    _state = ProgressButtonState.Default;
+    _color = widget.color;
+    _textColor = widget.textColor;
+    _width = widget.width;
+    _height = widget.height;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    _color = _color ?? Theme.of(context).buttonColor;
+    _textColor = _textColor ?? Theme.of(context).textTheme.body1.color;
+
     return PhysicalModel(
-        color: widget.color,
-        borderRadius: BorderRadius.circular(25.0),
-        child: Container(
-          key: _globalKey,
-          height: _height,
-          width: _width,
-          child: RaisedButton(
-            padding: EdgeInsets.all(0.0),
-            color: _state == ProgressButtonState.Terminal
-                ? Colors.green
-                : widget.color,
-            child: buildButtonChild(),
-            onPressed: () {
-              setState(() {
-                if (_state == ProgressButtonState.Initial) {
-                  animateButton();
-                }
-              });
-            },
-          ),
-        ));
+      color: Theme.of(context).colorScheme.primary,
+      borderRadius: BorderRadius.circular(widget.borderRadius),
+      child: Container(
+        key: _globalKey,
+        height: _height,
+        width: _width,
+        child: RaisedButton(
+          padding: EdgeInsets.all(0.0),
+          color: _color,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(widget.borderRadius)),
+          child: buildChildren(context),
+          onPressed: () {
+            setState(() {
+              process();
+            });
+          },
+        ),
+      ),
+    );
   }
 
-  void animateButton() {
-    double initialWidth = _globalKey.currentContext.size.width;
+  void process() {
+    if (_state == ProgressButtonState.Default) {
+      double initialWidth = _globalKey.currentContext.size.width;
 
-    _controller =
-        AnimationController(duration: Duration(milliseconds: 250), vsync: this);
-    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
-      ..addListener(() {
+      _animController = AnimationController(duration: _duration, vsync: this);
+      _anim = Tween(begin: 0.0, end: 1.0).animate(_animController)
+        ..addListener(() {
+          setState(() {
+            _width = initialWidth - ((initialWidth - _height) * _anim.value);
+          });
+        });
+      _animController.forward();
+
+      setState(() {
+        _state = ProgressButtonState.Process;
+      });
+    } else {
+      _animController.reverse();
+      Timer(_duration, () {
         setState(() {
-          _width = initialWidth - ((initialWidth - _height) * _animation.value);
+          _state = ProgressButtonState.Default;
         });
       });
-    _controller.forward();
-
-    setState(() {
-      _state = ProgressButtonState.Process;
-    });
-
-    Timer(Duration(milliseconds: 1750), () {
-      setState(() {
-        _state = ProgressButtonState.Terminal;
-      });
-    });
-
-    Timer(Duration(milliseconds: 2000), () {
-      _animatingReveal = true;
-      widget.callback();
-    });
+    }
   }
 
-  Widget buildButtonChild() {
-    if (_state == ProgressButtonState.Initial) {
-      return Text(widget.text, style: TextStyle(color: widget.textColor));
-    } else if (_state == ProgressButtonState.Process) {
-      return SizedBox(
-        child: CircularProgressIndicator(
+  Widget buildChildren(BuildContext context) {
+    switch (_state) {
+      case ProgressButtonState.Default:
+        return Text(widget.text, style: TextStyle(color: _textColor));
+        break;
+      case ProgressButtonState.Process:
+      default:
+        return CircularProgressIndicator(
           value: null,
-          valueColor: AlwaysStoppedAnimation<Color>(widget.textColor),
-        ),
-      );
-    } else {
-      return Icon(Icons.check, color: widget.textColor);
+          valueColor: AlwaysStoppedAnimation<Color>(_textColor),
+        );
+        break;
     }
   }
 }
