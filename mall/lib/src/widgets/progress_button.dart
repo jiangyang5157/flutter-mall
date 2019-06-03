@@ -26,9 +26,9 @@ class _ProgressButtonState extends State<ProgressButton>
   Animation _animation;
   AnimationController _controller;
   GlobalKey _globalKey = GlobalKey();
-  double _width = double.infinity;
-  int _state = 0;
-  bool _isPressed = false;
+  double _height = 48;
+  double _width = 200;
+  ProgressButtonState _state = ProgressButtonState.Initial;
   bool _animatingReveal = false;
 
   @override
@@ -44,28 +44,29 @@ class _ProgressButtonState extends State<ProgressButton>
   }
 
   void reset() {
-    _width = double.infinity;
+    _width = 200;
     _animatingReveal = false;
-    _state = 0;
+    _state = ProgressButtonState.Initial;
   }
 
   @override
   Widget build(BuildContext context) {
     return PhysicalModel(
         color: widget.color,
-        elevation: calculateElevation(),
         borderRadius: BorderRadius.circular(25.0),
         child: Container(
           key: _globalKey,
-          height: 48.0,
+          height: _height,
           width: _width,
           child: RaisedButton(
             padding: EdgeInsets.all(0.0),
-            color: _state == 2 ? Colors.green : widget.color,
+            color: _state == ProgressButtonState.Terminal
+                ? Colors.green
+                : widget.color,
             child: buildButtonChild(),
             onPressed: () {
               setState(() {
-                if (_state == 0) {
+                if (_state == ProgressButtonState.Initial) {
                   animateButton();
                 }
               });
@@ -78,41 +79,36 @@ class _ProgressButtonState extends State<ProgressButton>
     double initialWidth = _globalKey.currentContext.size.width;
 
     _controller =
-        AnimationController(duration: Duration(milliseconds: 300), vsync: this);
+        AnimationController(duration: Duration(milliseconds: 250), vsync: this);
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
       ..addListener(() {
         setState(() {
-          _width = initialWidth - ((initialWidth - 48.0) * _animation.value);
+          _width = initialWidth - ((initialWidth - _height) * _animation.value);
         });
       });
     _controller.forward();
 
     setState(() {
-      _state = 1;
+      _state = ProgressButtonState.Process;
     });
 
-    Timer(Duration(milliseconds: 3300), () {
+    Timer(Duration(milliseconds: 1750), () {
       setState(() {
-        _state = 2;
+        _state = ProgressButtonState.Terminal;
       });
     });
 
-    Timer(Duration(milliseconds: 3600), () {
+    Timer(Duration(milliseconds: 2000), () {
       _animatingReveal = true;
       widget.callback();
     });
   }
 
   Widget buildButtonChild() {
-    if (_state == 0) {
-      return Text(
-        'Login',
-        style: TextStyle(color: widget.textColor, fontSize: 16.0),
-      );
-    } else if (_state == 1) {
+    if (_state == ProgressButtonState.Initial) {
+      return Text(widget.text, style: TextStyle(color: widget.textColor));
+    } else if (_state == ProgressButtonState.Process) {
       return SizedBox(
-        height: 36.0,
-        width: 36.0,
         child: CircularProgressIndicator(
           value: null,
           valueColor: AlwaysStoppedAnimation<Color>(widget.textColor),
@@ -120,14 +116,6 @@ class _ProgressButtonState extends State<ProgressButton>
       );
     } else {
       return Icon(Icons.check, color: widget.textColor);
-    }
-  }
-
-  double calculateElevation() {
-    if (_animatingReveal) {
-      return 0.0;
-    } else {
-      return _isPressed ? 6.0 : 4.0;
     }
   }
 }
