@@ -1,3 +1,1 @@
-# flutter-mall
-
-Flutter practices
+# mall
