@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-enum ProgressButtonState { Default, Process }
+enum ProgressButtonState { Default, Progress }
 
 class ProgressButton extends StatefulWidget {
-  final Function onProcess;
+  final Function onProgress;
   final Color color;
   final Color textColor;
   final String text;
@@ -15,7 +15,7 @@ class ProgressButton extends StatefulWidget {
   ProgressButton(
     this.text, {
     Key key,
-    this.onProcess,
+    this.onProgress,
     this.color,
     this.textColor,
     this.width = double.infinity,
@@ -89,19 +89,19 @@ class _ProgressButtonState extends State<ProgressButton>
             }
 
             _forward(() async {
-              _state = ProgressButtonState.Process;
+              _state = ProgressButtonState.Progress;
             });
 
-            var onProcessCompleted;
-            if (widget.onProcess != null) {
-              onProcessCompleted = await widget.onProcess();
+            var onProgressCompleted;
+            if (widget.onProgress != null) {
+              onProgressCompleted = await widget.onProgress();
             }
 
             _reverse(() {
               _state = ProgressButtonState.Default;
-              if (onProcessCompleted != null &&
-                  onProcessCompleted is Function) {
-                onProcessCompleted();
+              if (onProgressCompleted != null &&
+                  onProgressCompleted is Function) {
+                onProgressCompleted();
               }
             });
           },
@@ -135,7 +135,7 @@ class _ProgressButtonState extends State<ProgressButton>
       case ProgressButtonState.Default:
         return Text(widget.text, style: TextStyle(color: _textColor));
         break;
-      case ProgressButtonState.Process:
+      case ProgressButtonState.Progress:
       default:
         return CircularProgressIndicator(
           value: null,

@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: ProgressButton(
                       'login with anonymous user',
                       width: 196,
-                      onProcess: () async {
+                      onProgress: () async {
                         User user = User();
                         user.set<bool>('anonymous', true);
                         ParseResponse response = await user.loginAnonymous();
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: ProgressButton(
                       'await 1 second',
                       width: 196,
-                      onProcess: () async {
+                      onProgress: () async {
                         await Future.delayed(
                             const Duration(milliseconds: 1000));
                         return () {
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: ProgressButton(
                       'no await',
                       width: 196,
-                      onProcess: () {
+                      onProgress: () {
                         print('no await');
                       },
                     ),
