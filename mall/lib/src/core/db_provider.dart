@@ -18,7 +18,7 @@ class DbProvider {
   Database get db => _db;
 
   /// Must initialize before use
-  Future<void> initialize() async {
+  Future initialize() async {
     final String dbDirectory = (await getApplicationDocumentsDirectory()).path;
     final String dbPath = join(dbDirectory, _db_name);
     final DatabaseFactory dbFactory = databaseFactoryIo;

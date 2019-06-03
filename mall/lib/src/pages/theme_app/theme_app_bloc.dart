@@ -9,7 +9,7 @@ class ThemeAppBloc extends Bloc<ThemeAppEvent, ThemeAppState> {
   static const String _prefs_IsDarkTheme = '_prefs_IsDarkTheme';
   static const bool _prefs_IsDarkTheme_default = false;
 
-  Future<void> initialize() async {
+  Future initialize() async {
     if (await _isDarkTheme()) {
       dispatch(DarkAppThemeEvent());
     } else {
@@ -22,7 +22,7 @@ class ThemeAppBloc extends Bloc<ThemeAppEvent, ThemeAppState> {
     return prefs.getBool(_prefs_IsDarkTheme) ?? _prefs_IsDarkTheme_default;
   }
 
-  Future<void> _setIsDarkTheme(bool isDarkTheme) async {
+  Future _setIsDarkTheme(bool isDarkTheme) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_prefs_IsDarkTheme, isDarkTheme);
   }

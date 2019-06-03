@@ -7,7 +7,7 @@ import 'package:mall/src/pages/login/login.dart';
 import 'package:mall/src/parse/parse.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  Future<void> initialize() async {
+  Future initialize() async {
     User user = await UserRepository().currentUser();
     if (user != null) {
       dispatch(CurrentUserFoundEvent(user));

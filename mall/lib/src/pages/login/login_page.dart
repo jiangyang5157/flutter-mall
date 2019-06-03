@@ -50,23 +50,23 @@ class _LoginPageState extends State<LoginPage> {
                       ParseResponse response = await user.loginAnonymous();
                       print('loginAnonymous response=$response');
                     },
-                    child: Text('anonymous user'),
+                    child: Text('login with anonymous user'),
+                  ),
+                  RaisedButton(
+                    onPressed: () async {
+                      User currentUser = await UserRepository().currentUser();
+                      ParseResponse response =
+                          await UserRepository().forget(currentUser);
+                      print('destroy response=$response');
+                    },
+                    child: Text('forget user'),
                   ),
                   RaisedButton(
                     onPressed: () async {
                       User currentUser = await UserRepository().currentUser();
                       print('currentUser=$currentUser');
                     },
-                    child: Text('currentUser user'),
-                  ),
-                  RaisedButton(
-                    onPressed: () async {
-                      User currentUser = await UserRepository().currentUser();
-                      ParseResponse response = await currentUser.destroy();
-                      print('destroy response=$response');
-
-                    },
-                    child: Text('destroy user'),
+                    child: Text('print current user info'),
                   ),
                 ],
               ),

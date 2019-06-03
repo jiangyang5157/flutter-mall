@@ -9,6 +9,8 @@ abstract class UserProviderContract {
 
   Future<ParseResponse> save(User user);
 
+  Future forget(User user);
+
   Future<ParseResponse> destroy(User user);
 
   Future<ParseResponse> signUp(User user);

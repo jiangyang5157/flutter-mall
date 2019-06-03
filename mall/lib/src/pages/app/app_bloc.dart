@@ -8,7 +8,7 @@ import 'package:mall/src/parse/parse.dart';
 import 'package:mall/src/core/core.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  Future<void> initialize() async {
+  Future initialize() async {
     // init Parse
     Parse().initialize(parseApplicationId, parseServerUrl,
         appName: parseApplicationName, masterKey: parseMasterKey, debug: true);

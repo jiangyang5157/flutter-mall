@@ -6,7 +6,7 @@ import 'package:mall/src/pages/home/home.dart';
 import 'package:mall/src/parse/parse.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  Future<void> initialize() async {}
+  Future initialize() async {}
 
   @override
   HomeState get initialState {

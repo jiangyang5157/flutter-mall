@@ -36,7 +36,8 @@ class UserRepository implements UserProviderContract {
     if (parseUser == null) {
       return null;
     }
-    return User().clone(json.jsonDecode(json.jsonEncode(parseUser.toJson(full: true))));
+    return User()
+        .clone(json.jsonDecode(json.jsonEncode(parseUser.toJson(full: true))));
   }
 
   @override
@@ -50,9 +51,16 @@ class UserRepository implements UserProviderContract {
   }
 
   @override
+  Future forget(User user) async {
+    await user.unpin(key: keyParseStoreUser);
+    await _store.delete(user.objectId);
+  }
+
+  @override
   Future<ParseResponse> destroy(User user) async {
     ParseResponse ret = await user.destroy();
     if (ret.success) {
+      user.unpin(key: keyParseStoreUser);
       await _store.delete(user.objectId);
     }
     return ret;
