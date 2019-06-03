@@ -10,7 +10,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Future<void> initialize() async {
     User user = await UserRepository().currentUser();
     if (user != null) {
-      dispatch(CurrentUserSignInEvent(user));
+      dispatch(CurrentUserFoundEvent(user));
     }
   }
 
@@ -25,8 +25,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is SignUpEvent) {
       yield SignUpStartState();
 
-      User user = UserRepository()
-          .createUser(event.username, event.password, event.emailAddress);
+      User user = UserRepository().createUser(
+          username: event.username,
+          password: event.password,
+          emailAddress: event.emailAddress);
       ParseResponse response = await user.signUp();
       if (response.success) {
         yield SignUpSuccessState();
@@ -38,7 +40,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is SignInEvent) {
       yield SignInStartState();
 
-      User user = UserRepository().createUser(event.username, event.password);
+      User user = UserRepository()
+          .createUser(username: event.username, password: event.password);
       ParseResponse response = await user.login();
       if (response.success) {
         yield SignInSuccessState();
@@ -47,15 +50,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     }
 
-    if (event is CurrentUserSignInEvent) {
+    if (event is CurrentUserFoundEvent) {
       yield InitialLoginState(event.user);
-
-      ParseResponse response = await event.user.login();
-      if (response.success) {
-        yield SignInSuccessState();
-      } else {
-        yield SignInFailureState(response.error.message);
-      }
     }
   }
 }

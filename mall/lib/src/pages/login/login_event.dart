@@ -22,8 +22,8 @@ class SignInEvent extends LoginEvent {
   SignInEvent(this.username, this.password) : super([username, password]);
 }
 
-class CurrentUserSignInEvent extends LoginEvent {
+class CurrentUserFoundEvent extends LoginEvent {
   final User user;
 
-  CurrentUserSignInEvent(this.user) : super([user]);
+  CurrentUserFoundEvent(this.user) : super([user]);
 }
