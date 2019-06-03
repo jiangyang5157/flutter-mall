@@ -6,6 +6,7 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:mall/src/parse/parse.dart';
 import 'package:mall/src/pages/login/login.dart';
 import 'package:mall/src/pages/app/app.dart';
+import 'package:mall/src/widgets/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -24,6 +25,8 @@ class _LoginPageState extends State<LoginPage> {
     _loginBloc = LoginBloc();
     super.initState();
   }
+
+  int test = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +70,19 @@ class _LoginPageState extends State<LoginPage> {
                       print('currentUser=$currentUser');
                     },
                     child: Text('print current user info'),
+                  ),
+                  ProgressButton(
+                    child: Text("asd"),
+                    onPressed: () async {
+                      setState(() {
+                        test++;
+                      });
+                    },
+                    buttonState: test % 3 == 0
+                        ? ButtonState.normal
+                        : test % 3 == 1
+                            ? ButtonState.error
+                            : ButtonState.inProgress,
                   ),
                 ],
               ),
