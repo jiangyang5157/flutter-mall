@@ -78,10 +78,10 @@ class _LoginPageState extends State<LoginPage> {
                         test++;
                       });
                     },
-                    buttonState: test % 3 == 0
+                    buttonState: test % 2 == 0
                         ? ButtonState.normal
-                        : test % 3 == 1
-                            ? ButtonState.error
+//                        : test % 3 == 1
+//                            ? ButtonState.error
                             : ButtonState.inProgress,
                   ),
                 ],
