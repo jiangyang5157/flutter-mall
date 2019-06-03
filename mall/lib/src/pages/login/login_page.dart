@@ -6,18 +6,23 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:mall/src/parse/parse.dart';
 import 'package:mall/src/pages/login/login.dart';
 import 'package:mall/src/pages/app/app.dart';
-import 'package:mall/src/widgets/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   AppBloc _appBloc;
   LoginBloc _loginBloc;
+
+  @override
+  void dispose() {
+    _loginBloc.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -71,19 +76,6 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text('print current user info'),
                   ),
-                  ProgressButton(
-                    child: Text("asd"),
-                    onPressed: () async {
-                      setState(() {
-                        test++;
-                      });
-                    },
-                    buttonState: test % 2 == 0
-                        ? ButtonState.normal
-//                        : test % 3 == 1
-//                            ? ButtonState.error
-                            : ButtonState.inProgress,
-                  ),
                 ],
               ),
             ),
@@ -91,11 +83,5 @@ class _LoginPageState extends State<LoginPage> {
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _loginBloc.dispose();
-    super.dispose();
   }
 }

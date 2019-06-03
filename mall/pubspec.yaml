@@ -16,6 +16,10 @@ dependencies:
 
   rxdart: '^0.22.0'
 
+  # Fluro is a Flutter routing library that adds flexible routing options.
+  # Eg: wildcards, named parameters and clear route definitions.
+  fluro: '^1.4.0'
+
   flutter_bloc: '0.15.0'
 
   equatable: '^0.2.0'
@@ -26,6 +30,8 @@ dependencies:
 
   sembast: '^1.15.1'
 
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: '^0.1.2'
 
   flutter_stetho: '^0.2.2'

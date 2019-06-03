@@ -35,6 +35,12 @@ class _ThreeSizeDotState extends State<ThreeSizeDot>
   Animation<double> animation_3;
 
   @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     animationController =
@@ -45,12 +51,6 @@ class _ThreeSizeDotState extends State<ThreeSizeDot>
         .animate(animationController);
     animation_3 = DelayTween(begin: 0.0, end: 1.0, delay: 0.4)
         .animate(animationController);
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
   }
 
   @override

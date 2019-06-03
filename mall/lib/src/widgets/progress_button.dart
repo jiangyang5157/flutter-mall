@@ -1,182 +1,124 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'dart:async';
 
-/// A button that animates between state changes.
-/// Progress state is just a small circle with a progress indicator inside
-/// Error state is a vibrating error animation
-/// Normal state is the button itself
 class ProgressButton extends StatefulWidget {
-  final VoidCallback onPressed;
-  final ButtonState buttonState;
-  final Widget child;
-  final Color backgroundColor;
-  final Color progressColor;
+  final Function callback;
 
-  ProgressButton(
-      {Key key,
-      @required this.buttonState,
-      @required this.onPressed,
-      this.child,
-      this.backgroundColor,
-      this.progressColor})
-      : super(key: key);
+  ProgressButton(this.callback);
 
   @override
-  _ProgressButtonState createState() => _ProgressButtonState();
+  State<StatefulWidget> createState() => _ProgressButtonState();
 }
-
-enum ButtonState { inProgress, error, normal }
 
 class _ProgressButtonState extends State<ProgressButton>
     with TickerProviderStateMixin {
-  AnimationController _errorAnimationController;
-  AnimationController _progressAnimationController;
-  Animation<Offset> _errorAnimation;
-  Animation<BorderRadius> _borderAnimation;
-  Animation<double> _widthAnimation;
-
-  double get buttonWidth => _widthAnimation.value ?? 0;
-
-  BorderRadius get borderRadius =>
-      _borderAnimation.value ?? BorderRadius.circular(12);
-
-  Color get backgroundColor =>
-      widget.backgroundColor ?? Theme.of(context).primaryColor;
-
-  Color get progressColor => widget.progressColor ?? Colors.white;
-
-  Widget get child => widget.child ?? Container();
+  Animation _animation;
+  AnimationController _controller;
+  GlobalKey _globalKey = GlobalKey();
+  double _width = double.infinity;
+  int _state = 0;
+  bool _isPressed = false;
+  bool _animatingReveal = false;
 
   @override
-  void initState() {
-    super.initState();
-
-    _errorAnimationController = new AnimationController(
-        vsync: this, duration: Duration(milliseconds: 2000));
-
-    _progressAnimationController = new AnimationController(
-        vsync: this, duration: Duration(milliseconds: 2000));
-
-    // Define errorAnimation sequence
-    _errorAnimation = TweenSequence<Offset>([
-      TweenSequenceItem<Offset>(
-          tween: Tween(begin: Offset(0, 0), end: Offset(0.03, 0)), weight: 1),
-      TweenSequenceItem<Offset>(
-          tween: Tween(begin: Offset(0.03, 0), end: Offset(-0.03, 0)),
-          weight: 2),
-      TweenSequenceItem<Offset>(
-          tween: Tween(begin: Offset(-0.03, 0), end: Offset(0.03, 0)),
-          weight: 2),
-      TweenSequenceItem<Offset>(
-          tween: Tween(begin: Offset(0.03, 0), end: Offset(-0.03, 0)),
-          weight: 2),
-      TweenSequenceItem<Offset>(
-          tween: Tween(begin: Offset(-0.03, 0), end: Offset(0, 0)), weight: 1)
-    ]).animate(CurvedAnimation(
-      parent: _errorAnimationController,
-      curve: Curves.linear,
-    ));
+  dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
-  void didUpdateWidget(ProgressButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // React to state changes by comparing old and new state
-    if (oldWidget.buttonState != ButtonState.error &&
-        widget.buttonState == ButtonState.error) {
-      _errorAnimationController.reset();
-      _errorAnimationController.forward();
-    }
-    if (oldWidget.buttonState != ButtonState.inProgress &&
-        widget.buttonState == ButtonState.inProgress) {
-      _progressAnimationController.stop();
-      _progressAnimationController.forward();
-    }
-    if (oldWidget.buttonState == ButtonState.inProgress &&
-        widget.buttonState != ButtonState.inProgress) {
-      _progressAnimationController.stop();
-      _progressAnimationController.reverse();
-    }
+  void deactivate() {
+    reset();
+    super.deactivate();
   }
 
-  /// A utility function to check whether an animation is running
-  bool isAnimationRunning(AnimationController controller) {
-    return !(controller.isCompleted || controller.isDismissed);
+  void reset() {
+    _width = double.infinity;
+    _animatingReveal = false;
+    _state = 0;
   }
 
   @override
   Widget build(BuildContext context) {
-    return getErrorAnimatedBuilder();
+    return PhysicalModel(
+        color: Colors.blue,
+        elevation: calculateElevation(),
+        borderRadius: BorderRadius.circular(25.0),
+        child: Container(
+          key: _globalKey,
+          height: 48.0,
+          width: _width,
+          child: RaisedButton(
+            padding: EdgeInsets.all(0.0),
+            color: _state == 2 ? Colors.green : Colors.blue,
+            child: buildButtonChild(),
+            onPressed: () {},
+            onHighlightChanged: (isPressed) {
+              setState(() {
+                _isPressed = isPressed;
+                if (_state == 0) {
+                  animateButton();
+                }
+              });
+            },
+          ),
+        ));
   }
 
-  AnimatedBuilder getErrorAnimatedBuilder() {
-    return AnimatedBuilder(
-        animation: _errorAnimationController,
-        builder: (context, child) {
-          return SlideTransition(
-              position: _errorAnimation,
-              child: LayoutBuilder(builder: getProgressAnimatedBuilder));
+  void animateButton() {
+    double initialWidth = _globalKey.currentContext.size.width;
+
+    _controller =
+        AnimationController(duration: Duration(milliseconds: 300), vsync: this);
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
+      ..addListener(() {
+        setState(() {
+          _width = initialWidth - ((initialWidth - 48.0) * _animation.value);
         });
+      });
+    _controller.forward();
+
+    setState(() {
+      _state = 1;
+    });
+
+    Timer(Duration(milliseconds: 3300), () {
+      setState(() {
+        _state = 2;
+      });
+    });
+
+    Timer(Duration(milliseconds: 3600), () {
+      _animatingReveal = true;
+      widget.callback();
+    });
   }
 
-  AnimatedBuilder getProgressAnimatedBuilder(
-      BuildContext context, BoxConstraints constraints) {
-    var buttonHeight = constraints.maxHeight;
-    // If there is no constraint on height, we should constrain it
-    if (buttonHeight == double.infinity) buttonHeight = 48;
-
-    // These animation configurations can be tweaked to have
-    // however you like it
-    _borderAnimation = BorderRadiusTween(
-            begin: BorderRadius.circular(buttonHeight / 6),
-            end: BorderRadius.circular(buttonHeight / 2))
-        .animate(CurvedAnimation(
-            parent: _progressAnimationController, curve: Curves.linear));
-
-    _widthAnimation = Tween<double>(
-      begin: constraints.maxWidth,
-      end: buttonHeight, // Circular progress must be contained in a square
-    ).animate(CurvedAnimation(
-      parent: _progressAnimationController,
-      curve: Curves.linear,
-    ));
-
-    Widget buttonContent;
-
-    if (widget.buttonState != ButtonState.inProgress ||
-        !isAnimationRunning(_progressAnimationController)) {
-      buttonContent = child;
-    } else if (widget.buttonState == ButtonState.inProgress) {
-      buttonContent = SizedBox(
-          height: buttonHeight,
-          width: buttonHeight, // needs to be a square container
-          child: Padding(
-            padding: EdgeInsets.all(8),
-            child: CircularProgressIndicator(
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(progressColor ?? Colors.white),
-              strokeWidth: 3,
-            ),
-          ));
+  Widget buildButtonChild() {
+    if (_state == 0) {
+      return Text(
+        'Login',
+        style: TextStyle(color: Colors.white, fontSize: 16.0),
+      );
+    } else if (_state == 1) {
+      return SizedBox(
+        height: 36.0,
+        width: 36.0,
+        child: CircularProgressIndicator(
+          value: null,
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        ),
+      );
+    } else {
+      return Icon(Icons.check, color: Colors.white);
     }
+  }
 
-    return AnimatedBuilder(
-      animation: _progressAnimationController,
-      builder: (context, child) {
-        return InkWell(
-            onTap: widget.onPressed,
-            borderRadius: borderRadius,
-            // this fixes the ripple effect
-            child: Center(
-              child: Ink(
-                width: buttonWidth,
-                height: buttonHeight,
-                decoration: BoxDecoration(
-                    borderRadius: borderRadius, color: backgroundColor),
-                child: Center(child: buttonContent),
-              ),
-            ));
-      },
-    );
+  double calculateElevation() {
+    if (_animatingReveal) {
+      return 0.0;
+    } else {
+      return _isPressed ? 6.0 : 4.0;
+    }
   }
 }

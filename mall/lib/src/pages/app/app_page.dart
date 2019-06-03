@@ -10,11 +10,17 @@ class AppPage extends StatefulWidget {
   AppPage({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _AppPageState();
+  _AppPageState createState() => _AppPageState();
 }
 
 class _AppPageState extends State<AppPage> {
   AppBloc _appBloc;
+
+  @override
+  void dispose() {
+    _appBloc.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -44,11 +50,5 @@ class _AppPageState extends State<AppPage> {
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _appBloc.dispose();
-    super.dispose();
   }
 }

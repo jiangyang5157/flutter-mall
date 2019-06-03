@@ -7,18 +7,25 @@ import 'package:mall/src/pages/theme_app/theme_app.dart';
 import 'package:mall/src/pages/app/app.dart';
 import 'package:mall/src/parse/parse.dart';
 import 'package:mall/src/core/core.dart';
+import 'package:mall/src/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   ThemeAppBloc _themeBloc;
   AppBloc _appBloc;
   HomeBloc _homeBloc;
+
+  @override
+  void dispose() {
+    _homeBloc.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -95,7 +102,11 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  // todo
+                  RevealProgressButton(),
+                  RaisedButton(
+                    onPressed: () async {},
+                    child: Text('test TestPage'),
+                  ),
                 ],
               ),
             ),
@@ -103,11 +114,5 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _homeBloc.dispose();
-    super.dispose();
   }
 }

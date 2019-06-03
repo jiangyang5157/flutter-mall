@@ -37,6 +37,12 @@ class _ThreeBounceDotState extends State<ThreeBounceDot>
   Animation<double> animation_3;
 
   @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     animationController =
@@ -63,12 +69,6 @@ class _ThreeBounceDotState extends State<ThreeBounceDot>
     animationController.addListener(() {
       setState(() => {});
     });
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
   }
 
   @override
