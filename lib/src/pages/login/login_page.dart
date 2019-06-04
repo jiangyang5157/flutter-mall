@@ -71,42 +71,17 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: EdgeInsets.all(4.0),
                     child: ProgressButton(
-                      'login with anonymous user',
+                      normalWidget: const Text('height=48',
+                          style: TextStyle(color: Colors.white)),
+                      progressWidget: const CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white)),
+                      color: Colors.blueAccent,
                       width: 196,
-                      onProgress: () async {
-                        User user = User();
-                        user.set<bool>('anonymous', true);
-                        ParseResponse response = await user.loginAnonymous();
-                        return () {
-                          print('loginAnonymous response=$response');
-                          if (response.success) {
-                            _appBloc.dispatch(AppSignedInEvent());
-                          }
-                        };
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: ProgressButton(
-                      'await 1 second',
-                      width: 196,
-                      onProgress: () async {
-                        await Future.delayed(
-                            const Duration(milliseconds: 1000));
-                        return () {
-                          print('1 second await done');
-                        };
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: ProgressButton(
-                      'no await',
-                      width: 196,
-                      onProgress: () {
-                        print('no await');
+                      height: 48,
+                      onPressed: () async {
+                        int score = await Future.delayed(
+                            const Duration(milliseconds: 3000), () => 42);
                       },
                     ),
                   ),

@@ -14,7 +14,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  flutter_progress_button: '^0.5.0'
+  flutter_progress_button: '^0.6.0'
 
   rxdart: '^0.22.0'
 
