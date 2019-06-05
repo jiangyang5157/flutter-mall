@@ -43,14 +43,13 @@ dependencies:
   # Parse
   parse_server_sdk: '^1.0.21'
 
+  # sembast db stands for Simple Embedded Application Store database
+  sembast: '^1.15.1'
+
   # todo Remove: for Bloc
   flutter_bloc: '^0.15.0'
   # todo Remove: for Bloc
   equatable: '^0.2.0'
-  # TODO Remove: sembast db stands for Simple Embedded Application Store database
-  sembast: '^1.15.1'
-  # TODO Remove: A network inspector for Flutter on Android using the Chrome Dev Tools
-  flutter_stetho: '^0.2.2'
 
 dev_dependencies:
   flutter_test:
