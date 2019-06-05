@@ -3,26 +3,28 @@ import 'package:flutter/material.dart';
 
 import 'package:mall/src/pages/pages.dart';
 
-class Navigation {
-  static final Navigation _instance = Navigation._internal();
+class App {
+  static final App _instance = App._internal();
 
-  factory Navigation() {
+  factory App() {
     return _instance;
   }
+
+  ThemeData _themeData;
+
+  ThemeData get themeData => _themeData;
 
   Router _router;
 
   Router get router => _router;
 
-  Navigation._internal() {
+  App._internal() {
+    _themeData = ThemeData(brightness: Brightness.light);
+
     _router = Router()
       ..define('/', handler: Handler(
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-        return AppPage();
-      }))
-      ..define('TestPage', handler: Handler(
-          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-        return TestPage();
+        return HomePage();
       }));
   }
 }
