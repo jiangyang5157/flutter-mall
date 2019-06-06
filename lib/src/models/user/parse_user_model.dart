@@ -12,6 +12,7 @@ class ParseUserModel extends ChangeNotifier implements UserContract {
   ParseUser _parseUser;
 
   ParseUserModel(ParseUser parseUser) {
+    print('#### ParseUserModel()');
     assert(parseUser != null);
     _parseUser = parseUser;
   }

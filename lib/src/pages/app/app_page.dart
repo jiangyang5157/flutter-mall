@@ -15,7 +15,9 @@ class AppPage extends StatefulWidget {
 class _AppPageState extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AppModel>(
+    print('#### _AppPageState build');
+
+    return Provider<AppModel>(
       builder: (_) => AppModel(),
       child: MaterialApp(
         localizationsDelegates: [

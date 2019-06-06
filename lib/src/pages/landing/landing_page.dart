@@ -14,24 +14,20 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Consumer<AuthModel>(builder: (context, authModel, _) {
-      switch (authModel.authState) {
-        case AuthState.Unauthenticated:
-          return LoginPage();
-        case AuthState.Authenticated:
-          return HomePage();
-      }
-    });
+    print('#### _LandingPageState build');
+    AuthModel authModel = Provider.of<AuthModel>(context);
+
+    return ChangeNotifierProvider<AuthModel>(
+      builder: (_) => authModel,
+      child: Consumer<AuthModel>(builder: (context, model, _) {
+        switch (model.authState) {
+          case AuthState.Unauthenticated:
+            return LoginPage();
+          case AuthState.Authenticated:
+            return HomePage();
+        }
+      }),
+    );
   }
 }

@@ -14,10 +14,11 @@ class UserModel extends ChangeNotifier implements UserContract {
   }
 
   UserModel() {
-    initialize();
+    print('#### UserModel()');
+    _sync();
   }
 
-  Future initialize() async {
+  Future _sync() async {
     ParseUser parseUser = await ParseUser.currentUser();
     if (parseUser == null) {
       _user = null;
@@ -28,42 +29,55 @@ class UserModel extends ChangeNotifier implements UserContract {
 
   @override
   Future<ParseResponse> signUp() async {
-    return _user?.signUp();
+    ParseResponse ret = await _user.signUp();
+    if (ret.success) {
+      _sync();
+    }
+    return ret;
   }
 
   @override
   Future<ParseResponse> signIn() async {
-    return _user?.signIn();
+    ParseResponse ret = await _user.signIn();
+    if (ret.success) {
+      _sync();
+    }
+    return _user.signIn();
   }
 
   @override
   Future<ParseResponse> signInAnonymous() async {
-    return _user?.signInAnonymous();
+    ParseResponse ret = await _user.signInAnonymous();
+    if (ret.success) {
+      _sync();
+    }
+    return ret;
   }
 
   @override
   Future<ParseResponse> signOut() async {
-    return _user?.signOut();
+    ParseResponse ret = await _user.signOut();
+    if (ret.success) {
+      _sync();
+    }
+    return ret;
   }
 
   @override
   Future<ParseResponse> save() async {
-    ParseResponse ret = await _user?.save();
-    ParseUser parseUser = ret?.result;
-    if (parseUser == null) {
-      user = null;
-    } else {
-      user = ParseUserModel(parseUser);
+    ParseResponse ret = await _user.save();
+    if (ret.success) {
+      _sync();
     }
     return ret;
   }
 
   @override
   Future<ParseResponse> destroy() async {
-    ParseResponse ret = await _user?.destroy();
-    if (ret != null && ret.success) {
-      user = null;
+    ParseResponse ret = await _user.destroy();
+    if (ret.success) {
+      _sync();
     }
-    return _user?.destroy();
+    return ret;
   }
 }

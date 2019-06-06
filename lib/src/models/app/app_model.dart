@@ -14,10 +14,11 @@ class AppModel extends ChangeNotifier {
   }
 
   AppModel() {
-    initialize();
+    print('#### AppModel()');
+    _initialize();
   }
 
-  Future initialize() async {
+  Future _initialize() async {
     Parse().initialize(parseApplicationId, parseServerUrl,
         appName: parseApplicationName, masterKey: parseMasterKey, debug: true);
     Parse().healthCheck();

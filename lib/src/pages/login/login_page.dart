@@ -14,6 +14,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    print('#### _LoginPageState build');
+    AuthModel authModel = Provider.of<AuthModel>(context);
+    UserModel userModel = Provider.of<UserModel>(context);
+
     return Scaffold(
       body: Center(
         child: Column(

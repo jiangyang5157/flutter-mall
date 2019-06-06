@@ -14,13 +14,20 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppModel>(builder: (context, appModel, _) {
-      return appModel.initialized
-          ? ChangeNotifierProvider<AuthModel>(
-              builder: (_) => AuthModel(),
+    print('#### _SplashPageState build');
+    AppModel appModel = Provider.of<AppModel>(context);
+
+    return ChangeNotifierProvider<AppModel>(
+      builder: (_) => appModel,
+      child: appModel.initialized
+          ? MultiProvider(
+              providers: [
+                Provider<AuthModel>.value(value: AuthModel()),
+                Provider<UserModel>.value(value: UserModel()),
+              ],
               child: LandingPage(),
             )
-          : Container();
-    });
+          : Container(), // Stay here if app is not initialized.
+    );
   }
 }

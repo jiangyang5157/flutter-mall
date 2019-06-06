@@ -13,6 +13,7 @@ class AuthModel extends ChangeNotifier {
   }
 
   AuthModel() {
+    print('#### AuthModel()');
     authState = AuthState.Unauthenticated;
   }
 }
