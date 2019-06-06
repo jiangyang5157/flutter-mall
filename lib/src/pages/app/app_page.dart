@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mall/src/models/models.dart';
+import 'package:mall/src/pages/pages.dart';
 import 'package:mall/src/core/core.dart';
 
 class AppPage extends StatefulWidget {
@@ -35,7 +36,7 @@ class _AppPageState extends State<AppPage> {
         ],
         supportedLocales: AppLocalizationsDelegate.supportedLanguageCodes
             .map<Locale>((languageCode) => Locale(languageCode)),
-        initialRoute: '/',
+        home: SplashPage(),
         onGenerateRoute: App().router.generator,
         theme: App().themeData,
       ),

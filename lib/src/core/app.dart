@@ -22,9 +22,21 @@ class App {
     _themeData = ThemeData(brightness: Brightness.light);
 
     _router = Router()
-      ..define('/', handler: Handler(
+      ..define('SplashPage', handler: Handler(
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
         return SplashPage();
+      }))
+      ..define('LandingPage', handler: Handler(
+          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        return LandingPage();
+      }))
+      ..define('Login', handler: Handler(
+          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        return LoginPage();
+      }))
+      ..define('HomePage', handler: Handler(
+          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        return HomePage();
       }));
   }
 }
