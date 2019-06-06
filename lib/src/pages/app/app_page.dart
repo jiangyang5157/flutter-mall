@@ -13,16 +13,20 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
+  AppModel appModel;
+
+  @override
+  void initState() {
+    appModel = AppModel();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     print('#### _AppPageState build');
 
-    return MultiProvider(
-      providers: [
-        Provider<AppModel>.value(value: AppModel()),
-        Provider<AuthModel>.value(value: AuthModel()),
-        Provider<UserModel>.value(value: UserModel()),
-      ],
+    return Provider<AppModel>(
+      builder: (_) => appModel,
       child: MaterialApp(
         localizationsDelegates: [
           const AppLocalizationsDelegate(),

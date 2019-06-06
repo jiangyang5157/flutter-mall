@@ -23,7 +23,6 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Login Screen'),
             RaisedButton(
               onPressed: () {
                 Provider.of<AuthModel>(context).authState =

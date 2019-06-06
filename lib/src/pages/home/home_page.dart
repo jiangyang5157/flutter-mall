@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () async {
                 authModel.authState = AuthState.Unauthenticated;
               },
-              child: Text('btn'),
+              child: Text('unauth'),
             ),
           ],
         ),
