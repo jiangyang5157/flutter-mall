@@ -8,6 +8,11 @@ class AppModel extends ChangeNotifier {
 
   bool get initialized => _initialized;
 
+  void _setInitialized(bool initialized) {
+    _initialized = initialized;
+    notifyListeners();
+  }
+
   AppModel() {
     initialize();
   }
@@ -17,7 +22,6 @@ class AppModel extends ChangeNotifier {
         appName: parseApplicationName, masterKey: parseMasterKey, debug: true);
     Parse().healthCheck();
 
-    _initialized = true;
-    notifyListeners();
+    _setInitialized(true);
   }
 }

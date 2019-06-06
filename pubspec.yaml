@@ -17,8 +17,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   cupertino_icons: '^0.1.2'
 
-  # Flutter routing library that adds flexible routing options.
-  fluro: '^1.4.0'
+  # Store data in secure storage: Keychain is used for iOS; AES encryption is used for Android
+  flutter_secure_storage: '^3.2.1'
 
   # State management
   provider: '^2.0.1'
@@ -26,23 +26,17 @@ dependencies:
   # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
   get_it: '^1.0.3'
 
-  # Store data in secure storage: Keychain is used for iOS; AES encryption is used for Android
-  flutter_secure_storage: '^3.2.1'
+  # Flutter routing library that adds flexible routing options.
+  fluro: '^1.4.0'
+
+  # Parse
+  parse_server_sdk: '^1.0.21'
 
   # Widget
   flutter_progress_button: '^0.6.0'
 
   # A highly customizable widget so you can notify your user when you fell like he needs a beautiful explanation.
   flushbar: '^1.6.0'
-
-  # RxDart is a reactive functional programming library for Google Dart, based on ReactiveX.
-  rxdart: '^0.22.0'
-
-  # Parse
-  parse_server_sdk: '^1.0.21'
-
-  # sembast db stands for Simple Embedded Application Store database
-  sembast: '^1.15.1'
 
 dev_dependencies:
   flutter_test:
