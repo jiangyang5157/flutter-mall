@@ -20,13 +20,7 @@ class _SplashPageState extends State<SplashPage> {
     return ChangeNotifierProvider<AppModel>(
       builder: (_) => appModel,
       child: appModel.initialized
-          ? MultiProvider(
-              providers: [
-                Provider<AuthModel>.value(value: AuthModel()),
-                Provider<UserModel>.value(value: UserModel()),
-              ],
-              child: LandingPage(),
-            )
+          ? LandingPage()
           : Container(), // Stay here if app is not initialized.
     );
   }

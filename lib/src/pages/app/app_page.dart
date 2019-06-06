@@ -17,8 +17,12 @@ class _AppPageState extends State<AppPage> {
   Widget build(BuildContext context) {
     print('#### _AppPageState build');
 
-    return Provider<AppModel>(
-      builder: (_) => AppModel(),
+    return MultiProvider(
+      providers: [
+        Provider<AppModel>.value(value: AppModel()),
+        Provider<AuthModel>.value(value: AuthModel()),
+        Provider<UserModel>.value(value: UserModel()),
+      ],
       child: MaterialApp(
         localizationsDelegates: [
           const AppLocalizationsDelegate(),
