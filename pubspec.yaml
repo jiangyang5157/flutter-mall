@@ -29,9 +29,6 @@ dependencies:
   # Store data in secure storage: Keychain is used for iOS; AES encryption is used for Android
   flutter_secure_storage: '^3.2.1'
 
-  # SharedPreferences helper
-  shared_preferences: '^0.5.0'
-
   # Widget
   flutter_progress_button: '^0.6.0'
 
