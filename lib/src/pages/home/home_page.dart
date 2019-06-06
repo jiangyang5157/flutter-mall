@@ -15,9 +15,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    print('#### _HomePageState build');
     AuthModel authModel = Provider.of<AuthModel>(context);
     UserModel userModel = Provider.of<UserModel>(context);
+    print('#### _HomePageState build');
 
     return Scaffold(
       appBar: AppBar(

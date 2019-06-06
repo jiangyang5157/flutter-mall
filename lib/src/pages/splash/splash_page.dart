@@ -24,8 +24,8 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('#### _SplashPageState build');
     AppModel  appModel = Provider.of<AppModel>(context);
+    print('#### _SplashPageState build');
 
     return ChangeNotifierProvider<AppModel>(
       builder: (_) => appModel,
@@ -37,7 +37,7 @@ class _SplashPageState extends State<SplashPage> {
               ],
               child: LandingPage(),
             )
-          : Text('SSSS########'), // Stay here if app is not initialized.
+          : Container(), // Stay here if app is not initialized.
     );
   }
 }

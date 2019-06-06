@@ -15,8 +15,8 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
-    print('#### _LandingPageState build');
     AuthModel authModel = Provider.of<AuthModel>(context);
+    print('#### _LandingPageState build ${authModel.authState}');
 
     return ChangeNotifierProvider<AuthModel>(
       builder: (_) => authModel,
