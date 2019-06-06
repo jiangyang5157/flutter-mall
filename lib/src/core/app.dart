@@ -25,18 +25,6 @@ class App {
       ..define('/', handler: Handler(
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
         return SplashPage();
-      }))
-      ..define('/landing', handler: Handler(
-          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-        return LandingPage();
-      }))
-      ..define('/login', handler: Handler(
-          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-        return LoginPage();
-      }))
-      ..define('/home', handler: Handler(
-          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-        return HomePage();
       }));
   }
 }
