@@ -13,24 +13,41 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   @override
-  Widget build(BuildContext context) {
-    AppModel appModel = Provider.of<AppModel>(context);
-    AuthModel authModel = Provider.of<AuthModel>(context);
-    UserModel userModel = Provider.of<UserModel>(context);
-    print('#### _SplashPageState build');
+  void initState() {
+    AppModel appModel = AppModel();
+    AuthModel authModel = AuthModel();
+    UserModel userModel = UserModel();
 
-    return ChangeNotifierProvider<AppModel>(
-      builder: (_) => appModel,
-      child: buildChild(appModel),
-    );
+    AppModel().addListener(() {
+      switch (appModel.state) {
+        case AppState.Uninitialized:
+          break;
+        case AppState.Initialized:
+          break;
+      }
+    })
+
+    ;
+    authModel.addListener(() {});
+    userModel.addListener(() {});
   }
 
-  Widget buildChild(AppModel appModel) {
-    switch (appModel.state) {
-      case AppState.Uninitialized:
-        return Container();
-      case AppState.Initialized:
-        return LandingPage();
-    }
+  @override
+  Widget build(BuildContext context) {
+    print('#### _SplashPageState build');
+
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RaisedButton(
+              onPressed: () {},
+              child: Text('SplashPage'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -15,16 +15,10 @@ class AppPage extends StatefulWidget {
 
 class _AppPageState extends State<AppPage> {
   ThemeModel themeModel;
-  AppModel appModel;
-  AuthModel authModel;
-  UserModel userModel;
 
   @override
   void initState() {
     themeModel = ThemeModel();
-    appModel = AppModel();
-    authModel = AuthModel();
-    userModel = UserModel();
     super.initState();
   }
 
@@ -32,13 +26,8 @@ class _AppPageState extends State<AppPage> {
   Widget build(BuildContext context) {
     print('#### _AppPageState build');
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<ThemeModel>(builder: (_) => themeModel),
-        Provider<AppModel>.value(value: appModel),
-        Provider<AuthModel>.value(value: authModel),
-        Provider<UserModel>.value(value: userModel),
-      ],
+    return ChangeNotifierProvider<ThemeModel>(
+      builder: (_) => themeModel,
       child: Consumer<ThemeModel>(
         builder: (context, themeModel, _) {
           return MaterialApp(
