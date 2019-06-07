@@ -14,17 +14,24 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
-  ThemeModel themeModel;
+  ThemeModel themeModel = ThemeModel();
+
+  @override
+  void dispose() {
+    super.dispose();
+    print('#### _AppPageState - dispose');
+    themeModel.dispose();
+  }
 
   @override
   void initState() {
-    themeModel = ThemeModel();
     super.initState();
+    print('#### _AppPageState - initState');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('#### _AppPageState build');
+    print('#### _AppPageState - build');
 
     return ChangeNotifierProvider<ThemeModel>(
       builder: (_) => themeModel,
@@ -40,7 +47,7 @@ class _AppPageState extends State<AppPage> {
                 .map<Locale>((languageCode) => Locale(languageCode)),
             home: SplashPage(),
             onGenerateRoute: locator<Nav>().router.generator,
-            theme: themeModel.data,
+            theme: themeModel.typeToData(themeModel.type),
           );
         },
       ),

@@ -1,46 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rxdart/rxdart.dart';
 
 enum ThemeType { Light, Dark }
 
 class ThemeModel extends ChangeNotifier {
   static const String _prefs_ThemeType = '_prefs_ThemeType';
 
-  ThemeType _type;
+  BehaviorSubject<ThemeType> _typeController =
+      BehaviorSubject<ThemeType>.seeded(ThemeType.Light);
 
-  ThemeData get data {
-    return _typeToData(_type);
+  Stream<ThemeType> get typeOut => _typeController.stream;
+
+  Sink<ThemeType> get typeIn => _typeController.sink;
+
+  ThemeType get type => _typeController.value;
+
+  set type(ThemeType type) {
+    typeIn.add(type);
   }
 
-  ThemeData _typeToData(ThemeType type) {
-    switch (type) {
-      case ThemeType.Dark:
-        return ThemeData(brightness: Brightness.dark);
-      case ThemeType.Light:
-        return ThemeData(brightness: Brightness.light);
-    }
+  @override
+  void dispose() {
+    super.dispose();
+    print('#### ThemeModel - dispose');
+    _typeController.close();
   }
 
-  set type(ThemeType themeType) {
-    _type = themeType;
-    _saveType(_type);
+  ThemeModel() {
+    print('#### ThemeModel()');
+    typeOut.listen(_setType);
+    _initialize();
+  }
+
+  void _setType(ThemeType type) {
+    _saveType(type);
     notifyListeners();
   }
 
   Future _initialize() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String themeTypeString = prefs.getString(_prefs_ThemeType);
-    if (themeTypeString != null) {
-      _type = _stringToType(themeTypeString);
-    } else {
-      _type = ThemeType.Light;
+    String typeString = prefs.getString(_prefs_ThemeType);
+    if (typeString != null) {
+      type = _stringToType(typeString);
     }
-    notifyListeners();
   }
 
-  ThemeModel() {
-    print('#### ThemeModel()');
-    _initialize();
+  Future _saveType(ThemeType type) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(_prefs_ThemeType, _typeToString(type));
   }
 
   ThemeType _stringToType(String type) {
@@ -52,8 +60,12 @@ class ThemeModel extends ChangeNotifier {
     return type.toString().split('.').last;
   }
 
-  Future _saveType(ThemeType themeType) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(_prefs_ThemeType, _typeToString(_type));
+  ThemeData typeToData(ThemeType type) {
+    switch (type) {
+      case ThemeType.Dark:
+        return ThemeData(brightness: Brightness.dark);
+      case ThemeType.Light:
+        return ThemeData(brightness: Brightness.light);
+    }
   }
 }

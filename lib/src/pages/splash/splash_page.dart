@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'package:mall/src/pages/pages.dart';
+import 'package:mall/src/core/core.dart';
 import 'package:mall/src/models/models.dart';
 
 class SplashPage extends StatefulWidget {
@@ -12,39 +11,57 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  AppModel appModel = AppModel();
+  UserModel userModel = UserModel();
+
+  @override
+  void dispose() {
+    super.dispose();
+    print('#### _SplashPageState - dispose');
+    appModel.dispose();
+    userModel.dispose();
+  }
+
   @override
   void initState() {
-    AppModel appModel = AppModel();
-    AuthModel authModel = AuthModel();
-    UserModel userModel = UserModel();
+    super.initState();
+    print('#### _SplashPageState - initState');
 
-    AppModel().addListener(() {
-      switch (appModel.state) {
-        case AppState.Uninitialized:
-          break;
+    appModel.stateOut.listen((AppState state) {
+      switch (state) {
         case AppState.Initialized:
+          userModel.userOut.listen((ParseUserModel user) {
+            if (userModel.user == null) {
+              locator<Nav>()
+                  .router
+                  .navigateTo(context, 'LoginPage', clearStack: true);
+            } else {
+              locator<Nav>()
+                  .router
+                  .navigateTo(context, 'HomePage', clearStack: true);
+            }
+          });
+          break;
+        case AppState.UpdateRequired:
+          // TODO: Handle this case.
+          break;
+        case AppState.DownTime:
+          // TODO: Handle this case.
           break;
       }
-    })
-
-    ;
-    authModel.addListener(() {});
-    userModel.addListener(() {});
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print('#### _SplashPageState build');
+    print('#### _SplashPageState - build');
 
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            RaisedButton(
-              onPressed: () {},
-              child: Text('SplashPage'),
-            ),
+            Container(),
           ],
         ),
       ),

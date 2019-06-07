@@ -9,17 +9,18 @@ class ParseUserModel extends ChangeNotifier implements UserContract {
   static const String _keyVarUserDisplayPicture = 'userDisplayPicture';
   static const String _keyVarUserType = 'userType';
 
-  ParseUser _parseUser;
+  final ParseUser _parseUser;
 
-  void _setParseUser(ParseUser parseUser) {
-    _parseUser = parseUser;
-    notifyListeners();
+  @override
+  void dispose() {
+    super.dispose();
+    print('#### ParseUserModel - dispose');
   }
 
-  ParseUserModel(ParseUser parseUser) {
+  ParseUserModel(this._parseUser) {
     print('#### ParseUserModel()');
-    assert(parseUser != null);
-    _setParseUser(parseUser);
+    assert(_parseUser != null);
+    notifyListeners();
   }
 
   String get name => _parseUser.get<String>(keyVarUsername);

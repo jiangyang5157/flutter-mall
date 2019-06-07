@@ -14,11 +14,7 @@ class Nav {
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
         return SplashPage();
       }))
-      ..define('LandingPage', handler: Handler(
-          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-        return LandingPage();
-      }))
-      ..define('Login', handler: Handler(
+      ..define('LoginPage', handler: Handler(
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
         return LoginPage();
       }))

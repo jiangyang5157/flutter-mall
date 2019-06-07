@@ -12,12 +12,23 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  @override
+  void dispose() {
+    super.dispose();
+    print('#### _LoginPageState - dispose');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print('#### _LoginPageState - initState');
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('#### _LoginPageState - build');
     ThemeModel themeModel = Provider.of<ThemeModel>(context);
-    AuthModel authModel = Provider.of<AuthModel>(context);
-    UserModel userModel = Provider.of<UserModel>(context);
-    print('#### _LoginPageState build');
 
     return Scaffold(
       body: Center(
@@ -26,8 +37,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             RaisedButton(
               onPressed: () {
-//                authModel.authState = AuthState.Authenticated;
-                themeModel.type = ThemeType.Dark;
+                themeModel.typeIn.add(ThemeType.Dark);
               },
               child: Text('auth'),
             ),

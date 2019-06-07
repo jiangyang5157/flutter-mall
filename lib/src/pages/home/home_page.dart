@@ -13,11 +13,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  UserModel userModel = UserModel();
+
+  @override
+  void dispose() {
+    super.dispose();
+    print('#### _HomePageState - dispose');
+    userModel.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print('#### _HomePageState - initState');
+  }
+
   @override
   Widget build(BuildContext context) {
-    AuthModel authModel = Provider.of<AuthModel>(context);
-    UserModel userModel = Provider.of<UserModel>(context);
     print('#### _HomePageState build');
+
+    ThemeModel themeModel = Provider.of<ThemeModel>(context);
+    UserModel userModel = Provider.of<UserModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -29,14 +45,18 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             ChangeNotifierProvider<ParseUserModel>(
               builder: (_) => userModel.user,
-              child: UserAccountsDrawerHeader(
-                accountName: Text('userModel.user.name'),
-                accountEmail: Text('userModel.user.emailAddress'),
-                currentAccountPicture: GestureDetector(
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                  ),
-                ),
+              child: Consumer<ParseUserModel>(
+                builder: (context, user, _) {
+                  return UserAccountsDrawerHeader(
+                    accountName: Text(user.name),
+                    accountEmail: Text(user.emailAddress),
+                    currentAccountPicture: GestureDetector(
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
             ListTile(
@@ -69,7 +89,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             RaisedButton(
               onPressed: () async {
-                authModel.state = AuthState.Unauthenticated;
+                themeModel.typeIn.add(ThemeType.Light);
               },
               child: Text('unauth'),
             ),
