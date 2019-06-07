@@ -13,16 +13,16 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  AppModel() {
-    print('#### AppModel()');
-    _initialize();
-  }
-
   Future _initialize() async {
     Parse().initialize(parseApplicationId, parseServerUrl,
         appName: parseApplicationName, masterKey: parseMasterKey, debug: true);
     Parse().healthCheck();
 
     _setInitialized(true);
+  }
+
+  AppModel() {
+    print('#### AppModel()');
+    _initialize();
   }
 }

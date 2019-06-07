@@ -20,6 +20,9 @@ dependencies:
   # Store data in secure storage: Keychain is used for iOS; AES encryption is used for Android
   flutter_secure_storage: '^3.2.1'
 
+  # SharedPreferences helper
+  shared_preferences: '^0.5.0'
+
   # State management
   provider: '^2.0.1'
 

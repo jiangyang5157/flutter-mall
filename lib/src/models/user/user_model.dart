@@ -13,18 +13,18 @@ class UserModel extends ChangeNotifier implements UserContract {
     notifyListeners();
   }
 
+  Future _sync() async {
+    ParseUser parseUser = await ParseUser.currentUser();
+    if (parseUser != null) {
+      user = ParseUserModel(parseUser);
+    } else {
+      user = null;
+    }
+  }
+
   UserModel() {
     print('#### UserModel()');
     _sync();
-  }
-
-  Future _sync() async {
-    ParseUser parseUser = await ParseUser.currentUser();
-    if (parseUser == null) {
-      _user = null;
-    } else {
-      _user = ParseUserModel(parseUser);
-    }
   }
 
   @override
@@ -42,7 +42,7 @@ class UserModel extends ChangeNotifier implements UserContract {
     if (ret.success) {
       _sync();
     }
-    return _user.signIn();
+    return ret;
   }
 
   @override

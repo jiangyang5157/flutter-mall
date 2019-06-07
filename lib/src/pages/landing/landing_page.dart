@@ -20,14 +20,16 @@ class _LandingPageState extends State<LandingPage> {
 
     return ChangeNotifierProvider<AuthModel>(
       builder: (_) => authModel,
-      child: Consumer<AuthModel>(builder: (context, model, _) {
-        switch (model.authState) {
-          case AuthState.Unauthenticated:
-            return LoginPage();
-          case AuthState.Authenticated:
-            return HomePage();
-        }
-      }),
+      child: Consumer<AuthModel>(
+        builder: (context, model, _) {
+          switch (model.authState) {
+            case AuthState.Unauthenticated:
+              return LoginPage();
+            case AuthState.Authenticated:
+              return HomePage();
+          }
+        },
+      ),
     );
   }
 }

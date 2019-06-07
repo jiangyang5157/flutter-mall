@@ -11,10 +11,15 @@ class ParseUserModel extends ChangeNotifier implements UserContract {
 
   ParseUser _parseUser;
 
+  void _setParseUser(ParseUser parseUser) {
+    _parseUser = parseUser;
+    notifyListeners();
+  }
+
   ParseUserModel(ParseUser parseUser) {
     print('#### ParseUserModel()');
     assert(parseUser != null);
-    _parseUser = parseUser;
+    _setParseUser(parseUser);
   }
 
   String get name => _parseUser.get<String>(keyVarUsername);

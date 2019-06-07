@@ -14,12 +14,14 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
+  ThemeModel themeModel;
   AppModel appModel;
   AuthModel authModel;
   UserModel userModel;
 
   @override
   void initState() {
+    themeModel = ThemeModel();
     appModel = AppModel();
     authModel = AuthModel();
     userModel = UserModel();
@@ -32,21 +34,26 @@ class _AppPageState extends State<AppPage> {
 
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<ThemeModel>(builder: (_) => themeModel),
         Provider<AppModel>.value(value: appModel),
         Provider<AuthModel>.value(value: authModel),
         Provider<UserModel>.value(value: userModel),
       ],
-      child: MaterialApp(
-        localizationsDelegates: [
-          const AppLocalizationsDelegate(),
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: AppLocalizationsDelegate.supportedLanguageCodes
-            .map<Locale>((languageCode) => Locale(languageCode)),
-        home: SplashPage(),
-        onGenerateRoute: App().router.generator,
-        theme: App().themeData,
+      child: Consumer<ThemeModel>(
+        builder: (context, themeModel, _) {
+          return MaterialApp(
+            localizationsDelegates: [
+              const AppLocalizationsDelegate(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizationsDelegate.supportedLanguageCodes
+                .map<Locale>((languageCode) => Locale(languageCode)),
+            home: SplashPage(),
+            onGenerateRoute: locator<Nav>().router.generator,
+            theme: themeModel.themeData,
+          );
+        },
       ),
     );
   }

@@ -14,6 +14,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    ThemeModel themeModel = Provider.of<ThemeModel>(context);
     AuthModel authModel = Provider.of<AuthModel>(context);
     UserModel userModel = Provider.of<UserModel>(context);
     print('#### _LoginPageState build');
@@ -25,8 +26,8 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             RaisedButton(
               onPressed: () {
-                Provider.of<AuthModel>(context).authState =
-                    AuthState.Authenticated;
+//                authModel.authState = AuthState.Authenticated;
+                themeModel.themeType = ThemeType.Dark;
               },
               child: Text('auth'),
             ),

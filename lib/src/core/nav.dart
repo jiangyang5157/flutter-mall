@@ -3,24 +3,12 @@ import 'package:flutter/material.dart';
 
 import 'package:mall/src/pages/pages.dart';
 
-class App {
-  static final App _instance = App._internal();
-
-  factory App() {
-    return _instance;
-  }
-
-  ThemeData _themeData;
-
-  ThemeData get themeData => _themeData;
-
+class Nav {
   Router _router;
 
   Router get router => _router;
 
-  App._internal() {
-    _themeData = ThemeData(brightness: Brightness.light);
-
+  Nav() {
     _router = Router()
       ..define('SplashPage', handler: Handler(
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
