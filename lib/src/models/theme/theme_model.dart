@@ -6,13 +6,13 @@ enum ThemeType { Light, Dark }
 class ThemeModel extends ChangeNotifier {
   static const String _prefs_ThemeType = '_prefs_ThemeType';
 
-  ThemeType _themeType;
+  ThemeType _type;
 
-  ThemeData get themeData {
-    return _themeTypeToThemeData(_themeType);
+  ThemeData get data {
+    return _typeToData(_type);
   }
 
-  ThemeData _themeTypeToThemeData(ThemeType type) {
+  ThemeData _typeToData(ThemeType type) {
     switch (type) {
       case ThemeType.Dark:
         return ThemeData(brightness: Brightness.dark);
@@ -21,9 +21,9 @@ class ThemeModel extends ChangeNotifier {
     }
   }
 
-  set themeType(ThemeType themeType) {
-    _themeType = themeType;
-    _saveThemeType(_themeType);
+  set type(ThemeType themeType) {
+    _type = themeType;
+    _saveType(_type);
     notifyListeners();
   }
 
@@ -31,9 +31,9 @@ class ThemeModel extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String themeTypeString = prefs.getString(_prefs_ThemeType);
     if (themeTypeString != null) {
-      _themeType = _stringToThemeType(themeTypeString);
+      _type = _stringToType(themeTypeString);
     } else {
-      _themeType = ThemeType.Light;
+      _type = ThemeType.Light;
     }
     notifyListeners();
   }
@@ -43,17 +43,17 @@ class ThemeModel extends ChangeNotifier {
     _initialize();
   }
 
-  ThemeType _stringToThemeType(String type) {
+  ThemeType _stringToType(String type) {
     return ThemeType.values
-        .firstWhere((element) => _themeTypeToString(element) == type);
+        .firstWhere((element) => _typeToString(element) == type);
   }
 
-  String _themeTypeToString(ThemeType type) {
+  String _typeToString(ThemeType type) {
     return type.toString().split('.').last;
   }
 
-  Future _saveThemeType(ThemeType themeType) async {
+  Future _saveType(ThemeType themeType) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(_prefs_ThemeType, _themeTypeToString(_themeType));
+    prefs.setString(_prefs_ThemeType, _typeToString(_type));
   }
 }

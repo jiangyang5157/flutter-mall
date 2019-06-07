@@ -16,13 +16,13 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     AuthModel authModel = Provider.of<AuthModel>(context);
-    print('#### _LandingPageState build ${authModel.authState}');
+    print('#### _LandingPageState build ${authModel.state}');
 
     return ChangeNotifierProvider<AuthModel>(
       builder: (_) => authModel,
       child: Consumer<AuthModel>(
         builder: (context, model, _) {
-          switch (model.authState) {
+          switch (model.state) {
             case AuthState.Unauthenticated:
               return LoginPage();
             case AuthState.Authenticated:

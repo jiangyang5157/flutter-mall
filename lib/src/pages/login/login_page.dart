@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
             RaisedButton(
               onPressed: () {
 //                authModel.authState = AuthState.Authenticated;
-                themeModel.themeType = ThemeType.Dark;
+                themeModel.type = ThemeType.Dark;
               },
               child: Text('auth'),
             ),

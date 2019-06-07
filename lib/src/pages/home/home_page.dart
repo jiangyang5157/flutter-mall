@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             RaisedButton(
               onPressed: () async {
-                authModel.authState = AuthState.Unauthenticated;
+                authModel.state = AuthState.Unauthenticated;
               },
               child: Text('unauth'),
             ),

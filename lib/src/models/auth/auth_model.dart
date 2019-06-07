@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 enum AuthState { Unauthenticated, Authenticated }
 
 class AuthModel extends ChangeNotifier {
-  AuthState _authState;
+  AuthState _state;
 
-  AuthState get authState => _authState;
+  AuthState get state => _state;
 
-  set authState(AuthState authState) {
-    _authState = authState;
+  set state(AuthState authState) {
+    _state = authState;
     notifyListeners();
   }
 
   AuthModel() {
     print('#### AuthModel()');
-    authState = AuthState.Unauthenticated;
+    state = AuthState.Unauthenticated;
   }
 }

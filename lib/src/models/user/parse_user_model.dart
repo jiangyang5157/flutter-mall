@@ -52,20 +52,20 @@ class ParseUserModel extends ChangeNotifier implements UserContract {
   }
 
   UserType get type {
-    return _stringToUserType(_parseUser.get<String>(_keyVarUserType));
+    return _stringToType(_parseUser.get<String>(_keyVarUserType));
   }
 
   set type(UserType type) {
-    _parseUser.set<String>(_keyVarUserType, _userTypeToString(type));
+    _parseUser.set<String>(_keyVarUserType, _typeToString(type));
     notifyListeners();
   }
 
-  UserType _stringToUserType(String type) {
+  UserType _stringToType(String type) {
     return UserType.values
-        .firstWhere((element) => _userTypeToString(element) == type);
+        .firstWhere((element) => _typeToString(element) == type);
   }
 
-  String _userTypeToString(UserType type) {
+  String _typeToString(UserType type) {
     return type.toString().split('.').last;
   }
 

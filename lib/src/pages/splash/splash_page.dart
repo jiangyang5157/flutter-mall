@@ -21,9 +21,16 @@ class _SplashPageState extends State<SplashPage> {
 
     return ChangeNotifierProvider<AppModel>(
       builder: (_) => appModel,
-      child: appModel.initialized
-          ? LandingPage()
-          : Container(), // Stay here if app is not initialized.
+      child: buildChild(appModel),
     );
+  }
+
+  Widget buildChild(AppModel appModel) {
+    switch (appModel.state) {
+      case AppState.Uninitialized:
+        return Container();
+      case AppState.Initialized:
+        return LandingPage();
+    }
   }
 }

@@ -3,13 +3,15 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 import 'package:mall/src/parse/parse.dart';
 
+enum AppState { Uninitialized, Initialized }
+
 class AppModel extends ChangeNotifier {
-  bool _initialized;
+  AppState _state;
 
-  bool get initialized => _initialized;
+  AppState get state => _state;
 
-  void _setInitialized(bool initialized) {
-    _initialized = initialized;
+  void _setState(AppState state) {
+    _state = state;
     notifyListeners();
   }
 
@@ -18,7 +20,7 @@ class AppModel extends ChangeNotifier {
         appName: parseApplicationName, masterKey: parseMasterKey, debug: true);
     Parse().healthCheck();
 
-    _setInitialized(true);
+    _setState(AppState.Initialized);
   }
 
   AppModel() {
