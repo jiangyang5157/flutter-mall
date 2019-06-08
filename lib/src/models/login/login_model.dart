@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'package:mall/src/core/core.dart';
-
-enum LoginState { SignIn, SignUp, Login }
+enum LoginState { SignIn, SignUp }
 
 class LoginModel extends ChangeNotifier {
   BehaviorSubject<LoginState> _stateController = BehaviorSubject<LoginState>();

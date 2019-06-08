@@ -33,7 +33,6 @@ class _HomePageState extends State<HomePage> {
     print('#### _HomePageState build');
 
     ThemeModel themeModel = Provider.of<ThemeModel>(context);
-    UserModel userModel = Provider.of<UserModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -60,14 +59,18 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              title: Text('1'),
+              title: Text('Light'),
               trailing: Icon(Icons.launch),
-              onTap: () {},
+              onTap: () {
+                themeModel.typeIn.add(ThemeType.Light);
+              },
             ),
             ListTile(
-              title: Text('2'),
+              title: Text('Dark'),
               trailing: Icon(Icons.launch),
-              onTap: () {},
+              onTap: () {
+                themeModel.typeIn.add(ThemeType.Dark);
+              },
             ),
             Divider(),
             ListTile(
@@ -89,7 +92,10 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             RaisedButton(
               onPressed: () async {
-                themeModel.typeIn.add(ThemeType.Light);
+                userModel.signOut();
+                locator<Nav>()
+                    .router
+                    .navigateTo(context, 'LoginPage', clearStack: true);
               },
               child: Text('unauth'),
             ),

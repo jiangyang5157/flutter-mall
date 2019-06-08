@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mall/src/models/models.dart';
+import 'package:mall/src/pages/pages.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -12,10 +13,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  LoginModel loginModel = LoginModel();
+
   @override
   void dispose() {
     super.dispose();
     print('#### _LoginPageState - dispose');
+    loginModel.dispose();
   }
 
   @override
@@ -27,22 +31,23 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     print('#### _LoginPageState - build');
-    ThemeModel themeModel = Provider.of<ThemeModel>(context);
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            RaisedButton(
-              onPressed: () {
-                themeModel.typeIn.add(ThemeType.Dark);
-              },
-              child: Text('auth'),
-            ),
-          ],
-        ),
+    return ChangeNotifierProvider<LoginModel>(
+      builder: (_) => loginModel,
+      child: Consumer<LoginModel>(
+        builder: (context, loginModel, _) {
+          return Scaffold(body: buildChildren(loginModel.state));
+        },
       ),
     );
+  }
+
+  Widget buildChildren(LoginState loginState) {
+    switch (loginState) {
+      case LoginState.SignIn:
+        return SignInPage();
+      case LoginState.SignUp:
+        return SignUpPage();
+    }
   }
 }

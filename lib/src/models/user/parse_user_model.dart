@@ -25,8 +25,8 @@ class ParseUserModel extends ChangeNotifier implements UserContract {
 
   String get name => _parseUser.get<String>(keyVarUsername);
 
-  set name(String userName) {
-    _parseUser.set<String>(keyVarUsername, userName);
+  set name(String username) {
+    _parseUser.set<String>(keyVarUsername, username);
     notifyListeners();
   }
 

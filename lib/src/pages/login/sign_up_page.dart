@@ -1,5 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:flutter_progress_button/flutter_progress_button.dart';
+import 'package:provider/provider.dart';
+
+import 'package:mall/src/models/models.dart';
+import 'package:mall/src/core/core.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key key}) : super(key: key);
@@ -49,9 +55,31 @@ class _SignUpPageState extends State<SignUpPage> {
             obscureText: false,
             controller: _emailAddressController,
           ),
+          ProgressButton(
+            normalWidget: Text('Sign Up'),
+            progressWidget: const CircularProgressIndicator(),
+            width: 196,
+            height: 40,
+            onPressed: () async {
+              ParseResponse response = await UserModel.createUser(
+                      username: _usernameController.text,
+                      password: _passwordController.text,
+                      emailAddress: _emailAddressController.text)
+                  .signUp();
+              return () {
+                if (response.success) {
+                  locator<Nav>()
+                      .router
+                      .navigateTo(context, 'HomePage', clearStack: true);
+                }
+              };
+            },
+          ),
           RaisedButton(
-            onPressed: () {},
-            child: Text('sign up'),
+            onPressed: () {
+              Provider.of<LoginModel>(context).state = LoginState.SignIn;
+            },
+            child: Text('To Sign In'),
           ),
         ],
       ),

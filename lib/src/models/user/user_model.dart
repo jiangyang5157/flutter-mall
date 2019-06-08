@@ -35,6 +35,12 @@ class UserModel extends ChangeNotifier implements UserContract {
     }
   }
 
+  static UserModel createUser(
+      {String username, String password, String emailAddress}) {
+    return UserModel(
+        ParseUserModel(ParseUser(username, password, emailAddress)));
+  }
+
   void _setUser(ParseUserModel parseUserModel) {
     notifyListeners();
   }
