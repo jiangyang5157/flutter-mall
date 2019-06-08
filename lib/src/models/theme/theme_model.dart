@@ -33,8 +33,8 @@ class ThemeModel extends ChangeNotifier {
     _init();
   }
 
-  void _setType(ThemeType type) {
-    _saveType(type);
+  void _setType(ThemeType themeType) {
+    _saveType(themeType);
     notifyListeners();
   }
 

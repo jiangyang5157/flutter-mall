@@ -4,7 +4,7 @@ import 'package:rxdart/rxdart.dart';
 
 import 'package:mall/src/core/core.dart';
 
-enum AppState { Initialized, UpdateRequired, DownTime }
+enum AppState { Initialized }
 
 class AppModel extends ChangeNotifier {
   BehaviorSubject<AppState> _stateController = BehaviorSubject<AppState>();

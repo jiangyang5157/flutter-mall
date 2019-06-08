@@ -41,13 +41,6 @@ class _SplashPageState extends State<SplashPage> {
                   .navigateTo(context, 'HomePage', clearStack: true);
             }
           });
-          break;
-        case AppState.UpdateRequired:
-          // TODO: Handle this case.
-          break;
-        case AppState.DownTime:
-          // TODO: Handle this case.
-          break;
       }
     });
   }
