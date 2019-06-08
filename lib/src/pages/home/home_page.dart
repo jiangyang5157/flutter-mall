@@ -32,23 +32,21 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     print('#### _HomePageState build');
 
-    ThemeModel themeModel = Provider.of<ThemeModel>(context);
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(Localization.of(context).string('app_name')),
+        title: Text(string(context, 'app_name')),
       ),
       drawer: Drawer(
         child: ListView(
           padding: const EdgeInsets.all(0.0),
           children: <Widget>[
-            ChangeNotifierProvider<ParseUserModel>(
-              builder: (_) => userModel.user,
-              child: Consumer<ParseUserModel>(
-                builder: (context, user, _) {
+            ChangeNotifierProvider<UserModel>(
+              builder: (_) => userModel,
+              child: Consumer<UserModel>(
+                builder: (context, userModel, _) {
                   return UserAccountsDrawerHeader(
-                    accountName: Text(user.name),
-                    accountEmail: Text(user.emailAddress),
+                    accountName: Text(userModel.user.name),
+                    accountEmail: Text(userModel.user.emailAddress),
                     currentAccountPicture: GestureDetector(
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
@@ -62,26 +60,26 @@ class _HomePageState extends State<HomePage> {
               title: Text('Light'),
               trailing: Icon(Icons.launch),
               onTap: () {
-                themeModel.typeIn.add(ThemeType.Light);
+                Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Light);
               },
             ),
             ListTile(
               title: Text('Dark'),
               trailing: Icon(Icons.launch),
               onTap: () {
-                themeModel.typeIn.add(ThemeType.Dark);
+                Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Dark);
               },
             ),
             Divider(),
             ListTile(
-              title: Text('3'),
+              title: Text('Sign Out'),
               trailing: Icon(Icons.settings),
-              onTap: () async {},
-            ),
-            ListTile(
-              title: Text('4'),
-              trailing: Icon(Icons.settings),
-              onTap: () async {},
+              onTap: () {
+                userModel.signOut();
+                locator<Nav>()
+                    .router
+                    .navigateTo(context, 'LoginPage', clearStack: true);
+              },
             ),
           ],
         ),
@@ -89,17 +87,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RaisedButton(
-              onPressed: () async {
-                userModel.signOut();
-                locator<Nav>()
-                    .router
-                    .navigateTo(context, 'LoginPage', clearStack: true);
-              },
-              child: Text('unauth'),
-            ),
-          ],
+          children: <Widget>[],
         ),
       ),
     );
