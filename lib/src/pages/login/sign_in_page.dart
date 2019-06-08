@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
+import 'package:mall/src/widgets/widgets.dart';
 
 class SignInPage extends StatefulWidget {
   SignInPage({Key key}) : super(key: key);
@@ -39,19 +40,22 @@ class _SignInPageState extends State<SignInPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextFormField(
-            decoration: InputDecoration(labelText: 'username / email'),
+            decoration: InputDecoration(
+                labelText: string(context, 'label_username_or_email_address')),
             obscureText: false,
             controller: _usernameController,
           ),
           TextFormField(
-            decoration: InputDecoration(labelText: 'password'),
+            decoration:
+                InputDecoration(labelText: string(context, 'label_password')),
             obscureText: true,
             enableInteractiveSelection: false,
             controller: _passwordController,
           ),
           ProgressButton(
-            normalWidget: Text('Sign In'),
-            progressWidget: const CircularProgressIndicator(),
+            normalWidget: Text(string(context, 'label_sign_in')),
+            progressWidget: ThreeSizeDot(),
+            animate: false,
             width: 196,
             height: 40,
             onPressed: () async {
@@ -72,7 +76,7 @@ class _SignInPageState extends State<SignInPage> {
             onPressed: () {
               Provider.of<LoginModel>(context).state = LoginState.SignUp;
             },
-            child: Text('To Sign Up'),
+            child: Text(string(context, 'prompt_go_to_sign_up')),
           ),
         ],
       ),

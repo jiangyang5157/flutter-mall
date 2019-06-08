@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
+import 'package:mall/src/widgets/widgets.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key key}) : super(key: key);
@@ -40,24 +41,28 @@ class _SignUpPageState extends State<SignUpPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextFormField(
-            decoration: InputDecoration(labelText: 'username'),
+            decoration:
+                InputDecoration(labelText: string(context, 'label_username')),
             obscureText: false,
             controller: _usernameController,
           ),
           TextFormField(
-            decoration: InputDecoration(labelText: 'password'),
+            decoration:
+                InputDecoration(labelText: string(context, 'label_password')),
             obscureText: true,
             enableInteractiveSelection: false,
             controller: _passwordController,
           ),
           TextFormField(
-            decoration: InputDecoration(labelText: 'email address'),
+            decoration: InputDecoration(
+                labelText: string(context, 'label_email_address')),
             obscureText: false,
             controller: _emailAddressController,
           ),
           ProgressButton(
-            normalWidget: Text('Sign Up'),
-            progressWidget: const CircularProgressIndicator(),
+            normalWidget: Text(string(context, 'label_sign_up')),
+            progressWidget: ThreeSizeDot(),
+            animate: false,
             width: 196,
             height: 40,
             onPressed: () async {
@@ -79,7 +84,9 @@ class _SignUpPageState extends State<SignUpPage> {
             onPressed: () {
               Provider.of<LoginModel>(context).state = LoginState.SignIn;
             },
-            child: Text('To Sign In'),
+            child: Text(
+              string(context, 'prompt_go_to_sign_in'),
+            ),
           ),
         ],
       ),

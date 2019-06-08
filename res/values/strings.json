@@ -1,7 +1,18 @@
 {
   "en": {
     "app_name": "mall",
-    "title_home": "home"
+    "title_home": "home",
+    "label_sign_in": "Sign In",
+    "label_sign_up": "Sign Up",
+    "label_sign_out": "Sign Out",
+    "label_username": "Username",
+    "label_password": "Password",
+    "label_email_address": "Email address",
+    "label_username_or_email_address": "Username / email address",
+    "prompt_sign_in": "Welcome back.",
+    "prompt_sign_up": "Create your account.",
+    "prompt_go_to_sign_up": "Not yet registered? Sign up.",
+    "prompt_go_to_sign_in": "Already have an account? Log back in."
   },
   "zh": {
   }

@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: Text(string(context, 'app_name')),
+          title: Text(string(context, 'title_home')),
         ),
         drawer: Drawer(
           child: ListView(
@@ -52,6 +52,8 @@ class _HomePageState extends State<HomePage> {
                     currentAccountPicture: GestureDetector(
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
+                        backgroundImage: AssetImage(
+                            'res/drawable/account_circle_black_196.png'),
                       ),
                     ),
                   );
@@ -59,24 +61,23 @@ class _HomePageState extends State<HomePage> {
               ),
               ListTile(
                 title: Text('Light'),
-                trailing: Icon(Icons.launch),
+                trailing: Icon(Icons.settings),
                 onTap: () {
                   Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Light);
                 },
               ),
               ListTile(
                 title: Text('Dark'),
-                trailing: Icon(Icons.launch),
+                trailing: Icon(Icons.settings),
                 onTap: () {
                   Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Dark);
                 },
               ),
               Divider(),
               ListTile(
-                title: Text('Sign Out'),
+                title: Text(string(context, 'label_sign_out')),
                 trailing: Icon(Icons.settings),
-                onTap: () {
-                  userModel.signOut();
+                onTap: () async {
                   locator<Nav>()
                       .router
                       .navigateTo(context, 'LoginPage', clearStack: true);
