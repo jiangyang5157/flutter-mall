@@ -39,7 +39,6 @@ class AppModel extends ChangeNotifier {
   Future _init() async {
     Parse().initialize(parseApplicationId, parseServerUrl,
         appName: parseApplicationName, masterKey: parseMasterKey, debug: true);
-    Parse().healthCheck();
 
     state = AppState.Initialized;
   }

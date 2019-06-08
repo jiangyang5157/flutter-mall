@@ -32,17 +32,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     print('#### _HomePageState build');
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(string(context, 'app_name')),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: const EdgeInsets.all(0.0),
-          children: <Widget>[
-            ChangeNotifierProvider<UserModel>(
-              builder: (_) => userModel,
-              child: Consumer<UserModel>(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserModel>(builder: (_) => userModel),
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(string(context, 'app_name')),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: const EdgeInsets.all(0.0),
+            children: <Widget>[
+              Consumer<UserModel>(
                 builder: (context, userModel, _) {
                   return UserAccountsDrawerHeader(
                     accountName: Text(userModel.user.name),
@@ -55,39 +57,39 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
               ),
-            ),
-            ListTile(
-              title: Text('Light'),
-              trailing: Icon(Icons.launch),
-              onTap: () {
-                Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Light);
-              },
-            ),
-            ListTile(
-              title: Text('Dark'),
-              trailing: Icon(Icons.launch),
-              onTap: () {
-                Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Dark);
-              },
-            ),
-            Divider(),
-            ListTile(
-              title: Text('Sign Out'),
-              trailing: Icon(Icons.settings),
-              onTap: () {
-                userModel.signOut();
-                locator<Nav>()
-                    .router
-                    .navigateTo(context, 'LoginPage', clearStack: true);
-              },
-            ),
-          ],
+              ListTile(
+                title: Text('Light'),
+                trailing: Icon(Icons.launch),
+                onTap: () {
+                  Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Light);
+                },
+              ),
+              ListTile(
+                title: Text('Dark'),
+                trailing: Icon(Icons.launch),
+                onTap: () {
+                  Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Dark);
+                },
+              ),
+              Divider(),
+              ListTile(
+                title: Text('Sign Out'),
+                trailing: Icon(Icons.settings),
+                onTap: () {
+                  userModel.signOut();
+                  locator<Nav>()
+                      .router
+                      .navigateTo(context, 'LoginPage', clearStack: true);
+                },
+              ),
+            ],
+          ),
         ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[],
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[],
+          ),
         ),
       ),
     );
