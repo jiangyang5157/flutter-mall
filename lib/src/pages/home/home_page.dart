@@ -52,8 +52,6 @@ class _HomePageState extends State<HomePage> {
                     currentAccountPicture: GestureDetector(
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
-                        backgroundImage: AssetImage(
-                            'res/drawable/account_circle_black_196.png'),
                       ),
                     ),
                   );
