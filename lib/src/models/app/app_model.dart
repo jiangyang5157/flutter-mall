@@ -15,8 +15,8 @@ class AppModel extends ChangeNotifier {
 
   AppState get state => _stateController.value;
 
-  set state(AppState state) {
-    stateIn.add(state);
+  set state(AppState appState) {
+    stateIn.add(appState);
   }
 
   @override
@@ -29,14 +29,14 @@ class AppModel extends ChangeNotifier {
   AppModel() {
     print('#### AppModel()');
     stateOut.listen(_setState);
-    _initialize();
+    _init();
   }
 
-  void _setState(AppState state) {
+  void _setState(AppState appState) {
     notifyListeners();
   }
 
-  Future _initialize() async {
+  Future _init() async {
     Parse().initialize(parseApplicationId, parseServerUrl,
         appName: parseApplicationName, masterKey: parseMasterKey, debug: true);
     Parse().healthCheck();

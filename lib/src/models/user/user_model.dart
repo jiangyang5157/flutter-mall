@@ -14,8 +14,8 @@ class UserModel extends ChangeNotifier implements UserContract {
 
   ParseUserModel get user => _userController.value;
 
-  set user(ParseUserModel user) {
-    userIn.add(user);
+  set user(ParseUserModel parseUserModel) {
+    userIn.add(parseUserModel);
   }
 
   @override
@@ -25,13 +25,17 @@ class UserModel extends ChangeNotifier implements UserContract {
     _userController.close();
   }
 
-  UserModel() {
+  UserModel([ParseUserModel parseUserModel]) {
     print('#### UserModel()');
     userOut.listen(_setUser);
-    _sync();
+    if (parseUserModel == null) {
+      _sync();
+    } else {
+      user = parseUserModel;
+    }
   }
 
-  void _setUser(ParseUserModel user) {
+  void _setUser(ParseUserModel parseUserModel) {
     notifyListeners();
   }
 

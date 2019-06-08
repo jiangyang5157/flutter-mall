@@ -16,8 +16,8 @@ class ThemeModel extends ChangeNotifier {
 
   ThemeType get type => _typeController.value;
 
-  set type(ThemeType type) {
-    typeIn.add(type);
+  set type(ThemeType themeType) {
+    typeIn.add(themeType);
   }
 
   @override
@@ -30,7 +30,7 @@ class ThemeModel extends ChangeNotifier {
   ThemeModel() {
     print('#### ThemeModel()');
     typeOut.listen(_setType);
-    _initialize();
+    _init();
   }
 
   void _setType(ThemeType type) {
@@ -38,7 +38,7 @@ class ThemeModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future _initialize() async {
+  Future _init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String typeString = prefs.getString(_prefs_ThemeType);
     if (typeString != null) {

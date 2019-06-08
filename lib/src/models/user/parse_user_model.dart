@@ -25,30 +25,30 @@ class ParseUserModel extends ChangeNotifier implements UserContract {
 
   String get name => _parseUser.get<String>(keyVarUsername);
 
-  set name(String name) {
-    _parseUser.set<String>(keyVarUsername, name);
+  set name(String userName) {
+    _parseUser.set<String>(keyVarUsername, userName);
     notifyListeners();
   }
 
   String get password => _parseUser.get<String>(keyVarPassword);
 
-  set password(String password) {
-    _parseUser.set<String>(keyVarPassword, password);
+  set password(String userPassword) {
+    _parseUser.set<String>(keyVarPassword, userPassword);
     notifyListeners();
   }
 
   String get emailAddress => _parseUser.get<String>(keyVarEmail);
 
-  set emailAddress(String emailAddress) {
-    _parseUser.set<String>(keyVarEmail, emailAddress);
+  set emailAddress(String userEmailAddress) {
+    _parseUser.set<String>(keyVarEmail, userEmailAddress);
     notifyListeners();
   }
 
   String get displayPicture =>
       _parseUser.get<String>(_keyVarUserDisplayPicture);
 
-  set displayPicture(String displayPicture) {
-    _parseUser.set<String>(_keyVarUserDisplayPicture, displayPicture);
+  set displayPicture(String userDisplayPicture) {
+    _parseUser.set<String>(_keyVarUserDisplayPicture, userDisplayPicture);
     notifyListeners();
   }
 
@@ -56,18 +56,18 @@ class ParseUserModel extends ChangeNotifier implements UserContract {
     return _stringToType(_parseUser.get<String>(_keyVarUserType));
   }
 
-  set type(UserType type) {
-    _parseUser.set<String>(_keyVarUserType, _typeToString(type));
+  set type(UserType userType) {
+    _parseUser.set<String>(_keyVarUserType, _typeToString(userType));
     notifyListeners();
   }
 
-  UserType _stringToType(String type) {
+  UserType _stringToType(String userType) {
     return UserType.values
-        .firstWhere((element) => _typeToString(element) == type);
+        .firstWhere((element) => _typeToString(element) == userType);
   }
 
-  String _typeToString(UserType type) {
-    return type.toString().split('.').last;
+  String _typeToString(UserType userType) {
+    return userType.toString().split('.').last;
   }
 
   @override
