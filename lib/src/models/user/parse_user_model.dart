@@ -3,7 +3,7 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 import 'package:mall/src/models/user/user.dart';
 
-enum UserType { Master, Normal }
+enum UserType { Master, Administrator, Normal }
 
 class ParseUserModel extends ChangeNotifier implements UserContract {
   static const String _keyVarUserDisplayPicture = 'userDisplayPicture';
