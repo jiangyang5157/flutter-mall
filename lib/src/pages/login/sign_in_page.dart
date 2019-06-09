@@ -16,6 +16,7 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -49,6 +50,7 @@ class _SignInPageState extends State<SignInPage> {
     _passwordController.text = signInModel.password;
 
     return Form(
+      key: _formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -57,6 +59,9 @@ class _SignInPageState extends State<SignInPage> {
                 labelText: string(context, 'label_username_or_email_address')),
             obscureText: false,
             controller: _usernameController,
+            validator: (text) => text.trim().length > 0
+                ? null
+                : string(context, 'error_empty_username'),
           ),
           TextFormField(
             decoration:
@@ -64,6 +69,9 @@ class _SignInPageState extends State<SignInPage> {
             obscureText: true,
             enableInteractiveSelection: false,
             controller: _passwordController,
+            validator: (text) => text.trim().length > 0
+                ? null
+                : string(context, 'error_empty_password'),
           ),
           ProgressButton(
             defaultWidget: Text(string(context, 'label_sign_in')),
@@ -72,19 +80,21 @@ class _SignInPageState extends State<SignInPage> {
             width: 196,
             height: 40,
             onPressed: () async {
-              ParseResponse response = await UserModel.createUser(
-                      username: _usernameController.text,
-                      password: _passwordController.text)
-                  .signIn();
-              return () {
-                if (response.success) {
-                  if (mounted) {
-                    locator<Nav>()
-                        .router
-                        .navigateTo(context, 'HomePage', clearStack: true);
+              if (_formKey.currentState.validate()) {
+                ParseResponse response = await UserModel.createUser(
+                        username: _usernameController.text,
+                        password: _passwordController.text)
+                    .signIn();
+                return () {
+                  if (response.success) {
+                    if (mounted) {
+                      locator<Nav>()
+                          .router
+                          .navigateTo(context, 'HomePage', clearStack: true);
+                    }
                   }
-                }
-              };
+                };
+              }
             },
           ),
           RaisedButton(

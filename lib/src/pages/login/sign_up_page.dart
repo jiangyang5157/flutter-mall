@@ -16,6 +16,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _emailAddressController = TextEditingController();
@@ -41,7 +43,8 @@ class _SignUpPageState extends State<SignUpPage> {
       Provider.of<SignUpModel>(context).password = _passwordController.text;
     });
     _emailAddressController.addListener(() {
-      Provider.of<SignUpModel>(context).emailAddress = _emailAddressController.text;
+      Provider.of<SignUpModel>(context).emailAddress =
+          _emailAddressController.text;
     });
   }
 
@@ -55,6 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
     _emailAddressController.text = signUpModel.emailAddress;
 
     return Form(
+      key: _formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -63,6 +67,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 InputDecoration(labelText: string(context, 'label_username')),
             obscureText: false,
             controller: _usernameController,
+            validator: (text) => text.trim().length > 0
+                ? null
+                : string(context, 'error_empty_username'),
           ),
           TextFormField(
             decoration:
@@ -70,12 +77,18 @@ class _SignUpPageState extends State<SignUpPage> {
             obscureText: true,
             enableInteractiveSelection: false,
             controller: _passwordController,
+            validator: (text) => text.trim().length > 0
+                ? null
+                : string(context, 'error_empty_password'),
           ),
           TextFormField(
             decoration: InputDecoration(
                 labelText: string(context, 'label_email_address')),
             obscureText: false,
             controller: _emailAddressController,
+            validator: (text) => text.trim().length > 0
+                ? null
+                : string(context, 'error_empty_email_address'),
           ),
           ProgressButton(
             defaultWidget: Text(string(context, 'label_sign_up')),
@@ -84,20 +97,22 @@ class _SignUpPageState extends State<SignUpPage> {
             width: 196,
             height: 40,
             onPressed: () async {
-              ParseResponse response = await UserModel.createUser(
-                      username: _usernameController.text,
-                      password: _passwordController.text,
-                      emailAddress: _emailAddressController.text)
-                  .signUp();
-              return () {
-                if (response.success) {
-                  if (mounted) {
-                    locator<Nav>()
-                        .router
-                        .navigateTo(context, 'HomePage', clearStack: true);
+              if (_formKey.currentState.validate()) {
+                ParseResponse response = await UserModel.createUser(
+                        username: _usernameController.text,
+                        password: _passwordController.text,
+                        emailAddress: _emailAddressController.text)
+                    .signUp();
+                return () {
+                  if (response.success) {
+                    if (mounted) {
+                      locator<Nav>()
+                          .router
+                          .navigateTo(context, 'HomePage', clearStack: true);
+                    }
                   }
-                }
-              };
+                };
+              }
             },
           ),
           RaisedButton(
