@@ -18,9 +18,9 @@ class LoginModel extends ChangeNotifier {
 
   @override
   void dispose() {
+    _stateController.close();
     super.dispose();
     print('#### LoginModel - dispose');
-    _stateController.close();
   }
 
   LoginModel() {
@@ -29,11 +29,11 @@ class LoginModel extends ChangeNotifier {
     _init();
   }
 
-  void _setState(LoginState appState) {
-    notifyListeners();
+  void _init() {
+    state = LoginState.SignIn;
   }
 
-  Future _init() async {
-    state = LoginState.SignIn;
+  void _setState(LoginState appState) {
+    notifyListeners();
   }
 }

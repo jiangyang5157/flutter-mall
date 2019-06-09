@@ -22,9 +22,9 @@ class ThemeModel extends ChangeNotifier {
 
   @override
   void dispose() {
+    _typeController.close();
     super.dispose();
     print('#### ThemeModel - dispose');
-    _typeController.close();
   }
 
   ThemeModel() {
@@ -33,17 +33,17 @@ class ThemeModel extends ChangeNotifier {
     _init();
   }
 
-  void _setType(ThemeType themeType) {
-    _saveType(themeType);
-    notifyListeners();
-  }
-
   Future _init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String typeString = prefs.getString(_prefs_ThemeType);
     if (typeString != null) {
       type = _stringToType(typeString);
     }
+  }
+
+  void _setType(ThemeType themeType) {
+    _saveType(themeType);
+    notifyListeners();
   }
 
   Future _saveType(ThemeType type) async {

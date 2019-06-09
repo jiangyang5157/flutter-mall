@@ -14,9 +14,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   LoginModel loginModel = LoginModel();
+  SignInModel signInModel = SignInModel();
+  SignUpModel signUpModel = SignUpModel();
 
   @override
   void dispose() {
+    signInModel.dispose();
+    signUpModel.dispose();
     super.dispose();
     print('#### _LoginPageState - dispose');
   }
@@ -44,9 +48,15 @@ class _LoginPageState extends State<LoginPage> {
   Widget buildChildren(LoginState loginState) {
     switch (loginState) {
       case LoginState.SignIn:
-        return SignInPage();
+        return Provider<SignInModel>.value(
+          value: signInModel,
+          child: SignInPage(),
+        );
       case LoginState.SignUp:
-        return SignUpPage();
+        return Provider<SignUpModel>.value(
+          value: signUpModel,
+          child: SignUpPage(),
+        );
     }
   }
 }

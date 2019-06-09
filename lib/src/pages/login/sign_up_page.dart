@@ -22,6 +22,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _emailAddressController.dispose();
     super.dispose();
     print('#### _SignUpPageState - dispose');
   }
@@ -30,11 +33,26 @@ class _SignUpPageState extends State<SignUpPage> {
   void initState() {
     super.initState();
     print('#### _SignUpPageState - initState');
+
+    _usernameController.addListener(() {
+      Provider.of<SignUpModel>(context).username = _usernameController.text;
+    });
+    _passwordController.addListener(() {
+      Provider.of<SignUpModel>(context).password = _passwordController.text;
+    });
+    _emailAddressController.addListener(() {
+      Provider.of<SignUpModel>(context).emailAddress = _emailAddressController.text;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     print('#### _SignUpPageState - build');
+
+    SignUpModel signUpModel = Provider.of<SignUpModel>(context);
+    _usernameController.text = signUpModel.username;
+    _passwordController.text = signUpModel.password;
+    _emailAddressController.text = signUpModel.emailAddress;
 
     return Form(
       child: Column(

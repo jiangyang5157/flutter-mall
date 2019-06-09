@@ -21,9 +21,9 @@ class AppModel extends ChangeNotifier {
 
   @override
   void dispose() {
+    _stateController.close();
     super.dispose();
     print('#### AppModel - dispose');
-    _stateController.close();
   }
 
   AppModel() {
@@ -32,14 +32,14 @@ class AppModel extends ChangeNotifier {
     _init();
   }
 
-  void _setState(AppState appState) {
-    notifyListeners();
-  }
-
   Future _init() async {
     Parse().initialize(parseApplicationId, parseServerUrl,
         appName: parseApplicationName, masterKey: parseMasterKey, debug: true);
 
     state = AppState.Initialized;
+  }
+
+  void _setState(AppState appState) {
+    notifyListeners();
   }
 }

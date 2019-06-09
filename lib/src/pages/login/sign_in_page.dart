@@ -21,6 +21,8 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
     super.dispose();
     print('#### _SignInPageState - dispose');
   }
@@ -29,11 +31,22 @@ class _SignInPageState extends State<SignInPage> {
   void initState() {
     super.initState();
     print('#### _SignInPageState - initState');
+
+    _usernameController.addListener(() {
+      Provider.of<SignInModel>(context).username = _usernameController.text;
+    });
+    _passwordController.addListener(() {
+      Provider.of<SignInModel>(context).password = _passwordController.text;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     print('#### _SignInPageState - build');
+
+    SignInModel signInModel = Provider.of<SignInModel>(context);
+    _usernameController.text = signInModel.username;
+    _passwordController.text = signInModel.password;
 
     return Form(
       child: Column(

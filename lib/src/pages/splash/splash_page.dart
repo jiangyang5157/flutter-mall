@@ -16,10 +16,10 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void dispose() {
-    super.dispose();
-    print('#### _SplashPageState - dispose');
     appModel.dispose();
     userModel.dispose();
+    super.dispose();
+    print('#### _SplashPageState - dispose');
   }
 
   @override

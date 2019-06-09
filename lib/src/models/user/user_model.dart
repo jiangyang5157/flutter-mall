@@ -20,9 +20,9 @@ class UserModel extends ChangeNotifier implements UserContract {
 
   @override
   void dispose() {
+    _userController.close();
     super.dispose();
     print('#### UserModel - dispose');
-    _userController.close();
   }
 
   UserModel([ParseUserModel parseUserModel]) {
