@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  UserModel userModel = UserModel();
 
   @override
   void dispose() {
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<UserModel>(builder: (_) => UserModel()),
+        ChangeNotifierProvider<UserModel>(builder: (_) => userModel),
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -45,8 +46,8 @@ class _HomePageState extends State<HomePage> {
               Consumer<UserModel>(
                 builder: (context, userModel, _) {
                   return UserAccountsDrawerHeader(
-                    accountName: Text(userModel.user.name),
-                    accountEmail: Text(userModel.user.emailAddress),
+                    accountName: Text(userModel.user?.name ?? ''),
+                    accountEmail: Text(userModel.user?.emailAddress ?? ''),
                     currentAccountPicture: GestureDetector(
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
@@ -74,6 +75,7 @@ class _HomePageState extends State<HomePage> {
                 title: Text(string(context, 'label_sign_out')),
                 trailing: Icon(Icons.settings),
                 onTap: () async {
+                  await userModel.signOut();
                   locator<Nav>()
                       .router
                       .navigateTo(context, 'LoginPage', clearStack: true);

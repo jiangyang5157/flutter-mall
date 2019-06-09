@@ -14,13 +14,10 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
-  ThemeModel themeModel = ThemeModel();
-
   @override
   void dispose() {
     super.dispose();
     print('#### _AppPageState - dispose');
-    themeModel.dispose();
   }
 
   @override
@@ -34,7 +31,7 @@ class _AppPageState extends State<AppPage> {
     print('#### _AppPageState - build');
 
     return ChangeNotifierProvider<ThemeModel>(
-      builder: (_) => themeModel,
+      builder: (_) => ThemeModel(),
       child: Consumer<ThemeModel>(
         builder: (context, themeModel, _) {
           return MaterialApp(
