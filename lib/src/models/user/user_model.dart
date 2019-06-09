@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'package:mall/src/models/models.dart';
+import 'package:mall/src/core/core.dart';
 
 class UserModel extends ChangeNotifier implements UserContract {
   BehaviorSubject<ParseUserModel> _userController =
@@ -48,7 +49,19 @@ class UserModel extends ChangeNotifier implements UserContract {
   Future _sync() async {
     ParseUser parseUser = await ParseUser.currentUser();
     if (parseUser != null) {
-      user = ParseUserModel(parseUser);
+      DateTime now = DateTime.now();
+      var diff = now.difference(parseUser.createdAt);
+      if (diff.inDays < parseSessionExpiredInDays) {
+        user = ParseUserModel(parseUser);
+      } else {
+        // Session may expired in server
+        ParseResponse ret = await ParseUser.getCurrentUserFromServer();
+        if (ret != null && ret.success) {
+          user = ParseUserModel(ret.result);
+        } else {
+          user = null;
+        }
+      }
     } else {
       user = null;
     }
@@ -57,7 +70,7 @@ class UserModel extends ChangeNotifier implements UserContract {
   @override
   Future<ParseResponse> signUp() async {
     ParseResponse ret = await user.signUp();
-    if (ret.success) {
+    if (ret != null && ret.success) {
       _sync();
     }
     return ret;
@@ -66,7 +79,7 @@ class UserModel extends ChangeNotifier implements UserContract {
   @override
   Future<ParseResponse> signIn() async {
     ParseResponse ret = await user.signIn();
-    if (ret.success) {
+    if (ret != null && ret.success) {
       _sync();
     }
     return ret;
@@ -75,7 +88,7 @@ class UserModel extends ChangeNotifier implements UserContract {
   @override
   Future<ParseResponse> signInAnonymous() async {
     ParseResponse ret = await user.signInAnonymous();
-    if (ret.success) {
+    if (ret != null && ret.success) {
       _sync();
     }
     return ret;
@@ -84,7 +97,7 @@ class UserModel extends ChangeNotifier implements UserContract {
   @override
   Future<ParseResponse> signOut() async {
     ParseResponse ret = await user.signOut();
-    if (ret.success) {
+    if (ret != null && ret.success) {
       _sync();
     }
     return ret;
@@ -93,7 +106,7 @@ class UserModel extends ChangeNotifier implements UserContract {
   @override
   Future<ParseResponse> save() async {
     ParseResponse ret = await user.save();
-    if (ret.success) {
+    if (ret != null && ret.success) {
       _sync();
     }
     return ret;
@@ -102,7 +115,7 @@ class UserModel extends ChangeNotifier implements UserContract {
   @override
   Future<ParseResponse> destroy() async {
     ParseResponse ret = await user.destroy();
-    if (ret.success) {
+    if (ret != null && ret.success) {
       _sync();
     }
     return ret;
