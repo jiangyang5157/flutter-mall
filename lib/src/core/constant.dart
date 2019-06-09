@@ -5,7 +5,3 @@ const String parseMasterKey = 'myMasterKey';
 const String parseServerUrl = 'http://118.24.251.163:1337/parse';
 
 const int parseSessionExpiredInDays = 365;
-
-const String masterUserName = 'master';
-const String masterUserPassword = 'master';
-const String masterUserEmailAddress = 'jiangyang5157@gmail.com';

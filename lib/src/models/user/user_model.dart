@@ -42,10 +42,6 @@ class UserModel extends ChangeNotifier implements UserContract {
         ParseUserModel(ParseUser(username, password, emailAddress)));
   }
 
-  void _setUser(ParseUserModel parseUserModel) {
-    notifyListeners();
-  }
-
   Future _sync() async {
     ParseUser parseUser = await ParseUser.currentUser();
     if (parseUser != null) {
@@ -67,6 +63,10 @@ class UserModel extends ChangeNotifier implements UserContract {
     }
   }
 
+  void _setUser(ParseUserModel parseUserModel) {
+    notifyListeners();
+  }
+
   @override
   Future<ParseResponse> signUp() async {
     ParseResponse ret = await user.signUp();
@@ -79,15 +79,6 @@ class UserModel extends ChangeNotifier implements UserContract {
   @override
   Future<ParseResponse> signIn() async {
     ParseResponse ret = await user.signIn();
-    if (ret != null && ret.success) {
-      _sync();
-    }
-    return ret;
-  }
-
-  @override
-  Future<ParseResponse> signInAnonymous() async {
-    ParseResponse ret = await user.signInAnonymous();
     if (ret != null && ret.success) {
       _sync();
     }

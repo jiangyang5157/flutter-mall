@@ -5,8 +5,6 @@ abstract class UserContract {
 
   Future<ParseResponse> signIn();
 
-  Future<ParseResponse> signInAnonymous();
-
   Future<ParseResponse> signOut();
 
   Future<ParseResponse> save();

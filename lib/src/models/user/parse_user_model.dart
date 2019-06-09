@@ -3,7 +3,7 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 import 'package:mall/src/models/user/user.dart';
 
-enum UserType { Master, Administrator, Normal, Anonymous }
+enum UserType { Master, Normal }
 
 class ParseUserModel extends ChangeNotifier implements UserContract {
   static const String _keyVarUserDisplayPicture = 'userDisplayPicture';
@@ -78,11 +78,6 @@ class ParseUserModel extends ChangeNotifier implements UserContract {
   @override
   Future<ParseResponse> signIn() {
     return _parseUser.login();
-  }
-
-  @override
-  Future<ParseResponse> signInAnonymous() {
-    return _parseUser.loginAnonymous();
   }
 
   @override
