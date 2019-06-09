@@ -13,13 +13,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  UserModel userModel = UserModel();
 
   @override
   void dispose() {
     super.dispose();
     print('#### _HomePageState - dispose');
-    userModel.dispose();
   }
 
   @override
@@ -34,7 +32,7 @@ class _HomePageState extends State<HomePage> {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<UserModel>(builder: (_) => userModel),
+        ChangeNotifierProvider<UserModel>(builder: (_) => UserModel()),
       ],
       child: Scaffold(
         appBar: AppBar(

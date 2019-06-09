@@ -60,7 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
             controller: _emailAddressController,
           ),
           ProgressButton(
-            normalWidget: Text(string(context, 'label_sign_up')),
+            defaultWidget: Text(string(context, 'label_sign_up')),
             progressWidget: ThreeSizeDot(),
             animate: false,
             width: 196,
@@ -73,9 +73,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   .signUp();
               return () {
                 if (response.success) {
-                  locator<Nav>()
-                      .router
-                      .navigateTo(context, 'HomePage', clearStack: true);
+                  if (mounted) {
+                    locator<Nav>()
+                        .router
+                        .navigateTo(context, 'HomePage', clearStack: true);
+                  }
                 }
               };
             },

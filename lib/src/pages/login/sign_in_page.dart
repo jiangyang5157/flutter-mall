@@ -53,7 +53,7 @@ class _SignInPageState extends State<SignInPage> {
             controller: _passwordController,
           ),
           ProgressButton(
-            normalWidget: Text(string(context, 'label_sign_in')),
+            defaultWidget: Text(string(context, 'label_sign_in')),
             progressWidget: ThreeSizeDot(),
             animate: false,
             width: 196,
@@ -65,9 +65,11 @@ class _SignInPageState extends State<SignInPage> {
                   .signIn();
               return () {
                 if (response.success) {
-                  locator<Nav>()
-                      .router
-                      .navigateTo(context, 'HomePage', clearStack: true);
+                  if (mounted) {
+                    locator<Nav>()
+                        .router
+                        .navigateTo(context, 'HomePage', clearStack: true);
+                  }
                 }
               };
             },

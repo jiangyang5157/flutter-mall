@@ -13,13 +13,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  LoginModel loginModel = LoginModel();
-
   @override
   void dispose() {
     super.dispose();
     print('#### _LoginPageState - dispose');
-    loginModel.dispose();
   }
 
   @override
@@ -33,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     print('#### _LoginPageState - build');
 
     return ChangeNotifierProvider<LoginModel>(
-      builder: (_) => loginModel,
+      builder: (_) => LoginModel(),
       child: Consumer<LoginModel>(
         builder: (context, loginModel, _) {
           return Scaffold(body: buildChildren(loginModel.state));
