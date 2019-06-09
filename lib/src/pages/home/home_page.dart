@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                 title: Text(string(context, 'label_sign_out')),
                 trailing: Icon(Icons.settings),
                 onTap: () async {
-                  await userModel.signOut();
+                  UserModel(userModel.user).signOut();
                   locator<Nav>()
                       .router
                       .navigateTo(context, 'LoginPage', clearStack: true);
