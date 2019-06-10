@@ -13,9 +13,9 @@
     "prompt_sign_up": "Create your account.",
     "prompt_go_to_sign_up": "Not yet registered? Sign up.",
     "prompt_go_to_sign_in": "Already have an account? Log back in.",
-    "error_empty_username": "Username cannot be empty.",
-    "error_empty_password": "Password cannot be empty.",
-    "error_empty_email_address": "Email address cannot be empty."
+    "error_invalid_username": "Invalid username.",
+    "error_invalid_password": "Invalid password.",
+    "error_invalid_email_address": "Invalid email."
   },
   "zh": {
   }

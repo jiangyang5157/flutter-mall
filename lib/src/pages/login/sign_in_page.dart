@@ -8,6 +8,7 @@ import 'package:fluro/fluro.dart';
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
 import 'package:mall/src/widgets/widgets.dart';
+import 'package:mall/src/utils/utils.dart';
 
 class SignInPage extends StatefulWidget {
   SignInPage({Key key}) : super(key: key);
@@ -62,7 +63,7 @@ class _SignInPageState extends State<SignInPage> {
             controller: _usernameController,
             validator: (text) => text.trim().length > 0
                 ? null
-                : string(context, 'error_empty_username'),
+                : string(context, 'error_invalid_username'),
           ),
           TextFormField(
             decoration:
@@ -72,7 +73,7 @@ class _SignInPageState extends State<SignInPage> {
             controller: _passwordController,
             validator: (text) => text.trim().length > 0
                 ? null
-                : string(context, 'error_empty_password'),
+                : string(context, 'error_invalid_password'),
           ),
           ProgressButton(
             defaultWidget: Text(string(context, 'label_sign_in')),

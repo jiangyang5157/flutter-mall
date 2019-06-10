@@ -3,6 +3,7 @@ import 'package:fluro/fluro.dart';
 
 import 'package:mall/src/core/core.dart';
 import 'package:mall/src/models/models.dart';
+import 'package:mall/src/utils/utils.dart';
 
 class SplashPage extends StatefulWidget {
   SplashPage({Key key}) : super(key: key);

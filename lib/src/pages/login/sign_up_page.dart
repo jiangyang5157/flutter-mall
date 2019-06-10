@@ -8,6 +8,7 @@ import 'package:fluro/fluro.dart';
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
 import 'package:mall/src/widgets/widgets.dart';
+import 'package:mall/src/utils/utils.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key key}) : super(key: key);
@@ -70,7 +71,7 @@ class _SignUpPageState extends State<SignUpPage> {
             controller: _usernameController,
             validator: (text) => text.trim().length > 0
                 ? null
-                : string(context, 'error_empty_username'),
+                : string(context, 'error_invalid_username'),
           ),
           TextFormField(
             decoration:
@@ -80,7 +81,7 @@ class _SignUpPageState extends State<SignUpPage> {
             controller: _passwordController,
             validator: (text) => text.trim().length > 0
                 ? null
-                : string(context, 'error_empty_password'),
+                : string(context, 'error_invalid_password'),
           ),
           TextFormField(
             decoration: InputDecoration(
@@ -89,7 +90,7 @@ class _SignUpPageState extends State<SignUpPage> {
             controller: _emailAddressController,
             validator: (text) => text.trim().length > 0
                 ? null
-                : string(context, 'error_empty_email_address'),
+                : string(context, 'error_invalid_email_address'),
           ),
           ProgressButton(
             defaultWidget: Text(string(context, 'label_sign_up')),

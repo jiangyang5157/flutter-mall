@@ -5,6 +5,7 @@ import 'package:fluro/fluro.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
+import 'package:mall/src/utils/utils.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
