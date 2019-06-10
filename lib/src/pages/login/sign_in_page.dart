@@ -94,7 +94,8 @@ class _SignInPageState extends State<SignInPage> {
                     } else {
                       Scaffold.of(context).showSnackBar(SnackBar(
                         content: Text(response.error.message),
-                        duration: Duration(seconds: 3),
+                        duration: Duration(
+                            milliseconds: snackBarDurationInMilliseconds),
                       ));
                     }
                   }
