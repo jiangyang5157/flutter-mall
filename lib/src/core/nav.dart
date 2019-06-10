@@ -12,15 +12,13 @@ class Nav {
     _router = Router()
       ..define('SplashPage', handler: Handler(
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-        return SplashPage();
-      }))
-      ..define('LoginPage', handler: Handler(
+            return SplashPage();
+          }))..define('LoginPage', handler: Handler(
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-        return LoginPage();
-      }))
-      ..define('HomePage', handler: Handler(
+            return LoginPage();
+          }))..define('HomePage', handler: Handler(
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
-        return HomePage();
-      }));
+            return HomePage();
+          }));
   }
 }

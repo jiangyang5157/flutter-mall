@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:fluro/fluro.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
@@ -76,9 +77,8 @@ class _HomePageState extends State<HomePage> {
                 trailing: Icon(Icons.settings),
                 onTap: () async {
                   UserModel(userModel.user).signOut();
-                  locator<Nav>()
-                      .router
-                      .navigateTo(context, 'LoginPage', clearStack: true);
+                  locator<Nav>().router.navigateTo(context, 'LoginPage',
+                      clearStack: true, transition: TransitionType.fadeIn);
                 },
               ),
             ],

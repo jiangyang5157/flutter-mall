@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluro/fluro.dart';
 
 import 'package:mall/src/core/core.dart';
 import 'package:mall/src/models/models.dart';
@@ -32,13 +33,11 @@ class _SplashPageState extends State<SplashPage> {
         case AppState.Initialized:
           userModel.userOut.listen((ParseUserModel user) {
             if (userModel.user == null) {
-              locator<Nav>()
-                  .router
-                  .navigateTo(context, 'LoginPage', clearStack: true);
+              locator<Nav>().router.navigateTo(context, 'LoginPage',
+                  clearStack: true, transition: TransitionType.fadeIn);
             } else {
-              locator<Nav>()
-                  .router
-                  .navigateTo(context, 'HomePage', clearStack: true);
+              locator<Nav>().router.navigateTo(context, 'HomePage',
+                  clearStack: true, transition: TransitionType.fadeIn);
             }
           });
       }

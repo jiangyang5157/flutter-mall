@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:provider/provider.dart';
+import 'package:fluro/fluro.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
@@ -109,11 +110,15 @@ class _SignUpPageState extends State<SignUpPage> {
                   await userModel.save();
                 }
                 return () {
-                  if (response.success) {
-                    if (mounted) {
-                      locator<Nav>()
-                          .router
-                          .navigateTo(context, 'HomePage', clearStack: true);
+                  if (mounted) {
+                    if (response.success) {
+                      locator<Nav>().router.navigateTo(context, 'HomePage',
+                          clearStack: true, transition: TransitionType.fadeIn);
+                    } else {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text(response.error.message),
+                        duration: Duration(seconds: 3),
+                      ));
                     }
                   }
                 };

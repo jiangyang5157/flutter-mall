@@ -38,9 +38,6 @@ dependencies:
   # Flutter routing library that adds flexible routing options.
   fluro: '^1.4.0'
 
-  # A highly customizable widget so you can notify your user when you fell like he needs a beautiful explanation.
-  flushbar: '^1.6.0'
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
