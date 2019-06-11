@@ -20,9 +20,12 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _emailAddressController = TextEditingController();
+  final _usernameController = TextEditingControllerWorkaround();
+  final _passwordController = TextEditingControllerWorkaround();
+  final _emailAddressController = TextEditingControllerWorkaround();
+  final FocusNode _usernameFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _emailAddressFocusNode = FocusNode();
 
   @override
   void dispose() {
@@ -55,9 +58,9 @@ class _SignUpFormState extends State<SignUpForm> {
     print('#### _SignUpFormState - build');
 
     SignUpModel signUpModel = Provider.of<SignUpModel>(context);
-    _usernameController.text = signUpModel.username;
-    _passwordController.text = signUpModel.password;
-    _emailAddressController.text = signUpModel.emailAddress;
+    _usernameController.setTextAndPosition(signUpModel.username);
+    _passwordController.setTextAndPosition(signUpModel.password);
+    _emailAddressController.setTextAndPosition(signUpModel.emailAddress);
 
     return Form(
       key: _formKey,
@@ -67,8 +70,12 @@ class _SignUpFormState extends State<SignUpForm> {
           TextFormField(
             decoration:
                 InputDecoration(labelText: string(context, 'label_username')),
+            textInputAction: TextInputAction.next,
             obscureText: false,
             controller: _usernameController,
+            focusNode: _usernameFocusNode,
+            onFieldSubmitted: (_) =>
+                FocusScope.of(context).requestFocus(_passwordFocusNode),
             validator: (text) =>
                 string(context, UsernameValidator().validate(text)),
             inputFormatters: [UsernameInputFormatter()],
@@ -76,9 +83,13 @@ class _SignUpFormState extends State<SignUpForm> {
           TextFormField(
             decoration:
                 InputDecoration(labelText: string(context, 'label_password')),
+            textInputAction: TextInputAction.next,
             obscureText: true,
             enableInteractiveSelection: false,
             controller: _passwordController,
+            focusNode: _passwordFocusNode,
+            onFieldSubmitted: (_) =>
+                FocusScope.of(context).requestFocus(_emailAddressFocusNode),
             validator: (text) =>
                 string(context, PasswordValidator().validate(text)),
             inputFormatters: [PasswordInputFormatter()],
@@ -86,8 +97,11 @@ class _SignUpFormState extends State<SignUpForm> {
           TextFormField(
             decoration: InputDecoration(
                 labelText: string(context, 'label_email_address')),
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.done,
             obscureText: false,
             controller: _emailAddressController,
+            focusNode: _emailAddressFocusNode,
             validator: (text) =>
                 string(context, EmailAddressValidator().validate(text)),
             inputFormatters: [EmailAddressInputFormatter()],
@@ -109,6 +123,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   await userModel.save();
                 }
                 return () {
+                  _passwordController.clear();
                   if (mounted) {
                     if (response.success) {
                       locator<Nav>().router.navigateTo(context, 'HomePage',

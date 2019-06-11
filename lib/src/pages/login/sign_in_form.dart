@@ -19,8 +19,11 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
+
+  final _usernameController = TextEditingControllerWorkaround();
+  final _passwordController = TextEditingControllerWorkaround();
+  final FocusNode _usernameFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
 
   @override
   void dispose() {
@@ -48,8 +51,8 @@ class _SignInFormState extends State<SignInForm> {
     print('#### _SignInFormState - build');
 
     SignInModel signInModel = Provider.of<SignInModel>(context);
-    _usernameController.text = signInModel.username;
-    _passwordController.text = signInModel.password;
+    _usernameController.setTextAndPosition(signInModel.username);
+    _passwordController.setTextAndPosition(signInModel.password);
 
     return Form(
       key: _formKey,
@@ -59,8 +62,12 @@ class _SignInFormState extends State<SignInForm> {
           TextFormField(
             decoration: InputDecoration(
                 labelText: string(context, 'label_username_or_email_address')),
+            textInputAction: TextInputAction.next,
             obscureText: false,
             controller: _usernameController,
+            focusNode: _usernameFocusNode,
+            onFieldSubmitted: (_) =>
+                FocusScope.of(context).requestFocus(_passwordFocusNode),
             validator: (text) =>
                 string(context, UsernameValidator().validate(text)),
             inputFormatters: [UsernameInputFormatter()],
@@ -68,9 +75,11 @@ class _SignInFormState extends State<SignInForm> {
           TextFormField(
             decoration:
                 InputDecoration(labelText: string(context, 'label_password')),
+            textInputAction: TextInputAction.done,
             obscureText: true,
             enableInteractiveSelection: false,
             controller: _passwordController,
+            focusNode: _passwordFocusNode,
             validator: (text) =>
                 string(context, PasswordValidator().validate(text)),
             inputFormatters: [PasswordInputFormatter()],
@@ -86,6 +95,7 @@ class _SignInFormState extends State<SignInForm> {
                         password: _passwordController.text)
                     .signIn();
                 return () {
+                  _passwordController.clear();
                   if (mounted) {
                     if (response.success) {
                       locator<Nav>().router.navigateTo(context, 'HomePage',
