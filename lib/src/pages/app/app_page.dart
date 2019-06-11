@@ -45,7 +45,7 @@ class _AppPageState extends State<AppPage> {
                 .map<Locale>((languageCode) => Locale(languageCode)),
             home: SplashPage(),
             onGenerateRoute: locator<Nav>().router.generator,
-            theme: themeModel.typeToData(themeModel.type),
+            theme: themeModel.typeToData(context, themeModel.type),
           );
         },
       ),

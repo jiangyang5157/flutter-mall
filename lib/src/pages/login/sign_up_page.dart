@@ -91,7 +91,11 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           ProgressButton(
             defaultWidget: Text(string(context, 'label_sign_up')),
-            progressWidget: ThreeSizeDot(),
+            progressWidget: ThreeSizeDot(
+              color_1: Theme.of(context).textTheme.body1.color,
+              color_2: Theme.of(context).textTheme.body1.color,
+              color_3: Theme.of(context).textTheme.body1.color,
+            ),
             animate: false,
             onPressed: () async {
               if (_formKey.currentState.validate()) {

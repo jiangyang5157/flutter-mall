@@ -60,15 +60,19 @@ class ThemeModel extends ChangeNotifier {
     return type.toString().split('.').last;
   }
 
-  ThemeData typeToData(ThemeType type) {
+  ThemeData typeToData(BuildContext context, ThemeType type) {
     switch (type) {
       case ThemeType.Dark:
-        return ThemeData(
-          brightness: Brightness.dark,
+        return ThemeData.dark().copyWith(
+          buttonTheme: ButtonTheme.of(context).copyWith(
+            height: 40,
+          ),
         );
       case ThemeType.Light:
-        return ThemeData(
-          brightness: Brightness.light,
+        return ThemeData.light().copyWith(
+          buttonTheme: ButtonTheme.of(context).copyWith(
+            height: 40,
+          ),
         );
     }
   }
