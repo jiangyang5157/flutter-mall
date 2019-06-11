@@ -4,6 +4,7 @@ import 'package:mall/src/utils/utils.dart';
 class UsernameValidator implements Validator<String, String> {
   @override
   String validate(String data) {
+    // TODO: restriction
     String trimmed = data.trim();
     if (trimmed.length <= 0) {
       return 'error_empty_username';

@@ -61,6 +61,7 @@ class ThemeModel extends ChangeNotifier {
   }
 
   ThemeData typeToData(BuildContext context, ThemeType type) {
+    // TODO: theme customization
     switch (type) {
       case ThemeType.Dark:
         return ThemeData.dark().copyWith(
