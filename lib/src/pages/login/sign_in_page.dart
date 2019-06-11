@@ -61,9 +61,8 @@ class _SignInPageState extends State<SignInPage> {
                 labelText: string(context, 'label_username_or_email_address')),
             obscureText: false,
             controller: _usernameController,
-            validator: (text) => text.trim().length > 0
-                ? null
-                : string(context, 'error_invalid_username'),
+            validator: (text) =>
+                string(context, UsernameValidator().validate(text)),
           ),
           TextFormField(
             decoration:
@@ -71,9 +70,8 @@ class _SignInPageState extends State<SignInPage> {
             obscureText: true,
             enableInteractiveSelection: false,
             controller: _passwordController,
-            validator: (text) => text.trim().length > 0
-                ? null
-                : string(context, 'error_invalid_password'),
+            validator: (text) =>
+                string(context, PasswordValidator().validate(text)),
           ),
           ProgressButton(
             defaultWidget: Text(string(context, 'label_sign_in')),
