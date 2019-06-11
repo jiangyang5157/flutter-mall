@@ -77,8 +77,6 @@ class _SignInPageState extends State<SignInPage> {
             defaultWidget: Text(string(context, 'label_sign_in')),
             progressWidget: ThreeSizeDot(),
             animate: false,
-            width: 196,
-            height: 40,
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 ParseResponse response = await UserModel.createUser(

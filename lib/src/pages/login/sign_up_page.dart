@@ -93,8 +93,6 @@ class _SignUpPageState extends State<SignUpPage> {
             defaultWidget: Text(string(context, 'label_sign_up')),
             progressWidget: ThreeSizeDot(),
             animate: false,
-            width: 196,
-            height: 40,
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 UserModel userModel = UserModel.createUser(

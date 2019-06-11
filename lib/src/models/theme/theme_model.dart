@@ -63,9 +63,13 @@ class ThemeModel extends ChangeNotifier {
   ThemeData typeToData(ThemeType type) {
     switch (type) {
       case ThemeType.Dark:
-        return ThemeData(brightness: Brightness.dark);
+        return ThemeData(
+          brightness: Brightness.dark,
+        );
       case ThemeType.Light:
-        return ThemeData(brightness: Brightness.light);
+        return ThemeData(
+          brightness: Brightness.light,
+        );
     }
   }
 }
