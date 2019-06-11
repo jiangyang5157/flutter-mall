@@ -71,6 +71,7 @@ class _SignUpFormState extends State<SignUpForm> {
             controller: _usernameController,
             validator: (text) =>
                 string(context, UsernameValidator().validate(text)),
+            inputFormatters: [UsernameInputFormatter()],
           ),
           TextFormField(
             decoration:
@@ -80,6 +81,7 @@ class _SignUpFormState extends State<SignUpForm> {
             controller: _passwordController,
             validator: (text) =>
                 string(context, PasswordValidator().validate(text)),
+            inputFormatters: [PasswordInputFormatter()],
           ),
           TextFormField(
             decoration: InputDecoration(
@@ -88,6 +90,7 @@ class _SignUpFormState extends State<SignUpForm> {
             controller: _emailAddressController,
             validator: (text) =>
                 string(context, EmailAddressValidator().validate(text)),
+            inputFormatters: [EmailAddressInputFormatter()],
           ),
           ProgressButton(
             defaultWidget: Text(string(context, 'label_sign_up')),

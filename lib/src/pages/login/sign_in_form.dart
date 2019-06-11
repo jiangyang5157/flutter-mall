@@ -63,6 +63,7 @@ class _SignInFormState extends State<SignInForm> {
             controller: _usernameController,
             validator: (text) =>
                 string(context, UsernameValidator().validate(text)),
+            inputFormatters: [UsernameInputFormatter()],
           ),
           TextFormField(
             decoration:
@@ -72,6 +73,7 @@ class _SignInFormState extends State<SignInForm> {
             controller: _passwordController,
             validator: (text) =>
                 string(context, PasswordValidator().validate(text)),
+            inputFormatters: [PasswordInputFormatter()],
           ),
           ProgressButton(
             defaultWidget: Text(string(context, 'label_sign_in')),
