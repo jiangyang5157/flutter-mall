@@ -10,14 +10,14 @@ import 'package:mall/src/core/core.dart';
 import 'package:mall/src/widgets/widgets.dart';
 import 'package:mall/src/utils/utils.dart';
 
-class SignInPage extends StatefulWidget {
-  SignInPage({Key key}) : super(key: key);
+class SignInForm extends StatefulWidget {
+  SignInForm({Key key}) : super(key: key);
 
   @override
-  _SignInPageState createState() => _SignInPageState();
+  _SignInFormState createState() => _SignInFormState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignInFormState extends State<SignInForm> {
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -27,13 +27,13 @@ class _SignInPageState extends State<SignInPage> {
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
-    print('#### _SignInPageState - dispose');
+    print('#### _SignInFormState - dispose');
   }
 
   @override
   void initState() {
     super.initState();
-    print('#### _SignInPageState - initState');
+    print('#### _SignInFormState - initState');
 
     _usernameController.addListener(() {
       Provider.of<SignInModel>(context).username = _usernameController.text;
@@ -45,7 +45,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('#### _SignInPageState - build');
+    print('#### _SignInFormState - build');
 
     SignInModel signInModel = Provider.of<SignInModel>(context);
     _usernameController.text = signInModel.username;

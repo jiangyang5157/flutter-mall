@@ -50,12 +50,12 @@ class _LoginPageState extends State<LoginPage> {
       case LoginState.SignIn:
         return Provider<SignInModel>.value(
           value: signInModel,
-          child: SignInPage(),
+          child: SignInForm(),
         );
       case LoginState.SignUp:
         return Provider<SignUpModel>.value(
           value: signUpModel,
-          child: SignUpPage(),
+          child: SignUpForm(),
         );
     }
   }

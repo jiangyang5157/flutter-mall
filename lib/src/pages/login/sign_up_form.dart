@@ -10,14 +10,14 @@ import 'package:mall/src/core/core.dart';
 import 'package:mall/src/widgets/widgets.dart';
 import 'package:mall/src/utils/utils.dart';
 
-class SignUpPage extends StatefulWidget {
-  SignUpPage({Key key}) : super(key: key);
+class SignUpForm extends StatefulWidget {
+  SignUpForm({Key key}) : super(key: key);
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpFormState extends State<SignUpForm> {
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   final _usernameController = TextEditingController();
@@ -30,13 +30,13 @@ class _SignUpPageState extends State<SignUpPage> {
     _passwordController.dispose();
     _emailAddressController.dispose();
     super.dispose();
-    print('#### _SignUpPageState - dispose');
+    print('#### _SignUpFormState - dispose');
   }
 
   @override
   void initState() {
     super.initState();
-    print('#### _SignUpPageState - initState');
+    print('#### _SignUpFormState - initState');
 
     _usernameController.addListener(() {
       Provider.of<SignUpModel>(context).username = _usernameController.text;
@@ -52,7 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('#### _SignUpPageState - build');
+    print('#### _SignUpFormState - build');
 
     SignUpModel signUpModel = Provider.of<SignUpModel>(context);
     _usernameController.text = signUpModel.username;
