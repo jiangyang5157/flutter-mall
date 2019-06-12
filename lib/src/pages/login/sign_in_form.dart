@@ -63,7 +63,6 @@ class _SignInFormState extends State<SignInForm> {
             decoration: InputDecoration(
                 labelText: string(context, 'label_username_or_email_address')),
             textInputAction: TextInputAction.next,
-            obscureText: false,
             controller: _usernameController,
             focusNode: _usernameFocusNode,
             onFieldSubmitted: (_) =>

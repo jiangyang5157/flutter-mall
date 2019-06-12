@@ -71,7 +71,6 @@ class _SignUpFormState extends State<SignUpForm> {
             decoration:
                 InputDecoration(labelText: string(context, 'label_username')),
             textInputAction: TextInputAction.next,
-            obscureText: false,
             controller: _usernameController,
             focusNode: _usernameFocusNode,
             onFieldSubmitted: (_) =>
@@ -99,7 +98,6 @@ class _SignUpFormState extends State<SignUpForm> {
                 labelText: string(context, 'label_email_address')),
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.done,
-            obscureText: false,
             controller: _emailAddressController,
             focusNode: _emailAddressFocusNode,
             validator: (text) =>
