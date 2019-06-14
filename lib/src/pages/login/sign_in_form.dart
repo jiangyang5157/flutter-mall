@@ -94,9 +94,20 @@ class _SignInFormState extends State<SignInForm> {
                     decoration: InputDecoration(
                       labelText: string(context, 'label_password'),
                       prefixIcon: Icon(Icons.lock),
+                      suffixIcon: new GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            signInModel.obscurePassword =
+                                !signInModel.obscurePassword;
+                          });
+                        },
+                        child: Icon(signInModel.obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                      ),
                     ),
+                    obscureText: signInModel.obscurePassword,
                     textInputAction: TextInputAction.done,
-                    obscureText: true,
                     enableInteractiveSelection: false,
                     controller: _passwordController,
                     focusNode: _passwordFocusNode,

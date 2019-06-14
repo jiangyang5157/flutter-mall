@@ -101,9 +101,20 @@ class _SignUpFormState extends State<SignUpForm> {
                     decoration: InputDecoration(
                       labelText: string(context, 'label_password'),
                       prefixIcon: Icon(Icons.lock),
+                      suffixIcon: new GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            signUpModel.obscurePassword =
+                            !signUpModel.obscurePassword;
+                          });
+                        },
+                        child: Icon(signUpModel.obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                      ),
                     ),
+                    obscureText: signUpModel.obscurePassword,
                     textInputAction: TextInputAction.next,
-                    obscureText: true,
                     enableInteractiveSelection: false,
                     controller: _passwordController,
                     focusNode: _passwordFocusNode,

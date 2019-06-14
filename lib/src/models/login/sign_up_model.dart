@@ -34,6 +34,15 @@ class SignUpModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _obscurePassword;
+
+  bool get obscurePassword => _obscurePassword;
+
+  set obscurePassword(bool obscurePassword) {
+    _obscurePassword = obscurePassword;
+    notifyListeners();
+  }
+
   SignUpModel() {
     print('#### SignUpModel()');
     _init();
@@ -43,5 +52,6 @@ class SignUpModel extends ChangeNotifier {
     username = '';
     password = '';
     emailAddress = '';
+    obscurePassword = true;
   }
 }

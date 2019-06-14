@@ -25,6 +25,15 @@ class SignInModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _obscurePassword;
+
+  bool get obscurePassword => _obscurePassword;
+
+  set obscurePassword(bool obscurePassword) {
+    _obscurePassword = obscurePassword;
+    notifyListeners();
+  }
+
   SignInModel() {
     print('#### SignInModel()');
     _init();
@@ -33,5 +42,6 @@ class SignInModel extends ChangeNotifier {
   void _init() {
     username = '';
     password = '';
+    obscurePassword = true;
   }
 }
