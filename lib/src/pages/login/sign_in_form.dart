@@ -54,71 +54,97 @@ class _SignInFormState extends State<SignInForm> {
     _usernameController.setTextAndPosition(signInModel.username);
     _passwordController.setTextAndPosition(signInModel.password);
 
-    return Form(
-      key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextFormField(
-            decoration: InputDecoration(
-                labelText: string(context, 'label_username_or_email_address')),
-            textInputAction: TextInputAction.next,
-            controller: _usernameController,
-            focusNode: _usernameFocusNode,
-            onFieldSubmitted: (_) =>
-                FocusScope.of(context).requestFocus(_passwordFocusNode),
-            validator: (text) =>
-                string(context, UsernameValidator().validate(text)),
-            inputFormatters: [UsernameInputFormatter()],
-          ),
-          TextFormField(
-            decoration:
-                InputDecoration(labelText: string(context, 'label_password')),
-            textInputAction: TextInputAction.done,
-            obscureText: true,
-            enableInteractiveSelection: false,
-            controller: _passwordController,
-            focusNode: _passwordFocusNode,
-            validator: (text) =>
-                string(context, PasswordValidator().validate(text)),
-            inputFormatters: [PasswordInputFormatter()],
-          ),
-          ProgressButton(
-            defaultWidget: Text(string(context, 'label_sign_in')),
-            progressWidget: ThreeSizeDot(),
-            animate: false,
-            onPressed: () async {
-              if (_formKey.currentState.validate()) {
-                ParseResponse response = await UserModel.createUser(
-                        username: _usernameController.text,
-                        password: _passwordController.text)
-                    .signIn();
-                return () {
-                  _passwordController.clear();
-                  if (mounted) {
-                    if (response.success) {
-                      locator<Nav>().router.navigateTo(context, 'HomePage',
-                          clearStack: true, transition: TransitionType.fadeIn);
-                    } else {
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text(response.error.message),
-                        duration: Duration(
-                            milliseconds: snackBarDurationInMilliseconds),
-                      ));
+    return Container(
+      padding: new EdgeInsets.fromLTRB(formPaddingLR, 0, formPaddingLR, 0),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            Container(
+              padding:
+                  new EdgeInsets.all(formTitlePaddingLTRB),
+              child: Text(
+                string(context, 'title_sign_in_form'),
+                style: Theme.of(context).textTheme.title,
+              ),
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                  labelText:
+                      string(context, 'label_username_or_email_address')),
+              textInputAction: TextInputAction.next,
+              controller: _usernameController,
+              focusNode: _usernameFocusNode,
+              onFieldSubmitted: (_) =>
+                  FocusScope.of(context).requestFocus(_passwordFocusNode),
+              validator: (text) =>
+                  string(context, UsernameValidator().validate(text)),
+              inputFormatters: [UsernameInputFormatter()],
+            ),
+            TextFormField(
+              decoration:
+                  InputDecoration(labelText: string(context, 'label_password')),
+              textInputAction: TextInputAction.done,
+              obscureText: true,
+              enableInteractiveSelection: false,
+              controller: _passwordController,
+              focusNode: _passwordFocusNode,
+              validator: (text) =>
+                  string(context, PasswordValidator().validate(text)),
+              inputFormatters: [PasswordInputFormatter()],
+            ),
+            ProgressButton(
+              defaultWidget: Text(string(context, 'label_sign_in')),
+              progressWidget: ThreeSizeDot(),
+              animate: false,
+              onPressed: () async {
+                if (_formKey.currentState.validate()) {
+                  ParseResponse response = await UserModel.createUser(
+                          username: _usernameController.text,
+                          password: _passwordController.text)
+                      .signIn();
+                  return () {
+                    _passwordController.clear();
+                    if (mounted) {
+                      if (response.success) {
+                        locator<Nav>().router.navigateTo(context, 'HomePage',
+                            clearStack: true,
+                            transition: TransitionType.fadeIn);
+                      } else {
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text(response.error.message),
+                          duration: Duration(
+                              milliseconds: snackBarDurationInMilliseconds),
+                        ));
+                      }
                     }
-                  }
-                };
-              }
-            },
-          ),
-          RaisedButton(
-            onPressed: () {
-              Provider.of<LoginModel>(context).state = LoginState.SignUp;
-            },
-            child: Text(string(context, 'prompt_go_to_sign_up')),
-          ),
-        ],
+                  };
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+//Widget buildTopChild(LoginState loginState) {
+//  switch (loginState) {
+//    case LoginState.SignIn:
+//      return Column(
+//        mainAxisAlignment: MainAxisAlignment.end,
+//        children: [
+//          Text(string(context, 'prompt_sign_in_form')),
+//        ],
+//      );
+
+//    case LoginState.SignUp:
+//      return Column(
+//        mainAxisAlignment: MainAxisAlignment.end,
+//        children: [
+//          Text(string(context, 'prompt_sign_up_form')),
+//        ],
+//      );
+//  }
+//}
