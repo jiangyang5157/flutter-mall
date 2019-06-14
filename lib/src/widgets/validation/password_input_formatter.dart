@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-import 'package:mall/src/utils/validation/validation.dart';
+import 'package:mall/src/widgets/validation/validation.dart';
 
 class PasswordInputFormatter implements TextInputFormatter {
   final RegexValidator regexValidator = RegexValidator('^[a-zA-Z0-9._]*\$');

@@ -1,16 +1,16 @@
-import 'package:mall/src/utils/utils.dart';
+import 'package:mall/src/widgets/validation/validation.dart';
 
 /// Validate given data, returns error message key or null if the data is valid.
-class UsernameValidator implements Validator<String, String> {
+class PasswordValidator implements Validator<String, String> {
   final RegexValidator regexValidator = RegexValidator('^[a-zA-Z0-9._]+\$');
 
   @override
   String validate(String data) {
     if (data.length <= 0) {
-      return 'error_empty_username';
+      return 'error_empty_password';
     }
     if (!regexValidator.validate(data)) {
-      return 'error_invalid_username';
+      return 'error_invalid_passowrd';
     }
     return null;
   }

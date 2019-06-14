@@ -1,4 +1,4 @@
-import 'package:mall/src/utils/validation/validation.dart';
+import 'package:mall/src/widgets/validation/validation.dart';
 
 /// Validate given data, returns error message key or null if the data is valid.
 class EmailAddressValidator implements Validator<String, String> {
