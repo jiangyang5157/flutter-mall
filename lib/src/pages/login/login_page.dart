@@ -43,6 +43,9 @@ class _LoginPageState extends State<LoginPage> {
             body: Center(
               child: ListView(
                 children: <Widget>[
+                  SizedBox(
+                    height: 96, // TODO: add content
+                  ),
                   buildForms(loginModel.state),
                 ],
               ),
