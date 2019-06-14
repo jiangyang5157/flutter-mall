@@ -8,6 +8,4 @@ const int parseSessionExpiredInDays = 365;
 
 const int snackBarDurationInMilliseconds = 3000;
 
-const double pagePaddingLR = 16;
-const double formPaddingLR = 32;
-const double formTitlePaddingLTRB = 16;
+const double textFieldHeight = 88;

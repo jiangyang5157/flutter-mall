@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/pages/pages.dart';
-import 'package:mall/src/utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -41,25 +40,15 @@ class _LoginPageState extends State<LoginPage> {
       child: Consumer<LoginModel>(
         builder: (context, loginModel, _) {
           return Scaffold(
-            resizeToAvoidBottomPadding: false,
-            body: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                new Expanded(
-                  child: Container(),
-                  flex: 1,
-                ),
-                new Expanded(
-                  child: buildCenterChild(loginModel.state),
-                  flex: 2,
-                ),
-                new Expanded(
-                  child: buildBottomChild(loginModel.state),
-                  flex: 1,
-                ),
-              ],
+            body: Center(
+              child: ListView(
+                children: <Widget>[
+                  SizedBox(
+                    height: 96, // TODO: add content
+                  ),
+                  buildForms(loginModel.state),
+                ],
+              ),
             ),
           );
         },
@@ -67,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget buildCenterChild(LoginState loginState) {
+  Widget buildForms(LoginState loginState) {
     switch (loginState) {
       case LoginState.SignIn:
         return Provider<SignInModel>.value(
@@ -78,49 +67,6 @@ class _LoginPageState extends State<LoginPage> {
         return Provider<SignUpModel>.value(
           value: signUpModel,
           child: SignUpForm(),
-        );
-    }
-  }
-
-  Widget buildBottomChild(LoginState loginState) {
-    switch (loginState) {
-      case LoginState.SignIn:
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(string(context, 'prompt_go_to_sign_up')),
-            FlatButton(
-              child: Text(
-                string(context, 'prompt_sign_up_action'),
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.title.color,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-              onPressed: () {
-                loginModel.state = LoginState.SignUp;
-              },
-            ),
-          ],
-        );
-      case LoginState.SignUp:
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(string(context, 'prompt_go_to_sign_in')),
-            FlatButton(
-              child: Text(
-                string(context, 'prompt_sign_in_action'),
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.title.color,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-              onPressed: () {
-                loginModel.state = LoginState.SignIn;
-              },
-            ),
-          ],
         );
     }
   }

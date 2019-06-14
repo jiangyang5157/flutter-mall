@@ -6,7 +6,7 @@ import 'package:mall/src/core/core.dart';
 import 'package:mall/src/utils/utils.dart';
 
 void main() {
-  debugPaintSizeEnabled=true;
+//  debugPaintSizeEnabled=true;
   locator.registerSingleton<Nav>(Nav());
   runApp(AppPage());
 }
