@@ -33,68 +33,70 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     print('#### _HomePageState build');
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<UserModel>(builder: (_) => userModel),
-        ChangeNotifierProvider<DrawerModel>(builder: (_) => DrawerModel()),
-      ],
+    return ChangeNotifierProvider<UserModel>(
+      builder: (_) => userModel,
       child: Scaffold(
         appBar: AppBar(
           title: Text(string(context, 'title_home')),
         ),
         drawer: Drawer(
-          child: ListView(
-            padding: const EdgeInsets.all(0.0),
-            children: <Widget>[
-              Consumer2<UserModel, DrawerModel>(
-                builder: (context, userModel, drawerModel, _) {
-                  return UserAccountsDrawerHeader(
-                    accountName: Text(userModel.user.name),
-                    accountEmail: Text(userModel.user.emailAddress),
-                    currentAccountPicture: GestureDetector(
-                      child: CircleAvatar(
-                        backgroundColor: Colors.white,
+          child: ChangeNotifierProvider<DrawerModel>(
+            builder: (_) => DrawerModel(),
+            child: ListView(
+              padding: const EdgeInsets.all(0.0),
+              children: <Widget>[
+                Consumer2<UserModel, DrawerModel>(
+                  builder: (context, userModel, drawerModel, _) {
+                    return UserAccountsDrawerHeader(
+                      accountName: Text(userModel.user.name),
+                      accountEmail: Text(userModel.user.emailAddress),
+                      currentAccountPicture: GestureDetector(
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                        ),
                       ),
-                    ),
-                    onDetailsPressed: () {
-                      print('${drawerModel.state}');
-                      switch (drawerModel.state) {
-                        case DrawerState.Menu:
-                          drawerModel.state = DrawerState.AccountDetails;
-                          break;
-                        case DrawerState.AccountDetails:
-                          drawerModel.state = DrawerState.Menu;
-                          break;
-                      }
-                    },
-                  );
-                },
-              ),
-              ListTile(
-                title: Text('Light'),
-                trailing: Icon(Icons.settings),
-                onTap: () {
-                  Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Light);
-                },
-              ),
-              ListTile(
-                title: Text('Dark'),
-                trailing: Icon(Icons.settings),
-                onTap: () {
-                  Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Dark);
-                },
-              ),
-              Divider(),
-              ListTile(
-                title: Text(string(context, 'label_sign_out')),
-                trailing: Icon(Icons.settings),
-                onTap: () async {
-                  UserModel(userModel.user).signOut();
-                  locator<Nav>().router.navigateTo(context, 'LoginPage',
-                      clearStack: true, transition: TransitionType.fadeIn);
-                },
-              ),
-            ],
+                      onDetailsPressed: () {
+                        print('${drawerModel.state}');
+                        switch (drawerModel.state) {
+                          case DrawerState.Menu:
+                            drawerModel.state = DrawerState.AccountDetails;
+                            break;
+                          case DrawerState.AccountDetails:
+                            drawerModel.state = DrawerState.Menu;
+                            break;
+                        }
+                      },
+                    );
+                  },
+                ),
+                ListTile(
+                  title: Text('Light'),
+                  trailing: Icon(Icons.settings),
+                  onTap: () {
+                    Provider.of<ThemeModel>(context)
+                        .typeIn
+                        .add(ThemeType.Light);
+                  },
+                ),
+                ListTile(
+                  title: Text('Dark'),
+                  trailing: Icon(Icons.settings),
+                  onTap: () {
+                    Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Dark);
+                  },
+                ),
+                Divider(),
+                ListTile(
+                  title: Text(string(context, 'label_sign_out')),
+                  trailing: Icon(Icons.settings),
+                  onTap: () async {
+                    UserModel(userModel.user).signOut();
+                    locator<Nav>().router.navigateTo(context, 'LoginPage',
+                        clearStack: true, transition: TransitionType.fadeIn);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         body: Center(
