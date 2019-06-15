@@ -64,7 +64,7 @@ class _SignInFormState extends State<SignInForm> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 8.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
                   child: Text(
                     string(context, 'title_sign_in_form'),
                     style: Theme.of(context).textTheme.title,
@@ -116,65 +116,62 @@ class _SignInFormState extends State<SignInForm> {
                     inputFormatters: [PasswordInputFormatter()],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 0.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: FlatButton(
-                          child: Text(
-                            string(context, 'label_sign_up'),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                            ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: FlatButton(
+                        child: Text(
+                          string(context, 'label_sign_up'),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor,
                           ),
-                          onPressed: () {
-                            Provider.of<LoginModel>(context).state =
-                                LoginState.SignUp;
-                          },
                         ),
+                        onPressed: () {
+                          Provider.of<LoginModel>(context).state =
+                              LoginState.SignUp;
+                        },
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: ProgressButton(
-                          defaultWidget: Text(string(context, 'label_sign_in')),
-                          progressWidget: ThreeSizeDot(),
-                          animate: false,
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              ParseResponse response =
-                                  await UserModel.createUser(
-                                          username: _usernameController.text,
-                                          password: _passwordController.text)
-                                      .signIn();
-                              return () {
-                                _passwordController.clear();
-                                if (mounted) {
-                                  if (response.success) {
-                                    locator<Nav>().router.navigateTo(
-                                        context, 'HomePage',
-                                        clearStack: true,
-                                        transition: TransitionType.fadeIn);
-                                  } else {
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text(response.error.message),
-                                      duration: Duration(
-                                          milliseconds:
-                                              snackBarDurationInMilliseconds),
-                                    ));
-                                  }
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: ProgressButton(
+                        defaultWidget: Text(string(context, 'label_sign_in')),
+                        progressWidget: ThreeSizeDot(),
+                        animate: false,
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()) {
+                            ParseResponse response =
+                                await UserModel.createUser(
+                                        username: _usernameController.text,
+                                        password: _passwordController.text)
+                                    .signIn();
+                            return () {
+                              _passwordController.clear();
+                              if (mounted) {
+                                if (response.success) {
+                                  locator<Nav>().router.navigateTo(
+                                      context, 'HomePage',
+                                      clearStack: true,
+                                      transition: TransitionType.fadeIn);
+                                } else {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text(response.error.message),
+                                    duration: Duration(
+                                        milliseconds:
+                                            snackBarDurationInMilliseconds),
+                                  ));
                                 }
-                              };
-                            }
-                          },
-                        ),
+                              }
+                            };
+                          }
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
