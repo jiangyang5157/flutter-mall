@@ -74,12 +74,12 @@ class _SignInFormState extends State<SignInForm> {
                   height: textFieldHeight,
                   child: TextFormField(
                     decoration: InputDecoration(
-                      labelText:
-                          string(context, 'label_username_or_email_address'),
-                      contentPadding: const EdgeInsets.all(textFieldContentPadding),
+                      hintText: string(context, 'label_username_or_email_address'),
+                      hintStyle: new TextStyle(fontSize: textFieldFontSize),
+                      contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.person),
-
-                  ),
+                    ),
+                    style: new TextStyle(fontSize: textFieldFontSize),
                     textInputAction: TextInputAction.next,
                     controller: _usernameController,
                     focusNode: _usernameFocusNode,
@@ -94,8 +94,9 @@ class _SignInFormState extends State<SignInForm> {
                   height: textFieldHeight,
                   child: TextFormField(
                     decoration: InputDecoration(
-                      labelText: string(context, 'label_password'),
-                      contentPadding: const EdgeInsets.all(textFieldContentPadding),
+                      hintText: string(context, 'label_password'),
+                      hintStyle: new TextStyle(fontSize: textFieldFontSize),
+                      contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.lock),
                       suffixIcon: GestureDetector(
                         onTap: () {
@@ -109,6 +110,7 @@ class _SignInFormState extends State<SignInForm> {
                             : Icons.visibility),
                       ),
                     ),
+                    style: new TextStyle(fontSize: textFieldFontSize),
                     obscureText: signInModel.obscurePassword,
                     textInputAction: TextInputAction.done,
                     enableInteractiveSelection: false,
