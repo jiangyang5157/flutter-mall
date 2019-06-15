@@ -43,20 +43,26 @@ class _LoginPageState extends State<LoginPage> {
       child: Consumer<LoginModel>(
         builder: (context, loginModel, _) {
           return Scaffold(
-            body: ListView(
-              children: <Widget>[
-                SizedBox(
-                  height: 96,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: FlutterLogo(),
-                  ),
-                ),
-                buildForms(loginModel.state),
-              ],
+            body: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  buildHeader(),
+                  buildForms(loginModel.state),
+                ],
+              ),
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget buildHeader() {
+    return SizedBox(
+      height: 96,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: FlutterLogo(),
       ),
     );
   }
@@ -73,6 +79,8 @@ class _LoginPageState extends State<LoginPage> {
           value: signUpModel,
           child: SignUpForm(),
         );
+      default:
+        return SizedBox.shrink();
     }
   }
 }

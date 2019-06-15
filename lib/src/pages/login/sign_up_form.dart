@@ -83,11 +83,11 @@ class _SignUpFormState extends State<SignUpForm> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       hintText: string(context, 'label_username'),
-                      hintStyle: new TextStyle(fontSize: textFieldFontSize),
+                      hintStyle: TextStyle(fontSize: textFieldFontSize),
                       contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.person),
                     ),
-                    style: new TextStyle(fontSize: textFieldFontSize),
+                    style: TextStyle(fontSize: textFieldFontSize),
                     textInputAction: TextInputAction.next,
                     controller: _usernameController,
                     focusNode: _usernameFocusNode,
@@ -103,7 +103,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       hintText: string(context, 'label_password'),
-                      hintStyle: new TextStyle(fontSize: textFieldFontSize),
+                      hintStyle: TextStyle(fontSize: textFieldFontSize),
                       contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.lock),
                       suffixIcon: GestureDetector(
@@ -118,7 +118,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             : Icons.visibility),
                       ),
                     ),
-                    style: new TextStyle(fontSize: textFieldFontSize),
+                    style: TextStyle(fontSize: textFieldFontSize),
                     obscureText: signUpModel.obscurePassword,
                     textInputAction: TextInputAction.next,
                     enableInteractiveSelection: false,
@@ -136,11 +136,11 @@ class _SignUpFormState extends State<SignUpForm> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       hintText: string(context, 'label_email_address'),
-                      hintStyle: new TextStyle(fontSize: textFieldFontSize),
+                      hintStyle: TextStyle(fontSize: textFieldFontSize),
                       contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.email),
                     ),
-                    style: new TextStyle(fontSize: textFieldFontSize),
+                    style: TextStyle(fontSize: textFieldFontSize),
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
                     controller: _emailAddressController,
@@ -160,7 +160,6 @@ class _SignUpFormState extends State<SignUpForm> {
                         child: Text(
                           string(context, 'label_sign_in'),
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
@@ -197,12 +196,7 @@ class _SignUpFormState extends State<SignUpForm> {
                                       clearStack: true,
                                       transition: TransitionType.fadeIn);
                                 } else {
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text(response.error.message),
-                                    duration: Duration(
-                                        milliseconds:
-                                            snackBarDurationInMilliseconds),
-                                  ));
+                                  showSimpleSnackBar(context, response.error.message);
                                 }
                               }
                             };

@@ -75,11 +75,11 @@ class _SignInFormState extends State<SignInForm> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       hintText: string(context, 'label_username_or_email_address'),
-                      hintStyle: new TextStyle(fontSize: textFieldFontSize),
+                      hintStyle: TextStyle(fontSize: textFieldFontSize),
                       contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.person),
                     ),
-                    style: new TextStyle(fontSize: textFieldFontSize),
+                    style: TextStyle(fontSize: textFieldFontSize),
                     textInputAction: TextInputAction.next,
                     controller: _usernameController,
                     focusNode: _usernameFocusNode,
@@ -95,7 +95,7 @@ class _SignInFormState extends State<SignInForm> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       hintText: string(context, 'label_password'),
-                      hintStyle: new TextStyle(fontSize: textFieldFontSize),
+                      hintStyle: TextStyle(fontSize: textFieldFontSize),
                       contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.lock),
                       suffixIcon: GestureDetector(
@@ -110,7 +110,7 @@ class _SignInFormState extends State<SignInForm> {
                             : Icons.visibility),
                       ),
                     ),
-                    style: new TextStyle(fontSize: textFieldFontSize),
+                    style: TextStyle(fontSize: textFieldFontSize),
                     obscureText: signInModel.obscurePassword,
                     textInputAction: TextInputAction.done,
                     enableInteractiveSelection: false,
@@ -131,7 +131,6 @@ class _SignInFormState extends State<SignInForm> {
                         child: Text(
                           string(context, 'label_sign_up'),
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
@@ -162,12 +161,7 @@ class _SignInFormState extends State<SignInForm> {
                                       clearStack: true,
                                       transition: TransitionType.fadeIn);
                                 } else {
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text(response.error.message),
-                                    duration: Duration(
-                                        milliseconds:
-                                            snackBarDurationInMilliseconds),
-                                  ));
+                                  showSimpleSnackBar(context, response.error.message);
                                 }
                               }
                             };

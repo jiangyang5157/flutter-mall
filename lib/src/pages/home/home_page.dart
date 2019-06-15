@@ -48,13 +48,14 @@ class _HomePageState extends State<HomePage> {
               Consumer<UserModel>(
                 builder: (context, userModel, _) {
                   return UserAccountsDrawerHeader(
-                    accountName: Text(userModel.user?.name ?? ''),
-                    accountEmail: Text(userModel.user?.emailAddress ?? ''),
+                    accountName: Text(userModel.user.name),
+                    accountEmail: Text(userModel.user.emailAddress),
                     currentAccountPicture: GestureDetector(
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
                       ),
                     ),
+                    onDetailsPressed: () {},
                   );
                 },
               ),
