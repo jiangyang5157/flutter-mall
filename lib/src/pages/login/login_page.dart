@@ -1,12 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:package_info/package_info.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/pages/pages.dart';
-import 'package:mall/src/core/core.dart';
-import 'package:mall/src/utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -43,10 +40,17 @@ class _LoginPageState extends State<LoginPage> {
       child: Consumer<LoginModel>(
         builder: (context, loginModel, _) {
           return Scaffold(
-            body: SingleChildScrollView(
-              child: ListBody(
+            body: SafeArea(
+              // Use expanded ListView instead of shrinking SingleChildScrollView
+              child: ListView(
                 children: <Widget>[
-                  buildHeader(),
+                  SizedBox(
+                    height: 96,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: FlutterLogo(),
+                    ),
+                  ),
                   buildForms(loginModel.state),
                 ],
               ),
@@ -60,10 +64,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget buildHeader() {
     return SizedBox(
       height: 96,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: FlutterLogo(),
-      ),
+      child: FlutterLogo(),
     );
   }
 
