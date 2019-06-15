@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<UserModel>(builder: (_) => userModel),
+        ChangeNotifierProvider<DrawerModel>(builder: (_) => DrawerModel()),
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -45,8 +46,8 @@ class _HomePageState extends State<HomePage> {
           child: ListView(
             padding: const EdgeInsets.all(0.0),
             children: <Widget>[
-              Consumer<UserModel>(
-                builder: (context, userModel, _) {
+              Consumer2<UserModel, DrawerModel>(
+                builder: (context, userModel, drawerModel, _) {
                   return UserAccountsDrawerHeader(
                     accountName: Text(userModel.user.name),
                     accountEmail: Text(userModel.user.emailAddress),
@@ -55,7 +56,17 @@ class _HomePageState extends State<HomePage> {
                         backgroundColor: Colors.white,
                       ),
                     ),
-                    onDetailsPressed: () {},
+                    onDetailsPressed: () {
+                      print('${drawerModel.state}');
+                      switch (drawerModel.state) {
+                        case DrawerState.Menu:
+                          drawerModel.state = DrawerState.AccountDetails;
+                          break;
+                        case DrawerState.AccountDetails:
+                          drawerModel.state = DrawerState.Menu;
+                          break;
+                      }
+                    },
                   );
                 },
               ),
