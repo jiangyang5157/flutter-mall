@@ -46,12 +46,29 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   SizedBox(
                     height: 96,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: FlutterLogo(),
+                    child: FlutterLogo(),
+                  ),
+                  ChangeNotifierProvider<LoginModel>(
+                    builder: (_) => loginModel,
+                    child: Consumer<LoginModel>(
+                      builder: (context, loginModel, _) {
+                        switch (loginModel.state) {
+                          case LoginState.SignIn:
+                            return Provider<SignInModel>.value(
+                              value: signInModel,
+                              child: SignInForm(),
+                            );
+                          case LoginState.SignUp:
+                            return Provider<SignUpModel>.value(
+                              value: signUpModel,
+                              child: SignUpForm(),
+                            );
+                          default:
+                            return SizedBox.shrink();
+                        }
+                      },
                     ),
                   ),
-                  buildForms(loginModel.state),
                 ],
               ),
             ),
@@ -59,29 +76,5 @@ class _LoginPageState extends State<LoginPage> {
         },
       ),
     );
-  }
-
-  Widget buildHeader() {
-    return SizedBox(
-      height: 96,
-      child: FlutterLogo(),
-    );
-  }
-
-  Widget buildForms(LoginState loginState) {
-    switch (loginState) {
-      case LoginState.SignIn:
-        return Provider<SignInModel>.value(
-          value: signInModel,
-          child: SignInForm(),
-        );
-      case LoginState.SignUp:
-        return Provider<SignUpModel>.value(
-          value: signUpModel,
-          child: SignUpForm(),
-        );
-      default:
-        return SizedBox.shrink();
-    }
   }
 }
