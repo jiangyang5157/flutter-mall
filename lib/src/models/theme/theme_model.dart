@@ -61,16 +61,21 @@ class ThemeModel extends ChangeNotifier {
   }
 
   ThemeData typeToData(BuildContext context, ThemeType type) {
-    // TODO: theme customization
     switch (type) {
       case ThemeType.Dark:
         return ThemeData.dark().copyWith(
+          primaryColor: Colors.green,
+          accentColor: Colors.greenAccent,
+          errorColor: Colors.greenAccent,
           buttonTheme: ButtonTheme.of(context).copyWith(
             height: 40,
           ),
         );
       case ThemeType.Light:
         return ThemeData.light().copyWith(
+          primaryColor: Colors.blue,
+          accentColor: Colors.blueAccent,
+          errorColor: Colors.blueAccent,
           buttonTheme: ButtonTheme.of(context).copyWith(
             height: 40,
           ),
