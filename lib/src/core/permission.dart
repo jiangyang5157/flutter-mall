@@ -1,6 +1,5 @@
 enum Permission {
   //
-  Configuration,
   SearchUser,
   EditItemProperty,
   //
