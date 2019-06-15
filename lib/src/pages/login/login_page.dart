@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
               builder: (_) => loginModel,
               child: Consumer<LoginModel>(
                 builder: (context, loginModel, _) {
-                  return buildForms(loginModel.state);
+                  return buildForms(context, loginModel.state);
                 },
               ),
             ),
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget buildForms(LoginState loginState) {
+  Widget buildForms(BuildContext context, LoginState loginState) {
     switch (loginState) {
       case LoginState.SignIn:
         return Provider<SignInModel>.value(

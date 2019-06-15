@@ -32,7 +32,7 @@ class _AppPageState extends State<AppPage> {
     print('#### _AppPageState - build');
 
     return ChangeNotifierProvider<ThemeModel>(
-      builder: (_) => ThemeModel(),
+      builder: (context) => ThemeModel(),
       child: Consumer<ThemeModel>(
         builder: (context, themeModel, _) {
           return MaterialApp(

@@ -34,70 +34,21 @@ class _HomePageState extends State<HomePage> {
     print('#### _HomePageState build');
 
     return ChangeNotifierProvider<UserModel>(
-      builder: (_) => userModel,
+      builder: (context) => userModel,
       child: Scaffold(
         appBar: AppBar(
           title: Text(string(context, 'title_home')),
         ),
         drawer: Drawer(
           child: ChangeNotifierProvider<DrawerModel>(
-            builder: (_) => DrawerModel(),
-            child: ListView(
-              padding: const EdgeInsets.all(0.0),
-              children: <Widget>[
-                Consumer2<UserModel, DrawerModel>(
+              builder: (context) => DrawerModel(),
+              child: Consumer2<UserModel, DrawerModel>(
                   builder: (context, userModel, drawerModel, _) {
-                    return UserAccountsDrawerHeader(
-                      accountName: Text(userModel.user.name),
-                      accountEmail: Text(userModel.user.emailAddress),
-                      currentAccountPicture: GestureDetector(
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                        ),
-                      ),
-                      onDetailsPressed: () {
-                        print('${drawerModel.state}');
-                        switch (drawerModel.state) {
-                          case DrawerState.Menu:
-                            drawerModel.state = DrawerState.AccountDetails;
-                            break;
-                          case DrawerState.AccountDetails:
-                            drawerModel.state = DrawerState.Menu;
-                            break;
-                        }
-                      },
-                    );
-                  },
-                ),
-                ListTile(
-                  title: Text('Light'),
-                  trailing: Icon(Icons.settings),
-                  onTap: () {
-                    Provider.of<ThemeModel>(context)
-                        .typeIn
-                        .add(ThemeType.Light);
-                  },
-                ),
-                ListTile(
-                  title: Text('Dark'),
-                  trailing: Icon(Icons.settings),
-                  onTap: () {
-                    Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Dark);
-                  },
-                ),
-                Divider(),
-                ListTile(
-                  title: Text(string(context, 'label_sign_out')),
-                  trailing: Icon(Icons.settings),
-                  onTap: () async {
-                    UserModel(userModel.user).signOut();
-                    locator<Nav>().router.navigateTo(context, 'LoginPage',
-                        clearStack: true, transition: TransitionType.fadeIn);
-                  },
-                ),
-              ],
-            ),
-          ),
+                return ListView(
+                  padding: const EdgeInsets.all(0.0),
+                  children: buildDrawerList(context, userModel, drawerModel),
+                );
+              })),
         ),
         body: Center(
           child: Column(
@@ -107,5 +58,58 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  List<Widget> buildDrawerList(
+      BuildContext context, UserModel userModel, DrawerModel drawerModel) {
+    var ret = List<Widget>();
+    ret.add(UserAccountsDrawerHeader(
+      accountName: Text(userModel.user.name),
+      accountEmail: Text(userModel.user.emailAddress),
+      currentAccountPicture: GestureDetector(
+        child: CircleAvatar(
+          backgroundColor: Colors.white,
+        ),
+      ),
+      onDetailsPressed: () {
+        print('${drawerModel.state}');
+        switch (drawerModel.state) {
+          case DrawerState.Menu:
+            drawerModel.state = DrawerState.AccountDetails;
+            break;
+          case DrawerState.AccountDetails:
+            drawerModel.state = DrawerState.Menu;
+            break;
+        }
+      },
+    ));
+
+    //
+    ret.add(ListTile(
+      title: Text('Light'),
+      trailing: Icon(Icons.settings),
+      onTap: () {
+        Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Light);
+      },
+    ));
+    ret.add(ListTile(
+      title: Text('Dark'),
+      trailing: Icon(Icons.settings),
+      onTap: () {
+        Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Dark);
+      },
+    ));
+    ret.add(Divider());
+    ret.add(ListTile(
+      title: Text(string(context, 'label_sign_out')),
+      trailing: Icon(Icons.settings),
+      onTap: () async {
+        UserModel(userModel.user).signOut();
+        locator<Nav>().router.navigateTo(context, 'LoginPage',
+            clearStack: true, transition: TransitionType.fadeIn);
+      },
+    ));
+
+    return ret;
   }
 }
