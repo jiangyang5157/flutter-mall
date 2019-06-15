@@ -63,7 +63,23 @@ class _HomePageState extends State<HomePage> {
   List<Widget> buildDrawerList(
       BuildContext context, UserModel userModel, DrawerModel drawerModel) {
     var ret = List<Widget>();
-    ret.add(UserAccountsDrawerHeader(
+    ret.add(buildDrawerHeader(context, userModel, drawerModel));
+    switch (drawerModel.state) {
+      case DrawerState.Menu:
+        ret.addAll(buildDrawerMenu(context, userModel));
+        break;
+      case DrawerState.AccountDetails:
+        ret.addAll(buildDrawerAccountDetails(context, userModel));
+        break;
+      default:
+        break;
+    }
+    return ret;
+  }
+
+  Widget buildDrawerHeader(
+      BuildContext context, UserModel userModel, DrawerModel drawerModel) {
+    return UserAccountsDrawerHeader(
       accountName: Text(userModel.user.name),
       accountEmail: Text(userModel.user.emailAddress),
       currentAccountPicture: GestureDetector(
@@ -82,34 +98,48 @@ class _HomePageState extends State<HomePage> {
             break;
         }
       },
-    ));
+    );
+  }
 
-    //
+  List<Widget> buildDrawerMenu(BuildContext context, UserModel userModel) {
+    var ret = List<Widget>();
     ret.add(ListTile(
       title: Text('Light'),
-      trailing: Icon(Icons.settings),
+      trailing: Icon(Icons.brightness_high),
       onTap: () {
         Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Light);
       },
     ));
     ret.add(ListTile(
       title: Text('Dark'),
-      trailing: Icon(Icons.settings),
+      trailing: Icon(Icons.brightness_low),
       onTap: () {
         Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Dark);
+      },
+    ));
+    return ret;
+  }
+
+  List<Widget> buildDrawerAccountDetails(
+      BuildContext context, UserModel userModel) {
+    var ret = List<Widget>();
+    ret.add(ListTile(
+      title: Text(string(context, 'label_user_profile')),
+      trailing: Icon(Icons.account_box),
+      onTap: () {
+        todo(context);
       },
     ));
     ret.add(Divider());
     ret.add(ListTile(
       title: Text(string(context, 'label_sign_out')),
-      trailing: Icon(Icons.settings),
+      trailing: Icon(Icons.transit_enterexit),
       onTap: () async {
         UserModel(userModel.user).signOut();
         locator<Nav>().router.navigateTo(context, 'LoginPage',
             clearStack: true, transition: TransitionType.fadeIn);
       },
     ));
-
     return ret;
   }
 }

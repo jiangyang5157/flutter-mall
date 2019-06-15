@@ -34,3 +34,16 @@ void showSimpleAlertDialog(BuildContext context, String title,
         );
       });
 }
+
+void todo(BuildContext context) {
+  showSimpleAlertDialog(context, 'TODO', <Widget>[
+    Text('Handle this case.')
+  ], <Widget>[
+    FlatButton(
+      child: Text('Gotcha'),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    )
+  ]);
+}
