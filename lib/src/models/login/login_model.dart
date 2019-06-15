@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-enum LoginState { SignIn, SignUp }
+enum LoginState {
+  SignIn,
+  SignUp,
+}
 
 class LoginModel extends ChangeNotifier {
   BehaviorSubject<LoginState> _stateController = BehaviorSubject<LoginState>();

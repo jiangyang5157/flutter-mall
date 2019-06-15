@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-enum DrawerState { Menu, AccountDetails }
+enum DrawerState {
+  Menu,
+  AccountDetails,
+}
 
 class DrawerModel extends ChangeNotifier {
   BehaviorSubject<DrawerState> _stateController =

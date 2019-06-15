@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rxdart/rxdart.dart';
 
-enum ThemeType { Light, Dark }
+enum ThemeType {
+  Light,
+  Dark,
+}
 
 class ThemeModel extends ChangeNotifier {
   static const String _prefs_ThemeType = '_prefs_ThemeType';
