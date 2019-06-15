@@ -71,6 +71,8 @@ class ThemeModel extends ChangeNotifier {
           accentColor: Colors.greenAccent,
           errorColor: Colors.greenAccent,
           buttonTheme: ButtonTheme.of(context).copyWith(
+            textTheme: ButtonTextTheme.primary,
+            buttonColor: Colors.green,
             height: 40,
           ),
         );
@@ -80,6 +82,8 @@ class ThemeModel extends ChangeNotifier {
           accentColor: Colors.blueAccent,
           errorColor: Colors.blueAccent,
           buttonTheme: ButtonTheme.of(context).copyWith(
+            textTheme: ButtonTextTheme.primary,
+            buttonColor: Colors.blue,
             height: 40,
           ),
         );

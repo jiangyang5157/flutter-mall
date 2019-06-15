@@ -67,7 +67,7 @@ class _ThreeSizeDotState extends State<ThreeSizeDot>
                 shape: widget.shape,
                 size: widget.size,
                 color:
-                    widget.color_1 ?? Theme.of(context).primaryColor,
+                    widget.color_1 ?? Theme.of(context).buttonTheme.colorScheme.onPrimary,
               ),
             ),
           ),
@@ -79,7 +79,7 @@ class _ThreeSizeDotState extends State<ThreeSizeDot>
                 shape: widget.shape,
                 size: widget.size,
                 color:
-                    widget.color_2 ?? Theme.of(context).primaryColor,
+                    widget.color_2 ?? Theme.of(context).buttonTheme.colorScheme.onPrimary,
               ),
             ),
           ),
@@ -91,7 +91,7 @@ class _ThreeSizeDotState extends State<ThreeSizeDot>
                 shape: widget.shape,
                 size: widget.size,
                 color:
-                    widget.color_3 ?? Theme.of(context).primaryColor,
+                    widget.color_3 ?? Theme.of(context).buttonTheme.colorScheme.onPrimary,
               ),
             ),
           ),
