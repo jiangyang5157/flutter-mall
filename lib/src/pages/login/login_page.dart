@@ -35,46 +35,43 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     print('#### _LoginPageState - build');
 
-    return ChangeNotifierProvider<LoginModel>(
-      builder: (_) => loginModel,
-      child: Consumer<LoginModel>(
-        builder: (context, loginModel, _) {
-          return Scaffold(
-            body: SafeArea(
-              // Use expanded ListView instead of shrinking SingleChildScrollView
-              child: ListView(
-                children: <Widget>[
-                  SizedBox(
-                    height: 96,
-                    child: FlutterLogo(),
-                  ),
-                  ChangeNotifierProvider<LoginModel>(
-                    builder: (_) => loginModel,
-                    child: Consumer<LoginModel>(
-                      builder: (context, loginModel, _) {
-                        switch (loginModel.state) {
-                          case LoginState.SignIn:
-                            return Provider<SignInModel>.value(
-                              value: signInModel,
-                              child: SignInForm(),
-                            );
-                          case LoginState.SignUp:
-                            return Provider<SignUpModel>.value(
-                              value: signUpModel,
-                              child: SignUpForm(),
-                            );
-                          default:
-                            return SizedBox.shrink();
-                        }
-                      },
-                    ),
-                  ),
-                ],
+    return Scaffold(
+      body: SafeArea(
+        // Use expanded ListView instead of shrinking SingleChildScrollView
+        child: ListView(
+          children: <Widget>[
+            SizedBox(
+              height: 96,
+              child: FlutterLogo(),
+            ),
+            ChangeNotifierProvider<LoginModel>(
+              builder: (_) => loginModel,
+              child: Consumer<LoginModel>(
+                builder: (context, loginModel, _) {
+                  return buildForms(loginModel.state);
+                },
               ),
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
+  }
+
+  Widget buildForms(LoginState loginState) {
+    switch (loginState) {
+      case LoginState.SignIn:
+        return Provider<SignInModel>.value(
+          value: signInModel,
+          child: SignInForm(),
+        );
+      case LoginState.SignUp:
+        return Provider<SignUpModel>.value(
+          value: signUpModel,
+          child: SignUpForm(),
+        );
+      default:
+        return SizedBox.shrink();
+    }
   }
 }
