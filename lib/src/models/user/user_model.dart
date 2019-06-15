@@ -119,8 +119,6 @@ class UserModel extends ChangeNotifier
     switch (user.type) {
       case UserType.Master:
         return true;
-      case UserType.Administrator:
-        return data == Permission.EditItem || data == Permission.EditOrder;
       case UserType.Normal:
         return false;
       default:

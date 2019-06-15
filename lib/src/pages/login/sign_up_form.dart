@@ -22,15 +22,18 @@ class _SignUpFormState extends State<SignUpForm> {
 
   final _usernameController = TextEditingControllerWorkaround();
   final _passwordController = TextEditingControllerWorkaround();
+  final _repeatPasswordController = TextEditingControllerWorkaround();
   final _emailAddressController = TextEditingControllerWorkaround();
   final FocusNode _usernameFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _repeatPasswordFocusNode = FocusNode();
   final FocusNode _emailAddressFocusNode = FocusNode();
 
   @override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
+    _repeatPasswordController.dispose();
     _emailAddressController.dispose();
     super.dispose();
     print('#### _SignUpFormState - dispose');
@@ -47,6 +50,10 @@ class _SignUpFormState extends State<SignUpForm> {
     _passwordController.addListener(() {
       Provider.of<SignUpModel>(context).password = _passwordController.text;
     });
+    _repeatPasswordController.addListener(() {
+      Provider.of<SignUpModel>(context).repeatPassword =
+          _repeatPasswordController.text;
+    });
     _emailAddressController.addListener(() {
       Provider.of<SignUpModel>(context).emailAddress =
           _emailAddressController.text;
@@ -60,6 +67,7 @@ class _SignUpFormState extends State<SignUpForm> {
     SignUpModel signUpModel = Provider.of<SignUpModel>(context);
     _usernameController.setTextAndPosition(signUpModel.username);
     _passwordController.setTextAndPosition(signUpModel.password);
+    _repeatPasswordController.setTextAndPosition(signUpModel.repeatPassword);
     _emailAddressController.setTextAndPosition(signUpModel.emailAddress);
 
     return Padding(
@@ -84,7 +92,8 @@ class _SignUpFormState extends State<SignUpForm> {
                     decoration: InputDecoration(
                       hintText: string(context, 'label_username'),
                       hintStyle: TextStyle(fontSize: textFieldFontSize),
-                      contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
+                      contentPadding: const EdgeInsets.fromLTRB(
+                          0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.person),
                     ),
                     style: TextStyle(fontSize: textFieldFontSize),
@@ -104,13 +113,14 @@ class _SignUpFormState extends State<SignUpForm> {
                     decoration: InputDecoration(
                       hintText: string(context, 'label_password'),
                       hintStyle: TextStyle(fontSize: textFieldFontSize),
-                      contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
+                      contentPadding: const EdgeInsets.fromLTRB(
+                          0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.lock),
                       suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
                             signUpModel.obscurePassword =
-                            !signUpModel.obscurePassword;
+                                !signUpModel.obscurePassword;
                           });
                         },
                         child: Icon(signUpModel.obscurePassword
@@ -125,7 +135,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     controller: _passwordController,
                     focusNode: _passwordFocusNode,
                     onFieldSubmitted: (_) => FocusScope.of(context)
-                        .requestFocus(_emailAddressFocusNode),
+                        .requestFocus(_repeatPasswordFocusNode),
                     validator: (text) =>
                         string(context, PasswordValidator().validate(text)),
                     inputFormatters: [PasswordInputFormatter()],
@@ -135,9 +145,35 @@ class _SignUpFormState extends State<SignUpForm> {
                   height: textFieldHeight,
                   child: TextFormField(
                     decoration: InputDecoration(
+                      hintText: string(context, 'label_repeat_password'),
+                      hintStyle: TextStyle(fontSize: textFieldFontSize),
+                      contentPadding: const EdgeInsets.fromLTRB(
+                          0, textFieldContentPaddingT, 0, 0),
+                      prefixIcon: Icon(Icons.lock),
+                    ),
+                    style: TextStyle(fontSize: textFieldFontSize),
+                    obscureText: true,
+                    textInputAction: TextInputAction.next,
+                    enableInteractiveSelection: false,
+                    controller: _repeatPasswordController,
+                    focusNode: _repeatPasswordFocusNode,
+                    onFieldSubmitted: (_) => FocusScope.of(context)
+                        .requestFocus(_emailAddressFocusNode),
+                    validator: (text) => string(
+                        context,
+                        RepeatPasswordValidator(_passwordController.text)
+                            .validate(text)),
+                    inputFormatters: [PasswordInputFormatter()],
+                  ),
+                ),
+                Container(
+                  height: textFieldHeight,
+                  child: TextFormField(
+                    decoration: InputDecoration(
                       hintText: string(context, 'label_email_address'),
                       hintStyle: TextStyle(fontSize: textFieldFontSize),
-                      contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
+                      contentPadding: const EdgeInsets.fromLTRB(
+                          0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.email),
                     ),
                     style: TextStyle(fontSize: textFieldFontSize),
@@ -196,7 +232,8 @@ class _SignUpFormState extends State<SignUpForm> {
                                       clearStack: true,
                                       transition: TransitionType.fadeIn);
                                 } else {
-                                  showSimpleSnackBar(context, response.error.message);
+                                  showSimpleSnackBar(
+                                      context, response.error.message);
                                 }
                               }
                             };

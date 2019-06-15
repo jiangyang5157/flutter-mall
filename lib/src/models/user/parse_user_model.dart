@@ -5,7 +5,6 @@ import 'package:mall/src/models/user/user.dart';
 
 enum UserType {
   Master,
-  Administrator,
   Normal,
 }
 

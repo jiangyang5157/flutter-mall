@@ -122,8 +122,29 @@ class _HomePageState extends State<HomePage> {
       BuildContext context, UserModel userModel) {
     var ret = List<Widget>();
     ret.add(ListTile(
-      title: Text(string(context, 'label_user_profile')),
-      trailing: Icon(Icons.account_box),
+      title: Text(string(context, 'label_upload_display_picture')),
+      trailing: Icon(Icons.account_circle),
+      onTap: () {
+        todo(context);
+      },
+    ));
+    ret.add(ListTile(
+      title: Text(string(context, 'label_change_username')),
+      trailing: Icon(Icons.person),
+      onTap: () {
+        todo(context);
+      },
+    ));
+    ret.add(ListTile(
+      title: Text(string(context, 'label_change_password')),
+      trailing: Icon(Icons.lock),
+      onTap: () {
+        todo(context);
+      },
+    ));
+    ret.add(ListTile(
+      title: Text(string(context, 'label_change_email_address')),
+      trailing: Icon(Icons.email),
       onTap: () {
         todo(context);
       },
