@@ -74,7 +74,7 @@ class _SignInFormState extends State<SignInForm> {
                   height: textFieldHeight,
                   child: TextFormField(
                     decoration: InputDecoration(
-                      hintText: string(context, 'label_username_or_email_address'),
+                      hintText: string(context, 'label_username'),
                       hintStyle: TextStyle(fontSize: textFieldFontSize),
                       contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.person),
