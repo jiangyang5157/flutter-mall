@@ -123,7 +123,6 @@ class UserModel extends ChangeNotifier
         return data == Permission.EditItem || data == Permission.EditOrder;
       case UserType.Normal:
         return false;
-        break;
       default:
         return false;
     }

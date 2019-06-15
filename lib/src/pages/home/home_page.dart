@@ -71,8 +71,6 @@ class _HomePageState extends State<HomePage> {
       case DrawerState.AccountDetails:
         ret.addAll(buildDrawerAccountDetails(context, userModel));
         break;
-      default:
-        break;
     }
     return ret;
   }
