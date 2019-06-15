@@ -4,8 +4,10 @@ import 'package:rxdart/rxdart.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
+import 'package:mall/src/utils/validator.dart';
 
-class UserModel extends ChangeNotifier implements UserContract {
+class UserModel extends ChangeNotifier
+    implements UserContract, Validator<Permission, bool> {
   BehaviorSubject<ParseUserModel> _userController =
       BehaviorSubject<ParseUserModel>();
 
@@ -110,5 +112,20 @@ class UserModel extends ChangeNotifier implements UserContract {
       _sync();
     }
     return ret;
+  }
+
+  @override
+  bool validate(Permission data) {
+    switch (user.type) {
+      case UserType.Master:
+        return true;
+      case UserType.Administrator:
+        return data == Permission.EditItem || data == Permission.EditOrder;
+      case UserType.Normal:
+        return false;
+        break;
+      default:
+        return false;
+    }
   }
 }

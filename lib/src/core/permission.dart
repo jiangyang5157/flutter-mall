@@ -1,3 +1,9 @@
 enum Permission {
-  A,
+  //
+  Configuration,
+  SearchUser,
+  EditItemProperty,
+  //
+  EditItem,
+  EditOrder,
 }

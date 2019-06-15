@@ -1,4 +1,3 @@
-export 'package:mall/src/widgets/validation/validator.dart';
 export 'package:mall/src/widgets/validation/regex_validator.dart';
 export 'package:mall/src/widgets/validation/username_validator.dart';
 export 'package:mall/src/widgets/validation/username_input_formatter.dart';

@@ -1,4 +1,5 @@
 import 'package:mall/src/widgets/validation/validation.dart';
+import 'package:mall/src/utils//validator.dart';
 
 /// Validate given data, returns error message key or null if the data is valid.
 class UsernameValidator implements Validator<String, String> {

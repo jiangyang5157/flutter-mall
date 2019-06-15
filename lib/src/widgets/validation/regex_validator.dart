@@ -1,4 +1,4 @@
-import 'package:mall/src/widgets/validation/validation.dart';
+import 'package:mall/src/utils//validator.dart';
 
 class RegexValidator implements Validator<String, bool> {
   RegexValidator(this.regex);
