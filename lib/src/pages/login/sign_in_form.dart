@@ -76,8 +76,10 @@ class _SignInFormState extends State<SignInForm> {
                     decoration: InputDecoration(
                       labelText:
                           string(context, 'label_username_or_email_address'),
+                      contentPadding: const EdgeInsets.all(textFieldContentPadding),
                       prefixIcon: Icon(Icons.person),
-                    ),
+
+                  ),
                     textInputAction: TextInputAction.next,
                     controller: _usernameController,
                     focusNode: _usernameFocusNode,
@@ -93,8 +95,9 @@ class _SignInFormState extends State<SignInForm> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       labelText: string(context, 'label_password'),
+                      contentPadding: const EdgeInsets.all(textFieldContentPadding),
                       prefixIcon: Icon(Icons.lock),
-                      suffixIcon: new GestureDetector(
+                      suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
                             signInModel.obscurePassword =
@@ -144,11 +147,10 @@ class _SignInFormState extends State<SignInForm> {
                         animate: false,
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            ParseResponse response =
-                                await UserModel.createUser(
-                                        username: _usernameController.text,
-                                        password: _passwordController.text)
-                                    .signIn();
+                            ParseResponse response = await UserModel.createUser(
+                                    username: _usernameController.text,
+                                    password: _passwordController.text)
+                                .signIn();
                             return () {
                               _passwordController.clear();
                               if (mounted) {

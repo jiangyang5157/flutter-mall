@@ -83,6 +83,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       labelText: string(context, 'label_username'),
+                      contentPadding: const EdgeInsets.all(textFieldContentPadding),
                       prefixIcon: Icon(Icons.person),
                     ),
                     textInputAction: TextInputAction.next,
@@ -100,8 +101,9 @@ class _SignUpFormState extends State<SignUpForm> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       labelText: string(context, 'label_password'),
+                      contentPadding: const EdgeInsets.all(textFieldContentPadding),
                       prefixIcon: Icon(Icons.lock),
-                      suffixIcon: new GestureDetector(
+                      suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
                             signUpModel.obscurePassword =
@@ -130,6 +132,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       labelText: string(context, 'label_email_address'),
+                      contentPadding: const EdgeInsets.all(textFieldContentPadding),
                       prefixIcon: Icon(Icons.email),
                     ),
                     keyboardType: TextInputType.emailAddress,

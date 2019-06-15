@@ -1,9 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:package_info/package_info.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/pages/pages.dart';
+import 'package:mall/src/core/core.dart';
+import 'package:mall/src/utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -40,15 +43,17 @@ class _LoginPageState extends State<LoginPage> {
       child: Consumer<LoginModel>(
         builder: (context, loginModel, _) {
           return Scaffold(
-            body: Center(
-              child: ListView(
-                children: <Widget>[
-                  SizedBox(
-                    height: 96, // TODO: add content
+            body: ListView(
+              children: <Widget>[
+                SizedBox(
+                  height: 96,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: FlutterLogo(),
                   ),
-                  buildForms(loginModel.state),
-                ],
-              ),
+                ),
+                buildForms(loginModel.state),
+              ],
             ),
           );
         },
