@@ -214,14 +214,14 @@ class _SignUpFormState extends State<SignUpForm> {
                       animate: false,
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
-                          UserModel userModel = UserModel.createUser(
+                          UserModel userModel = UserModel.create(
                               username: _usernameController.text,
                               password: _passwordController.text,
                               emailAddress: _emailAddressController.text);
                           ParseResponse response = await userModel.signUp();
                           if (response.success) {
                             // TODO: parse_server_sdk is not yet support including more properties other then username/password/emailAddress during signUp.
-                            userModel.user.type = UserType.Master;
+                            userModel.type = UserType.Master;
                             await userModel.save();
                           }
                           return () {

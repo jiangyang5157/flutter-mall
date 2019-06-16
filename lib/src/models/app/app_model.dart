@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:rxdart/rxdart.dart';
 
 import 'package:mall/src/core/core.dart';
 
@@ -9,39 +8,29 @@ enum AppState {
 }
 
 class AppModel extends ChangeNotifier {
-  BehaviorSubject<AppState> _stateController = BehaviorSubject<AppState>();
+  AppState _state;
 
-  Stream<AppState> get stateOut => _stateController.stream;
+  AppState get state => _state;
 
-  Sink<AppState> get stateIn => _stateController.sink;
-
-  AppState get state => _stateController.value;
-
-  set state(AppState appState) {
-    stateIn.add(appState);
+  set state(AppState state) {
+    _state = state;
+    notifyListeners();
   }
 
   @override
   void dispose() {
-    _stateController.close();
     super.dispose();
     print('#### AppModel - dispose');
   }
 
   AppModel() {
     print('#### AppModel()');
-    stateOut.listen(_setState);
-    _init();
   }
 
-  Future _init() async {
+  Future<void> init() async {
     Parse().initialize(parseApplicationId, parseServerUrl,
         appName: parseApplicationName, masterKey: parseMasterKey, debug: true);
 
     state = AppState.Initialized;
-  }
-
-  void _setState(AppState appState) {
-    notifyListeners();
   }
 }

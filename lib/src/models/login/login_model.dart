@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 
 enum LoginState {
   SignIn,
@@ -7,36 +6,23 @@ enum LoginState {
 }
 
 class LoginModel extends ChangeNotifier {
-  BehaviorSubject<LoginState> _stateController = BehaviorSubject<LoginState>();
+  LoginState _state;
 
-  Stream<LoginState> get stateOut => _stateController.stream;
+  LoginState get state => _state;
 
-  Sink<LoginState> get stateIn => _stateController.sink;
-
-  LoginState get state => _stateController.value;
-
-  set state(LoginState appState) {
-    stateIn.add(appState);
+  set state(LoginState state) {
+    _state = state;
+    notifyListeners();
   }
 
   @override
   void dispose() {
-    _stateController.close();
     super.dispose();
     print('#### LoginModel - dispose');
   }
 
   LoginModel() {
     print('#### LoginModel()');
-    stateOut.listen(_setState);
-    _init();
-  }
-
-  void _init() {
     state = LoginState.SignIn;
-  }
-
-  void _setState(LoginState appState) {
-    notifyListeners();
   }
 }

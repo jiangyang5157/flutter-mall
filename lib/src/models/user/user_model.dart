@@ -1,127 +1,156 @@
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 
-import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
 import 'package:mall/src/utils/validator.dart';
 
-class UserModel extends ChangeNotifier
-    implements UserContract, Validator<Permission, bool> {
-  BehaviorSubject<ParseUserModel> _userController =
-      BehaviorSubject<ParseUserModel>();
+enum UserType {
+  Master,
+  Normal,
+}
 
-  Stream<ParseUserModel> get userOut => _userController.stream;
+class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
+  static const String _keyVarUserDisplayPicture = 'userDisplayPicture';
+  static const String _keyVarUserType = 'userType';
 
-  Sink<ParseUserModel> get userIn => _userController.sink;
+  ParseUser _user;
 
-  ParseUserModel get user => _userController.value;
+  ParseUser get user => _user;
 
-  set user(ParseUserModel parseUserModel) {
-    userIn.add(parseUserModel);
+  set user(ParseUser user) {
+    _user = user;
+    notifyListeners();
+  }
+
+  String get name => user.get<String>(keyVarUsername);
+
+  set name(String name) {
+    user.set<String>(keyVarUsername, name);
+    notifyListeners();
+  }
+
+  String get password => user.get<String>(keyVarPassword);
+
+  set password(String password) {
+    user.set<String>(keyVarPassword, password);
+    notifyListeners();
+  }
+
+  String get emailAddress => user.get<String>(keyVarEmail);
+
+  set emailAddress(String emailAddress) {
+    user.set<String>(keyVarEmail, emailAddress);
+    notifyListeners();
+  }
+
+  String get displayPicture => user.get<String>(_keyVarUserDisplayPicture);
+
+  set displayPicture(String displayPicture) {
+    user.set<String>(_keyVarUserDisplayPicture, displayPicture);
+    notifyListeners();
+  }
+
+  UserType get type {
+    return _stringToType(user.get<String>(_keyVarUserType));
+  }
+
+  set type(UserType type) {
+    user.set<String>(_keyVarUserType, _typeToString(type));
+    notifyListeners();
+  }
+
+  UserType _stringToType(String type) {
+    return UserType.values
+        .firstWhere((element) => _typeToString(element) == type);
+  }
+
+  String _typeToString(UserType type) {
+    return type.toString().split('.').last;
   }
 
   @override
   void dispose() {
-    _userController.close();
     super.dispose();
     print('#### UserModel - dispose');
   }
 
-  UserModel([ParseUserModel parseUserModel]) {
+  UserModel() {
     print('#### UserModel()');
-    userOut.listen(_setUser);
-    if (parseUserModel == null) {
-      _sync();
-    } else {
-      user = parseUserModel;
-    }
   }
 
-  static UserModel createUser(
-      {String username, String password, String emailAddress}) {
-    return UserModel(
-        ParseUserModel(ParseUser(username, password, emailAddress)));
-  }
-
-  Future _sync() async {
+  /// Reset to current user
+  Future<void> init({bool fromServer = false}) async {
     ParseUser parseUser = await ParseUser.currentUser();
     if (parseUser != null) {
-      DateTime now = DateTime.now();
-      var diff = now.difference(parseUser.createdAt);
-      if (diff.inDays < parseSessionExpiredInDays) {
-        user = ParseUserModel(parseUser);
-      } else {
-        // Session may expired in server
+      if (fromServer) {
         ParseResponse ret = await ParseUser.getCurrentUserFromServer();
         if (ret != null && ret.success) {
-          user = ParseUserModel(ret.result);
+          user = ret.result;
         } else {
           user = null;
         }
+      } else {
+        user = parseUser;
       }
     } else {
       user = null;
     }
   }
 
-  void _setUser(ParseUserModel parseUserModel) {
-    notifyListeners();
+  static UserModel create(
+      {String username, String password, String emailAddress}) {
+    UserModel ret = UserModel();
+    ret.user = ParseUser(username, password, emailAddress);
+    return ret;
   }
 
-  @override
   Future<ParseResponse> signUp() async {
     ParseResponse ret = await user.signUp();
     if (ret != null && ret.success) {
-      _sync();
+      user = ret.result;
+      user.pin();
     }
     return ret;
   }
 
-  @override
   Future<ParseResponse> signIn() async {
-    ParseResponse ret = await user.signIn();
+    ParseResponse ret = await user.login();
     if (ret != null && ret.success) {
-      _sync();
+      user.pin();
     }
     return ret;
   }
 
-  @override
   Future<ParseResponse> signOut() async {
-    ParseResponse ret = await user.signOut();
+    ParseResponse ret = await user.logout();
     if (ret != null && ret.success) {
-      _sync();
+      user.pin();
     }
     return ret;
   }
 
-  @override
   Future<ParseResponse> save() async {
     ParseResponse ret = await user.save();
     if (ret != null && ret.success) {
-      _sync();
+      user.pin();
     }
     return ret;
   }
 
-  @override
   Future<ParseResponse> destroy() async {
     ParseResponse ret = await user.destroy();
     if (ret != null && ret.success) {
-      _sync();
+      user.pin();
     }
     return ret;
   }
 
   @override
   bool validate(Permission data) {
-    switch (user.type) {
+    switch (type) {
       case UserType.Master:
         return true;
       case UserType.Normal:
-        return false;
-      default:
         return false;
     }
   }

@@ -28,21 +28,22 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     print('#### _SplashPageState - initState');
+    _init();
+  }
 
-    appModel.stateOut.listen((AppState state) {
-      switch (state) {
-        case AppState.Initialized:
-          userModel.userOut.listen((ParseUserModel user) {
-            if (userModel.user == null) {
-              locator<Nav>().router.navigateTo(context, 'LoginPage',
-                  clearStack: true, transition: TransitionType.fadeIn);
-            } else {
-              locator<Nav>().router.navigateTo(context, 'HomePage',
-                  clearStack: true, transition: TransitionType.fadeIn);
-            }
-          });
-      }
-    });
+  Future<void> _init() async {
+    await appModel.init();
+    switch (appModel.state) {
+      case AppState.Initialized:
+        await userModel.init(fromServer: true);
+        if (userModel.user == null) {
+          locator<Nav>().router.navigateTo(context, 'LoginPage',
+              clearStack: true, transition: TransitionType.fadeIn);
+        } else {
+          locator<Nav>().router.navigateTo(context, 'HomePage',
+              clearStack: true, transition: TransitionType.fadeIn);
+        }
+    }
   }
 
   @override

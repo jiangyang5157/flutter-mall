@@ -143,7 +143,7 @@ class _SignInFormState extends State<SignInForm> {
                       animate: false,
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
-                          ParseResponse response = await UserModel.createUser(
+                          ParseResponse response = await UserModel.create(
                                   username: _usernameController.text,
                                   password: _passwordController.text)
                               .signIn();

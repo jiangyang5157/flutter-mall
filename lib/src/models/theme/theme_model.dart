@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rxdart/rxdart.dart';
 
 import 'package:mall/src/core/core.dart';
 
@@ -12,33 +11,27 @@ enum ThemeType {
 class ThemeModel extends ChangeNotifier {
   static const String _prefs_ThemeType = '_prefs_ThemeType';
 
-  BehaviorSubject<ThemeType> _typeController =
-      BehaviorSubject<ThemeType>.seeded(ThemeType.Light);
+  ThemeType _type;
 
-  Stream<ThemeType> get typeOut => _typeController.stream;
+  ThemeType get type => _type;
 
-  Sink<ThemeType> get typeIn => _typeController.sink;
-
-  ThemeType get type => _typeController.value;
-
-  set type(ThemeType themeType) {
-    typeIn.add(themeType);
+  set type(ThemeType type) {
+    _type = type;
+    _saveType(type);
+    notifyListeners();
   }
 
   @override
   void dispose() {
-    _typeController.close();
     super.dispose();
     print('#### ThemeModel - dispose');
   }
 
   ThemeModel() {
     print('#### ThemeModel()');
-    typeOut.listen(_setType);
-    _init();
   }
 
-  Future _init() async {
+  Future<void> init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String typeString = prefs.getString(_prefs_ThemeType);
     if (typeString != null) {
@@ -46,12 +39,7 @@ class ThemeModel extends ChangeNotifier {
     }
   }
 
-  void _setType(ThemeType themeType) {
-    _saveType(themeType);
-    notifyListeners();
-  }
-
-  Future _saveType(ThemeType type) async {
+  Future<void> _saveType(ThemeType type) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(_prefs_ThemeType, _typeToString(type));
   }

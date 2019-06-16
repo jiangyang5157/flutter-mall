@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     print('#### _HomePageState - initState');
+    userModel.init();
   }
 
   @override
@@ -82,10 +83,9 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildDrawerHeader(
       BuildContext context, UserModel userModel, DrawerModel drawerModel) {
-    // TODO: why email address didn't update after changed email address?
     return UserAccountsDrawerHeader(
-      accountName: Text(userModel.user.name),
-      accountEmail: Text(userModel.user.emailAddress),
+      accountName: Text(userModel.name),
+      accountEmail: Text(userModel.emailAddress),
       currentAccountPicture: GestureDetector(
         child: CircleAvatar(
           backgroundColor: Colors.white,
@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
         title: Text('Light'),
         trailing: Icon(Icons.brightness_high),
         onTap: () {
-          Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Light);
+          Provider.of<ThemeModel>(context).type = ThemeType.Light;
         },
       ),
     );
@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
         title: Text('Dark'),
         trailing: Icon(Icons.brightness_low),
         onTap: () {
-          Provider.of<ThemeModel>(context).typeIn.add(ThemeType.Dark);
+          Provider.of<ThemeModel>(context).type = ThemeType.Dark;
         },
       ),
     );
@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
         title: Text(string(context, 'label_sign_out')),
         trailing: Icon(Icons.transit_enterexit),
         onTap: () async {
-          UserModel(userModel.user).signOut();
+          userModel.signOut();
           locator<Nav>().router.navigateTo(context, 'LoginPage',
               clearStack: true, transition: TransitionType.fadeIn);
         },
@@ -221,11 +221,14 @@ class _HomePageState extends State<HomePage> {
               animate: false,
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
-                  userModel.user.emailAddress = _emailAddressController.text;
-                  ParseResponse response = await userModel.save();
+                  UserModel tmpUserModel = UserModel();
+                  await tmpUserModel.init();
+                  tmpUserModel.emailAddress = _emailAddressController.text;
+                  ParseResponse response = await tmpUserModel.save();
                   return () {
                     if (mounted) {
                       if (response.success) {
+                        userModel.emailAddress = tmpUserModel.emailAddress;
                         showSimpleSnackBar(
                             context, string(context, 'label_success'));
                       } else {

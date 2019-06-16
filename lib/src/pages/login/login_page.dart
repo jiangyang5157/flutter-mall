@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
               return ListView(
                 children: <Widget>[
                   SizedBox(
-                    height: 96,
+                    height: 96, // TODO:
                     child: FlutterLogo(),
                   ),
                   _buildForms(context, loginModel.state),

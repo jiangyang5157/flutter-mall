@@ -36,10 +36,6 @@ class SignInModel extends ChangeNotifier {
 
   SignInModel() {
     print('#### SignInModel()');
-    _init();
-  }
-
-  void _init() {
     username = '';
     password = '';
     obscurePassword = true;

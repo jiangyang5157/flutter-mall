@@ -15,6 +15,8 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
+  ThemeModel themeModel = ThemeModel();
+
   @override
   void dispose() {
     super.dispose();
@@ -25,6 +27,7 @@ class _AppPageState extends State<AppPage> {
   void initState() {
     super.initState();
     print('#### _AppPageState - initState');
+    themeModel.init();
   }
 
   @override
@@ -32,7 +35,7 @@ class _AppPageState extends State<AppPage> {
     print('#### _AppPageState - build');
 
     return ChangeNotifierProvider<ThemeModel>(
-      builder: (context) => ThemeModel(),
+      builder: (context) => themeModel,
       child: Consumer<ThemeModel>(
         builder: (context, themeModel, _) {
           return MaterialApp(
