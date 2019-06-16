@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
             child: Consumer2<UserModel, DrawerModel>(
               builder: (context, userModel, drawerModel, _) {
                 return ListView(
-                  padding: const EdgeInsets.all(0.0),
+                  padding: const EdgeInsets.all(0),
                   children: _buildDrawerList(context, userModel, drawerModel),
                 );
               },
@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
           <Widget>[
             Form(
               key: _formKey,
-              child: Container(
+              child: SizedBox(
                 height: textFieldHeight,
                 child: TextFormField(
                   decoration: InputDecoration(
@@ -226,7 +226,8 @@ class _HomePageState extends State<HomePage> {
                   return () {
                     if (mounted) {
                       if (response.success) {
-                        locator<Nav>().router.pop(context);
+                        showSimpleSnackBar(
+                            context, string(context, 'label_success'));
                       } else {
                         showSimpleSnackBar(context, response.error.message);
                       }

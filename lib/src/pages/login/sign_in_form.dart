@@ -55,22 +55,23 @@ class _SignInFormState extends State<SignInForm> {
     _passwordController.setTextAndPosition(signInModel.password);
 
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(paddingLarge),
       child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
-                  child: Text(
-                    string(context, 'title_sign_in_form'),
-                    style: Theme.of(context).textTheme.title,
-                  ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, paddingLarge, 0, 0),
+                child: Text(
+                  string(context, 'title_sign_in_form'),
+                  style: Theme.of(context).textTheme.title,
                 ),
-                Container(
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                    paddingLarge, paddingLarge, paddingLarge, 0),
+                child: SizedBox(
                   height: textFieldHeight,
                   child: TextFormField(
                     decoration: InputDecoration(
@@ -91,7 +92,11 @@ class _SignInFormState extends State<SignInForm> {
                     inputFormatters: [UsernameInputFormatter()],
                   ),
                 ),
-                Container(
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.fromLTRB(paddingLarge, 0, paddingLarge, 0),
+                child: SizedBox(
                   height: textFieldHeight,
                   child: TextFormField(
                     decoration: InputDecoration(
@@ -123,7 +128,10 @@ class _SignInFormState extends State<SignInForm> {
                     inputFormatters: [PasswordInputFormatter()],
                   ),
                 ),
-                ButtonBar(
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, paddingNormal, 0, 0),
+                child: ButtonBar(
                   mainAxisSize: MainAxisSize.max,
                   alignment: MainAxisAlignment.end,
                   children: <Widget>[
@@ -158,8 +166,8 @@ class _SignInFormState extends State<SignInForm> {
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
