@@ -76,7 +76,8 @@ class _SignInFormState extends State<SignInForm> {
                     decoration: InputDecoration(
                       hintText: string(context, 'label_username'),
                       hintStyle: TextStyle(fontSize: textFieldFontSize),
-                      contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
+                      contentPadding: const EdgeInsets.fromLTRB(
+                          0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.person),
                     ),
                     style: TextStyle(fontSize: textFieldFontSize),
@@ -96,7 +97,8 @@ class _SignInFormState extends State<SignInForm> {
                     decoration: InputDecoration(
                       hintText: string(context, 'label_password'),
                       hintStyle: TextStyle(fontSize: textFieldFontSize),
-                      contentPadding: const EdgeInsets.fromLTRB(0, textFieldContentPaddingT, 0, 0),
+                      contentPadding: const EdgeInsets.fromLTRB(
+                          0, textFieldContentPaddingT, 0, 0),
                       prefixIcon: Icon(Icons.lock),
                       suffixIcon: GestureDetector(
                         onTap: () {
@@ -123,7 +125,6 @@ class _SignInFormState extends State<SignInForm> {
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Expanded(
                       flex: 1,
@@ -161,7 +162,8 @@ class _SignInFormState extends State<SignInForm> {
                                       clearStack: true,
                                       transition: TransitionType.fadeIn);
                                 } else {
-                                  showSimpleSnackBar(context, response.error.message);
+                                  showSimpleSnackBar(
+                                      context, response.error.message);
                                 }
                               }
                             };

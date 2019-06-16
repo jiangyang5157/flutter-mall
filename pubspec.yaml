@@ -21,7 +21,7 @@ dependencies:
 
   parse_server_sdk: '^1.0.21'
 
-  flutter_progress_button: '^0.6.4'
+  flutter_progress_button: '^1.0.0'
 
   # The following adds the Cupertino Icons font to your application.
   cupertino_icons: '^0.1.2'

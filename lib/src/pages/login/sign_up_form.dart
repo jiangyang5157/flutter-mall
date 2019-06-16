@@ -188,7 +188,6 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Expanded(
                       flex: 1,
