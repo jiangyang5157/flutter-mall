@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/pages/pages.dart';
+import 'package:mall/src/utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -38,27 +39,28 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SafeArea(
         // Use expanded ListView instead of shrinking SingleChildScrollView
-        child: ListView(
-          children: <Widget>[
-            SizedBox(
-              height: 96,
-              child: FlutterLogo(),
-            ),
-            ChangeNotifierProvider<LoginModel>(
-              builder: (_) => loginModel,
-              child: Consumer<LoginModel>(
-                builder: (context, loginModel, _) {
-                  return buildForms(context, loginModel.state);
-                },
-              ),
-            ),
-          ],
+        child: ChangeNotifierProvider<LoginModel>(
+          builder: (_) => loginModel,
+          child: Consumer<LoginModel>(
+            builder: (context, loginModel, _) {
+              return ListView(
+                children: <Widget>[
+                  SizedBox(
+                    height: 96,
+                    child: FlutterLogo(),
+                  ),
+                  _buildForms(context, loginModel.state),
+                  _buildFormSelector(context, loginModel.state),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
-  Widget buildForms(BuildContext context, LoginState loginState) {
+  Widget _buildForms(BuildContext context, LoginState loginState) {
     switch (loginState) {
       case LoginState.SignIn:
         return Provider<SignInModel>.value(
@@ -72,6 +74,47 @@ class _LoginPageState extends State<LoginPage> {
         );
       default:
         return SizedBox.shrink();
+    }
+  }
+
+  Widget _buildFormSelector(BuildContext context, LoginState loginState) {
+    switch (loginState) {
+      case LoginState.SignIn:
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(string(context, 'prompt_sign_up_action')),
+            FlatButton(
+              child: Text(
+                string(context, 'label_sign_up_action'),
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              onPressed: () {
+                loginModel.state = LoginState.SignUp;
+              },
+            ),
+          ],
+        );
+      case LoginState.SignUp:
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(string(context, 'prompt_sign_in_action')),
+            FlatButton(
+              child: Text(
+                string(context, 'label_sign_in_action'),
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              onPressed: () {
+                loginModel.state = LoginState.SignIn;
+              },
+            ),
+          ],
+        );
     }
   }
 }

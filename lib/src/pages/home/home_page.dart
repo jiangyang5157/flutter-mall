@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
               builder: (context, userModel, drawerModel, _) {
                 return ListView(
                   padding: const EdgeInsets.all(0.0),
-                  children: buildDrawerList(context, userModel, drawerModel),
+                  children: _buildDrawerList(context, userModel, drawerModel),
                 );
               },
             ),
@@ -65,22 +65,22 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<Widget> buildDrawerList(
+  List<Widget> _buildDrawerList(
       BuildContext context, UserModel userModel, DrawerModel drawerModel) {
     var ret = List<Widget>();
-    ret.add(buildDrawerHeader(context, userModel, drawerModel));
+    ret.add(_buildDrawerHeader(context, userModel, drawerModel));
     switch (drawerModel.state) {
       case DrawerState.Menu:
-        ret.addAll(buildDrawerMenu(context, userModel));
+        ret.addAll(_buildDrawerMenu(context, userModel));
         break;
       case DrawerState.AccountDetails:
-        ret.addAll(buildDrawerAccountDetails(context, userModel));
+        ret.addAll(_buildDrawerAccountDetails(context, userModel));
         break;
     }
     return ret;
   }
 
-  Widget buildDrawerHeader(
+  Widget _buildDrawerHeader(
       BuildContext context, UserModel userModel, DrawerModel drawerModel) {
     // TODO: why email address didn't update after changed email address?
     return UserAccountsDrawerHeader(
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<Widget> buildDrawerMenu(BuildContext context, UserModel userModel) {
+  List<Widget> _buildDrawerMenu(BuildContext context, UserModel userModel) {
     var ret = List<Widget>();
     ret.add(
       ListTile(
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
     return ret;
   }
 
-  List<Widget> buildDrawerAccountDetails(
+  List<Widget> _buildDrawerAccountDetails(
       BuildContext context, UserModel userModel) {
     var ret = List<Widget>();
     ret.add(
@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
-    ret.add(buildDrawerEmailItem(context, userModel));
+    ret.add(_buildDrawerEmailItem(context, userModel));
     ret.add(Divider());
     ret.add(
       ListTile(
@@ -174,7 +174,7 @@ class _HomePageState extends State<HomePage> {
     return ret;
   }
 
-  Widget buildDrawerEmailItem(BuildContext context, UserModel userModel) {
+  Widget _buildDrawerEmailItem(BuildContext context, UserModel userModel) {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     final _emailAddressController = TextEditingControllerWorkaround();
     return ListTile(

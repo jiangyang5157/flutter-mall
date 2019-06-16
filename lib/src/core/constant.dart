@@ -8,7 +8,10 @@ const int parseSessionExpiredInDays = 365;
 
 const int snackBarDurationInMilliseconds = 3000;
 
-const double btnProgressWidth = 64;
+const double btnMinWidth = 80;
+const double btnHeight = 40;
+const double btnEndWidth = 120;
+const double btnCenterWidth = 160;
 
 const double textFieldFontSize = 14;
 const double textFieldContentPaddingT = 16;

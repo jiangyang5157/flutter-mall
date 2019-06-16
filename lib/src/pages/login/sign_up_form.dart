@@ -186,59 +186,44 @@ class _SignUpFormState extends State<SignUpForm> {
                     inputFormatters: [EmailAddressInputFormatter()],
                   ),
                 ),
-                Row(
+                ButtonBar(
                   mainAxisSize: MainAxisSize.max,
+                  alignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: FlatButton(
-                        child: Text(
-                          string(context, 'label_sign_in'),
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        onPressed: () {
-                          Provider.of<LoginModel>(context).state =
-                              LoginState.SignIn;
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: ProgressButton(
-                        defaultWidget: Text(string(context, 'label_sign_up')),
-                        progressWidget: ThreeSizeDot(),
-                        animate: false,
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            UserModel userModel = UserModel.createUser(
-                                username: _usernameController.text,
-                                password: _passwordController.text,
-                                emailAddress: _emailAddressController.text);
-                            ParseResponse response = await userModel.signUp();
-                            if (response.success) {
-                              // TODO: parse_server_sdk is not yet support including more properties other then username/password/emailAddress during signUp.
-                              userModel.user.type = UserType.Master;
-                              await userModel.save();
-                            }
-                            return () {
-                              _passwordController.clear();
-                              if (mounted) {
-                                if (response.success) {
-                                  locator<Nav>().router.navigateTo(
-                                      context, 'HomePage',
-                                      clearStack: true,
-                                      transition: TransitionType.fadeIn);
-                                } else {
-                                  showSimpleSnackBar(
-                                      context, response.error.message);
-                                }
-                              }
-                            };
+                    ProgressButton(
+                      defaultWidget: Text(string(context, 'label_sign_up')),
+                      progressWidget: ThreeSizeDot(),
+                      width: btnEndWidth,
+                      height: btnHeight,
+                      animate: false,
+                      onPressed: () async {
+                        if (_formKey.currentState.validate()) {
+                          UserModel userModel = UserModel.createUser(
+                              username: _usernameController.text,
+                              password: _passwordController.text,
+                              emailAddress: _emailAddressController.text);
+                          ParseResponse response = await userModel.signUp();
+                          if (response.success) {
+                            // TODO: parse_server_sdk is not yet support including more properties other then username/password/emailAddress during signUp.
+                            userModel.user.type = UserType.Master;
+                            await userModel.save();
                           }
-                        },
-                      ),
+                          return () {
+                            _passwordController.clear();
+                            if (mounted) {
+                              if (response.success) {
+                                locator<Nav>().router.navigateTo(
+                                    context, 'HomePage',
+                                    clearStack: true,
+                                    transition: TransitionType.fadeIn);
+                              } else {
+                                showSimpleSnackBar(
+                                    context, response.error.message);
+                              }
+                            }
+                          };
+                        }
+                      },
                     ),
                   ],
                 ),

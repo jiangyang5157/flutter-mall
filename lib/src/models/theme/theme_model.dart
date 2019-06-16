@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rxdart/rxdart.dart';
 
+import 'package:mall/src/core/core.dart';
+
 enum ThemeType {
   Light,
   Dark,
@@ -73,7 +75,8 @@ class ThemeModel extends ChangeNotifier {
           buttonTheme: ButtonTheme.of(context).copyWith(
             textTheme: ButtonTextTheme.primary,
             buttonColor: Colors.green,
-            height: 40,
+            minWidth: btnMinWidth,
+            height: btnHeight,
           ),
         );
       case ThemeType.Light:
@@ -84,7 +87,8 @@ class ThemeModel extends ChangeNotifier {
           buttonTheme: ButtonTheme.of(context).copyWith(
             textTheme: ButtonTextTheme.primary,
             buttonColor: Colors.blue,
-            height: 40,
+            minWidth: btnMinWidth,
+            height: btnHeight,
           ),
         );
     }

@@ -123,53 +123,38 @@ class _SignInFormState extends State<SignInForm> {
                     inputFormatters: [PasswordInputFormatter()],
                   ),
                 ),
-                Row(
+                ButtonBar(
                   mainAxisSize: MainAxisSize.max,
+                  alignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: FlatButton(
-                        child: Text(
-                          string(context, 'label_sign_up'),
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        onPressed: () {
-                          Provider.of<LoginModel>(context).state =
-                              LoginState.SignUp;
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: ProgressButton(
-                        defaultWidget: Text(string(context, 'label_sign_in')),
-                        progressWidget: ThreeSizeDot(),
-                        animate: false,
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            ParseResponse response = await UserModel.createUser(
-                                    username: _usernameController.text,
-                                    password: _passwordController.text)
-                                .signIn();
-                            return () {
-                              _passwordController.clear();
-                              if (mounted) {
-                                if (response.success) {
-                                  locator<Nav>().router.navigateTo(
-                                      context, 'HomePage',
-                                      clearStack: true,
-                                      transition: TransitionType.fadeIn);
-                                } else {
-                                  showSimpleSnackBar(
-                                      context, response.error.message);
-                                }
+                    ProgressButton(
+                      defaultWidget: Text(string(context, 'label_sign_in')),
+                      progressWidget: ThreeSizeDot(),
+                      width: btnEndWidth,
+                      height: btnHeight,
+                      animate: false,
+                      onPressed: () async {
+                        if (_formKey.currentState.validate()) {
+                          ParseResponse response = await UserModel.createUser(
+                                  username: _usernameController.text,
+                                  password: _passwordController.text)
+                              .signIn();
+                          return () {
+                            _passwordController.clear();
+                            if (mounted) {
+                              if (response.success) {
+                                locator<Nav>().router.navigateTo(
+                                    context, 'HomePage',
+                                    clearStack: true,
+                                    transition: TransitionType.fadeIn);
+                              } else {
+                                showSimpleSnackBar(
+                                    context, response.error.message);
                               }
-                            };
-                          }
-                        },
-                      ),
+                            }
+                          };
+                        }
+                      },
                     ),
                   ],
                 ),
