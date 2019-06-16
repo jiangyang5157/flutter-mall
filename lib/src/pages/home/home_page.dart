@@ -2,13 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fluro/fluro.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:flutter_progress_button/flutter_progress_button.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
 import 'package:mall/src/utils/utils.dart';
-import 'package:mall/src/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -125,6 +122,16 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+    ret.add(Divider());
+    ret.add(
+      ListTile(
+        title: Text(string(context, 'label_settings')),
+        trailing: Icon(Icons.settings),
+        onTap: () async {
+          todo(context);
+        },
+      ),
+    );
     return ret;
   }
 
@@ -133,37 +140,16 @@ class _HomePageState extends State<HomePage> {
     var ret = List<Widget>();
     ret.add(
       ListTile(
-        title: Text(string(context, 'label_upload_display_picture')),
-        trailing: Icon(Icons.account_circle),
+        title: Text(string(context, 'label_profile')),
         onTap: () {
           todo(context);
         },
       ),
     );
-    ret.add(
-      ListTile(
-        title: Text(string(context, 'label_change_username')),
-        trailing: Icon(Icons.person),
-        onTap: () {
-          todo(context);
-        },
-      ),
-    );
-    ret.add(
-      ListTile(
-        title: Text(string(context, 'label_change_password')),
-        trailing: Icon(Icons.lock),
-        onTap: () {
-          todo(context);
-        },
-      ),
-    );
-    ret.add(_buildDrawerEmailItem(context, userModel));
     ret.add(Divider());
     ret.add(
       ListTile(
         title: Text(string(context, 'label_sign_out')),
-        trailing: Icon(Icons.transit_enterexit),
         onTap: () async {
           userModel.signOut();
           locator<Nav>().router.navigateTo(context, 'LoginPage',
@@ -174,74 +160,77 @@ class _HomePageState extends State<HomePage> {
     return ret;
   }
 
-  Widget _buildDrawerEmailItem(BuildContext context, UserModel userModel) {
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final _emailAddressController = TextEditingControllerWorkaround();
-    return ListTile(
-      title: Text(string(context, 'label_change_email_address')),
-      trailing: Icon(Icons.email),
-      onTap: () {
-        showSimpleAlertDialog(
-          context,
-          string(context, 'label_change_email_address'),
-          <Widget>[
-            Form(
-              key: _formKey,
-              child: SizedBox(
-                height: textFieldHeight,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    hintText: string(context, 'label_email_address'),
-                    hintStyle: TextStyle(fontSize: textFieldFontSize),
-                    contentPadding: const EdgeInsets.fromLTRB(
-                        0, textFieldContentPaddingT, 0, 0),
-                    prefixIcon: Icon(Icons.email),
-                  ),
-                  style: TextStyle(fontSize: textFieldFontSize),
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.done,
-                  controller: _emailAddressController,
-                  validator: (text) =>
-                      string(context, EmailAddressValidator().validate(text)),
-                  inputFormatters: [EmailAddressInputFormatter()],
-                ),
-              ),
-            ),
-          ],
-          <Widget>[
-            ProgressButton(
-              defaultWidget: Text(
-                string(context, 'label_confirm'),
-                style: TextStyle(
-                  color: Theme.of(context).buttonTheme.colorScheme.onPrimary,
-                ),
-              ),
-              progressWidget: ThreeSizeDot(),
-              width: 96,
-              animate: false,
-              onPressed: () async {
-                if (_formKey.currentState.validate()) {
-                  UserModel tmpUserModel = UserModel();
-                  await tmpUserModel.init();
-                  tmpUserModel.emailAddress = _emailAddressController.text;
-                  ParseResponse response = await tmpUserModel.save();
-                  return () {
-                    if (mounted) {
-                      if (response.success) {
-                        userModel.emailAddress = tmpUserModel.emailAddress;
-                        showSimpleSnackBar(
-                            context, string(context, 'label_success'));
-                      } else {
-                        showSimpleSnackBar(context, response.error.message);
-                      }
-                    }
-                  };
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+//  import 'package:parse_server_sdk/parse_server_sdk.dart';
+//  import 'package:flutter_progress_button/flutter_progress_button.dart';
+//  import 'package:mall/src/widgets/widgets.dart';
+//  Widget _buildDrawerEmailItem(BuildContext context, UserModel userModel) {
+//    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+//    final _emailAddressController = TextEditingControllerWorkaround();
+//    return ListTile(
+//      title: Text(string(context, 'label_change_email_address')),
+//      trailing: Icon(Icons.email),
+//      onTap: () {
+//        showSimpleAlertDialog(
+//          context,
+//          string(context, 'label_change_email_address'),
+//          <Widget>[
+//            Form(
+//              key: _formKey,
+//              child: SizedBox(
+//                height: textFieldHeight,
+//                child: TextFormField(
+//                  decoration: InputDecoration(
+//                    hintText: string(context, 'label_email_address'),
+//                    hintStyle: TextStyle(fontSize: textFieldFontSize),
+//                    contentPadding: const EdgeInsets.fromLTRB(
+//                        0, textFieldContentPaddingT, 0, 0),
+//                    prefixIcon: Icon(Icons.email),
+//                  ),
+//                  style: TextStyle(fontSize: textFieldFontSize),
+//                  keyboardType: TextInputType.emailAddress,
+//                  textInputAction: TextInputAction.done,
+//                  controller: _emailAddressController,
+//                  validator: (text) =>
+//                      string(context, EmailAddressValidator().validate(text)),
+//                  inputFormatters: [EmailAddressInputFormatter()],
+//                ),
+//              ),
+//            ),
+//          ],
+//          <Widget>[
+//            ProgressButton(
+//              defaultWidget: Text(
+//                string(context, 'label_confirm'),
+//                style: TextStyle(
+//                  color: Theme.of(context).buttonTheme.colorScheme.onPrimary,
+//                ),
+//              ),
+//              progressWidget: ThreeSizeDot(),
+//              width: 96,
+//              animate: false,
+//              onPressed: () async {
+//                if (_formKey.currentState.validate()) {
+//                  UserModel tmpUserModel = UserModel();
+//                  await tmpUserModel.init();
+//                  tmpUserModel.emailAddress = _emailAddressController.text;
+//                  ParseResponse response = await tmpUserModel.save();
+//                  return () {
+//                    if (mounted) {
+//                      if (response.success) {
+//                        userModel.emailAddress = tmpUserModel.emailAddress;
+//                        showSimpleSnackBar(
+//                            context, string(context, 'label_success'));
+//                      } else {
+//                        showSimpleSnackBar(context, response.error.message);
+//                      }
+//                    }
+//                  };
+//                }
+//              },
+//            ),
+//          ],
+//        );
+//      },
+//    );
+//  }
 }
