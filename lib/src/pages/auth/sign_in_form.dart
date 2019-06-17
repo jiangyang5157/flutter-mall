@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:provider/provider.dart';
-import 'package:fluro/fluro.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
@@ -11,7 +10,9 @@ import 'package:mall/src/widgets/widgets.dart';
 import 'package:mall/src/utils/utils.dart';
 
 class SignInForm extends StatefulWidget {
-  SignInForm({Key key}) : super(key: key);
+  final Function(ParseResponse response) onResponse;
+
+  SignInForm({Key key, @required this.onResponse}) : super(key: key);
 
   @override
   _SignInFormState createState() => _SignInFormState();
@@ -149,17 +150,7 @@ class _SignInFormState extends State<SignInForm> {
                               .signIn();
                           return () {
                             _passwordController.clear();
-                            if (mounted) {
-                              if (response.success) {
-                                locator<Nav>().router.navigateTo(
-                                    context, 'HomePage',
-                                    clearStack: true,
-                                    transition: TransitionType.fadeIn);
-                              } else {
-                                showSimpleSnackBar(
-                                    context, response.error.message);
-                              }
-                            }
+                            widget.onResponse(response);
                           };
                         }
                       },

@@ -11,7 +11,9 @@ import 'package:mall/src/widgets/widgets.dart';
 import 'package:mall/src/utils/utils.dart';
 
 class SignUpForm extends StatefulWidget {
-  SignUpForm({Key key}) : super(key: key);
+  final Function(ParseResponse response) onResponse;
+
+  SignUpForm({Key key, @required this.onResponse}) : super(key: key);
 
   @override
   _SignUpFormState createState() => _SignUpFormState();
@@ -225,17 +227,8 @@ class _SignUpFormState extends State<SignUpForm> {
                           }
                           return () {
                             _passwordController.clear();
-                            if (mounted) {
-                              if (response.success) {
-                                locator<Nav>().router.navigateTo(
-                                    context, 'HomePage',
-                                    clearStack: true,
-                                    transition: TransitionType.fadeIn);
-                              } else {
-                                showSimpleSnackBar(
-                                    context, response.error.message);
-                              }
-                            }
+                            _repeatPasswordController.clear();
+                            widget.onResponse(response);
                           };
                         }
                       },

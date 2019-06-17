@@ -1,20 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:fluro/fluro.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/pages/pages.dart';
 import 'package:mall/src/utils/utils.dart';
+import 'package:mall/src/core/core.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+class AuthPage extends StatefulWidget {
+  AuthPage({Key key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _AuthPageState createState() => _AuthPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  LoginModel loginModel = LoginModel();
+class _AuthPageState extends State<AuthPage> {
+  AuthModel authModel = AuthModel();
   SignInModel signInModel = SignInModel();
   SignUpModel signUpModel = SignUpModel();
 
@@ -23,34 +25,34 @@ class _LoginPageState extends State<LoginPage> {
     signInModel.dispose();
     signUpModel.dispose();
     super.dispose();
-    print('#### _LoginPageState - dispose');
+    print('#### _AuthPageState - dispose');
   }
 
   @override
   void initState() {
     super.initState();
-    print('#### _LoginPageState - initState');
+    print('#### _AuthPageState - initState');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('#### _LoginPageState - build');
+    print('#### _AuthPageState - build');
 
     return Scaffold(
       body: SafeArea(
         // Use expanded ListView instead of shrinking SingleChildScrollView
-        child: ChangeNotifierProvider<LoginModel>(
-          builder: (_) => loginModel,
-          child: Consumer<LoginModel>(
-            builder: (context, loginModel, _) {
+        child: ChangeNotifierProvider<AuthModel>(
+          builder: (_) => authModel,
+          child: Consumer<AuthModel>(
+            builder: (context, authModel, _) {
               return ListView(
                 children: <Widget>[
                   SizedBox(
                     height: 96, // TODO:
                     child: FlutterLogo(),
                   ),
-                  _buildForms(context, loginModel.state),
-                  _buildFormSelector(context, loginModel.state),
+                  _buildForms(context, authModel.state),
+                  _buildFormSelector(context, authModel.state),
                 ],
               );
             },
@@ -60,26 +62,44 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildForms(BuildContext context, LoginState loginState) {
-    switch (loginState) {
-      case LoginState.SignIn:
+  Widget _buildForms(BuildContext context, AuthState authState) {
+    switch (authState) {
+      case AuthState.SignIn:
         return Provider<SignInModel>.value(
           value: signInModel,
-          child: SignInForm(),
+          child: SignInForm(
+            onResponse: (response) {
+              if (response.success) {
+                locator<Nav>().router.navigateTo(context, 'HomePage',
+                    clearStack: true, transition: TransitionType.fadeIn);
+              } else {
+                showSimpleSnackBar(context, response.error.message);
+              }
+            },
+          ),
         );
-      case LoginState.SignUp:
+      case AuthState.SignUp:
         return Provider<SignUpModel>.value(
           value: signUpModel,
-          child: SignUpForm(),
+          child: SignUpForm(
+            onResponse: (response) {
+              if (response.success) {
+                locator<Nav>().router.navigateTo(context, 'HomePage',
+                    clearStack: true, transition: TransitionType.fadeIn);
+              } else {
+                showSimpleSnackBar(context, response.error.message);
+              }
+            },
+          ),
         );
       default:
         return SizedBox.shrink();
     }
   }
 
-  Widget _buildFormSelector(BuildContext context, LoginState loginState) {
-    switch (loginState) {
-      case LoginState.SignIn:
+  Widget _buildFormSelector(BuildContext context, AuthState authState) {
+    switch (authState) {
+      case AuthState.SignIn:
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -92,12 +112,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               onPressed: () {
-                loginModel.state = LoginState.SignUp;
+                authModel.state = AuthState.SignUp;
               },
             ),
           ],
         );
-      case LoginState.SignUp:
+      case AuthState.SignUp:
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -110,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               onPressed: () {
-                loginModel.state = LoginState.SignIn;
+                authModel.state = AuthState.SignIn;
               },
             ),
           ],

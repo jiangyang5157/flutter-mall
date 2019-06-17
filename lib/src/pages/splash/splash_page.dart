@@ -37,7 +37,7 @@ class _SplashPageState extends State<SplashPage> {
       case AppState.Initialized:
         await userModel.init(fromServer: true);
         if (userModel.user == null) {
-          locator<Nav>().router.navigateTo(context, 'LoginPage',
+          locator<Nav>().router.navigateTo(context, 'AuthPage',
               clearStack: true, transition: TransitionType.fadeIn);
         } else {
           locator<Nav>().router.navigateTo(context, 'HomePage',

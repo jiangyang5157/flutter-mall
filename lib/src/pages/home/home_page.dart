@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> {
         title: Text(string(context, 'label_sign_out')),
         onTap: () async {
           userModel.signOut();
-          locator<Nav>().router.navigateTo(context, 'LoginPage',
+          locator<Nav>().router.navigateTo(context, 'AuthPage',
               clearStack: true, transition: TransitionType.fadeIn);
         },
       ),
