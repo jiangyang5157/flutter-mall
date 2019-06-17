@@ -218,11 +218,10 @@ class _SignUpFormState extends State<SignUpForm> {
                               username: _usernameController.text,
                               password: _passwordController.text,
                               emailAddress: _emailAddressController.text);
+                          userModel.type = UserType.Master;
                           ParseResponse response = await userModel.signUp();
                           if (response.success) {
-                            // TODO: parse_server_sdk is not yet support including more properties other then username/password/emailAddress during signUp.
-                            userModel.type = UserType.Master;
-                            await userModel.save();
+                            response = await userModel.signIn();
                           }
                           return () {
                             _passwordController.clear();
