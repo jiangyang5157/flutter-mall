@@ -220,7 +220,7 @@ class _SignUpFormState extends State<SignUpForm> {
                               username: _usernameController.text,
                               password: _passwordController.text,
                               emailAddress: _emailAddressController.text);
-                          userModel.type = UserType.Master;
+                          userModel.type = UserType.Master; // TODO:
                           ParseResponse response = await userModel.signUp();
                           if (response.success) {
                             response = await userModel.signIn();

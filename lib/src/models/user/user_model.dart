@@ -7,6 +7,7 @@ import 'package:mall/src/utils/validator.dart';
 enum UserType {
   Master,
   Normal,
+  Anonymous,
 }
 
 class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
@@ -159,6 +160,8 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
       case UserType.Master:
         return true;
       case UserType.Normal:
+        return false;
+      case UserType.Anonymous:
         return false;
     }
   }

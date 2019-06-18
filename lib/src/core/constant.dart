@@ -6,8 +6,8 @@ const String parseMasterKey = 'myMasterKey';
 const String parseServerUrl = 'http://118.24.251.163:1337/parse';
 
 /// Size
-const double btnMinWidth = 80;
 const double btnHeight = 40;
+const double btnMinWidth = 80;
 const double btnEndWidth = 120;
 const double btnCenterWidth = 160;
 

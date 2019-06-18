@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
       BuildContext context, UserModel userModel, DrawerModel drawerModel) {
     return UserAccountsDrawerHeader(
       accountName: Text(userModel.name),
-      accountEmail: Text(userModel.emailAddress),
+      accountEmail: Text(userModel.emailAddress ?? ''),
       currentAccountPicture: GestureDetector(
         child: CircleAvatar(
           backgroundColor: Colors.white,
@@ -138,44 +138,60 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _buildDrawerAccountDetails(
       BuildContext context, UserModel userModel) {
     var ret = List<Widget>();
-    ret.add(
-      ListTile(
-        title: Text(string(context, 'label_upload_display_picture')),
-        onTap: () {
-          todo(context);
-        },
-      ),
-    );
-    ret.add(
-      ListTile(
-        title: Text(string(context, 'label_change_username')),
-        onTap: () {
-          todo(context);
-        },
-      ),
-    );
-    ret.add(
-      ListTile(
-        title: Text(string(context, 'label_change_password')),
-        onTap: () {
-          todo(context);
-        },
-      ),
-    );
-    ret.add(
-      ListTile(
-        title: Text(string(context, 'label_update_email_address')),
-        onTap: () {
-          todo(context);
-        },
-      ),
-    );
+    if (userModel.type == UserType.Anonymous) {
+      ret.add(
+        ListTile(
+          title: Text(string(context, 'label_create_account')),
+          onTap: () {
+            todo(context);
+          },
+        ),
+      );
+    } else {
+      ret.add(
+        ListTile(
+          title: Text(string(context, 'label_upload_display_picture')),
+          onTap: () {
+            todo(context);
+          },
+        ),
+      );
+      ret.add(
+        ListTile(
+          title: Text(string(context, 'label_change_username')),
+          onTap: () {
+            todo(context);
+          },
+        ),
+      );
+      ret.add(
+        ListTile(
+          title: Text(string(context, 'label_change_password')),
+          onTap: () {
+            todo(context);
+          },
+        ),
+      );
+      ret.add(
+        ListTile(
+          title: Text(string(context, 'label_update_email_address')),
+          onTap: () {
+            todo(context);
+          },
+        ),
+      );
+    }
     ret.add(Divider());
     ret.add(
       ListTile(
         title: Text(string(context, 'label_sign_out')),
         onTap: () async {
-          userModel.signOut();
+          if (userModel.type == UserType.Anonymous) {
+            userModel.destroy();
+            userModel.signOut();
+          } else {
+            userModel.signOut();
+          }
           locator<Nav>().router.navigateTo(context, 'AuthPage',
               clearStack: true, transition: TransitionType.fadeIn);
         },

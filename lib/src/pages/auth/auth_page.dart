@@ -2,8 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fluro/fluro.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:flutter_progress_button/flutter_progress_button.dart';
 
 import 'package:mall/src/models/models.dart';
+import 'package:mall/src/widgets/widgets.dart';
 import 'package:mall/src/pages/pages.dart';
 import 'package:mall/src/utils/utils.dart';
 import 'package:mall/src/core/core.dart';
@@ -120,12 +123,30 @@ class _AuthPageState extends State<AuthPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(string(context, 'prompt_quick_start_action')),
-                FlatButton(
-                  child: Text(
-                    string(context, 'label_anonymous_login'),
+                ProgressButton(
+                  defaultWidget: Text(string(context, 'label_anonymous_login')),
+                  progressWidget: ThreeSizeDot(
+                    color_1: Theme.of(context).buttonTheme.colorScheme.primary,
+                    color_2: Theme.of(context).buttonTheme.colorScheme.primary,
+                    color_3: Theme.of(context).buttonTheme.colorScheme.primary,
                   ),
-                  onPressed: () {
-                    todo(context);
+                  type: ProgressButtonType.Flat,
+                  width: 148,
+                  height: btnHeight,
+                  animate: false,
+                  onPressed: () async {
+                    UserModel userModel = UserModel.create();
+                    userModel.type = UserType.Anonymous;
+                    ParseResponse response = await userModel.signInAnonymous();
+                    return () {
+                      if (response.success) {
+                        locator<Nav>().router.navigateTo(context, 'HomePage',
+                            clearStack: true,
+                            transition: TransitionType.fadeIn);
+                      } else {
+                        showSimpleSnackBar(context, response.error.message);
+                      }
+                    };
                   },
                 ),
               ],
