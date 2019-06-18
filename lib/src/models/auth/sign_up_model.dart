@@ -29,6 +29,15 @@ class SignUpModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _emailAddress;
+
+  String get emailAddress => _emailAddress;
+
+  set emailAddress(String emailAddress) {
+    _emailAddress = emailAddress;
+    notifyListeners();
+  }
+
   bool _obscurePassword;
 
   bool get obscurePassword => _obscurePassword;
@@ -49,6 +58,7 @@ class SignUpModel extends ChangeNotifier {
     username = '';
     password = '';
     repeatPassword = '';
+    emailAddress = '';
     obscurePassword = true;
   }
 }

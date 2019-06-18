@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:provider/provider.dart';
+import 'package:fluro/fluro.dart';
 
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
@@ -24,15 +25,18 @@ class _SignUpFormState extends State<SignUpForm> {
   final _usernameController = TextEditingControllerWorkaround();
   final _passwordController = TextEditingControllerWorkaround();
   final _repeatPasswordController = TextEditingControllerWorkaround();
+  final _emailAddressController = TextEditingControllerWorkaround();
   final FocusNode _usernameFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _repeatPasswordFocusNode = FocusNode();
+  final FocusNode _emailAddressFocusNode = FocusNode();
 
   @override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
     _repeatPasswordController.dispose();
+    _emailAddressController.dispose();
     super.dispose();
     print('#### _SignUpFormState - dispose');
   }
@@ -52,6 +56,10 @@ class _SignUpFormState extends State<SignUpForm> {
       Provider.of<SignUpModel>(context).repeatPassword =
           _repeatPasswordController.text;
     });
+    _emailAddressController.addListener(() {
+      Provider.of<SignUpModel>(context).emailAddress =
+          _emailAddressController.text;
+    });
   }
 
   @override
@@ -62,6 +70,7 @@ class _SignUpFormState extends State<SignUpForm> {
     _usernameController.setTextAndPosition(signUpModel.username);
     _passwordController.setTextAndPosition(signUpModel.password);
     _repeatPasswordController.setTextAndPosition(signUpModel.repeatPassword);
+    _emailAddressController.setTextAndPosition(signUpModel.emailAddress);
 
     return Padding(
       padding: const EdgeInsets.all(paddingLarge),
@@ -142,7 +151,7 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.fromLTRB(paddingLarge, 0, paddingLarge, 0),
+                const EdgeInsets.fromLTRB(paddingLarge, 0, paddingLarge, 0),
                 child: SizedBox(
                   height: textFieldHeight,
                   child: TextFormField(
@@ -155,15 +164,41 @@ class _SignUpFormState extends State<SignUpForm> {
                     ),
                     style: TextStyle(fontSize: textFieldFontSize),
                     obscureText: true,
-                    textInputAction: TextInputAction.done,
+                    textInputAction: TextInputAction.next,
                     enableInteractiveSelection: false,
                     controller: _repeatPasswordController,
                     focusNode: _repeatPasswordFocusNode,
+                    onFieldSubmitted: (_) => FocusScope.of(context)
+                        .requestFocus(_emailAddressFocusNode),
                     validator: (text) => string(
                         context,
                         RepeatPasswordValidator(_passwordController.text)
                             .validate(text)),
                     inputFormatters: [PasswordInputFormatter()],
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                const EdgeInsets.fromLTRB(paddingLarge, 0, paddingLarge, 0),
+                child: SizedBox(
+                  height: textFieldHeight,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      hintText: string(context, 'label_email_address'),
+                      hintStyle: TextStyle(fontSize: textFieldFontSize),
+                      contentPadding: const EdgeInsets.fromLTRB(
+                          0, textFieldContentPaddingT, 0, 0),
+                      prefixIcon: Icon(Icons.email),
+                    ),
+                    style: TextStyle(fontSize: textFieldFontSize),
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.done,
+                    controller: _emailAddressController,
+                    focusNode: _emailAddressFocusNode,
+                    validator: (text) =>
+                        string(context, EmailAddressValidator().validate(text)),
+                    inputFormatters: [EmailAddressInputFormatter()],
                   ),
                 ),
               ),
@@ -183,7 +218,8 @@ class _SignUpFormState extends State<SignUpForm> {
                         if (_formKey.currentState.validate()) {
                           UserModel userModel = UserModel.create(
                               username: _usernameController.text,
-                              password: _passwordController.text);
+                              password: _passwordController.text,
+                              emailAddress: _emailAddressController.text);
                           userModel.type = UserType.Master;
                           ParseResponse response = await userModel.signUp();
                           if (response.success) {
