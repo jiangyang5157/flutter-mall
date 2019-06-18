@@ -107,9 +107,6 @@ class _AuthPageState extends State<AuthPage> {
             FlatButton(
               child: Text(
                 string(context, 'label_sign_up_action'),
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                ),
               ),
               onPressed: () {
                 authModel.state = AuthState.SignUp;
@@ -125,9 +122,6 @@ class _AuthPageState extends State<AuthPage> {
             FlatButton(
               child: Text(
                 string(context, 'label_sign_in_action'),
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                ),
               ),
               onPressed: () {
                 authModel.state = AuthState.SignIn;
