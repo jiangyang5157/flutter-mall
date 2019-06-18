@@ -34,7 +34,9 @@ class ThemeModel extends ChangeNotifier {
   Future<void> init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String typeString = prefs.getString(_prefs_ThemeType);
-    if (typeString != null) {
+    if (typeString == null) {
+      type = ThemeType.Light;
+    } else {
       type = _stringToType(typeString);
     }
   }

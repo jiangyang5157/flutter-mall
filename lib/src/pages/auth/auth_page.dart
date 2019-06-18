@@ -73,6 +73,7 @@ class _AuthPageState extends State<AuthPage> {
           child: SignInForm(
             onResponse: (response) {
               if (response.success) {
+                response.result.save();
                 locator<Nav>().router.navigateTo(context, 'HomePage',
                     clearStack: true, transition: TransitionType.fadeIn);
               } else {
@@ -87,6 +88,7 @@ class _AuthPageState extends State<AuthPage> {
           child: SignUpForm(
             onResponse: (response) {
               if (response.success) {
+                response.result.save();
                 locator<Nav>().router.navigateTo(context, 'HomePage',
                     clearStack: true, transition: TransitionType.fadeIn);
               } else {
@@ -140,6 +142,7 @@ class _AuthPageState extends State<AuthPage> {
                     ParseResponse response = await userModel.signInAnonymous();
                     return () {
                       if (response.success) {
+                        response.result.save();
                         locator<Nav>().router.navigateTo(context, 'HomePage',
                             clearStack: true,
                             transition: TransitionType.fadeIn);

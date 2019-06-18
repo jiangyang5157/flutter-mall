@@ -108,7 +108,6 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
   Future<ParseResponse> signUp() async {
     ParseResponse ret = await user.signUp();
     if (ret != null && ret.success) {
-      user = ret.result;
       user.pin();
     }
     return ret;
