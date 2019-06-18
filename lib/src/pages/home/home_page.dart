@@ -140,7 +140,31 @@ class _HomePageState extends State<HomePage> {
     var ret = List<Widget>();
     ret.add(
       ListTile(
-        title: Text(string(context, 'label_profile')),
+        title: Text(string(context, 'label_upload_display_picture')),
+        onTap: () {
+          todo(context);
+        },
+      ),
+    );
+    ret.add(
+      ListTile(
+        title: Text(string(context, 'label_change_username')),
+        onTap: () {
+          todo(context);
+        },
+      ),
+    );
+    ret.add(
+      ListTile(
+        title: Text(string(context, 'label_change_password')),
+        onTap: () {
+          todo(context);
+        },
+      ),
+    );
+    ret.add(
+      ListTile(
+        title: Text(string(context, 'label_update_email_address')),
         onTap: () {
           todo(context);
         },

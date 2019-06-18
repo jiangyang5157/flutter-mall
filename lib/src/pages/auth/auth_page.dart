@@ -51,7 +51,7 @@ class _AuthPageState extends State<AuthPage> {
                     height: 96, // TODO:
                     child: FlutterLogo(),
                   ),
-                  _buildForms(context, authModel.state),
+                  _buildForm(context, authModel.state),
                   _buildFormSelector(context, authModel.state),
                 ],
               );
@@ -62,7 +62,7 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
-  Widget _buildForms(BuildContext context, AuthState authState) {
+  Widget _buildForm(BuildContext context, AuthState authState) {
     switch (authState) {
       case AuthState.SignIn:
         return Provider<SignInModel>.value(
@@ -100,17 +100,35 @@ class _AuthPageState extends State<AuthPage> {
   Widget _buildFormSelector(BuildContext context, AuthState authState) {
     switch (authState) {
       case AuthState.SignIn:
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(string(context, 'prompt_sign_up_action')),
-            FlatButton(
-              child: Text(
-                string(context, 'label_sign_up_action'),
-              ),
-              onPressed: () {
-                authModel.state = AuthState.SignUp;
-              },
+        return Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(string(context, 'prompt_sign_up_action')),
+                FlatButton(
+                  child: Text(
+                    string(context, 'label_sign_up_action'),
+                  ),
+                  onPressed: () {
+                    authModel.state = AuthState.SignUp;
+                  },
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(string(context, 'prompt_quick_start_action')),
+                FlatButton(
+                  child: Text(
+                    string(context, 'label_anonymous_login'),
+                  ),
+                  onPressed: () {
+                    todo(context);
+                  },
+                ),
+              ],
             ),
           ],
         );

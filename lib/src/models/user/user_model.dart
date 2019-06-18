@@ -121,6 +121,14 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
     return ret;
   }
 
+  Future<ParseResponse> signInAnonymous() async {
+    ParseResponse ret = await user.loginAnonymous();
+    if (ret != null && ret.success) {
+      user.pin();
+    }
+    return ret;
+  }
+
   Future<ParseResponse> signOut() async {
     ParseResponse ret = await user.logout();
     if (ret != null && ret.success) {
