@@ -82,9 +82,11 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
   /// Reset to current user
   Future<void> init({bool fromServer = false}) async {
     ParseUser parseUser = await ParseUser.currentUser();
+    print('#### ParseUser.currentUser=$parseUser');
     if (parseUser != null) {
       if (fromServer) {
         ParseResponse ret = await ParseUser.getCurrentUserFromServer();
+        print('#### ParseUser.getCurrentUserFromServer=$parseUser');
         if (ret != null && ret.success) {
           user = ret.result;
         } else {
@@ -106,51 +108,27 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
   }
 
   Future<ParseResponse> signUp() async {
-    ParseResponse ret = await user.signUp();
-    if (ret != null && ret.success) {
-      user.pin();
-    }
-    return ret;
+    return await user.signUp();
   }
 
   Future<ParseResponse> signIn() async {
-    ParseResponse ret = await user.login();
-    if (ret != null && ret.success) {
-      user.pin();
-    }
-    return ret;
+    return await user.login();
   }
 
   Future<ParseResponse> signInAnonymous() async {
-    ParseResponse ret = await user.loginAnonymous();
-    if (ret != null && ret.success) {
-      user.pin();
-    }
-    return ret;
+    return await user.loginAnonymous();
   }
 
   Future<ParseResponse> signOut() async {
-    ParseResponse ret = await user.logout();
-    if (ret != null && ret.success) {
-      user.pin();
-    }
-    return ret;
+    return await user.logout();
   }
 
   Future<ParseResponse> save() async {
-    ParseResponse ret = await user.save();
-    if (ret != null && ret.success) {
-      user.pin();
-    }
-    return ret;
+    return await user.save();
   }
 
   Future<ParseResponse> destroy() async {
-    ParseResponse ret = await user.destroy();
-    if (ret != null && ret.success) {
-      user.pin();
-    }
-    return ret;
+    return await user.destroy();
   }
 
   @override
