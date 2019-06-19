@@ -82,18 +82,19 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
   /// Reset to current user
   Future<void> init({bool fromServer = false}) async {
     ParseUser parseUser = await ParseUser.currentUser();
-    print('#### ParseUser.currentUser=$parseUser');
     if (parseUser != null) {
       if (fromServer) {
         ParseResponse ret = await ParseUser.getCurrentUserFromServer();
-        print('#### ParseUser.getCurrentUserFromServer=$parseUser');
+        print('#### currentUserFromServer=$parseUser');
         if (ret != null && ret.success) {
           user = ret.result;
         } else {
+          print('#### currentUserFromServer error: ${ret.error.message}');
           user = null;
         }
       } else {
-        user = parseUser;
+        user = await parseUser.fromPin(parseUser.objectId);
+        print('#### fromPin(currentLocalUser.objectId)=$user');
       }
     } else {
       user = null;
@@ -125,6 +126,10 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
 
   Future<ParseResponse> save() async {
     return await user.save();
+  }
+
+  Future<bool> pin() async {
+    return await user.pin();
   }
 
   Future<ParseResponse> destroy() async {

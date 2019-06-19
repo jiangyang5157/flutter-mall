@@ -139,7 +139,8 @@ class _AuthPageState extends State<AuthPage> {
                     ParseResponse response = await userModel.signInAnonymous();
                     if (response.success) {
                       userModel.type = UserType.Anonymous;
-                      await userModel.save();
+                      await userModel.user.save();
+                      await userModel.user.pin();
                     }
                     return () {
                       if (response.success) {
