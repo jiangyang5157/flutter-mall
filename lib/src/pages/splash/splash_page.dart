@@ -12,12 +12,12 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  AppModel appModel = AppModel();
+  SplashModel splashModel = SplashModel();
   UserModel userModel = UserModel();
 
   @override
   void dispose() {
-    appModel.dispose();
+    splashModel.dispose();
     userModel.dispose();
     super.dispose();
     print('#### _SplashPageState - dispose');
@@ -31,9 +31,9 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _init() async {
-    await appModel.init();
-    switch (appModel.state) {
-      case AppState.Initialized:
+    await splashModel.init();
+    switch (splashModel.state) {
+      case SplashState.Initialized:
         await userModel.init(fromServer: true);
         if (userModel.user == null) {
           locator<Nav>().router.navigateTo(context, 'AuthPage',

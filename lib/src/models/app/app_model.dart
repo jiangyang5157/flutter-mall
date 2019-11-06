@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:mall/src/core/core.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-enum AppState {
-  Initialized,
+enum ThemeType {
+  Light,
+  Dark,
 }
 
 class AppModel extends ChangeNotifier {
-  AppState _state;
+  static const String _prefs_ThemeType = '_prefs_ThemeType';
 
-  AppState get state => _state;
+  ThemeType _themeType;
 
-  set state(AppState state) {
-    _state = state;
+  ThemeType get themeType => _themeType;
+
+  set themeType(ThemeType themeType) {
+    _themeType = themeType;
+    _saveThemeType(themeType);
     notifyListeners();
   }
 
@@ -27,12 +31,57 @@ class AppModel extends ChangeNotifier {
   }
 
   Future<void> init() async {
-    Parse().initialize(parseApplicationId, parseServerUrl,
-        appName: parseApplicationName,
-        masterKey: parseMasterKey,
-        autoSendSessionId: true,
-        debug: true);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String typeString = prefs.getString(_prefs_ThemeType);
+    if (typeString == null) {
+      themeType = ThemeType.Light;
+    } else {
+      themeType = _stringToThemeType(typeString);
+    }
+  }
 
-    state = AppState.Initialized;
+  Future<void> _saveThemeType(ThemeType themeType) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(_prefs_ThemeType, _themeTypeToString(themeType));
+  }
+
+  ThemeType _stringToThemeType(String themeType) {
+    return ThemeType.values
+        .firstWhere((element) => _themeTypeToString(element) == themeType);
+  }
+
+  String _themeTypeToString(ThemeType themeType) {
+    return themeType.toString().split('.').last;
+  }
+
+  ThemeData themeTypeToData(BuildContext context, ThemeType themeType) {
+    switch (themeType) {
+      case ThemeType.Dark:
+        return ThemeData.dark().copyWith(
+          primaryColor: Colors.green,
+          accentColor: Colors.greenAccent,
+          errorColor: Colors.greenAccent,
+          buttonTheme: ButtonTheme.of(context).copyWith(
+            textTheme: ButtonTextTheme.primary,
+            buttonColor: Colors.green,
+            minWidth: btnMinWidth,
+            height: btnHeight,
+          ),
+        );
+      case ThemeType.Light:
+        return ThemeData.light().copyWith(
+          primaryColor: Colors.blue,
+          accentColor: Colors.blueAccent,
+          errorColor: Colors.blueAccent,
+          buttonTheme: ButtonTheme.of(context).copyWith(
+            textTheme: ButtonTextTheme.primary,
+            buttonColor: Colors.blue,
+            minWidth: btnMinWidth,
+            height: btnHeight,
+          ),
+        );
+      default:
+        throw ("$themeType is not recognized as an ThemeType");
+    }
   }
 }

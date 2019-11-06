@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
         title: Text('Light'),
         trailing: Icon(Icons.brightness_high),
         onTap: () {
-          Provider.of<ThemeModel>(context).type = ThemeType.Light;
+          Provider.of<AppModel>(context).themeType = ThemeType.Light;
         },
       ),
     );
@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
         title: Text('Dark'),
         trailing: Icon(Icons.brightness_low),
         onTap: () {
-          Provider.of<ThemeModel>(context).type = ThemeType.Dark;
+          Provider.of<AppModel>(context).themeType = ThemeType.Dark;
         },
       ),
     );

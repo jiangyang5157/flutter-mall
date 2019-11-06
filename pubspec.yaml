@@ -19,7 +19,7 @@ dependencies:
 
   shared_preferences: '^0.5.0'
 
-  parse_server_sdk: '^1.0.21'
+  parse_server_sdk: '^1.0.24'
 
   flutter_progress_button: '^1.0.0'
 
