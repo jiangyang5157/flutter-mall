@@ -95,7 +95,7 @@ class _AuthPageState extends State<AuthPage> {
           ),
         );
       default:
-        return SizedBox.shrink();
+        throw ("$authState is not recognized as an AuthState");
     }
   }
 
@@ -171,6 +171,8 @@ class _AuthPageState extends State<AuthPage> {
             ),
           ],
         );
+      default:
+        throw ("$authState is not recognized as an AuthState");
     }
   }
 }

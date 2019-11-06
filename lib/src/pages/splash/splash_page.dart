@@ -42,6 +42,9 @@ class _SplashPageState extends State<SplashPage> {
           locator<Nav>().router.navigateTo(context, 'HomePage',
               clearStack: true, transition: TransitionType.fadeIn);
         }
+        break;
+      default:
+        throw ("${splashModel.state} is not recognized as an SplashState");
     }
   }
 

@@ -144,6 +144,8 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
         return false;
       case UserType.Anonymous:
         return false;
+      default:
+        throw ("$type is not recognized as an UserType");
     }
   }
 }

@@ -212,6 +212,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       width: btnEndWidth,
                       height: btnHeight,
                       animate: false,
+                      // ignore: missing_return
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           UserModel userModel = UserModel.create(

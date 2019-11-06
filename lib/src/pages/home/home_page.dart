@@ -73,6 +73,8 @@ class _HomePageState extends State<HomePage> {
       case DrawerState.AccountDetails:
         ret.addAll(_buildDrawerAccountDetails(context, userModel));
         break;
+      default:
+        throw ("${drawerModel.state} is not recognized as an DrawerState");
     }
     return ret;
   }
@@ -96,6 +98,8 @@ class _HomePageState extends State<HomePage> {
           case DrawerState.AccountDetails:
             drawerModel.state = DrawerState.Menu;
             break;
+          default:
+            throw ("${drawerModel.state} is not recognized as an DrawerState");
         }
       },
     );
