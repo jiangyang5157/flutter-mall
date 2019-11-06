@@ -1,1 +1,1 @@
-export 'package:mall/src/models/splash/splash_model.dart';
+export 'package:mall/src/models/splash/init_model.dart';

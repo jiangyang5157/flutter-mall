@@ -12,12 +12,12 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  SplashModel splashModel = SplashModel();
+  InitModel initModel = InitModel();
   UserModel userModel = UserModel();
 
   @override
   void dispose() {
-    splashModel.dispose();
+    initModel.dispose();
     userModel.dispose();
     super.dispose();
     print('#### _SplashPageState - dispose');
@@ -31,9 +31,12 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _init() async {
-    await splashModel.init();
-    switch (splashModel.state) {
-      case SplashState.Initialized:
+    await initModel.init();
+    switch (initModel.state) {
+      case InitState.Start:
+        // ignore: wait for InitState.Finish
+        break;
+      case InitState.Finish:
         await userModel.init(fromServer: true);
         if (userModel.user == null) {
           locator<Nav>().router.navigateTo(context, 'AuthPage',
@@ -44,7 +47,7 @@ class _SplashPageState extends State<SplashPage> {
         }
         break;
       default:
-        throw ("${splashModel.state} is not recognized as an SplashState");
+        throw ("${initModel.state} is not recognized as an SplashState");
     }
   }
 

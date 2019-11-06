@@ -7,55 +7,55 @@ enum ThemeType {
   Dark,
 }
 
-class AppModel extends ChangeNotifier {
+class ThemeModel extends ChangeNotifier {
   static const String _prefs_ThemeType = '_prefs_ThemeType';
 
-  ThemeType _themeType;
+  ThemeType _type;
 
-  ThemeType get themeType => _themeType;
+  ThemeType get type => _type;
 
-  set themeType(ThemeType themeType) {
-    _themeType = themeType;
-    _saveThemeType(themeType);
+  set type(ThemeType type) {
+    _type = type;
+    _saveType(type);
     notifyListeners();
   }
 
   @override
   void dispose() {
     super.dispose();
-    print('#### AppModel - dispose');
+    print('#### ThemeModel - dispose');
   }
 
-  AppModel() {
-    print('#### AppModel()');
+  ThemeModel() {
+    print('#### ThemeModel()');
   }
 
   Future<void> init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String typeString = prefs.getString(_prefs_ThemeType);
     if (typeString == null) {
-      themeType = ThemeType.Light;
+      type = ThemeType.Light;
     } else {
-      themeType = _stringToThemeType(typeString);
+      type = _stringToType(typeString);
     }
   }
 
-  Future<void> _saveThemeType(ThemeType themeType) async {
+  Future<void> _saveType(ThemeType type) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(_prefs_ThemeType, _themeTypeToString(themeType));
+    prefs.setString(_prefs_ThemeType, _typeToString(type));
   }
 
-  ThemeType _stringToThemeType(String themeType) {
+  ThemeType _stringToType(String type) {
     return ThemeType.values
-        .firstWhere((element) => _themeTypeToString(element) == themeType);
+        .firstWhere((element) => _typeToString(element) == type);
   }
 
-  String _themeTypeToString(ThemeType themeType) {
-    return themeType.toString().split('.').last;
+  String _typeToString(ThemeType type) {
+    return type.toString().split('.').last;
   }
 
-  ThemeData themeTypeToData(BuildContext context, ThemeType themeType) {
-    switch (themeType) {
+  ThemeData typeToData(BuildContext context, ThemeType type) {
+    switch (type) {
       case ThemeType.Dark:
         return ThemeData.dark().copyWith(
           primaryColor: Colors.green,
@@ -81,7 +81,7 @@ class AppModel extends ChangeNotifier {
           ),
         );
       default:
-        throw ("$themeType is not recognized as an ThemeType");
+        throw ("$type is not recognized as an ThemeType");
     }
   }
 }

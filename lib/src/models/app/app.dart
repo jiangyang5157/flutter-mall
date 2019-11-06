@@ -1,1 +1,1 @@
-export 'package:mall/src/models/app/app_model.dart';
+export 'package:mall/src/models/app/theme_model.dart';

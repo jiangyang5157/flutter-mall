@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mall/src/core/core.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
-enum SplashState {
-  Initialized,
+enum InitState {
+  Start,
+  Finish,
 }
 
-class SplashModel extends ChangeNotifier {
-  SplashState _state;
+class InitModel extends ChangeNotifier {
+  InitState _state;
 
-  SplashState get state => _state;
+  InitState get state => _state;
 
-  set state(SplashState state) {
+  set state(InitState state) {
     _state = state;
     notifyListeners();
   }
@@ -19,14 +20,16 @@ class SplashModel extends ChangeNotifier {
   @override
   void dispose() {
     super.dispose();
-    print('#### SplashModel - dispose');
+    print('#### InitModel - dispose');
   }
 
-  SplashModel() {
-    print('#### SplashModel()');
+  InitModel() {
+    print('#### InitModel()');
   }
 
   Future<void> init() async {
+    state = InitState.Start;
+
     Parse().initialize(parseApplicationId, parseServerUrl,
         appName: parseApplicationName,
         masterKey: parseMasterKey,
@@ -34,6 +37,6 @@ class SplashModel extends ChangeNotifier {
         coreStore: await CoreStoreSembastImp.getInstance(),
         debug: true);
 
-    state = SplashState.Initialized;
+    state = InitState.Finish;
   }
 }
