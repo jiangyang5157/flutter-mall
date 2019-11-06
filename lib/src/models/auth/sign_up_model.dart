@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SignUpModel extends ChangeNotifier {
-
   String _username;
 
   String get username => _username;

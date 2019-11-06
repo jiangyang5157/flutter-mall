@@ -1,5 +1,5 @@
-import 'package:mall/src/widgets/validation/validation.dart';
 import 'package:mall/src/utils//validator.dart';
+import 'package:mall/src/widgets/validation/validation.dart';
 
 /// Validate given data, returns error message key or null if the data is valid.
 class PasswordValidator implements Validator<String, String> {

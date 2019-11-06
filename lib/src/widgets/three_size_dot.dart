@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:mall/src/widgets/widgets.dart';
 
 class ThreeSizeDot extends StatefulWidget {

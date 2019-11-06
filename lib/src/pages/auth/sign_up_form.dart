@@ -1,14 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
-import 'package:provider/provider.dart';
-import 'package:fluro/fluro.dart';
-
-import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
-import 'package:mall/src/widgets/widgets.dart';
+import 'package:mall/src/models/models.dart';
 import 'package:mall/src/utils/utils.dart';
+import 'package:mall/src/widgets/widgets.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:provider/provider.dart';
 
 class SignUpForm extends StatefulWidget {
   final Function(ParseResponse response) onResponse;
@@ -151,7 +149,7 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.fromLTRB(paddingLarge, 0, paddingLarge, 0),
+                    const EdgeInsets.fromLTRB(paddingLarge, 0, paddingLarge, 0),
                 child: SizedBox(
                   height: textFieldHeight,
                   child: TextFormField(
@@ -180,7 +178,7 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.fromLTRB(paddingLarge, 0, paddingLarge, 0),
+                    const EdgeInsets.fromLTRB(paddingLarge, 0, paddingLarge, 0),
                 child: SizedBox(
                   height: textFieldHeight,
                   child: TextFormField(

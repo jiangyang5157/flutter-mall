@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-
 import 'package:mall/src/widgets/validation/validation.dart';
 
 class EmailAddressInputFormatter implements TextInputFormatter {

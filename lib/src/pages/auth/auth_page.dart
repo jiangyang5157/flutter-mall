@@ -1,15 +1,14 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:fluro/fluro.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
-
+import 'package:mall/src/core/core.dart';
 import 'package:mall/src/models/models.dart';
-import 'package:mall/src/widgets/widgets.dart';
 import 'package:mall/src/pages/pages.dart';
 import 'package:mall/src/utils/utils.dart';
-import 'package:mall/src/core/core.dart';
+import 'package:mall/src/widgets/widgets.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:provider/provider.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key key}) : super(key: key);

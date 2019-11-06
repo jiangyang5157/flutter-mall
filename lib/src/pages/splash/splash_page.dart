@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
-
+import 'package:flutter/material.dart';
 import 'package:mall/src/core/core.dart';
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/utils/utils.dart';

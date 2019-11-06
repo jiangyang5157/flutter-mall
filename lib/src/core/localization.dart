@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class Localization {
   Localization(this._locale, this._localizedValues);

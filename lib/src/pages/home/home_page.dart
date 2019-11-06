@@ -1,11 +1,10 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:fluro/fluro.dart';
-
-import 'package:mall/src/models/models.dart';
 import 'package:mall/src/core/core.dart';
+import 'package:mall/src/models/models.dart';
 import 'package:mall/src/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);

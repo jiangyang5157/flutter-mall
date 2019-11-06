@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
-
 import 'package:mall/src/core/core.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 enum AppState {
   Initialized,
