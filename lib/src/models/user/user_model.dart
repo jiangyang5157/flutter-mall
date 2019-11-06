@@ -68,14 +68,14 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
     return type.toString().split('.').last;
   }
 
+  UserModel() {
+    print('#### UserModel()');
+  }
+
   @override
   void dispose() {
     super.dispose();
     print('#### UserModel - dispose');
-  }
-
-  UserModel() {
-    print('#### UserModel()');
   }
 
   /// Reset to current user

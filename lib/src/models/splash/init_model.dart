@@ -17,14 +17,14 @@ class InitModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  InitModel() {
+    print('#### InitModel()');
+  }
+
   @override
   void dispose() {
     super.dispose();
     print('#### InitModel - dispose');
-  }
-
-  InitModel() {
-    print('#### InitModel()');
   }
 
   Future<void> init() async {

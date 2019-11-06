@@ -15,14 +15,14 @@ class AuthModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  AuthModel() {
+    print('#### AuthModel()');
+    state = AuthState.SignIn;
+  }
+
   @override
   void dispose() {
     super.dispose();
     print('#### AuthModel - dispose');
-  }
-
-  AuthModel() {
-    print('#### AuthModel()');
-    state = AuthState.SignIn;
   }
 }

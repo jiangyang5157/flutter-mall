@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
+    userModel.dispose();
     super.dispose();
     print('#### _HomePageState - dispose');
   }

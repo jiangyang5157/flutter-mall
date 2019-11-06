@@ -15,14 +15,14 @@ class DrawerModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  DrawerModel() {
+    print('#### DrawerModel()');
+    state = DrawerState.Menu;
+  }
+
   @override
   void dispose() {
     super.dispose();
     print('#### DrawerModel - dispose');
-  }
-
-  DrawerModel() {
-    print('#### DrawerModel()');
-    state = DrawerState.Menu;
   }
 }

@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SignInModel extends ChangeNotifier {
-  @override
-  void dispose() {
-    super.dispose();
-    print('#### SignInModel - dispose');
-  }
-
   String _username;
 
   String get username => _username;
@@ -39,5 +33,11 @@ class SignInModel extends ChangeNotifier {
     username = '';
     password = '';
     obscurePassword = true;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print('#### SignInModel - dispose');
   }
 }

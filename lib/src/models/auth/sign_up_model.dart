@@ -46,12 +46,6 @@ class SignUpModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    print('#### SignUpModel - dispose');
-  }
-
   SignUpModel() {
     print('#### SignUpModel()');
     username = '';
@@ -59,5 +53,11 @@ class SignUpModel extends ChangeNotifier {
     repeatPassword = '';
     emailAddress = '';
     obscurePassword = true;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print('#### SignUpModel - dispose');
   }
 }

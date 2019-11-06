@@ -18,6 +18,7 @@ class _AppPageState extends State<AppPage> {
 
   @override
   void dispose() {
+    themeModel.dispose();
     super.dispose();
     print('#### _AppPageState - dispose');
   }

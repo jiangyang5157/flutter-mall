@@ -35,6 +35,10 @@ class _SignUpFormState extends State<SignUpForm> {
     _passwordController.dispose();
     _repeatPasswordController.dispose();
     _emailAddressController.dispose();
+    _usernameFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    _repeatPasswordFocusNode.dispose();
+    _emailAddressFocusNode.dispose();
     super.dispose();
     print('#### _SignUpFormState - dispose');
   }

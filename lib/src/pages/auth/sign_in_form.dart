@@ -29,6 +29,8 @@ class _SignInFormState extends State<SignInForm> {
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
+    _usernameFocusNode.dispose();
+    _passwordFocusNode.dispose();
     super.dispose();
     print('#### _SignInFormState - dispose');
   }

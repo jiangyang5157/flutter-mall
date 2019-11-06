@@ -24,6 +24,7 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   void dispose() {
+    authModel.dispose();
     signInModel.dispose();
     signUpModel.dispose();
     super.dispose();

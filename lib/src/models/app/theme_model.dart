@@ -20,14 +20,14 @@ class ThemeModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  ThemeModel() {
+    print('#### ThemeModel()');
+  }
+
   @override
   void dispose() {
     super.dispose();
     print('#### ThemeModel - dispose');
-  }
-
-  ThemeModel() {
-    print('#### ThemeModel()');
   }
 
   Future<void> init() async {
@@ -68,7 +68,7 @@ class ThemeModel extends ChangeNotifier {
             height: btnHeight,
           ),
         );
-      case ThemeType.Light:
+      default:
         return ThemeData.light().copyWith(
           primaryColor: Colors.blue,
           accentColor: Colors.blueAccent,
@@ -80,8 +80,6 @@ class ThemeModel extends ChangeNotifier {
             height: btnHeight,
           ),
         );
-      default:
-        throw ("$type is not recognized as an ThemeType");
     }
   }
 }
