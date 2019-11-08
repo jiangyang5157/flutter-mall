@@ -23,5 +23,7 @@ const double textFieldFontSize = 14;
 const double textFieldContentPaddingT = 16;
 const double textFieldHeight = 72;
 
-const double authTopContainer = 96;
 const double authBottomContainer = 96;
+
+/// Debug
+const double flutterLogoSize = 96; // TODO
