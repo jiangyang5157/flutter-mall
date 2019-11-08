@@ -47,15 +47,30 @@ class _AuthPageState extends State<AuthPage> {
           builder: (_) => authModel,
           child: Consumer<AuthModel>(
             builder: (context, authModel, _) {
-              return ListView(
-                children: <Widget>[
-                  SizedBox(
-                    height: 96, // TODO:
-                    child: FlutterLogo(),
-                  ),
-                  _buildForm(context, authModel.state),
-                  _buildFormSelector(context, authModel.state),
-                ],
+              return LayoutBuilder(
+                builder: (context, constraint) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints:
+                          BoxConstraints(minHeight: constraint.maxHeight),
+                      child: IntrinsicHeight(
+                        child: Column(
+                          children: <Widget>[
+                            FlutterLogo(size: authTopContainer),
+                            _buildForm(context, authModel.state),
+                            Spacer(),
+                            Container(
+                              height: authBottomContainer,
+                              alignment: Alignment.topCenter,
+                              child:
+                                  _buildFormSelector(context, authModel.state),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
               );
             },
           ),
