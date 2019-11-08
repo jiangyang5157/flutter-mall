@@ -56,8 +56,13 @@ class _AuthPageState extends State<AuthPage> {
                       child: IntrinsicHeight(
                         child: Column(
                           children: <Widget>[
-                            FlutterLogo(size: authTopContainer),
-                            _buildForm(context, authModel.state),
+                            FlutterLogo(size: flutterLogoSize), // TODO
+                            Padding(
+                              padding: const EdgeInsets.all(paddingLarge),
+                              child: Card(
+                                child: _buildForm(context, authModel.state),
+                              ),
+                            ),
                             Spacer(),
                             Container(
                               height: authBottomContainer,
