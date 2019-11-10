@@ -20,6 +20,10 @@ class Nav {
       ..define('HomePage', handler: Handler(
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
         return HomePage();
+      }))
+      ..define('SettingsPage', handler: Handler(
+          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        return SettingsPage();
       }));
   }
 }
