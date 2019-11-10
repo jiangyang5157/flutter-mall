@@ -17,7 +17,7 @@ dependencies:
 
   #  rxdart: '^0.22.0'
 
-  shared_preferences: '^0.5.4+3'
+  shared_preferences: '^0.5.3+5'
 
   parse_server_sdk: '^1.0.24'
 
