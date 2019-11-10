@@ -131,7 +131,9 @@ class _HomePageState extends State<HomePage> {
         title: Text(string(context, 'label_settings')),
         trailing: Icon(Icons.settings),
         onTap: () async {
-          todo(context);
+          locator<Nav>().router.pop(context);
+          locator<Nav>().router.navigateTo(context, 'SettingsPage',
+              transition: TransitionType.fadeIn);
         },
       ),
     );
