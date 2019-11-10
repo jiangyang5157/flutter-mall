@@ -37,7 +37,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.gmail.jiangyang5157.mall"
         minSdkVersion 18
         targetSdkVersion 28
