@@ -10,7 +10,7 @@ enum ThemeType {
 class ThemeModel extends ChangeNotifier {
   static const String _prefs_ThemeType = '_prefs_ThemeType';
 
-  ThemeType _type = ThemeType.Light;
+  ThemeType _type;
 
   ThemeType get type => _type;
 
