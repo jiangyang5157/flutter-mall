@@ -45,7 +45,41 @@ class _SettingsPageState extends State<SettingsPage> {
     var ret = List<Widget>();
     ret.addAll(_buildProfileList(context));
     ret.add(Divider());
-//    ret.add(ToggleButtons());
+    ret.add(ToggleButtons(
+      children: _themeTypeIcons(),
+      onPressed: (int index) {
+        Provider.of<ThemeModel>(context).type = ThemeType.values[index];
+      },
+      isSelected:
+          _themeTypeSelectedStatus(Provider.of<ThemeModel>(context).type),
+    ));
+    return ret;
+  }
+
+  List<Widget> _themeTypeIcons() {
+    var ret = List<Widget>();
+    for (int i = 0; i < ThemeType.values.length; i++) {
+      switch (ThemeType.values[i]) {
+        case ThemeType.Light:
+          ret.add(Icon(Icons.highlight));
+          break;
+        case ThemeType.Dark:
+          ret.add(Icon(Icons.call));
+          break;
+      }
+    }
+    return ret;
+  }
+
+  List<bool> _themeTypeSelectedStatus(ThemeType themeType) {
+    var ret = List<bool>();
+    for (int i = 0; i < ThemeType.values.length; i++) {
+      if (ThemeType.values[i] == themeType) {
+        ret.add(true);
+      } else {
+        ret.add(false);
+      }
+    }
     return ret;
   }
 

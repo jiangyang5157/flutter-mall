@@ -50,6 +50,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     print('#### _SplashPageState - build');
+
     return Scaffold(
         // TODO:
         );
