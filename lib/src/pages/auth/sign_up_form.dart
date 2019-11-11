@@ -215,7 +215,6 @@ class _SignUpFormState extends State<SignUpForm> {
                   animate: false,
                   // ignore: missing_return
                   onPressed: () async {
-//                    FocusScope.of(context).requestFocus(new FocusNode());
                      FocusScope.of(context).unfocus();
                     if (_formKey.currentState.validate()) {
                       UserModel userModel = UserModel.create(

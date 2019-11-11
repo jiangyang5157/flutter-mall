@@ -142,7 +142,6 @@ class _SignInFormState extends State<SignInForm> {
                   animate: false,
                   // ignore: missing_return
                   onPressed: () async {
-//                    FocusScope.of(context).requestFocus(new FocusNode());
                      FocusScope.of(context).unfocus();
                     if (_formKey.currentState.validate()) {
                       ParseResponse response = await UserModel.create(
