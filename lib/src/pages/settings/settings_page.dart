@@ -12,8 +12,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  UserModel userModel = UserModel();
-
   @override
   void dispose() {
     super.dispose();
@@ -24,43 +22,36 @@ class _SettingsPageState extends State<SettingsPage> {
   void initState() {
     super.initState();
     print('#### _SettingsPageState - initState');
-    userModel.init();
   }
 
   @override
   Widget build(BuildContext context) {
     print('#### _SettingsPageState - build');
 
-    return ChangeNotifierProvider<UserModel>(
-      builder: (context) => userModel,
-      child: Consumer<UserModel>(
-        builder: (context, userModel, _) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(string(context, 'title_settings')),
-            ),
-            body: Center(
-              child: ListView(
-                padding: const EdgeInsets.all(0),
-                children: (_buildSettingsList(context, userModel)),
-              ),
-            ),
-          );
-        },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(string(context, 'title_settings')),
+      ),
+      body: Center(
+        child: ListView(
+          padding: const EdgeInsets.all(0),
+          children: (_buildSettingsList(context)),
+        ),
       ),
     );
   }
 
-  List<Widget> _buildSettingsList(BuildContext context, UserModel userModel) {
+  List<Widget> _buildSettingsList(BuildContext context) {
     var ret = List<Widget>();
-    ret.addAll(_buildProfileList(context, userModel));
+    ret.addAll(_buildProfileList(context));
     ret.add(Divider());
 //    ret.add(ToggleButtons());
     return ret;
   }
 
-  List<Widget> _buildProfileList(BuildContext context, UserModel userModel) {
+  List<Widget> _buildProfileList(BuildContext context) {
     var ret = List<Widget>();
+    UserModel userModel = Provider.of<UserModel>(context);
     if (userModel.type == UserType.Anonymous) {
       ret.add(
         ListTile(

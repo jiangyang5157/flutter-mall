@@ -15,9 +15,12 @@ class AppPage extends StatefulWidget {
 
 class _AppPageState extends State<AppPage> {
   ThemeModel themeModel = ThemeModel();
+  UserModel userModel = UserModel();
 
   @override
   void dispose() {
+    themeModel.dispose();
+    userModel.dispose();
     super.dispose();
     print('#### _AppPageState - dispose');
   }
@@ -33,10 +36,13 @@ class _AppPageState extends State<AppPage> {
   Widget build(BuildContext context) {
     print('#### _AppPageState - build');
 
-    return ChangeNotifierProvider<ThemeModel>(
-      builder: (context) => themeModel,
-      child: Consumer<ThemeModel>(
-        builder: (context, themeModel, _) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeModel>(builder: (context) => themeModel),
+        ChangeNotifierProvider<UserModel>(builder: (context) => userModel),
+      ],
+      child: Consumer2<ThemeModel, UserModel>(
+        builder: (context, themeModel, userModel, _) {
           return MaterialApp(
             localizationsDelegates: [
               const AppLocalizationsDelegate(),

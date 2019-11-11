@@ -149,6 +149,7 @@ class _SignInFormState extends State<SignInForm> {
                               username: _usernameController.text,
                               password: _passwordController.text)
                           .signIn();
+                      await Provider.of<UserModel>(context).init();
                       return () {
                         _passwordController.clear();
                         widget.onResponse(response);

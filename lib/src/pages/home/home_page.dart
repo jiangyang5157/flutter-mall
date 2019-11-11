@@ -14,8 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  UserModel userModel = UserModel();
-
   @override
   void dispose() {
     super.dispose();
@@ -26,52 +24,47 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     print('#### _HomePageState - initState');
-    userModel.init();
   }
 
   @override
   Widget build(BuildContext context) {
     print('#### _HomePageState build');
 
-    return ChangeNotifierProvider<UserModel>(
-      builder: (context) => userModel,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(string(context, 'title_home')),
-        ),
-        drawer: Drawer(
-          child: ChangeNotifierProvider<DrawerModel>(
-            builder: (context) => DrawerModel(),
-            child: Consumer2<UserModel, DrawerModel>(
-              builder: (context, userModel, drawerModel, _) {
-                return ListView(
-                  padding: const EdgeInsets.all(0),
-                  children: _buildDrawerList(context, userModel, drawerModel),
-                );
-              },
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(string(context, 'title_home')),
+      ),
+      drawer: Drawer(
+        child: ChangeNotifierProvider<DrawerModel>.value(
+          value: DrawerModel(),
+          child: Consumer<DrawerModel>(
+            builder: (context, drawerModel, _) {
+              return ListView(
+                padding: const EdgeInsets.all(0),
+                children: _buildDrawerList(context, drawerModel),
+              );
+            },
           ),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[],
-          ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[],
         ),
       ),
     );
   }
 
-  List<Widget> _buildDrawerList(
-      BuildContext context, UserModel userModel, DrawerModel drawerModel) {
+  List<Widget> _buildDrawerList(BuildContext context, DrawerModel drawerModel) {
     var ret = List<Widget>();
-    ret.add(_buildDrawerHeader(context, userModel, drawerModel));
+    ret.add(_buildDrawerHeader(context, drawerModel));
     switch (drawerModel.state) {
       case DrawerState.Menu:
-        ret.addAll(_buildDrawerMenu(context, userModel));
+        ret.addAll(_buildDrawerMenu(context));
         break;
       case DrawerState.AccountDetails:
-        ret.addAll(_buildDrawerAccountDetails(context, userModel));
+        ret.addAll(_buildDrawerAccountDetails(context));
         break;
       default:
         throw ("${drawerModel.state} is not recognized as an DrawerState");
@@ -79,8 +72,8 @@ class _HomePageState extends State<HomePage> {
     return ret;
   }
 
-  Widget _buildDrawerHeader(
-      BuildContext context, UserModel userModel, DrawerModel drawerModel) {
+  Widget _buildDrawerHeader(BuildContext context, DrawerModel drawerModel) {
+    UserModel userModel = Provider.of<UserModel>(context);
     return UserAccountsDrawerHeader(
       accountName: Text(userModel.name),
       accountEmail: Text(userModel.emailAddress ?? ''),
@@ -105,7 +98,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<Widget> _buildDrawerMenu(BuildContext context, UserModel userModel) {
+  List<Widget> _buildDrawerMenu(BuildContext context) {
     var ret = List<Widget>();
     ret.add(
       ListTile(
@@ -140,9 +133,9 @@ class _HomePageState extends State<HomePage> {
     return ret;
   }
 
-  List<Widget> _buildDrawerAccountDetails(
-      BuildContext context, UserModel userModel) {
+  List<Widget> _buildDrawerAccountDetails(BuildContext context) {
     var ret = List<Widget>();
+    UserModel userModel = Provider.of<UserModel>(context);
     if (userModel.type == UserType.Anonymous) {
       ret.add(
         ListTile(

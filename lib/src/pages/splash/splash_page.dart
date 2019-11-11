@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mall/src/core/core.dart';
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class SplashPage extends StatefulWidget {
   SplashPage({Key key}) : super(key: key);
@@ -13,12 +14,10 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   InitModel initModel = InitModel();
-  UserModel userModel = UserModel();
 
   @override
   void dispose() {
     initModel.dispose();
-    userModel.dispose();
     super.dispose();
     print('#### _SplashPageState - dispose');
   }
@@ -37,6 +36,7 @@ class _SplashPageState extends State<SplashPage> {
         // ignore: wait for InitState.Finish
         break;
       case InitState.Finish:
+        UserModel userModel = Provider.of<UserModel>(context);
         await userModel.init(fromServer: true);
         if (userModel.user == null) {
           locator<Nav>().router.navigateTo(context, 'AuthPage',

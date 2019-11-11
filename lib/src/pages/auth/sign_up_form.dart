@@ -228,6 +228,7 @@ class _SignUpFormState extends State<SignUpForm> {
                         userModel.type = UserType.Master; // TODO:
                         await userModel.user.save();
                         await userModel.user.pin();
+                        await Provider.of<UserModel>(context).init();
                       }
                       return () {
                         _passwordController.clear();

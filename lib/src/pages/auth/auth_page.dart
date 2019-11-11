@@ -43,8 +43,8 @@ class _AuthPageState extends State<AuthPage> {
     return Scaffold(
       body: SafeArea(
         // Use expanded ListView instead of shrinking SingleChildScrollView
-        child: ChangeNotifierProvider<AuthModel>(
-          builder: (_) => authModel,
+        child: ChangeNotifierProvider<AuthModel>.value(
+          value: authModel,
           child: Consumer<AuthModel>(
             builder: (context, authModel, _) {
               return LayoutBuilder(
@@ -160,6 +160,7 @@ class _AuthPageState extends State<AuthPage> {
                       userModel.type = UserType.Anonymous;
                       await userModel.user.save();
                       await userModel.user.pin();
+                      await Provider.of<UserModel>(context).init();
                     }
                     return () {
                       if (response.success) {
