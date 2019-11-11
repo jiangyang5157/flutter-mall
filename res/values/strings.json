@@ -25,6 +25,8 @@
     "label_update_email_address": "Update Email Address",
     "label_create_account": "Create Account",
     "label_settings": "Settings",
+    "label_light_theme": "Light",
+    "label_dark_theme": "Dark",
     "prompt_sign_up_action": "Not yet registered?",
     "prompt_sign_in_action": "Already have an account?",
     "prompt_quick_start_action": "Looking for a quick start?",

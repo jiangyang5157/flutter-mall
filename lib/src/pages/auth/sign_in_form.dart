@@ -61,7 +61,7 @@ class _SignInFormState extends State<SignInForm> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, paddingLarge, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, sizeLarge, 0, 0),
             child: Text(
               string(context, 'title_sign_in_form'),
               style: Theme.of(context).textTheme.title,
@@ -69,7 +69,7 @@ class _SignInFormState extends State<SignInForm> {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(
-                paddingLarge, paddingLarge, paddingLarge, 0),
+                sizeLarge, sizeLarge, sizeLarge, 0),
             child: SizedBox(
               height: textFieldHeight,
               child: TextFormField(
@@ -94,7 +94,7 @@ class _SignInFormState extends State<SignInForm> {
           ),
           Padding(
             padding:
-                const EdgeInsets.fromLTRB(paddingLarge, 0, paddingLarge, 0),
+                const EdgeInsets.fromLTRB(sizeLarge, 0, sizeLarge, 0),
             child: SizedBox(
               height: textFieldHeight,
               child: TextFormField(
@@ -129,7 +129,7 @@ class _SignInFormState extends State<SignInForm> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, paddingNormal, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, sizeNormal, 0, 0),
             child: ButtonBar(
               mainAxisSize: MainAxisSize.max,
               alignment: MainAxisAlignment.end,

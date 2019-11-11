@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mall/src/core/constant.dart';
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
     ret.addAll(_buildProfileList(context));
     ret.add(Divider());
     ret.add(ToggleButtons(
-      children: _themeTypeIcons(),
+      children: _themeTypeWidgets(),
       onPressed: (int index) {
         Provider.of<ThemeModel>(context).type = ThemeType.values[index];
       },
@@ -56,15 +57,30 @@ class _SettingsPageState extends State<SettingsPage> {
     return ret;
   }
 
-  List<Widget> _themeTypeIcons() {
+  List<Widget> _themeTypeWidgets() {
     var ret = List<Widget>();
     for (int i = 0; i < ThemeType.values.length; i++) {
       switch (ThemeType.values[i]) {
         case ThemeType.Light:
-          ret.add(Icon(Icons.brightness_high));
+          ret.add(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.brightness_high),
+                SizedBox(width: sizeSmall),
+                Text(string(context, 'label_light_theme')),
+              ],
+            ),
+          );
           break;
         case ThemeType.Dark:
-          ret.add(Icon(Icons.brightness_low));
+          ret.add(Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.brightness_low),
+                SizedBox(width: sizeSmall),
+                Text(string(context, 'label_dark_theme')),
+              ]));
           break;
       }
     }

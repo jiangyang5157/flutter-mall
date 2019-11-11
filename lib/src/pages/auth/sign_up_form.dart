@@ -79,7 +79,7 @@ class _SignUpFormState extends State<SignUpForm> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, paddingLarge, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, sizeLarge, 0, 0),
             child: Text(
               string(context, 'title_sign_up_form'),
               style: Theme.of(context).textTheme.title,
@@ -87,7 +87,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(
-                paddingLarge, paddingLarge, paddingLarge, 0),
+                sizeLarge, sizeLarge, sizeLarge, 0),
             child: SizedBox(
               height: textFieldHeight,
               child: TextFormField(
@@ -112,7 +112,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           Padding(
             padding:
-                const EdgeInsets.fromLTRB(paddingLarge, 0, paddingLarge, 0),
+                const EdgeInsets.fromLTRB(sizeLarge, 0, sizeLarge, 0),
             child: SizedBox(
               height: textFieldHeight,
               child: TextFormField(
@@ -150,7 +150,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           Padding(
             padding:
-                const EdgeInsets.fromLTRB(paddingLarge, 0, paddingLarge, 0),
+                const EdgeInsets.fromLTRB(sizeLarge, 0, sizeLarge, 0),
             child: SizedBox(
               height: textFieldHeight,
               child: TextFormField(
@@ -179,7 +179,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           Padding(
             padding:
-                const EdgeInsets.fromLTRB(paddingLarge, 0, paddingLarge, 0),
+                const EdgeInsets.fromLTRB(sizeLarge, 0, sizeLarge, 0),
             child: SizedBox(
               height: textFieldHeight,
               child: TextFormField(
@@ -202,7 +202,7 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, paddingNormal, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, sizeNormal, 0, 0),
             child: ButtonBar(
               mainAxisSize: MainAxisSize.max,
               alignment: MainAxisAlignment.end,

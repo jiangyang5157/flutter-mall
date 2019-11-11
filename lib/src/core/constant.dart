@@ -11,10 +11,10 @@ const double btnMinWidth = 80;
 const double btnEndWidth = 120;
 const double btnCenterWidth = 160;
 
-const double paddingTiny = 2;
-const double paddingSmall = 4;
-const double paddingNormal = 8;
-const double paddingLarge = 16;
+const double sizeTiny = 2;
+const double sizeSmall = 4;
+const double sizeNormal = 8;
+const double sizeLarge = 16;
 
 /// Widget
 const int snackBarDurationInMilliseconds = 3000;

@@ -58,7 +58,7 @@ class _AuthPageState extends State<AuthPage> {
                           children: <Widget>[
                             FlutterLogo(size: flutterLogoSize), // TODO
                             Padding(
-                              padding: const EdgeInsets.all(paddingLarge),
+                              padding: const EdgeInsets.all(sizeLarge),
                               child: Card(
                                 child: _buildForm(context, authModel.state),
                               ),
