@@ -35,16 +35,9 @@ class _HomePageState extends State<HomePage> {
         title: Text(string(context, 'title_home')),
       ),
       drawer: Drawer(
-        child: ChangeNotifierProvider<DrawerModel>.value(
-          value: DrawerModel(),
-          child: Consumer<DrawerModel>(
-            builder: (context, drawerModel, _) {
-              return ListView(
-                padding: const EdgeInsets.all(0),
-                children: _buildDrawerList(context, drawerModel),
-              );
-            },
-          ),
+        child: ListView(
+          padding: const EdgeInsets.all(0),
+          children: _buildDrawerList(context),
         ),
       ),
       body: Center(
@@ -56,23 +49,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<Widget> _buildDrawerList(BuildContext context, DrawerModel drawerModel) {
+  List<Widget> _buildDrawerList(BuildContext context) {
     var ret = List<Widget>();
-    ret.add(_buildDrawerHeader(context, drawerModel));
-    switch (drawerModel.state) {
-      case DrawerState.Menu:
-        ret.addAll(_buildDrawerMenu(context));
-        break;
-      case DrawerState.AccountDetails:
-        ret.addAll(_buildDrawerAccountDetails(context));
-        break;
-      default:
-        throw ("${drawerModel.state} is not recognized as an DrawerState");
-    }
+    ret.add(_buildDrawerHeader(context));
+    ret.addAll(_buildDrawerMenu(context));
     return ret;
   }
 
-  Widget _buildDrawerHeader(BuildContext context, DrawerModel drawerModel) {
+  Widget _buildDrawerHeader(BuildContext context) {
     UserModel userModel = Provider.of<UserModel>(context);
     return UserAccountsDrawerHeader(
       accountName: Text(userModel.name),
@@ -82,19 +66,6 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.white,
         ),
       ),
-      onDetailsPressed: () {
-        print('${drawerModel.state}');
-        switch (drawerModel.state) {
-          case DrawerState.Menu:
-            drawerModel.state = DrawerState.AccountDetails;
-            break;
-          case DrawerState.AccountDetails:
-            drawerModel.state = DrawerState.Menu;
-            break;
-          default:
-            throw ("${drawerModel.state} is not recognized as an DrawerState");
-        }
-      },
     );
   }
 
@@ -130,56 +101,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
-    return ret;
-  }
-
-  List<Widget> _buildDrawerAccountDetails(BuildContext context) {
-    var ret = List<Widget>();
     UserModel userModel = Provider.of<UserModel>(context);
-    if (userModel.type == UserType.Anonymous) {
-      ret.add(
-        ListTile(
-          title: Text(string(context, 'label_create_account')),
-          onTap: () {
-            todo(context);
-          },
-        ),
-      );
-    } else {
-      ret.add(
-        ListTile(
-          title: Text(string(context, 'label_upload_display_picture')),
-          onTap: () {
-            todo(context);
-          },
-        ),
-      );
-      ret.add(
-        ListTile(
-          title: Text(string(context, 'label_change_username')),
-          onTap: () {
-            todo(context);
-          },
-        ),
-      );
-      ret.add(
-        ListTile(
-          title: Text(string(context, 'label_change_password')),
-          onTap: () {
-            todo(context);
-          },
-        ),
-      );
-      ret.add(
-        ListTile(
-          title: Text(string(context, 'label_update_email_address')),
-          onTap: () {
-            todo(context);
-          },
-        ),
-      );
-    }
-    ret.add(Divider());
     ret.add(
       ListTile(
         title: Text(string(context, 'label_sign_out')),
