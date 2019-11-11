@@ -61,10 +61,10 @@ class _SettingsPageState extends State<SettingsPage> {
     for (int i = 0; i < ThemeType.values.length; i++) {
       switch (ThemeType.values[i]) {
         case ThemeType.Light:
-          ret.add(Icon(Icons.highlight));
+          ret.add(Icon(Icons.brightness_high));
           break;
         case ThemeType.Dark:
-          ret.add(Icon(Icons.call));
+          ret.add(Icon(Icons.brightness_low));
           break;
       }
     }

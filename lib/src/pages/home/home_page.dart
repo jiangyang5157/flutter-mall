@@ -71,24 +71,6 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> _buildDrawerMenu(BuildContext context) {
     var ret = List<Widget>();
-    ret.add(
-      ListTile(
-        title: Text('Light'),
-        trailing: Icon(Icons.brightness_high),
-        onTap: () {
-          Provider.of<ThemeModel>(context).type = ThemeType.Light;
-        },
-      ),
-    );
-    ret.add(
-      ListTile(
-        title: Text('Dark'),
-        trailing: Icon(Icons.brightness_low),
-        onTap: () {
-          Provider.of<ThemeModel>(context).type = ThemeType.Dark;
-        },
-      ),
-    );
     ret.add(Divider());
     ret.add(
       ListTile(
