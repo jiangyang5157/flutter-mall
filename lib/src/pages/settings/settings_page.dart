@@ -46,14 +46,16 @@ class _SettingsPageState extends State<SettingsPage> {
     var ret = List<Widget>();
     ret.addAll(_buildProfileList(context));
     ret.add(Divider());
-    ret.add(ToggleButtons(
-      children: _themeTypeWidgets(),
-      onPressed: (int index) {
-        Provider.of<ThemeModel>(context).type = ThemeType.values[index];
-      },
-      isSelected:
-          _themeTypeSelectedStatus(Provider.of<ThemeModel>(context).type),
-    ));
+    ret.add(Padding(
+        padding: const EdgeInsets.fromLTRB(sizeLarge, 0, sizeLarge, 0),
+        child: ToggleButtons(
+          children: _themeTypeWidgets(),
+          onPressed: (int index) {
+            Provider.of<ThemeModel>(context).type = ThemeType.values[index];
+          },
+          isSelected:
+              _themeTypeSelectedStatus(Provider.of<ThemeModel>(context).type),
+        )));
     return ret;
   }
 
