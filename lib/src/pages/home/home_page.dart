@@ -87,12 +87,7 @@ class _HomePageState extends State<HomePage> {
       ListTile(
         title: Text(string(context, 'label_sign_out')),
         onTap: () async {
-          if (userModel.type == UserType.Anonymous) {
-            userModel.destroy();
-            userModel.signOut();
-          } else {
-            userModel.signOut();
-          }
+          await userModel.signOut();
           locator<Nav>().router.navigateTo(context, 'AuthPage',
               clearStack: true, transition: TransitionType.fadeIn);
         },

@@ -38,7 +38,7 @@ class _SplashPageState extends State<SplashPage> {
 
     UserModel userModel = Provider.of<UserModel>(context);
     await userModel.init(fromServer: true);
-    if (userModel.user == null) {
+    if (userModel.hasUser()) {
       locator<Nav>().router.navigateTo(context, 'AuthPage',
           clearStack: true, transition: TransitionType.fadeIn);
     } else {

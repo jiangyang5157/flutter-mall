@@ -59,6 +59,10 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
     notifyListeners();
   }
 
+  bool hasUser() {
+    return _user != null;
+  }
+
   UserType _stringToType(String type) {
     return UserType.values
         .firstWhere((element) => _typeToString(element) == type);
@@ -119,6 +123,9 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
   }
 
   Future<ParseResponse> signOut() async {
+    if (type == UserType.Anonymous) {
+      await _destroy();
+    }
     return await user.logout();
   }
 
@@ -130,7 +137,7 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
     return await user.pin();
   }
 
-  Future<ParseResponse> destroy() async {
+  Future<ParseResponse> _destroy() async {
     return await user.destroy();
   }
 

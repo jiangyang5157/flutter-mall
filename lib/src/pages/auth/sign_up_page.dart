@@ -95,15 +95,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       emailAddress: _emailAddressController.text);
                   ParseResponse response = await userModel.signUp();
                   if (response.success) {
-                    if (Provider.of<UserModel>(context).type ==
-                        UserType.Anonymous) {
-                      Provider.of<UserModel>(context).destroy();
+                    UserModel currentUserModel = Provider.of<UserModel>(context);
+                    if (currentUserModel != null) {
+                      await Provider.of<UserModel>(context).signOut();
                     }
-                    Provider.of<UserModel>(context).signOut();
                     await userModel.signIn();
                     userModel.type = UserType.Master; // TODO:
-                    await userModel.user.save();
-                    await userModel.user.pin();
+                    await userModel.save();
+                    await userModel.pin();
                     await Provider.of<UserModel>(context).init();
                   }
                   return () {

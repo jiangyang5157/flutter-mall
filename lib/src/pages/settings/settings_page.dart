@@ -125,7 +125,7 @@ class _SettingsPageState extends State<SettingsPage> {
     } else {
       ret.add(
         ListTile(
-          title: Text(string(context, 'label_upload_display_picture')),
+          title: Text(string(context, 'label_change_display_picture')),
           onTap: () {
             todo(context);
           },
@@ -149,7 +149,7 @@ class _SettingsPageState extends State<SettingsPage> {
       );
       ret.add(
         ListTile(
-          title: Text(string(context, 'label_update_email_address')),
+          title: Text(string(context, 'label_change_email_address')),
           onTap: () {
             todo(context);
           },

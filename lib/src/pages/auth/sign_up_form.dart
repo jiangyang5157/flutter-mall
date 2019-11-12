@@ -222,8 +222,8 @@ class _SignUpFormState extends State<SignUpForm> {
                         if (response.success) {
                           await userModel.signIn();
                           userModel.type = UserType.Master; // TODO:
-                          await userModel.user.save();
-                          await userModel.user.pin();
+                          await userModel.save();
+                          await userModel.pin();
                           await Provider.of<UserModel>(context).init();
                         }
                         return () {
