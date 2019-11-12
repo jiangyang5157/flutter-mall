@@ -210,7 +210,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ProgressButton(
                   defaultWidget: Text(string(context, 'label_sign_up')),
                   progressWidget: ThreeSizeDot(),
-                  width: btnEndWidth,
+                  width: lrBtnWidth,
                   height: btnHeight,
                   animate: false,
                   // ignore: missing_return

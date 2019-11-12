@@ -137,7 +137,7 @@ class _SignInFormState extends State<SignInForm> {
                 ProgressButton(
                   defaultWidget: Text(string(context, 'label_sign_in')),
                   progressWidget: ThreeSizeDot(),
-                  width: btnEndWidth,
+                  width: lrBtnWidth,
                   height: btnHeight,
                   animate: false,
                   // ignore: missing_return
