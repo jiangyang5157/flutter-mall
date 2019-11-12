@@ -48,7 +48,8 @@ class _SettingsPageState extends State<SettingsPage> {
     var ret = List<Widget>();
     ret.addAll(_buildProfileList(context));
     ret.add(Divider());
-    ret.add(Padding(
+    ret.add(
+      Padding(
         padding: const EdgeInsets.fromLTRB(sizeLarge, 0, sizeLarge, 0),
         child: ToggleButtons(
           children: _themeTypeWidgets(),
@@ -57,7 +58,9 @@ class _SettingsPageState extends State<SettingsPage> {
           },
           isSelected:
               _themeTypeSelectedStatus(Provider.of<ThemeModel>(context).type),
-        )));
+        ),
+      ),
+    );
     return ret;
   }
 
@@ -78,13 +81,16 @@ class _SettingsPageState extends State<SettingsPage> {
           );
           break;
         case ThemeType.Dark:
-          ret.add(Row(
+          ret.add(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Icon(Icons.brightness_low),
                 SizedBox(width: sizeSmall),
                 Text(string(context, 'label_dark_theme')),
-              ]));
+              ],
+            ),
+          );
           break;
       }
     }

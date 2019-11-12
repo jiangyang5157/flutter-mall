@@ -77,48 +77,49 @@ class _SignUpPageState extends State<SignUpPage> {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(string(context, 'title_sign_up_page')),
-          actions: <Widget>[
-            ProgressButton(
-              defaultWidget: Text(string(context, 'label_sign_up')),
-              progressWidget: ThreeSizeDot(),
-              width: actionBtnWidth,
-              animate: false,
-              // ignore: missing_return
-              onPressed: () async {
-                FocusScope.of(context).unfocus();
-                if (_formKey.currentState.validate()) {
-                  UserModel userModel = UserModel.create(
-                      username: _usernameController.text,
-                      password: _passwordController.text,
-                      emailAddress: _emailAddressController.text);
-                  ParseResponse response = await userModel.signUp();
-                  if (response.success) {
-                    if (Provider.of<UserModel>(context).type ==
-                        UserType.Anonymous) {
-                      Provider.of<UserModel>(context).destroy();
-                    }
-                    Provider.of<UserModel>(context).signOut();
-                    await userModel.signIn();
-                    userModel.type = UserType.Master; // TODO:
-                    await userModel.user.save();
-                    await userModel.user.pin();
-                    await Provider.of<UserModel>(context).init();
+        title: Text(string(context, 'title_sign_up_page')),
+        actions: <Widget>[
+          ProgressButton(
+            defaultWidget: Text(string(context, 'label_sign_up')),
+            progressWidget: ThreeSizeDot(),
+            width: actionBtnWidth,
+            animate: false,
+            // ignore: missing_return
+            onPressed: () async {
+              FocusScope.of(context).unfocus();
+              if (_formKey.currentState.validate()) {
+                UserModel userModel = UserModel.create(
+                    username: _usernameController.text,
+                    password: _passwordController.text,
+                    emailAddress: _emailAddressController.text);
+                ParseResponse response = await userModel.signUp();
+                if (response.success) {
+                  if (Provider.of<UserModel>(context).type ==
+                      UserType.Anonymous) {
+                    Provider.of<UserModel>(context).destroy();
                   }
-                  return () {
-                    _passwordController.clear();
-                    _repeatPasswordController.clear();
-
-                    if (response.success) {
-                      locator<Nav>().router.pop(context);
-                    } else {
-                      showSimpleSnackBar(context, response.error.message);
-                    }
-                  };
+                  Provider.of<UserModel>(context).signOut();
+                  await userModel.signIn();
+                  userModel.type = UserType.Master; // TODO:
+                  await userModel.user.save();
+                  await userModel.user.pin();
+                  await Provider.of<UserModel>(context).init();
                 }
-              },
-            ),
-          ]),
+                return () {
+                  _passwordController.clear();
+                  _repeatPasswordController.clear();
+
+                  if (response.success) {
+                    locator<Nav>().router.pop(context);
+                  } else {
+                    showSimpleSnackBar(context, response.error.message);
+                  }
+                };
+              }
+            },
+          ),
+        ],
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
