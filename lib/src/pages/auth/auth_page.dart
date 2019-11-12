@@ -55,7 +55,7 @@ class _AuthPageState extends State<AuthPage> {
                       child: IntrinsicHeight(
                         child: Column(
                           children: <Widget>[
-                            FlutterLogo(size: flutterLogoSize), // TODO
+                            FlutterLogo(size: flutterLogoSize),
                             Padding(
                               padding: const EdgeInsets.all(sizeLarge),
                               child: _buildForm(context, authModel.state),
@@ -150,12 +150,12 @@ class _AuthPageState extends State<AuthPage> {
                   width: 148,
                   animate: false,
                   onPressed: () async {
-                    UserModel userModel = UserModel.create();
-                    ParseResponse response = await userModel.signInAnonymous();
+                    UserModel newUserModel = UserModel.create();
+                    ParseResponse response = await newUserModel.signInAnonymous();
                     if (response.success) {
-                      userModel.type = UserType.Anonymous;
-                      await userModel.save();
-                      await userModel.pin();
+                      newUserModel.type = UserType.Anonymous;
+                      await newUserModel.save();
+                      await newUserModel.pin();
                       await Provider.of<UserModel>(context).init();
                     }
                     return () {

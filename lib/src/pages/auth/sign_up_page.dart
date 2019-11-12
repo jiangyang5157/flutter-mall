@@ -89,21 +89,21 @@ class _SignUpPageState extends State<SignUpPage> {
               onPressed: () async {
                 FocusScope.of(context).unfocus();
                 if (_formKey.currentState.validate()) {
-                  UserModel userModel = UserModel.create(
+                  UserModel newUserModel = UserModel.create(
                       username: _usernameController.text,
                       password: _passwordController.text,
                       emailAddress: _emailAddressController.text);
-                  ParseResponse response = await userModel.signUp();
+                  ParseResponse response = await newUserModel.signUp();
                   if (response.success) {
-                    UserModel currentUserModel = Provider.of<UserModel>(context);
-                    if (currentUserModel != null) {
-                      await Provider.of<UserModel>(context).signOut();
+                    UserModel userModel = Provider.of<UserModel>(context);
+                    if (userModel.hasUser()) {
+                      await userModel.signOut();
                     }
-                    await userModel.signIn();
-                    userModel.type = UserType.Master; // TODO:
-                    await userModel.save();
-                    await userModel.pin();
-                    await Provider.of<UserModel>(context).init();
+                    await newUserModel.signIn();
+                    newUserModel.type = UserType.Master; // TODO:
+                    await newUserModel.save();
+                    await newUserModel.pin();
+                    await userModel.init();
                   }
                   return () {
                     _passwordController.clear();

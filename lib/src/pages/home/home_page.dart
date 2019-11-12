@@ -70,6 +70,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Widget> _buildDrawerMenu(BuildContext context) {
+    UserModel userModel = Provider.of<UserModel>(context);
     var ret = List<Widget>();
     ret.add(
       ListTile(
@@ -82,7 +83,6 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
-    UserModel userModel = Provider.of<UserModel>(context);
     ret.add(
       ListTile(
         title: Text(string(context, 'label_sign_out')),

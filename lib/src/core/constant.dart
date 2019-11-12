@@ -27,4 +27,4 @@ const double textFieldHeight = 72;
 const double authBottomContainer = 96;
 
 /// Debug
-const double flutterLogoSize = 96; // TODO:
+const double flutterLogoSize = 96;

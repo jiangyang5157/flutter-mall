@@ -14,7 +14,6 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-
   @override
   void dispose() {
     super.dispose();
@@ -51,8 +50,6 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     print('#### _SplashPageState - build');
 
-    return Scaffold(
-        // TODO:
-        );
+    return Scaffold();
   }
 }

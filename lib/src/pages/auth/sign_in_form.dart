@@ -143,10 +143,10 @@ class _SignInFormState extends State<SignInForm> {
                     onPressed: () async {
                       FocusScope.of(context).unfocus();
                       if (_formKey.currentState.validate()) {
-                        UserModel userModel = UserModel.create(
+                        UserModel newUserModel = UserModel.create(
                             username: _usernameController.text,
                             password: _passwordController.text);
-                        ParseResponse response = await userModel.signIn();
+                        ParseResponse response = await newUserModel.signIn();
                         if (response.success) {
                           await Provider.of<UserModel>(context).init();
                         }

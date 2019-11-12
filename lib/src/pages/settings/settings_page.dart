@@ -45,8 +45,9 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   List<Widget> _buildSettingsList(BuildContext context) {
+    UserModel userModel = Provider.of<UserModel>(context);
     var ret = List<Widget>();
-    ret.addAll(_buildProfileList(context));
+    ret.addAll(_buildProfileList(context, userModel.type));
     ret.add(Divider());
     ret.add(
       Padding(
@@ -61,6 +62,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
     );
+    ret.add(Divider());
     return ret;
   }
 
@@ -109,10 +111,9 @@ class _SettingsPageState extends State<SettingsPage> {
     return ret;
   }
 
-  List<Widget> _buildProfileList(BuildContext context) {
+  List<Widget> _buildProfileList(BuildContext context, UserType userType) {
     var ret = List<Widget>();
-    UserModel userModel = Provider.of<UserModel>(context);
-    if (userModel.type == UserType.Anonymous) {
+    if (userType == UserType.Anonymous) {
       ret.add(
         ListTile(
           title: Text(string(context, 'title_sign_up_page')),
