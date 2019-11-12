@@ -12,14 +12,14 @@ import 'package:mall/src/widgets/validation/validation.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
-class CreateAccountPage extends StatefulWidget {
-  CreateAccountPage({Key key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  SignUpPage({Key key}) : super(key: key);
 
   @override
-  _CreateAccountPageState createState() => _CreateAccountPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _CreateAccountPageState extends State<CreateAccountPage> {
+class _SignUpPageState extends State<SignUpPage> {
   SignUpModel signUpModel = SignUpModel();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -44,13 +44,13 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     _passwordFocusNode.dispose();
     _repeatPasswordFocusNode.dispose();
     _emailAddressFocusNode.dispose();
-    print('#### _CreateAccountPageState - dispose');
+    print('#### _SignUpPageState - dispose');
   }
 
   @override
   void initState() {
     super.initState();
-    print('#### _CreateAccountPageState - initState');
+    print('#### _SignUpPageState - initState');
 
     _usernameController.addListener(() {
       signUpModel.username = _usernameController.text;
@@ -68,7 +68,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('#### _CreateAccountPageState - build');
+    print('#### _SignUpPageState - build');
 
     _usernameController.setTextAndPosition(signUpModel.username);
     _passwordController.setTextAndPosition(signUpModel.password);
@@ -77,13 +77,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(string(context, 'title_create_account')),
+          title: Text(string(context, 'title_sign_up_page')),
           actions: <Widget>[
             ProgressButton(
               defaultWidget: Text(string(context, 'label_sign_up')),
               progressWidget: ThreeSizeDot(),
               width: actionBtnWidth,
-              height: btnHeight,
               animate: false,
               // ignore: missing_return
               onPressed: () async {
@@ -100,7 +99,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       Provider.of<UserModel>(context).destroy();
                     }
                     Provider.of<UserModel>(context).signOut();
-
                     await userModel.signIn();
                     userModel.type = UserType.Master; // TODO:
                     await userModel.user.save();

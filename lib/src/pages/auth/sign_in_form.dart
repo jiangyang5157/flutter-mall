@@ -56,7 +56,8 @@ class _SignInFormState extends State<SignInForm> {
     _usernameController.setTextAndPosition(signInModel.username);
     _passwordController.setTextAndPosition(signInModel.password);
 
-    return Form(
+    return Card(
+      child: Form(
       key: _formKey,
       child: Column(
         children: [
@@ -138,7 +139,6 @@ class _SignInFormState extends State<SignInForm> {
                   defaultWidget: Text(string(context, 'label_sign_in')),
                   progressWidget: ThreeSizeDot(),
                   width: lrBtnWidth,
-                  height: btnHeight,
                   animate: false,
                   // ignore: missing_return
                   onPressed: () async {
@@ -161,6 +161,6 @@ class _SignInFormState extends State<SignInForm> {
           ),
         ],
       ),
-    );
+    ));
   }
 }

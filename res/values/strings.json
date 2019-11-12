@@ -2,9 +2,9 @@
   "en": {
     "title_home": "Home",
     "title_settings": "Settings",
-    "title_create_account": "Create Account",
     "title_sign_in_form": "Welcome Back",
     "title_sign_up_form": "Create Your Account",
+    "title_sign_up_page": "Create Your Account",
     "label_ok": "OK",
     "label_confirm": "Confirm",
     "label_cancel": "Cancel",

@@ -58,9 +58,7 @@ class _AuthPageState extends State<AuthPage> {
                             FlutterLogo(size: flutterLogoSize), // TODO
                             Padding(
                               padding: const EdgeInsets.all(sizeLarge),
-                              child: Card(
-                                child: _buildForm(context, authModel.state),
-                              ),
+                              child: _buildForm(context, authModel.state),
                             ),
                             Spacer(),
                             Container(
@@ -150,7 +148,6 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                   type: ProgressButtonType.Flat,
                   width: 148,
-                  height: btnHeight,
                   animate: false,
                   onPressed: () async {
                     UserModel userModel = UserModel.create();

@@ -71,7 +71,6 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> _buildDrawerMenu(BuildContext context) {
     var ret = List<Widget>();
-    ret.add(Divider());
     ret.add(
       ListTile(
         title: Text(string(context, 'label_settings')),
@@ -101,78 +100,4 @@ class _HomePageState extends State<HomePage> {
     );
     return ret;
   }
-
-//  import 'package:parse_server_sdk/parse_server_sdk.dart';
-//  import 'package:flutter_progress_button/flutter_progress_button.dart';
-//  import 'package:mall/src/widgets/widgets.dart';
-//  Widget _buildDrawerEmailItem(BuildContext context, UserModel userModel) {
-//    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-//    final _emailAddressController = TextEditingControllerWorkaround();
-//    return ListTile(
-//      title: Text(string(context, 'label_change_email_address')),
-//      trailing: Icon(Icons.email),
-//      onTap: () {
-//        showSimpleAlertDialog(
-//          context,
-//          string(context, 'label_change_email_address'),
-//          <Widget>[
-//            Form(
-//              key: _formKey,
-//              child: SizedBox(
-//                height: textFieldHeight,
-//                child: TextFormField(
-//                  decoration: InputDecoration(
-//                    hintText: string(context, 'label_email_address'),
-//                    hintStyle: TextStyle(fontSize: textFieldFontSize),
-//                    contentPadding: const EdgeInsets.fromLTRB(
-//                        0, textFieldContentPaddingT, 0, 0),
-//                    prefixIcon: Icon(Icons.email),
-//                  ),
-//                  style: TextStyle(fontSize: textFieldFontSize),
-//                  keyboardType: TextInputType.emailAddress,
-//                  textInputAction: TextInputAction.done,
-//                  controller: _emailAddressController,
-//                  validator: (text) =>
-//                      string(context, EmailAddressValidator().validate(text)),
-//                  inputFormatters: [EmailAddressInputFormatter()],
-//                ),
-//              ),
-//            ),
-//          ],
-//          <Widget>[
-//            ProgressButton(
-//              defaultWidget: Text(
-//                string(context, 'label_confirm'),
-//                style: TextStyle(
-//                  color: Theme.of(context).buttonTheme.colorScheme.onPrimary,
-//                ),
-//              ),
-//              progressWidget: ThreeSizeDot(),
-//              width: 96,
-//              animate: false,
-//              onPressed: () async {
-//                if (_formKey.currentState.validate()) {
-//                  UserModel tmpUserModel = UserModel();
-//                  await tmpUserModel.init();
-//                  tmpUserModel.emailAddress = _emailAddressController.text;
-//                  ParseResponse response = await tmpUserModel.save();
-//                  return () {
-//                    if (mounted) {
-//                      if (response.success) {
-//                        userModel.emailAddress = tmpUserModel.emailAddress;
-//                        showSimpleSnackBar(
-//                            context, string(context, 'label_success'));
-//                      } else {
-//                        showSimpleSnackBar(context, response.error.message);
-//                      }
-//                    }
-//                  };
-//                }
-//              },
-//            ),
-//          ],
-//        );
-//      },
-//    );
-//  }
 }

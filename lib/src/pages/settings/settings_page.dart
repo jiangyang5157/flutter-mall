@@ -109,9 +109,9 @@ class _SettingsPageState extends State<SettingsPage> {
     if (userModel.type == UserType.Anonymous) {
       ret.add(
         ListTile(
-          title: Text(string(context, 'label_create_account')),
+          title: Text(string(context, 'title_sign_up_page')),
           onTap: () {
-            locator<Nav>().router.navigateTo(context, 'CreateAccountPage',
+            locator<Nav>().router.navigateTo(context, 'SignUpPage',
                 transition: TransitionType.fadeIn);
           },
         ),

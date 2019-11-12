@@ -74,7 +74,8 @@ class _SignUpFormState extends State<SignUpForm> {
     _repeatPasswordController.setTextAndPosition(signUpModel.repeatPassword);
     _emailAddressController.setTextAndPosition(signUpModel.emailAddress);
 
-    return Form(
+    return Card(
+      child: Form(
       key: _formKey,
       child: Column(
         children: [
@@ -211,7 +212,6 @@ class _SignUpFormState extends State<SignUpForm> {
                   defaultWidget: Text(string(context, 'label_sign_up')),
                   progressWidget: ThreeSizeDot(),
                   width: lrBtnWidth,
-                  height: btnHeight,
                   animate: false,
                   // ignore: missing_return
                   onPressed: () async {
@@ -242,6 +242,6 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
         ],
       ),
-    );
+    ));
   }
 }
