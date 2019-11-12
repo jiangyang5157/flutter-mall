@@ -1,6 +1,8 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mall/src/core/constant.dart';
+import 'package:mall/src/core/locator.dart';
 import 'package:mall/src/models/models.dart';
 import 'package:mall/src/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -109,7 +111,8 @@ class _SettingsPageState extends State<SettingsPage> {
         ListTile(
           title: Text(string(context, 'label_create_account')),
           onTap: () {
-            todo(context);
+            locator<Nav>().router.navigateTo(context, 'CreateAccountPage',
+                transition: TransitionType.fadeIn);
           },
         ),
       );

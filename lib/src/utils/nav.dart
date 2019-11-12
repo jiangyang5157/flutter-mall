@@ -24,6 +24,10 @@ class Nav {
       ..define('SettingsPage', handler: Handler(
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
         return SettingsPage();
+      }))
+      ..define('CreateAccountPage', handler: Handler(
+          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        return CreateAccountPage();
       }));
   }
 }
