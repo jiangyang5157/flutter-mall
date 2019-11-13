@@ -85,7 +85,6 @@ class _SignUpPageState extends State<SignUpPage> {
               progressWidget: ThreeSizeDot(),
               width: actionBtnWidth,
               animate: false,
-              // ignore: missing_return
               onPressed: () async {
                 FocusScope.of(context).unfocus();
                 if (_formKey.currentState.validate()) {
@@ -115,6 +114,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       showSimpleSnackBar(context, response.error.message);
                     }
                   };
+                } else {
+                  return null;
                 }
               },
             ),

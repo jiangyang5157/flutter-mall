@@ -210,7 +210,6 @@ class _SignUpFormState extends State<SignUpForm> {
                     progressWidget: ThreeSizeDot(),
                     width: lrBtnWidth,
                     animate: false,
-                    // ignore: missing_return
                     onPressed: () async {
                       FocusScope.of(context).unfocus();
                       if (_formKey.currentState.validate()) {
@@ -231,6 +230,8 @@ class _SignUpFormState extends State<SignUpForm> {
                           _repeatPasswordController.clear();
                           widget.onResponse(response);
                         };
+                      } else {
+                        return null;
                       }
                     },
                   ),

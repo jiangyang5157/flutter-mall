@@ -139,7 +139,6 @@ class _SignInFormState extends State<SignInForm> {
                     progressWidget: ThreeSizeDot(),
                     width: lrBtnWidth,
                     animate: false,
-                    // ignore: missing_return
                     onPressed: () async {
                       FocusScope.of(context).unfocus();
                       if (_formKey.currentState.validate()) {
@@ -154,6 +153,8 @@ class _SignInFormState extends State<SignInForm> {
                           _passwordController.clear();
                           widget.onResponse(response);
                         };
+                      } else {
+                        return null;
                       }
                     },
                   ),

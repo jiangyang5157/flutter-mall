@@ -129,14 +129,17 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
     return await user.logout();
   }
 
+  /// Save changes of current user to Server
   Future<ParseResponse> save() async {
     return await user.save();
   }
 
+  /// Saves current user as simple key pair value to local storage
   Future<bool> pin() async {
     return await user.pin();
   }
 
+  /// Removes a user from Parse Server locally and online
   Future<ParseResponse> _destroy() async {
     return await user.destroy();
   }
