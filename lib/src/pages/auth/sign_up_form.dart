@@ -20,10 +20,10 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final _usernameController = TextEditingControllerWorkaround();
-  final _passwordController = TextEditingControllerWorkaround();
-  final _repeatPasswordController = TextEditingControllerWorkaround();
-  final _emailAddressController = TextEditingControllerWorkaround();
+  final TextEditingControllerWorkaround _usernameController = TextEditingControllerWorkaround();
+  final TextEditingControllerWorkaround _passwordController = TextEditingControllerWorkaround();
+  final TextEditingControllerWorkaround _repeatPasswordController = TextEditingControllerWorkaround();
+  final TextEditingControllerWorkaround _emailAddressController = TextEditingControllerWorkaround();
   final FocusNode _usernameFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _repeatPasswordFocusNode = FocusNode();

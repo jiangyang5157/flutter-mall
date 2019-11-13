@@ -20,8 +20,8 @@ class SignInForm extends StatefulWidget {
 class _SignInFormState extends State<SignInForm> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final _usernameController = TextEditingControllerWorkaround();
-  final _passwordController = TextEditingControllerWorkaround();
+  final TextEditingControllerWorkaround _usernameController = TextEditingControllerWorkaround();
+  final TextEditingControllerWorkaround _passwordController = TextEditingControllerWorkaround();
   final FocusNode _usernameFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
 

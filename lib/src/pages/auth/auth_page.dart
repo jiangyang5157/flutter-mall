@@ -92,7 +92,7 @@ class _AuthPageState extends State<AuthPage> {
                 locator<Nav>().router.navigateTo(context, 'HomePage',
                     clearStack: true, transition: TransitionType.fadeIn);
               } else {
-                showSimpleSnackBar(context, response.error.message);
+                showSimpleSnackBar(Scaffold.of(context), response.error.message);
               }
             },
           ),
@@ -106,7 +106,7 @@ class _AuthPageState extends State<AuthPage> {
                 locator<Nav>().router.navigateTo(context, 'HomePage',
                     clearStack: true, transition: TransitionType.fadeIn);
               } else {
-                showSimpleSnackBar(context, response.error.message);
+                showSimpleSnackBar(Scaffold.of(context), response.error.message);
               }
             },
           ),
@@ -164,7 +164,7 @@ class _AuthPageState extends State<AuthPage> {
                             clearStack: true,
                             transition: TransitionType.fadeIn);
                       } else {
-                        showSimpleSnackBar(context, response.error.message);
+                        showSimpleSnackBar(Scaffold.of(context), response.error.message);
                       }
                     };
                   },

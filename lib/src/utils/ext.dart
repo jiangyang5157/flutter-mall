@@ -11,11 +11,12 @@ void runOnWidgetDidBuild(Function func) {
   });
 }
 
-void showSimpleSnackBar(BuildContext context, String content) {
-  Scaffold.of(context).showSnackBar(
+void showSimpleSnackBar(ScaffoldState state, String content,
+    {int milliseconds = snackBarDurationInMilliseconds}) {
+  state.showSnackBar(
     SnackBar(
       content: Text(content),
-      duration: Duration(milliseconds: snackBarDurationInMilliseconds),
+      duration: Duration(milliseconds: milliseconds),
     ),
   );
 }

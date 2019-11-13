@@ -1,4 +1,3 @@
-import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
@@ -24,10 +23,14 @@ class _SignUpPageState extends State<SignUpPage> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   SignUpModel signUpModel = SignUpModel();
 
-  final _usernameController = TextEditingControllerWorkaround();
-  final _passwordController = TextEditingControllerWorkaround();
-  final _repeatPasswordController = TextEditingControllerWorkaround();
-  final _emailAddressController = TextEditingControllerWorkaround();
+  final TextEditingControllerWorkaround _usernameController =
+      TextEditingControllerWorkaround();
+  final TextEditingControllerWorkaround _passwordController =
+      TextEditingControllerWorkaround();
+  final TextEditingControllerWorkaround _repeatPasswordController =
+      TextEditingControllerWorkaround();
+  final TextEditingControllerWorkaround _emailAddressController =
+      TextEditingControllerWorkaround();
   final FocusNode _usernameFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _repeatPasswordFocusNode = FocusNode();
@@ -112,7 +115,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     if (response.success) {
                       locator<Nav>().router.pop(context);
                     } else {
-                      showSimpleSnackBar(context, response.error.message);
+                      showSimpleSnackBar(
+                          Scaffold.of(context), response.error.message);
                     }
                   };
                 } else {
