@@ -63,6 +63,16 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
     ret.add(Divider());
+    ret.add(
+      ListTile(
+        title: Text(string(context, 'label_sign_out')),
+        onTap: () async {
+          await userModel.signOut();
+          locator<Nav>().router.navigateTo(context, 'AuthPage',
+              clearStack: true, transition: TransitionType.fadeIn);
+        },
+      ),
+    );
     return ret;
   }
 
