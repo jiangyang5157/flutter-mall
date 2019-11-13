@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
@@ -20,8 +21,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  SignUpModel signUpModel = SignUpModel();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  SignUpModel signUpModel = SignUpModel();
 
   final _usernameController = TextEditingControllerWorkaround();
   final _passwordController = TextEditingControllerWorkaround();
