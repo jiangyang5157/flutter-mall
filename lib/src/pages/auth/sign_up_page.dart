@@ -19,8 +19,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
-    super.dispose();
     signUpModel.dispose();
+    super.dispose();
     print('#### _SignUpPageState - dispose');
   }
 

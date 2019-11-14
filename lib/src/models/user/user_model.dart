@@ -72,8 +72,9 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
     return type.toString().split('.').last;
   }
 
-  UserModel() {
+  UserModel({ParseUser user}) {
     print('#### UserModel()');
+    this.user = user;
   }
 
   @override

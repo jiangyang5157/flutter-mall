@@ -165,7 +165,8 @@ class _SettingsPageState extends State<SettingsPage> {
         ListTile(
           title: Text(string(context, 'label_change_email_address')),
           onTap: () {
-            todo(context);
+            locator<Nav>().router.navigateTo(context, 'ChangeEmailPage',
+                transition: TransitionType.fadeIn);
           },
         ),
       );

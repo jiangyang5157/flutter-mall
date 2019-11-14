@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:mall/src/pages/pages.dart';
+import 'package:mall/src/pages/settings/change_email_page.dart';
 
 class Nav {
   Router _router;
@@ -28,6 +29,10 @@ class Nav {
       ..define('SignUpPage', handler: Handler(
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
         return SignUpPage();
+      }))
+      ..define('ChangeEmailPage', handler: Handler(
+          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        return ChangeEmailPage();
       }));
   }
 }
