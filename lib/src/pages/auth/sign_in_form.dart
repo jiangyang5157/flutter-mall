@@ -141,7 +141,7 @@ class _SignInFormState extends State<SignInForm> {
                           password: _passwordController.text);
                       ParseResponse response = await newUserModel.signIn();
                       if (response.success) {
-                        await Provider.of<UserModel>(context).init();
+                        await Provider.of<UserModel>(context).sync();
                       }
                       return () {
                         _passwordController.clear();

@@ -82,8 +82,7 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
     print('#### UserModel - dispose');
   }
 
-  /// Reset to current user
-  Future<void> init({bool fromServer = false}) async {
+  Future<void> sync({bool fromServer = false}) async {
     ParseUser parseUser = await ParseUser.currentUser();
     if (parseUser == null) {
       user = null;

@@ -215,11 +215,9 @@ class _SignUpFormState extends State<SignUpForm> {
                           emailAddress: _emailAddressController.text);
                       ParseResponse response = await newUserModel.signUp();
                       if (response.success) {
-                        await newUserModel.signIn();
                         newUserModel.type = UserType.Master; // TODO:
                         await newUserModel.save();
-                        await newUserModel.pin();
-                        await Provider.of<UserModel>(context).init();
+                        await Provider.of<UserModel>(context).sync();
                       }
                       return () {
                         _passwordController.clear();

@@ -184,8 +184,7 @@ class _AuthPageState extends State<AuthPage> {
                     if (response.success) {
                       newUserModel.type = UserType.Anonymous;
                       await newUserModel.save();
-                      await newUserModel.pin();
-                      await Provider.of<UserModel>(context).init();
+                      await Provider.of<UserModel>(context).sync();
                     }
                     return () {
                       if (response.success) {

@@ -36,7 +36,7 @@ class _SplashPageState extends State<SplashPage> {
         debug: true);
 
     UserModel userModel = Provider.of<UserModel>(context);
-    await userModel.init(fromServer: true);
+    await userModel.sync(fromServer: true);
     if (userModel.hasUser()) {
       locator<Nav>().router.navigateTo(context, 'HomePage',
           clearStack: true, transition: TransitionType.fadeIn);
