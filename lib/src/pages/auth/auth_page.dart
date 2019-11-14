@@ -86,29 +86,57 @@ class _AuthPageState extends State<AuthPage> {
       case AuthState.SignIn:
         return Provider<SignInModel>.value(
           value: signInModel,
-          child: SignInForm(
-            onResponse: (response) {
-              if (response.success) {
-                locator<Nav>().router.navigateTo(context, 'HomePage',
-                    clearStack: true, transition: TransitionType.fadeIn);
-              } else {
-                showSimpleSnackBar(Scaffold.of(context), response.error.message);
-              }
-            },
+          child: Card(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, sizeLarge, 0, 0),
+                  child: Text(
+                    string(context, 'title_sign_in_form'),
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                ),
+                SignInForm(
+                  onResponse: (response) {
+                    if (response.success) {
+                      locator<Nav>().router.navigateTo(context, 'HomePage',
+                          clearStack: true, transition: TransitionType.fadeIn);
+                    } else {
+                      showSimpleSnackBar(
+                          Scaffold.of(context), response.error.message);
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         );
       case AuthState.SignUp:
         return Provider<SignUpModel>.value(
           value: signUpModel,
-          child: SignUpForm(
-            onResponse: (response) {
-              if (response.success) {
-                locator<Nav>().router.navigateTo(context, 'HomePage',
-                    clearStack: true, transition: TransitionType.fadeIn);
-              } else {
-                showSimpleSnackBar(Scaffold.of(context), response.error.message);
-              }
-            },
+          child: Card(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, sizeLarge, 0, 0),
+                  child: Text(
+                    string(context, 'title_sign_up_form'),
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                ),
+                SignUpForm(
+                  onResponse: (response) {
+                    if (response.success) {
+                      locator<Nav>().router.navigateTo(context, 'HomePage',
+                          clearStack: true, transition: TransitionType.fadeIn);
+                    } else {
+                      showSimpleSnackBar(
+                          Scaffold.of(context), response.error.message);
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         );
       default:
@@ -151,7 +179,8 @@ class _AuthPageState extends State<AuthPage> {
                   animate: false,
                   onPressed: () async {
                     UserModel newUserModel = UserModel.create();
-                    ParseResponse response = await newUserModel.signInAnonymous();
+                    ParseResponse response =
+                        await newUserModel.signInAnonymous();
                     if (response.success) {
                       newUserModel.type = UserType.Anonymous;
                       await newUserModel.save();
@@ -164,7 +193,8 @@ class _AuthPageState extends State<AuthPage> {
                             clearStack: true,
                             transition: TransitionType.fadeIn);
                       } else {
-                        showSimpleSnackBar(Scaffold.of(context), response.error.message);
+                        showSimpleSnackBar(
+                            Scaffold.of(context), response.error.message);
                       }
                     };
                   },
