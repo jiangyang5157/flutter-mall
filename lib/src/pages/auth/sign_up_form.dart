@@ -215,7 +215,12 @@ class _SignUpFormState extends State<SignUpForm> {
                           emailAddress: _emailAddressController.text);
                       ParseResponse response = await newUserModel.signUp();
                       if (response.success) {
-                        newUserModel.type = UserType.Master; // TODO:
+                        if (newUserModel.name ==
+                            UserModel.typeToString(UserType.Master)) {
+                          newUserModel.type = UserType.Master;
+                        } else {
+                          newUserModel.type = UserType.Normal;
+                        }
                         await newUserModel.save();
                         await Provider.of<UserModel>(context).sync();
                       }

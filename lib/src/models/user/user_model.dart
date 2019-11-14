@@ -51,11 +51,11 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
   }
 
   UserType get type {
-    return _stringToType(user.get<String>(_keyVarUserType));
+    return stringToType(user.get<String>(_keyVarUserType));
   }
 
   set type(UserType type) {
-    user.set<String>(_keyVarUserType, _typeToString(type));
+    user.set<String>(_keyVarUserType, typeToString(type));
     notifyListeners();
   }
 
@@ -63,12 +63,12 @@ class UserModel extends ChangeNotifier implements Validator<Permission, bool> {
     return _user != null;
   }
 
-  UserType _stringToType(String type) {
+  static UserType stringToType(String type) {
     return UserType.values
-        .firstWhere((element) => _typeToString(element) == type);
+        .firstWhere((element) => typeToString(element) == type);
   }
 
-  String _typeToString(UserType type) {
+  static String typeToString(UserType type) {
     return type.toString().split('.').last;
   }
 
