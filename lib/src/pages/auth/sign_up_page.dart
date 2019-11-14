@@ -5,6 +5,7 @@ import 'package:mall/src/core/locator.dart';
 import 'package:mall/src/models/auth/sign_up_model.dart';
 import 'package:mall/src/pages/auth/sign_up_form.dart';
 import 'package:mall/src/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key key}) : super(key: key);
@@ -33,31 +34,34 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     print('#### _SignUpPageState - build');
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(string(context, 'title_sign_up_page')),
-      ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: constraints.maxHeight,
+    return Provider<SignUpModel>.value(
+      value: signUpModel,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(string(context, 'title_sign_up_page')),
+        ),
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: SignUpForm(
+                  onResponse: (response) {
+                    if (response.success) {
+                      locator<Nav>().router.navigateTo(context, 'HomePage',
+                          clearStack: true, transition: TransitionType.fadeIn);
+                    } else {
+                      showSimpleSnackBar(
+                          Scaffold.of(context), response.error.message);
+                    }
+                  },
+                ),
               ),
-              child: SignUpForm(
-                onResponse: (response) {
-                  if (response.success) {
-                    locator<Nav>().router.navigateTo(context, 'HomePage',
-                        clearStack: true, transition: TransitionType.fadeIn);
-                  } else {
-                    showSimpleSnackBar(
-                        Scaffold.of(context), response.error.message);
-                  }
-                },
-              ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
