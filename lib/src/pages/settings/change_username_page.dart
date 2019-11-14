@@ -8,52 +8,52 @@ import 'package:mall/src/models/user/user_model.dart';
 import 'package:mall/src/utils/utils.dart';
 import 'package:mall/src/widgets/text_editing_controller_workaround.dart';
 import 'package:mall/src/widgets/three_size_dot.dart';
-import 'package:mall/src/widgets/validation/email_address_input_formatter.dart';
-import 'package:mall/src/widgets/validation/email_address_validator.dart';
+import 'package:mall/src/widgets/validation/username_input_formatter.dart';
+import 'package:mall/src/widgets/validation/username_validator.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
-class ChangeEmailPage extends StatefulWidget {
-  ChangeEmailPage({Key key}) : super(key: key);
+class ChangeUsernamePage extends StatefulWidget {
+  ChangeUsernamePage({Key key}) : super(key: key);
 
   @override
-  _ChangeEmailPageState createState() => _ChangeEmailPageState();
+  _ChangeUsernamePageState createState() => _ChangeUsernamePageState();
 }
 
-class _ChangeEmailPageState extends State<ChangeEmailPage> {
+class _ChangeUsernamePageState extends State<ChangeUsernamePage> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _emailAddressBefore;
+  String _usernameBefore;
 
-  final TextEditingControllerWorkaround _emailAddressController =
+  final TextEditingControllerWorkaround _usernameController =
       TextEditingControllerWorkaround();
 
   @override
   void dispose() {
-    _emailAddressController.dispose();
+    _usernameController.dispose();
     super.dispose();
-    print('#### _ChangeEmailPageState - dispose');
+    print('#### _ChangeUsernamePageState - dispose');
   }
 
   @override
   void initState() {
     super.initState();
-    print('#### _ChangeEmailPageState - initState');
+    print('#### _ChangeUsernamePageState - initState');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('#### _ChangeEmailPageState - build');
+    print('#### _ChangeUsernamePageState - build');
 
     UserModel userModel = Provider.of<UserModel>(context);
-    if (_emailAddressBefore == null) {
-      _emailAddressBefore = userModel.emailAddress;
-      _emailAddressController.setTextAndPosition(_emailAddressBefore);
+    if (_usernameBefore == null) {
+      _usernameBefore = userModel.name;
+      _usernameController.setTextAndPosition(_usernameBefore);
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(string(context, 'title_change_email_page')),
+        title: Text(string(context, 'title_change_username_page')),
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -73,19 +73,18 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
                         height: textFieldHeight,
                         child: TextFormField(
                           decoration: InputDecoration(
-                            hintText: string(context, 'label_email_address'),
+                            hintText: string(context, 'label_username'),
                             hintStyle: TextStyle(fontSize: textFieldFontSize),
                             contentPadding: const EdgeInsets.fromLTRB(
                                 0, textFieldContentPaddingT, 0, 0),
-                            prefixIcon: Icon(Icons.email),
+                            prefixIcon: Icon(Icons.person),
                           ),
                           style: TextStyle(fontSize: textFieldFontSize),
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.done,
-                          controller: _emailAddressController,
+                          textInputAction: TextInputAction.next,
+                          controller: _usernameController,
                           validator: (text) => string(
-                              context, EmailAddressValidator().validate(text)),
-                          inputFormatters: [EmailAddressInputFormatter()],
+                              context, UsernameValidator().validate(text)),
+                          inputFormatters: [UsernameInputFormatter()],
                         ),
                       ),
                     ),
@@ -104,11 +103,10 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
                             onPressed: () async {
                               FocusScope.of(context).unfocus();
                               if (_formKey.currentState.validate()) {
-                                userModel.emailAddress =
-                                    _emailAddressController.text;
+                                userModel.name = _usernameController.text;
                                 ParseResponse response = await userModel.save();
                                 if (!response.success) {
-                                  userModel.emailAddress = _emailAddressBefore;
+                                  userModel.name = _usernameBefore;
                                 }
                                 return () {
                                   if (response.success) {

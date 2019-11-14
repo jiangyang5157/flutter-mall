@@ -141,7 +141,9 @@ class _SettingsPageState extends State<SettingsPage> {
         ListTile(
           title: Text(string(context, 'label_change_display_picture')),
           onTap: () {
-            todo(context);
+            locator<Nav>().router.navigateTo(
+                context, 'ChangeDisplayPicturePage',
+                transition: TransitionType.fadeIn);
           },
         ),
       );
@@ -149,7 +151,8 @@ class _SettingsPageState extends State<SettingsPage> {
         ListTile(
           title: Text(string(context, 'label_change_username')),
           onTap: () {
-            todo(context);
+            locator<Nav>().router.navigateTo(context, 'ChangeUsernamePage',
+                transition: TransitionType.fadeIn);
           },
         ),
       );
@@ -157,7 +160,8 @@ class _SettingsPageState extends State<SettingsPage> {
         ListTile(
           title: Text(string(context, 'label_change_password')),
           onTap: () {
-            todo(context);
+            locator<Nav>().router.navigateTo(context, 'ChangePasswordPage',
+                transition: TransitionType.fadeIn);
           },
         ),
       );

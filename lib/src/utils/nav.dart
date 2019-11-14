@@ -30,6 +30,18 @@ class Nav {
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
         return SignUpPage();
       }))
+      ..define('ChangeDisplayPicturePage', handler: Handler(
+          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        return ChangeDisplayPicturePage();
+      }))
+      ..define('ChangeUsernamePage', handler: Handler(
+          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        return ChangeUsernamePage();
+      }))
+      ..define('ChangePasswordPage', handler: Handler(
+          handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+        return ChangePasswordPage();
+      }))
       ..define('ChangeEmailPage', handler: Handler(
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
         return ChangeEmailPage();
