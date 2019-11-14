@@ -50,15 +50,18 @@ class _SettingsPageState extends State<SettingsPage> {
     ret.addAll(_buildProfileList(context, userModel.type));
     ret.add(Divider());
     ret.add(
-      Padding(
-        padding: const EdgeInsets.fromLTRB(sizeLarge, 0, sizeLarge, 0),
-        child: ToggleButtons(
-          children: _themeTypeWidgets(),
-          onPressed: (int index) {
-            Provider.of<ThemeModel>(context).type = ThemeType.values[index];
-          },
-          isSelected:
-              _themeTypeSelectedStatus(Provider.of<ThemeModel>(context).type),
+      ListTile(
+        title: Text(string(context, 'label_change_theme')),
+        subtitle: Padding(
+          padding: const EdgeInsets.fromLTRB(0, sizeLarge, 0, 0),
+          child: ToggleButtons(
+            children: _themeTypeWidgets(),
+            onPressed: (int index) {
+              Provider.of<ThemeModel>(context).type = ThemeType.values[index];
+            },
+            isSelected:
+                _themeTypeSelectedStatus(Provider.of<ThemeModel>(context).type),
+          ),
         ),
       ),
     );
