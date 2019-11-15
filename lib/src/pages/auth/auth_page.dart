@@ -62,7 +62,7 @@ class _AuthPageState extends State<AuthPage> {
                             ),
                             Spacer(),
                             Container(
-                              height: authBottomContainer,
+                              height: authBottomContainerHeight,
                               alignment: Alignment.topCenter,
                               child:
                                   _buildFormSelector(context, authModel.state),

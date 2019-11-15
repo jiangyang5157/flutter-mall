@@ -56,31 +56,20 @@ class _ChangeDisplayPicturePageState extends State<ChangeDisplayPicturePage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                        sizeLarge, sizeLarge, sizeLarge, 0),
-                    child: Center(
-                      child: _displayPictureFile == null
-                          ? Text('No image selected.')
-                          : Image.file(_displayPictureFile),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, sizeNormal, 0, 0),
-                    child: ButtonBar(
-                      mainAxisSize: MainAxisSize.max,
-                      alignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        ProgressButton(
-                          defaultWidget: Text('test getImage'),
-                          progressWidget: ThreeSizeDot(),
-                          width: lrBtnWidth,
-                          animate: false,
-                          onPressed: () async {
-                            getImage();
-                            return () {};
-                          },
+                    padding: const EdgeInsets.fromLTRB(0, sizeLarge, 0, 0),
+                    child: GestureDetector(
+                      onTap: () {
+                        getImage();
+                      },
+                      child: Container(
+                        width: userDisplayPictureSize,
+                        height: userDisplayPictureSize,
+                        child: Card(
+                          child: _displayPictureFile == null
+                              ? Container()
+                              : Image.file(_displayPictureFile),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                   Padding(
