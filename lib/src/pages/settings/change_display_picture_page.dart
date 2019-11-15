@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mall/src/core/constant.dart';
 import 'package:mall/src/utils/utils.dart';
 import 'package:mall/src/widgets/three_size_dot.dart';
@@ -13,7 +16,17 @@ class ChangeDisplayPicturePage extends StatefulWidget {
       _ChangeDisplayPicturePageState();
 }
 
+//https://github.com/flutter/plugins/blob/master/packages/image_picker/example/lib/main.dart
 class _ChangeDisplayPicturePageState extends State<ChangeDisplayPicturePage> {
+  File _displayPictureFile;
+
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _displayPictureFile = image;
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
