@@ -16,12 +16,11 @@ class ChangeDisplayPicturePage extends StatefulWidget {
       _ChangeDisplayPicturePageState();
 }
 
-//https://github.com/flutter/plugins/blob/master/packages/image_picker/example/lib/main.dart
 class _ChangeDisplayPicturePageState extends State<ChangeDisplayPicturePage> {
   File _displayPictureFile;
 
   Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       _displayPictureFile = image;
     });
@@ -59,7 +58,30 @@ class _ChangeDisplayPicturePageState extends State<ChangeDisplayPicturePage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(
                         sizeLarge, sizeLarge, sizeLarge, 0),
-                    child: SizedBox(),
+                    child: Center(
+                      child: _displayPictureFile == null
+                          ? Text('No image selected.')
+                          : Image.file(_displayPictureFile),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, sizeNormal, 0, 0),
+                    child: ButtonBar(
+                      mainAxisSize: MainAxisSize.max,
+                      alignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        ProgressButton(
+                          defaultWidget: Text('test getImage'),
+                          progressWidget: ThreeSizeDot(),
+                          width: lrBtnWidth,
+                          animate: false,
+                          onPressed: () async {
+                            getImage();
+                            return () {};
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, sizeNormal, 0, 0),
