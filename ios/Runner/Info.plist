@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+
+    <!-- https://pub.dev/packages/image_picker -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>TODO: describe why your app needs permission for the photo library.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>TODO: describe why your app needs access to the camera.</string>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>TODO: describe why your app needs access to the microphone, if you intend to record videos.</string>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
