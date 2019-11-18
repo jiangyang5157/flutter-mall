@@ -1,57 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
+import 'package:mall/features/theme/data/models/theme_model.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 import 'package:mall/features/theme/domain/usecase/get_theme.dart';
 import 'package:mall/features/theme/domain/usecase/save_theme.dart';
 
 class ThemeViewModel extends ChangeNotifier {
-  final GetTheme getTheme;
-  final SaveTheme saveTheme;
+  final GetTheme _getTheme;
+  final SaveTheme _saveTheme;
+
+  ThemeModel _model;
 
   ThemeViewModel({
     @required GetTheme getTheme,
     @required SaveTheme saveTheme,
   })  : assert(getTheme != null),
         assert(saveTheme != null),
-        getTheme = getTheme,
-        saveTheme = saveTheme {
-    print('#### ThemeViewModel_constructor');
+        _getTheme = getTheme,
+        _saveTheme = saveTheme {
+    print('#### ThemeViewModel - constructor');
   }
 
   @override
   void dispose() {
     super.dispose();
-    print('#### ThemeViewModel_dispose');
+    print('#### ThemeViewModel - dispose');
   }
 
-  Future<ThemeData> getThemeData(BuildContext context) async {
-    final ret = await getTheme.call(NoParams());
-    return ret.fold(
-      (failure) => setThemeTypeWithoutNotify(context, ThemeType.Light),
-      (entity) => entity.toThemeData(context),
+  ThemeModel getTheme() {
+    print('#### 1111');
+    if (_model == null) {
+      print('#### 2222');
+      _model = ThemeModel(type: ThemeType.Light);
+
+      _getTheme.call(NoParams()).then((result) {
+        result.fold(
+          (failure) {
+            print('#### 3333');
+            setTheme(ThemeType.Light, notify: false);
+          },
+          (entity) {
+            print('#### 4444');
+            if (_model != entity) {
+              print('#### 5555');
+              _model = entity;
+              notifyListeners();
+              print('#### 6666');
+            }
+          },
+        );
+      });
+    }
+    return _model;
+  }
+
+  Future<void> setTheme(ThemeType type, {@required bool notify}) async {
+    final ret = await _saveTheme.call(Params(type: type));
+    _model = ret.fold(
+      (failure) => throw CacheFailure(),
+      (entity) => entity,
     );
-  }
-
-  Future<ThemeData> setThemeTypeWithNotify(
-      BuildContext context, ThemeType type) {
-    return _setThemeType(context, type, notify: true);
-  }
-
-  Future<ThemeData> setThemeTypeWithoutNotify(
-      BuildContext context, ThemeType type) {
-    return _setThemeType(context, type, notify: false);
-  }
-
-  Future<ThemeData> _setThemeType(BuildContext context, ThemeType type,
-      {@required bool notify}) async {
-    final ret = await saveTheme.call(Params(type: type));
     if (notify) {
       notifyListeners();
     }
-    return ret.fold(
-      (failure) => throw CacheFailure(),
-      (entity) => entity.toThemeData(context),
-    );
   }
 }

@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:mall/constant.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/nav.dart';
+import 'package:mall/features/theme/domain/entities/theme_entity.dart';
+import 'package:mall/features/theme/presentation/ThemeViewModel.dart';
 import 'package:mall/injection.dart';
-import 'package:mall/models/app/theme_model.dart';
 import 'package:mall/models/user/user_model.dart';
 import 'package:provider/provider.dart';
 
@@ -59,10 +60,11 @@ class _SettingsPageState extends State<SettingsPage> {
           child: ToggleButtons(
             children: _themeTypeWidgets(),
             onPressed: (int index) {
-              Provider.of<ThemeModel>(context).type = ThemeType.values[index];
+              Provider.of<ThemeViewModel>(context)
+                  .setTheme(ThemeType.values[index], notify: true);
             },
-            isSelected:
-                _themeTypeSelectedStatus(Provider.of<ThemeModel>(context).type),
+            isSelected: _themeTypeSelectedStatus(
+                Provider.of<ThemeViewModel>(context).getTheme().type),
           ),
         ),
       ),
