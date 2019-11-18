@@ -29,24 +29,18 @@ class ThemeViewModel extends ChangeNotifier {
   }
 
   ThemeModel getTheme() {
-    print('#### 1111');
     if (_model == null) {
-      print('#### 2222');
       _model = ThemeModel(type: ThemeType.Light);
 
       _getTheme.call(NoParams()).then((result) {
         result.fold(
           (failure) {
-            print('#### 3333');
             setTheme(ThemeType.Light, notify: false);
           },
           (entity) {
-            print('#### 4444');
             if (_model != entity) {
-              print('#### 5555');
               _model = entity;
               notifyListeners();
-              print('#### 6666');
             }
           },
         );

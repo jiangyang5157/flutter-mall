@@ -31,7 +31,6 @@ class _AppPageState extends State<AppPage> {
   void initState() {
     super.initState();
     print('#### _AppPageState - initState');
-    themeViewModel.getTheme();
   }
 
   @override
