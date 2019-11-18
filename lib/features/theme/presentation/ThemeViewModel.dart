@@ -30,16 +30,20 @@ class ThemeViewModel extends ChangeNotifier {
 
   ThemeModel getTheme() {
     if (_model == null) {
+      // returns default first
       _model = ThemeModel(type: ThemeType.Light);
 
       _getTheme.call(NoParams()).then((result) {
         result.fold(
           (failure) {
+            // set default if non-exist
             setTheme(ThemeType.Light, notify: false);
           },
           (entity) {
             if (_model != entity) {
               _model = entity;
+
+              // notify only if the value is different from the default
               notifyListeners();
             }
           },
@@ -50,11 +54,12 @@ class ThemeViewModel extends ChangeNotifier {
   }
 
   Future<void> setTheme(ThemeType type, {@required bool notify}) async {
-    final ret = await _saveTheme.call(Params(type: type));
-    _model = ret.fold(
-      (failure) => throw CacheFailure(),
-      (entity) => entity,
-    );
+    await _saveTheme.call(Params(type: type)).then((result) {
+      _model = result.fold(
+        (failure) => throw CacheFailure(),
+        (entity) => entity,
+      );
+    });
     if (notify) {
       notifyListeners();
     }
