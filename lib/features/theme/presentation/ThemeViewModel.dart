@@ -3,8 +3,8 @@ import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/theme/data/models/theme_model.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
-import 'package:mall/features/theme/domain/usecase/get_theme.dart';
-import 'package:mall/features/theme/domain/usecase/save_theme.dart';
+import 'package:mall/features/theme/domain/usecases/get_theme.dart';
+import 'package:mall/features/theme/domain/usecases/save_theme.dart';
 
 class ThemeViewModel extends ChangeNotifier {
   final GetTheme _getTheme;

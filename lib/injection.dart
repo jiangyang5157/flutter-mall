@@ -6,8 +6,8 @@ import 'package:mall/features/theme/data/repositories/theme_repository_impl.dart
 import 'package:mall/features/theme/data/sources/theme_local_data_source.dart';
 import 'package:mall/features/theme/data/sources/theme_remote_data_source.dart';
 import 'package:mall/features/theme/domain/repositories/theme_repository.dart';
-import 'package:mall/features/theme/domain/usecase/get_theme.dart';
-import 'package:mall/features/theme/domain/usecase/save_theme.dart';
+import 'package:mall/features/theme/domain/usecases/get_theme.dart';
+import 'package:mall/features/theme/domain/usecases/save_theme.dart';
 import 'package:mall/features/theme/presentation/ThemeViewModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
