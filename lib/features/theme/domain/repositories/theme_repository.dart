@@ -3,7 +3,7 @@ import 'package:mall/core/error/failures.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 
 abstract class ThemeRepository {
-  Future<Either<Failure, ThemeEntity>> getTheme();
+  Future<Either<Failure, ThemeEntity>> getData();
 
-  Future<Either<Failure, ThemeEntity>> saveTheme(ThemeType type);
+  Future<Either<Failure, ThemeEntity>> saveData(ThemeType type);
 }

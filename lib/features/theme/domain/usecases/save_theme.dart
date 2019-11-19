@@ -13,7 +13,7 @@ class SaveTheme implements UseCase<ThemeEntity, Params> {
 
   @override
   Future<Either<Failure, ThemeEntity>> call(Params params) async {
-    return await repository.saveTheme(params.type);
+    return await repository.saveData(params.type);
   }
 }
 

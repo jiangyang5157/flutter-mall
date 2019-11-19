@@ -11,6 +11,6 @@ class GetTheme implements UseCase<ThemeEntity, NoParams> {
 
   @override
   Future<Either<Failure, ThemeEntity>> call(NoParams params) async {
-    return await repository.getTheme();
+    return await repository.getData();
   }
 }
