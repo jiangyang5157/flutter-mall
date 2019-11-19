@@ -24,6 +24,23 @@ class SignUpRepositoryImpl implements SignUpRepository {
   }
 
   @override
+  Future<Either<Failure, SignUpEntity>> setSignUpData(
+      String username,
+      String password,
+      String repeatPassword,
+      String emailAddress,
+      bool obscurePassword) async {
+    final entity = SignUpEntity(
+        username: username,
+        password: password,
+        repeatPassword: repeatPassword,
+        emailAddress: emailAddress,
+        obscurePassword: obscurePassword);
+    localDataSource.cacheSignUpData(entity);
+    return Right(entity);
+  }
+
+  @override
   Future<Either<Failure, void>> setEmailAddress(
       SignUpEntity entity, String emailAddress) async {
     final ret = SignUpEntity(

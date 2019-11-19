@@ -5,6 +5,13 @@ import 'package:mall/features/signup/domain/entities/sign_up_entity.dart';
 abstract class SignUpRepository {
   Future<Either<Failure, SignUpEntity>> getSignUpData();
 
+  Future<Either<Failure, SignUpEntity>> setSignUpData(
+      String username,
+      String password,
+      String repeatPassword,
+      String emailAddress,
+      bool obscurePassword);
+
   Future<Either<Failure, void>> setUsername(
       SignUpEntity entity, String username);
 
