@@ -14,9 +14,9 @@ class SignUpRepositoryImpl implements SignUpRepository {
   });
 
   @override
-  Future<Either<Failure, SignUpEntity>> getSignUpData() async {
+  Future<Either<Failure, SignUpEntity>> getData() async {
     try {
-      final last = await localDataSource.getLastSignUpData();
+      final last = await localDataSource.getLastData();
       return Right(last);
     } on CacheException {
       return Left(CacheFailure());
@@ -24,7 +24,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
   }
 
   @override
-  Future<Either<Failure, SignUpEntity>> setSignUpData(
+  Future<Either<Failure, SignUpEntity>> setData(
       String username,
       String password,
       String repeatPassword,
@@ -36,7 +36,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
         repeatPassword: repeatPassword,
         emailAddress: emailAddress,
         obscurePassword: obscurePassword);
-    localDataSource.cacheSignUpData(entity);
+    localDataSource.cacheData(entity);
     return Right(entity);
   }
 
@@ -49,7 +49,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
         repeatPassword: entity.repeatPassword,
         emailAddress: emailAddress,
         obscurePassword: entity.obscurePassword);
-    localDataSource.cacheSignUpData(ret);
+    localDataSource.cacheData(ret);
     return Right(ret);
   }
 
@@ -62,7 +62,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
         repeatPassword: entity.repeatPassword,
         emailAddress: entity.emailAddress,
         obscurePassword: obscurePassword);
-    localDataSource.cacheSignUpData(ret);
+    localDataSource.cacheData(ret);
     return Right(ret);
   }
 
@@ -75,7 +75,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
         repeatPassword: entity.repeatPassword,
         emailAddress: entity.emailAddress,
         obscurePassword: entity.obscurePassword);
-    localDataSource.cacheSignUpData(ret);
+    localDataSource.cacheData(ret);
     return Right(ret);
   }
 
@@ -88,7 +88,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
         repeatPassword: repeatPassword,
         emailAddress: entity.emailAddress,
         obscurePassword: entity.obscurePassword);
-    localDataSource.cacheSignUpData(ret);
+    localDataSource.cacheData(ret);
     return Right(ret);
   }
 
@@ -101,7 +101,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
         repeatPassword: entity.repeatPassword,
         emailAddress: entity.emailAddress,
         obscurePassword: entity.obscurePassword);
-    localDataSource.cacheSignUpData(ret);
+    localDataSource.cacheData(ret);
     return Right(ret);
   }
 }

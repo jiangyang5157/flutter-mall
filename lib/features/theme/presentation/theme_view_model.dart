@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
-import 'package:mall/features/theme/domain/usecases/get_theme.dart';
-import 'package:mall/features/theme/domain/usecases/set_theme.dart';
+import 'package:mall/features/theme/domain/usecases/usecases.dart' as Theme;
 
 class ThemeViewModel extends ChangeNotifier {
-  final GetTheme _getTheme;
-  final SetTheme _setTheme;
+  final Theme.GetTheme _getTheme;
+  final Theme.SetTheme _setTheme;
 
   ThemeEntity _entity;
 
   ThemeViewModel({
-    @required GetTheme getTheme,
-    @required SetTheme setTheme,
+    @required Theme.GetTheme getTheme,
+    @required Theme.SetTheme setTheme,
   })  : assert(getTheme != null),
         assert(setTheme != null),
         _getTheme = getTheme,
@@ -54,7 +53,7 @@ class ThemeViewModel extends ChangeNotifier {
   }
 
   Future<void> setCurrentTheme(ThemeType type, {@required bool notify}) async {
-    await _setTheme.call(SetThemeParams(type: type)).then((result) {
+    await _setTheme.call(Theme.SetThemeParams(type: type)).then((result) {
       _entity = result.fold(
         (failure) => throw CacheFailure(),
         (entity) => entity,

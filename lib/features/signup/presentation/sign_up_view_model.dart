@@ -2,17 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/signup/domain/entities/sign_up_entity.dart';
-import 'package:mall/features/signup/domain/usecases/get_sign_up_data.dart';
-import 'package:mall/features/signup/domain/usecases/set_email_address.dart';
-import 'package:mall/features/signup/domain/usecases/set_obscure_password.dart';
-import 'package:mall/features/signup/domain/usecases/set_password.dart';
-import 'package:mall/features/signup/domain/usecases/set_repeat_password.dart';
-import 'package:mall/features/signup/domain/usecases/set_sign_up_data.dart';
-import 'package:mall/features/signup/domain/usecases/set_username.dart';
+import 'package:mall/features/signup/domain/usecases/usecases.dart';
 
 class SignUpViewModel extends ChangeNotifier {
-  final GetSignUpData _getSignUpData;
-  final SetSignUpData _setSignUpData;
+  final GetData _getData;
+  final SetData _setData;
   final SetUsername _setUsername;
   final SetPassword _setPassword;
   final SetRepeatPassword _setRepeatPassword;
@@ -22,22 +16,22 @@ class SignUpViewModel extends ChangeNotifier {
   SignUpEntity _entity;
 
   SignUpViewModel({
-    @required GetSignUpData getSignUpData,
-    @required SetSignUpData setSignUpData,
+    @required GetData getData,
+    @required SetData setData,
     @required SetUsername setUsername,
     @required SetPassword setPassword,
     @required SetRepeatPassword setRepeatPassword,
     @required SetEmailAddress setEmailAddress,
     @required SetObscurePassword setObscurePassword,
-  })  : assert(getSignUpData != null),
-        assert(setSignUpData != null),
+  })  : assert(getData != null),
+        assert(setData != null),
         assert(setUsername != null),
         assert(setPassword != null),
         assert(setRepeatPassword != null),
         assert(setEmailAddress != null),
         assert(setObscurePassword != null),
-        _getSignUpData = getSignUpData,
-        _setSignUpData = setSignUpData,
+        _getData = getData,
+        _setData = setData,
         _setUsername = setUsername,
         _setPassword = setPassword,
         _setRepeatPassword = setRepeatPassword,
@@ -52,7 +46,7 @@ class SignUpViewModel extends ChangeNotifier {
     print('#### SignUpViewModel - dispose');
   }
 
-  SignUpEntity getCurrentSignUpData() {
+  SignUpEntity getCurrentData() {
     if (_entity == null) {
       // returns default first
       final defaultEntity = SignUpEntity(
@@ -63,11 +57,11 @@ class SignUpViewModel extends ChangeNotifier {
           obscurePassword: true);
       _entity = defaultEntity;
 
-      _getSignUpData.call(NoParams()).then((result) {
+      _getData.call(NoParams()).then((result) {
         result.fold(
           (failure) {
             // set default if non-exist
-            setCurrentSignUpData(
+            setCurrentData(
                 defaultEntity.username,
                 defaultEntity.password,
                 defaultEntity.repeatPassword,
@@ -89,11 +83,11 @@ class SignUpViewModel extends ChangeNotifier {
     return _entity;
   }
 
-  Future<void> setCurrentSignUpData(String username, String password,
+  Future<void> setCurrentData(String username, String password,
       String repeatPassword, String emailAddress, bool obscurePassword,
       {@required bool notify}) async {
-    await _setSignUpData
-        .call(SetSignUpDataParams(
+    await _setData
+        .call(SetDataParams(
             username: username,
             password: password,
             repeatPassword: repeatPassword,

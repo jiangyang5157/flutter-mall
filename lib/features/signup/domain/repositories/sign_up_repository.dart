@@ -3,9 +3,9 @@ import 'package:mall/core/error/failures.dart';
 import 'package:mall/features/signup/domain/entities/sign_up_entity.dart';
 
 abstract class SignUpRepository {
-  Future<Either<Failure, SignUpEntity>> getSignUpData();
+  Future<Either<Failure, SignUpEntity>> getData();
 
-  Future<Either<Failure, SignUpEntity>> setSignUpData(
+  Future<Either<Failure, SignUpEntity>> setData(
       String username,
       String password,
       String repeatPassword,
