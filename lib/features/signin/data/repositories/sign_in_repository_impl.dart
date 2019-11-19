@@ -14,9 +14,9 @@ class SignInRepositoryImpl implements SignInRepository {
   });
 
   @override
-  Future<Either<Failure, SignInEntity>> getData() async {
+  Future<Either<Failure, SignInEntity>> getSignInData() async {
     try {
-      final last = await localDataSource.getLastData();
+      final last = await localDataSource.getLastSignInData();
       return Right(last);
     } on CacheException {
       return Left(CacheFailure());
@@ -24,36 +24,35 @@ class SignInRepositoryImpl implements SignInRepository {
   }
 
   @override
-  Future<Either<Failure, SignInEntity>> setObscurePassword(
-      bool obscurePassword) async {
-    final last = await localDataSource.getLastData();
+  Future<Either<Failure, void>> setObscurePassword(
+      SignInEntity entity, bool obscurePassword) async {
     final ret = SignInEntity(
-        username: last.username,
-        password: last.password,
+        username: entity.username,
+        password: entity.password,
         obscurePassword: obscurePassword);
-    localDataSource.cacheData(ret);
+    localDataSource.cacheSignInData(ret);
     return Right(ret);
   }
 
   @override
-  Future<Either<Failure, SignInEntity>> setPassword(String password) async {
-    final last = await localDataSource.getLastData();
+  Future<Either<Failure, void>> setPassword(
+      SignInEntity entity, String password) async {
     final ret = SignInEntity(
-        username: last.username,
+        username: entity.username,
         password: password,
-        obscurePassword: last.obscurePassword);
-    localDataSource.cacheData(ret);
+        obscurePassword: entity.obscurePassword);
+    localDataSource.cacheSignInData(ret);
     return Right(ret);
   }
 
   @override
-  Future<Either<Failure, SignInEntity>> setUsername(String username) async {
-    final last = await localDataSource.getLastData();
+  Future<Either<Failure, void>> setUsername(
+      SignInEntity entity, String username) async {
     final ret = SignInEntity(
         username: username,
-        password: last.password,
-        obscurePassword: last.obscurePassword);
-    localDataSource.cacheData(ret);
+        password: entity.password,
+        obscurePassword: entity.obscurePassword);
+    localDataSource.cacheSignInData(ret);
     return Right(ret);
   }
 }

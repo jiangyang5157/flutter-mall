@@ -6,21 +6,23 @@ import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/signin/domain/entities/sign_in_entity.dart';
 import 'package:mall/features/signin/domain/repositories/sign_in_repository.dart';
 
-class SetSignInPassword implements UseCase<SignInEntity, Params> {
+class SetPassword implements UseCase<SignInEntity, Params> {
   final SignInRepository repository;
 
-  SetSignInPassword(this.repository);
+  SetPassword(this.repository);
 
   @override
   Future<Either<Failure, SignInEntity>> call(Params params) async {
-    return await repository.setPassword(params.password);
+    return await repository.setPassword(params.entity, params.password);
   }
 }
 
 class Params extends Equatable {
+  final SignInEntity entity;
   final String password;
 
   Params({
+    @required this.entity,
     @required this.password,
   }) : super([password]);
 }
