@@ -6,16 +6,20 @@ class SignInEntity extends Equatable {
 
   final String password;
 
+  final bool obscurePassword;
+
   SignInEntity({
     @required this.username,
     @required this.password,
-  }) : super([username, password]);
+    @required this.obscurePassword,
+  }) : super([username, password, obscurePassword]);
 
   @override
   String toString() {
     return '''
 username: $username
 password: $password
+obscurePassword: $obscurePassword
 ''';
   }
 }

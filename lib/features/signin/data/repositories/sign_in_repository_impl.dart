@@ -24,9 +24,35 @@ class SignInRepositoryImpl implements SignInRepository {
   }
 
   @override
-  Future<Either<Failure, SignInEntity>> saveData(
-      String username, String password) async {
-    final ret = SignInEntity(username: username, password: password);
+  Future<Either<Failure, SignInEntity>> setObscurePassword(
+      bool obscurePassword) async {
+    final last = await localDataSource.getLastData();
+    final ret = SignInEntity(
+        username: last.username,
+        password: last.password,
+        obscurePassword: obscurePassword);
+    localDataSource.cacheData(ret);
+    return Right(ret);
+  }
+
+  @override
+  Future<Either<Failure, SignInEntity>> setPassword(String password) async {
+    final last = await localDataSource.getLastData();
+    final ret = SignInEntity(
+        username: last.username,
+        password: password,
+        obscurePassword: last.obscurePassword);
+    localDataSource.cacheData(ret);
+    return Right(ret);
+  }
+
+  @override
+  Future<Either<Failure, SignInEntity>> setUsername(String username) async {
+    final last = await localDataSource.getLastData();
+    final ret = SignInEntity(
+        username: username,
+        password: last.password,
+        obscurePassword: last.obscurePassword);
     localDataSource.cacheData(ret);
     return Right(ret);
   }
