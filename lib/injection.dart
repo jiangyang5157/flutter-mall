@@ -6,7 +6,7 @@ import 'package:mall/features/theme/data/repositories/theme_repository_impl.dart
 import 'package:mall/features/theme/data/sources/theme_local_data_source.dart';
 import 'package:mall/features/theme/domain/repositories/theme_repository.dart';
 import 'package:mall/features/theme/domain/usecases/get_theme.dart';
-import 'package:mall/features/theme/domain/usecases/set_theme_type.dart';
+import 'package:mall/features/theme/domain/usecases/set_theme.dart';
 import 'package:mall/features/theme/presentation/theme_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,13 +38,13 @@ Future<void> init() async {
 
   // Use case
   locator.registerLazySingleton(() => GetTheme(locator()));
-  locator.registerLazySingleton(() => SetThemeType(locator()));
+  locator.registerLazySingleton(() => SetTheme(locator()));
 
   // View model
   locator.registerFactory(
     () => ThemeViewModel(
       getTheme: locator(),
-      setThemeType: locator(),
+      setTheme: locator(),
     ),
   );
 }

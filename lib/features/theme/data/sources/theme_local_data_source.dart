@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mall/core/error/exceptions.dart';
-import 'package:mall/features/theme/data/models/theme_model.dart';
+import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ThemeLocalDataSource {
   /// Throws [CacheException] if no cached data is present.
-  Future<ThemeModel> getLastData();
+  Future<ThemeEntity> getLastTheme();
 
-  Future<bool> cacheData(ThemeModel model);
+  Future<bool> cacheTheme(ThemeEntity entity);
 }
 
 const _prefs_theme = 'key_prefs_theme';
@@ -18,16 +18,16 @@ class ThemeLocalDataSourceImpl implements ThemeLocalDataSource {
   ThemeLocalDataSourceImpl({@required this.prefs});
 
   @override
-  Future<bool> cacheData(ThemeModel theme) async {
+  Future<bool> cacheTheme(ThemeEntity theme) async {
     return await prefs.setString(_prefs_theme, theme.toString());
   }
 
   @override
-  Future<ThemeModel> getLastData() async {
-    final themeString = prefs.getString(_prefs_theme);
-    if (themeString == null) {
+  Future<ThemeEntity> getLastTheme() async {
+    final s = prefs.getString(_prefs_theme);
+    if (s == null) {
       throw CacheException();
     }
-    return ThemeModel.fromString(themeString);
+    return ThemeEntity.fromString(s);
   }
 }

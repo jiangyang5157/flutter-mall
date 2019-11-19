@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
-import 'package:mall/features/theme/data/models/theme_model.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 import 'package:mall/features/theme/domain/usecases/get_theme.dart';
-import 'package:mall/features/theme/domain/usecases/set_theme_type.dart';
+import 'package:mall/features/theme/domain/usecases/set_theme.dart';
 
 class ThemeViewModel extends ChangeNotifier {
   final GetTheme _getTheme;
-  final SetThemeType _saveThemeType;
+  final SetTheme _setTheme;
 
-  ThemeModel _model;
+  ThemeEntity _entity;
 
   ThemeViewModel({
     @required GetTheme getTheme,
-    @required SetThemeType setThemeType,
+    @required SetTheme setTheme,
   })  : assert(getTheme != null),
-        assert(setThemeType != null),
+        assert(setTheme != null),
         _getTheme = getTheme,
-        _saveThemeType = setThemeType {
+        _setTheme = setTheme {
     print('#### ThemeViewModel - constructor');
   }
 
@@ -28,20 +27,20 @@ class ThemeViewModel extends ChangeNotifier {
     print('#### ThemeViewModel - dispose');
   }
 
-  ThemeModel getTheme() {
-    if (_model == null) {
+  ThemeEntity getCurrentTheme() {
+    if (_entity == null) {
       // returns default first
-      _model = ThemeModel(type: ThemeType.Light);
+      _entity = ThemeEntity(type: ThemeType.Light);
 
       _getTheme.call(NoParams()).then((result) {
         result.fold(
           (failure) {
             // set default if non-exist
-            setTheme(ThemeType.Light, notify: false);
+            setCurrentTheme(ThemeType.Light, notify: false);
           },
           (entity) {
-            if (_model != entity) {
-              _model = entity;
+            if (_entity != entity) {
+              _entity = entity;
 
               // notify only if the value is different from the default
               notifyListeners();
@@ -50,12 +49,12 @@ class ThemeViewModel extends ChangeNotifier {
         );
       });
     }
-    return _model;
+    return _entity;
   }
 
-  Future<void> setTheme(ThemeType type, {@required bool notify}) async {
-    await _saveThemeType.call(Params(type: type)).then((result) {
-      _model = result.fold(
+  Future<void> setCurrentTheme(ThemeType type, {@required bool notify}) async {
+    await _setTheme.call(Params(type: type)).then((result) {
+      _entity = result.fold(
         (failure) => throw CacheFailure(),
         (entity) => entity,
       );
