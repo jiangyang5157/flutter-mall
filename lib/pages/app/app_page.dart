@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/nav.dart';
-import 'package:mall/features/theme/presentation/ThemeViewModel.dart';
+import 'package:mall/features/theme/presentation/theme_view_model.dart';
 import 'package:mall/injection.dart';
 import 'package:mall/models/user/user_model.dart';
 import 'package:mall/pages/splash/splash_page.dart';
