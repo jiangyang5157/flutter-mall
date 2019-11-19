@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 import 'package:mall/features/theme/domain/usecases/usecases.dart' as Theme;
@@ -54,9 +53,9 @@ class ThemeViewModel extends ChangeNotifier {
 
   Future<void> setCurrentTheme(ThemeType type, {@required bool notify}) async {
     await _setData.call(Theme.SetDataParams(type: type)).then((result) {
-      _entity = result.fold(
-        (failure) => throw CacheFailure(),
-        (entity) => entity,
+      result.fold(
+        (failure) => {},
+        (entity) => _entity = entity,
       );
     });
     if (notify) {

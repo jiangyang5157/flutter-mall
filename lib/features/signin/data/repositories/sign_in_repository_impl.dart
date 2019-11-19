@@ -26,12 +26,12 @@ class SignInRepositoryImpl implements SignInRepository {
   @override
   Future<Either<Failure, SignInEntity>> setData(
       String username, String password, bool obscurePassword) async {
-    try {
-      final last = await localDataSource.getLastData();
-      return Right(last);
-    } on CacheException {
-      return Left(CacheFailure());
-    }
+    final entity = SignInEntity(
+        username: username,
+        password: password,
+        obscurePassword: obscurePassword);
+    localDataSource.cacheData(entity);
+    return Right(entity);
   }
 
   @override

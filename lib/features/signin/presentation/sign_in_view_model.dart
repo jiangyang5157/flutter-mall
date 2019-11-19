@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/signin/domain/entities/sign_in_entity.dart';
 import 'package:mall/features/signin/domain/usecases/usecases.dart';
@@ -76,9 +75,9 @@ class SignInViewModel extends ChangeNotifier {
             password: password,
             obscurePassword: obscurePassword))
         .then((result) {
-      _entity = result.fold(
-        (failure) => throw CacheFailure(),
-        (entity) => entity,
+      result.fold(
+        (failure) => {},
+        (entity) => _entity = entity,
       );
     });
     if (notify) {
@@ -90,9 +89,9 @@ class SignInViewModel extends ChangeNotifier {
     await _setUsername
         .call(SetUsernameParams(entity: _entity, username: username))
         .then((result) {
-      _entity = result.fold(
-        (failure) => throw CacheFailure(),
-        (entity) => entity,
+      result.fold(
+        (failure) => {},
+        (entity) => _entity = entity,
       );
     });
     if (notify) {
@@ -104,9 +103,9 @@ class SignInViewModel extends ChangeNotifier {
     await _setPassword
         .call(SetPasswordParams(entity: _entity, password: password))
         .then((result) {
-      _entity = result.fold(
-        (failure) => throw CacheFailure(),
-        (entity) => entity,
+      result.fold(
+        (failure) => {},
+        (entity) => _entity = entity,
       );
     });
     if (notify) {
@@ -120,9 +119,9 @@ class SignInViewModel extends ChangeNotifier {
         .call(SetObscurePasswordParams(
             entity: _entity, obscurePassword: obscurePassword))
         .then((result) {
-      _entity = result.fold(
-        (failure) => throw CacheFailure(),
-        (entity) => entity,
+      result.fold(
+        (failure) => {},
+        (entity) => _entity = entity,
       );
     });
     if (notify) {

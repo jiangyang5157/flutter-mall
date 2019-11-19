@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/signup/domain/entities/sign_up_entity.dart';
 import 'package:mall/features/signup/domain/usecases/usecases.dart';
@@ -94,9 +93,9 @@ class SignUpViewModel extends ChangeNotifier {
             emailAddress: emailAddress,
             obscurePassword: obscurePassword))
         .then((result) {
-      _entity = result.fold(
-        (failure) => throw CacheFailure(),
-        (entity) => entity,
+      result.fold(
+        (failure) => {},
+        (entity) => _entity = entity,
       );
     });
     if (notify) {
@@ -108,9 +107,9 @@ class SignUpViewModel extends ChangeNotifier {
     await _setUsername
         .call(SetUsernameParams(entity: _entity, username: username))
         .then((result) {
-      _entity = result.fold(
-        (failure) => throw CacheFailure(),
-        (entity) => entity,
+      result.fold(
+        (failure) => {},
+        (entity) => _entity = entity,
       );
     });
     if (notify) {
@@ -122,9 +121,9 @@ class SignUpViewModel extends ChangeNotifier {
     await _setPassword
         .call(SetPasswordParams(entity: _entity, password: password))
         .then((result) {
-      _entity = result.fold(
-        (failure) => throw CacheFailure(),
-        (entity) => entity,
+      result.fold(
+        (failure) => {},
+        (entity) => _entity = entity,
       );
     });
     if (notify) {
@@ -138,9 +137,9 @@ class SignUpViewModel extends ChangeNotifier {
         .call(SetRepeatPasswordParams(
             entity: _entity, repeatPassword: repeatPassword))
         .then((result) {
-      _entity = result.fold(
-        (failure) => throw CacheFailure(),
-        (entity) => entity,
+      result.fold(
+        (failure) => {},
+        (entity) => _entity = entity,
       );
     });
     if (notify) {
@@ -154,9 +153,9 @@ class SignUpViewModel extends ChangeNotifier {
         .call(
             SetEmailAddressParams(entity: _entity, emailAddress: emailAddress))
         .then((result) {
-      _entity = result.fold(
-        (failure) => throw CacheFailure(),
-        (entity) => entity,
+      result.fold(
+        (failure) => {},
+        (entity) => _entity = entity,
       );
     });
     if (notify) {
@@ -170,9 +169,9 @@ class SignUpViewModel extends ChangeNotifier {
         .call(SetObscurePasswordParams(
             entity: _entity, obscurePassword: obscurePassword))
         .then((result) {
-      _entity = result.fold(
-        (failure) => throw CacheFailure(),
-        (entity) => entity,
+      result.fold(
+        (failure) => {},
+        (entity) => _entity = entity,
       );
     });
     if (notify) {
