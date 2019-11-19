@@ -50,26 +50,25 @@ Future<void> init() async {
       () => SignUpRepositoryImpl(localDataSource: locator()));
 
   // Use case
-  locator.registerLazySingleton(() => Theme.GetTheme(locator()));
-  locator.registerLazySingleton(() => Theme.SetTheme(locator()));
+  locator.registerLazySingleton(() => Theme.GetData(locator()));
+  locator.registerLazySingleton(() => Theme.SetData(locator()));
   locator.registerLazySingleton(() => SignIn.GetData(locator()));
   locator.registerLazySingleton(() => SignIn.SetData(locator()));
   locator.registerLazySingleton(() => SignIn.SetUsername(locator()));
   locator.registerLazySingleton(() => SignIn.SetPassword(locator()));
-  locator.registerLazySingleton(() => SignIn.SetUsername(locator()));
+  locator.registerLazySingleton(() => SignIn.SetObscurePassword(locator()));
   locator.registerLazySingleton(() => SignUp.GetData(locator()));
   locator.registerLazySingleton(() => SignUp.SetData(locator()));
   locator.registerLazySingleton(() => SignUp.SetUsername(locator()));
   locator.registerLazySingleton(() => SignUp.SetPassword(locator()));
   locator.registerLazySingleton(() => SignUp.SetRepeatPassword(locator()));
-  locator.registerLazySingleton(() => SignUp.SetUsername(locator()));
   locator.registerLazySingleton(() => SignUp.SetEmailAddress(locator()));
   locator.registerLazySingleton(() => SignUp.SetObscurePassword(locator()));
 
   // View model
   locator.registerFactory(() => ThemeViewModel(
-        getTheme: locator(),
-        setTheme: locator(),
+        getData: locator(),
+        setData: locator(),
       ));
   locator.registerFactory(() => SignInViewModel(
         getData: locator(),

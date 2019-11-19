@@ -5,18 +5,18 @@ import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 import 'package:mall/features/theme/domain/usecases/usecases.dart' as Theme;
 
 class ThemeViewModel extends ChangeNotifier {
-  final Theme.GetTheme _getTheme;
-  final Theme.SetTheme _setTheme;
+  final Theme.GetData _getData;
+  final Theme.SetData _setData;
 
   ThemeEntity _entity;
 
   ThemeViewModel({
-    @required Theme.GetTheme getTheme,
-    @required Theme.SetTheme setTheme,
-  })  : assert(getTheme != null),
-        assert(setTheme != null),
-        _getTheme = getTheme,
-        _setTheme = setTheme {
+    @required Theme.GetData getData,
+    @required Theme.SetData setData,
+  })  : assert(getData != null),
+        assert(setData != null),
+        _getData = getData,
+        _setData = setData {
     print('#### ThemeViewModel - constructor');
   }
 
@@ -32,7 +32,7 @@ class ThemeViewModel extends ChangeNotifier {
       final defaultEntity = ThemeEntity(type: ThemeType.Light);
       _entity = defaultEntity;
 
-      _getTheme.call(NoParams()).then((result) {
+      _getData.call(NoParams()).then((result) {
         result.fold(
           (failure) {
             // set default if non-exist
@@ -53,7 +53,7 @@ class ThemeViewModel extends ChangeNotifier {
   }
 
   Future<void> setCurrentTheme(ThemeType type, {@required bool notify}) async {
-    await _setTheme.call(Theme.SetThemeParams(type: type)).then((result) {
+    await _setData.call(Theme.SetDataParams(type: type)).then((result) {
       _entity = result.fold(
         (failure) => throw CacheFailure(),
         (entity) => entity,
