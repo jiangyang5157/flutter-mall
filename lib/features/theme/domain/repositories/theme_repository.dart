@@ -5,5 +5,5 @@ import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 abstract class ThemeRepository {
   Future<Either<Failure, ThemeEntity>> getData();
 
-  Future<Either<Failure, ThemeEntity>> saveData(ThemeType type);
+  Future<Either<Failure, ThemeEntity>> setThemeType(ThemeType type);
 }

@@ -25,7 +25,7 @@ class ThemeRepositoryImpl implements ThemeRepository {
   }
 
   @override
-  Future<Either<Failure, ThemeModel>> saveData(ThemeType type) async {
+  Future<Either<Failure, ThemeModel>> setThemeType(ThemeType type) async {
     final ret = ThemeModel(type: type);
     localDataSource.cacheData(ret);
     return Right(ret);

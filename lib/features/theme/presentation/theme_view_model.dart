@@ -4,21 +4,21 @@ import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/theme/data/models/theme_model.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 import 'package:mall/features/theme/domain/usecases/get_theme.dart';
-import 'package:mall/features/theme/domain/usecases/save_theme.dart';
+import 'package:mall/features/theme/domain/usecases/set_theme_type.dart';
 
 class ThemeViewModel extends ChangeNotifier {
   final GetTheme _getTheme;
-  final SaveTheme _saveTheme;
+  final SetThemeType _saveThemeType;
 
   ThemeModel _model;
 
   ThemeViewModel({
     @required GetTheme getTheme,
-    @required SaveTheme saveTheme,
+    @required SetThemeType setThemeType,
   })  : assert(getTheme != null),
-        assert(saveTheme != null),
+        assert(setThemeType != null),
         _getTheme = getTheme,
-        _saveTheme = saveTheme {
+        _saveThemeType = setThemeType {
     print('#### ThemeViewModel - constructor');
   }
 
@@ -54,7 +54,7 @@ class ThemeViewModel extends ChangeNotifier {
   }
 
   Future<void> setTheme(ThemeType type, {@required bool notify}) async {
-    await _saveTheme.call(Params(type: type)).then((result) {
+    await _saveThemeType.call(Params(type: type)).then((result) {
       _model = result.fold(
         (failure) => throw CacheFailure(),
         (entity) => entity,

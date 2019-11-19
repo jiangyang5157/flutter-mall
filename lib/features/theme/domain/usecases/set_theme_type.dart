@@ -6,14 +6,14 @@ import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 import 'package:mall/features/theme/domain/repositories/theme_repository.dart';
 
-class SaveTheme implements UseCase<ThemeEntity, Params> {
+class SetThemeType implements UseCase<ThemeEntity, Params> {
   final ThemeRepository repository;
 
-  SaveTheme(this.repository);
+  SetThemeType(this.repository);
 
   @override
   Future<Either<Failure, ThemeEntity>> call(Params params) async {
-    return await repository.saveData(params.type);
+    return await repository.setThemeType(params.type);
   }
 }
 
