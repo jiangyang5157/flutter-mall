@@ -1,3 +1,4 @@
+import 'package:mall/core/error/exceptions.dart';
 import 'package:mall/features/signin/domain/entities/sign_in_entity.dart';
 
 abstract class SignInLocalDataSource {
@@ -16,7 +17,10 @@ class SignInLocalDataSourceImpl implements SignInLocalDataSource {
   }
 
   @override
-  Future<SignInEntity> getLastSignInData() {
-    throw _entity;
+  Future<SignInEntity> getLastSignInData() async {
+    if (_entity == null) {
+      throw CacheException();
+    }
+    return _entity;
   }
 }

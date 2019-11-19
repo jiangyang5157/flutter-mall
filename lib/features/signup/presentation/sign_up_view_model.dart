@@ -55,18 +55,25 @@ class SignUpViewModel extends ChangeNotifier {
   SignUpEntity getCurrentSignUpData() {
     if (_entity == null) {
       // returns default first
-      _entity = SignUpEntity(
+      final defaultEntity = SignUpEntity(
           username: '',
           password: '',
           repeatPassword: '',
           emailAddress: '',
           obscurePassword: true);
+      _entity = defaultEntity;
 
       _getSignUpData.call(NoParams()).then((result) {
         result.fold(
           (failure) {
             // set default if non-exist
-            setCurrentSignUpData('', '', '', '', true, notify: false);
+            setCurrentSignUpData(
+                defaultEntity.username,
+                defaultEntity.password,
+                defaultEntity.repeatPassword,
+                defaultEntity.emailAddress,
+                defaultEntity.obscurePassword,
+                notify: false);
           },
           (entity) {
             if (_entity != entity) {
@@ -86,12 +93,88 @@ class SignUpViewModel extends ChangeNotifier {
       String repeatPassword, String emailAddress, bool obscurePassword,
       {@required bool notify}) async {
     await _setSignUpData
-        .call(Params(
+        .call(SetSignUpDataParams(
             username: username,
             password: password,
             repeatPassword: repeatPassword,
             emailAddress: emailAddress,
             obscurePassword: obscurePassword))
+        .then((result) {
+      _entity = result.fold(
+        (failure) => throw CacheFailure(),
+        (entity) => entity,
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+  }
+
+  Future<void> setUsername(String username, {@required bool notify}) async {
+    await _setUsername
+        .call(SetUsernameParams(entity: _entity, username: username))
+        .then((result) {
+      _entity = result.fold(
+        (failure) => throw CacheFailure(),
+        (entity) => entity,
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+  }
+
+  Future<void> setPassword(String password, {@required bool notify}) async {
+    await _setPassword
+        .call(SetPasswordParams(entity: _entity, password: password))
+        .then((result) {
+      _entity = result.fold(
+        (failure) => throw CacheFailure(),
+        (entity) => entity,
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+  }
+
+  Future<void> setRepeatPassword(String repeatPassword,
+      {@required bool notify}) async {
+    await _setRepeatPassword
+        .call(SetRepeatPasswordParams(
+            entity: _entity, repeatPassword: repeatPassword))
+        .then((result) {
+      _entity = result.fold(
+        (failure) => throw CacheFailure(),
+        (entity) => entity,
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+  }
+
+  Future<void> setEmailAddress(String emailAddress,
+      {@required bool notify}) async {
+    await _setEmailAddress
+        .call(
+            SetEmailAddressParams(entity: _entity, emailAddress: emailAddress))
+        .then((result) {
+      _entity = result.fold(
+        (failure) => throw CacheFailure(),
+        (entity) => entity,
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+  }
+
+  Future<void> setObscurePassword(bool obscurePassword,
+      {@required bool notify}) async {
+    await _setObscurePassword
+        .call(SetObscurePasswordParams(
+            entity: _entity, obscurePassword: obscurePassword))
         .then((result) {
       _entity = result.fold(
         (failure) => throw CacheFailure(),

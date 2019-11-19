@@ -6,26 +6,26 @@ import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/signup/domain/entities/sign_up_entity.dart';
 import 'package:mall/features/signup/domain/repositories/sign_up_repository.dart';
 
-class SetSignUpData implements UseCase<SignUpEntity, Params> {
+class SetSignUpData implements UseCase<SignUpEntity, SetSignUpDataParams> {
   final SignUpRepository repository;
 
   SetSignUpData(this.repository);
 
   @override
-  Future<Either<Failure, SignUpEntity>> call(Params params) async {
+  Future<Either<Failure, SignUpEntity>> call(SetSignUpDataParams params) async {
     return await repository.setSignUpData(params.username, params.password,
         params.repeatPassword, params.emailAddress, params.obscurePassword);
   }
 }
 
-class Params extends Equatable {
+class SetSignUpDataParams extends Equatable {
   final String username;
   final String password;
   final String repeatPassword;
   final String emailAddress;
   final bool obscurePassword;
 
-  Params({
+  SetSignUpDataParams({
     @required this.username,
     @required this.password,
     @required this.repeatPassword,
