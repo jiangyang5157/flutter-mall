@@ -11,6 +11,6 @@ class GetSignUpData implements UseCase<SignUpEntity, NoParams> {
 
   @override
   Future<Either<Failure, SignUpEntity>> call(NoParams params) async {
-    return await repository.getData();
+    return await repository.getSignUpData();
   }
 }
