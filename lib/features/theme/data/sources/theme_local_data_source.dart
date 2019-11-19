@@ -7,7 +7,7 @@ abstract class ThemeLocalDataSource {
   /// Throws [CacheException] if no cached data is present.
   Future<ThemeModel> getLastTheme();
 
-  Future<void> cacheTheme(ThemeModel theme);
+  Future<bool> cacheTheme(ThemeModel theme);
 }
 
 const _prefs_theme = 'key_prefs_theme';
@@ -27,7 +27,7 @@ class ThemeLocalDataSourceImpl implements ThemeLocalDataSource {
   }
 
   @override
-  Future<void> cacheTheme(ThemeModel theme) {
-    return prefs.setString(_prefs_theme, theme.toString());
+  Future<bool> cacheTheme(ThemeModel theme) async {
+    return await prefs.setString(_prefs_theme, theme.toString());
   }
 }

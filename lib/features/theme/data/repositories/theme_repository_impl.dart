@@ -29,16 +29,16 @@ class ThemeRepositoryImpl implements ThemeRepository {
   Future<Either<Failure, ThemeModel>> getTheme() async {
     if (await shouldFetch() && await networkInfo.isConnected) {
       try {
-        final ret = await remoteDataSource.fetchTheme();
-        localDataSource.cacheTheme(ret);
-        return Right(ret);
+        return Right(await remoteDataSource.fetchTheme().then((result) {
+          localDataSource.cacheTheme(result);
+          return result;
+        }));
       } on ServerException {
         return Left(ServerFailure());
       }
     } else {
       try {
-        final ret = await localDataSource.getLastTheme();
-        return Right(ret);
+        return Right(await localDataSource.getLastTheme());
       } on CacheException {
         return Left(CacheFailure());
       }
