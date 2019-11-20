@@ -12,7 +12,7 @@ import 'package:mall/core/util/validation/username_input_formatter.dart';
 import 'package:mall/core/util/validation/username_validator.dart';
 import 'package:mall/core/util/widgets/text_editing_controller_workaround.dart';
 import 'package:mall/core/util/widgets/three_size_dot.dart';
-import 'package:mall/models/auth/sign_up_model.dart';
+import 'package:mall/features/signup/presentation/sign_up_view_model.dart';
 import 'package:mall/models/user/user_model.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
@@ -62,18 +62,20 @@ class _SignUpFormState extends State<SignUpForm> {
     print('#### _SignUpFormState - initState');
 
     _usernameController.addListener(() {
-      Provider.of<SignUpModel>(context).username = _usernameController.text;
+      Provider.of<SignUpViewModel>(context)
+          .setUsername(_usernameController.text, notify: false);
     });
     _passwordController.addListener(() {
-      Provider.of<SignUpModel>(context).password = _passwordController.text;
+      Provider.of<SignUpViewModel>(context)
+          .setPassword(_passwordController.text, notify: false);
     });
     _repeatPasswordController.addListener(() {
-      Provider.of<SignUpModel>(context).repeatPassword =
-          _repeatPasswordController.text;
+      Provider.of<SignUpViewModel>(context)
+          .setRepeatPassword(_repeatPasswordController.text, notify: false);
     });
     _emailAddressController.addListener(() {
-      Provider.of<SignUpModel>(context).emailAddress =
-          _emailAddressController.text;
+      Provider.of<SignUpViewModel>(context)
+          .setEmailAddress(_emailAddressController.text, notify: false);
     });
   }
 
@@ -81,11 +83,17 @@ class _SignUpFormState extends State<SignUpForm> {
   Widget build(BuildContext context) {
     print('#### _SignUpFormState - build');
 
-    SignUpModel signUpModel = Provider.of<SignUpModel>(context);
-    _usernameController.setTextAndPosition(signUpModel.username);
-    _passwordController.setTextAndPosition(signUpModel.password);
-    _repeatPasswordController.setTextAndPosition(signUpModel.repeatPassword);
-    _emailAddressController.setTextAndPosition(signUpModel.emailAddress);
+    SignUpViewModel signUpViewModel = Provider.of<SignUpViewModel>(context);
+
+    print('#### ${signUpViewModel.getCurrentData()}');
+    _usernameController
+        .setTextAndPosition(signUpViewModel.getCurrentData().username);
+    _passwordController
+        .setTextAndPosition(signUpViewModel.getCurrentData().password);
+    _repeatPasswordController
+        .setTextAndPosition(signUpViewModel.getCurrentData().repeatPassword);
+    _emailAddressController
+        .setTextAndPosition(signUpViewModel.getCurrentData().emailAddress);
 
     return Form(
       key: _formKey,
@@ -130,17 +138,18 @@ class _SignUpFormState extends State<SignUpForm> {
                   suffixIcon: GestureDetector(
                     onTap: () {
                       setState(() {
-                        signUpModel.obscurePassword =
-                            !signUpModel.obscurePassword;
+                        signUpViewModel.setObscurePassword(
+                            !signUpViewModel.getCurrentData().obscurePassword,
+                            notify: false);
                       });
                     },
-                    child: Icon(signUpModel.obscurePassword
+                    child: Icon(signUpViewModel.getCurrentData().obscurePassword
                         ? Icons.visibility_off
                         : Icons.visibility),
                   ),
                 ),
                 style: TextStyle(fontSize: textFieldFontSize),
-                obscureText: signUpModel.obscurePassword,
+                obscureText: signUpViewModel.getCurrentData().obscurePassword,
                 textInputAction: TextInputAction.next,
                 enableInteractiveSelection: false,
                 controller: _passwordController,

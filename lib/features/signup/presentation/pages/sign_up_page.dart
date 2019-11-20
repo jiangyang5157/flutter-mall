@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/nav.dart';
 import 'package:mall/core/util/widgets/ext.dart';
+import 'package:mall/features/signup/presentation/sign_up_view_model.dart';
+import 'package:mall/features/signup/presentation/widgets/sign_up_form.dart';
 import 'package:mall/injection.dart';
-import 'package:mall/models/auth/sign_up_model.dart';
-import 'package:mall/pages/auth/sign_up_form.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -17,11 +17,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  SignUpModel signUpModel = SignUpModel();
+  SignUpViewModel signUpViewModel = locator<SignUpViewModel>();
 
   @override
   void dispose() {
-    signUpModel.dispose();
+    signUpViewModel.dispose();
     super.dispose();
     print('#### _SignUpPageState - dispose');
   }
@@ -36,8 +36,8 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     print('#### _SignUpPageState - build');
 
-    return Provider<SignUpModel>.value(
-      value: signUpModel,
+    return Provider<SignUpViewModel>.value(
+      value: signUpViewModel,
       child: Scaffold(
         appBar: AppBar(
           title: Text(string(context, 'title_sign_up_page')),

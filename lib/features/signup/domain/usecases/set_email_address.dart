@@ -14,7 +14,7 @@ class SetEmailAddress implements UseCase<SignUpEntity, SetEmailAddressParams> {
   @override
   Future<Either<Failure, SignUpEntity>> call(
       SetEmailAddressParams params) async {
-    return await repository.setUsername(params.entity, params.emailAddress);
+    return await repository.setEmailAddress(params.entity, params.emailAddress);
   }
 }
 

@@ -9,11 +9,11 @@ import 'package:mall/core/util/widgets/ext.dart';
 import 'package:mall/core/util/widgets/three_size_dot.dart';
 import 'package:mall/features/signin/presentation/sign_in_view_model.dart';
 import 'package:mall/features/signin/presentation/widgets/sign_in_form.dart';
+import 'package:mall/features/signup/presentation/sign_up_view_model.dart';
+import 'package:mall/features/signup/presentation/widgets/sign_up_form.dart';
 import 'package:mall/injection.dart';
 import 'package:mall/models/auth/auth_model.dart';
-import 'package:mall/models/auth/sign_up_model.dart';
 import 'package:mall/models/user/user_model.dart';
-import 'package:mall/pages/auth/sign_up_form.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
@@ -27,12 +27,12 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   AuthModel authModel = AuthModel();
   SignInViewModel signInViewModel = locator<SignInViewModel>();
-  SignUpModel signUpModel = SignUpModel();
+  SignUpViewModel signUpViewModel = locator<SignUpViewModel>();
 
   @override
   void dispose() {
     signInViewModel.dispose();
-    signUpModel.dispose();
+    signUpViewModel.dispose();
     super.dispose();
     print('#### _AuthPageState - dispose');
   }
@@ -119,8 +119,8 @@ class _AuthPageState extends State<AuthPage> {
           ),
         );
       case AuthState.SignUp:
-        return Provider<SignUpModel>.value(
-          value: signUpModel,
+        return Provider<SignUpViewModel>.value(
+          value: signUpViewModel,
           child: Card(
             child: Column(
               children: [
