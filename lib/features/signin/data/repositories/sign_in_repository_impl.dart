@@ -35,7 +35,7 @@ class SignInRepositoryImpl implements SignInRepository {
   }
 
   @override
-  Future<Either<Failure, void>> setObscurePassword(
+  Future<Either<Failure, SignInEntity>> setObscurePassword(
       SignInEntity entity, bool obscurePassword) async {
     final ret = SignInEntity(
         username: entity.username,
@@ -46,7 +46,7 @@ class SignInRepositoryImpl implements SignInRepository {
   }
 
   @override
-  Future<Either<Failure, void>> setPassword(
+  Future<Either<Failure, SignInEntity>> setPassword(
       SignInEntity entity, String password) async {
     final ret = SignInEntity(
         username: entity.username,
@@ -57,7 +57,7 @@ class SignInRepositoryImpl implements SignInRepository {
   }
 
   @override
-  Future<Either<Failure, void>> setUsername(
+  Future<Either<Failure, SignInEntity>> setUsername(
       SignInEntity entity, String username) async {
     final ret = SignInEntity(
         username: username,

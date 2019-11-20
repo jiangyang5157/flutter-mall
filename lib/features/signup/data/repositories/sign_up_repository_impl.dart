@@ -41,7 +41,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
   }
 
   @override
-  Future<Either<Failure, void>> setEmailAddress(
+  Future<Either<Failure, SignUpEntity>> setEmailAddress(
       SignUpEntity entity, String emailAddress) async {
     final ret = SignUpEntity(
         username: entity.username,
@@ -54,7 +54,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
   }
 
   @override
-  Future<Either<Failure, void>> setObscurePassword(
+  Future<Either<Failure, SignUpEntity>> setObscurePassword(
       SignUpEntity entity, bool obscurePassword) async {
     final ret = SignUpEntity(
         username: entity.username,
@@ -67,7 +67,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
   }
 
   @override
-  Future<Either<Failure, void>> setPassword(
+  Future<Either<Failure, SignUpEntity>> setPassword(
       SignUpEntity entity, String password) async {
     final ret = SignUpEntity(
         username: entity.username,
@@ -80,7 +80,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
   }
 
   @override
-  Future<Either<Failure, void>> setRepeatPassword(
+  Future<Either<Failure, SignUpEntity>> setRepeatPassword(
       SignUpEntity entity, String repeatPassword) async {
     final ret = SignUpEntity(
         username: entity.username,
@@ -93,7 +93,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
   }
 
   @override
-  Future<Either<Failure, void>> setUsername(
+  Future<Either<Failure, SignUpEntity>> setUsername(
       SignUpEntity entity, String username) async {
     final ret = SignUpEntity(
         username: username,

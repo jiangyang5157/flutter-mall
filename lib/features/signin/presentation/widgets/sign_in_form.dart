@@ -9,7 +9,7 @@ import 'package:mall/core/util/validation/username_input_formatter.dart';
 import 'package:mall/core/util/validation/username_validator.dart';
 import 'package:mall/core/util/widgets/text_editing_controller_workaround.dart';
 import 'package:mall/core/util/widgets/three_size_dot.dart';
-import 'package:mall/models/auth/sign_in_model.dart';
+import 'package:mall/features/signin/presentation/sign_in_view_model.dart';
 import 'package:mall/models/user/user_model.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
@@ -49,10 +49,12 @@ class _SignInFormState extends State<SignInForm> {
     print('#### _SignInFormState - initState');
 
     _usernameController.addListener(() {
-      Provider.of<SignInModel>(context).username = _usernameController.text;
+      Provider.of<SignInViewModel>(context)
+          .setUsername(_usernameController.text, notify: false);
     });
     _passwordController.addListener(() {
-      Provider.of<SignInModel>(context).password = _passwordController.text;
+      Provider.of<SignInViewModel>(context)
+          .setPassword(_passwordController.text, notify: false);
     });
   }
 
@@ -60,9 +62,11 @@ class _SignInFormState extends State<SignInForm> {
   Widget build(BuildContext context) {
     print('#### _SignInFormState - build');
 
-    SignInModel signInModel = Provider.of<SignInModel>(context);
-    _usernameController.setTextAndPosition(signInModel.username);
-    _passwordController.setTextAndPosition(signInModel.password);
+    SignInViewModel signInViewModel = Provider.of<SignInViewModel>(context);
+    _usernameController
+        .setTextAndPosition(signInViewModel.getCurrentData().username);
+    _passwordController
+        .setTextAndPosition(signInViewModel.getCurrentData().password);
 
     return Form(
       key: _formKey,
@@ -107,17 +111,18 @@ class _SignInFormState extends State<SignInForm> {
                   suffixIcon: GestureDetector(
                     onTap: () {
                       setState(() {
-                        signInModel.obscurePassword =
-                            !signInModel.obscurePassword;
+                        signInViewModel.setObscurePassword(
+                            !signInViewModel.getCurrentData().obscurePassword,
+                            notify: false);
                       });
                     },
-                    child: Icon(signInModel.obscurePassword
+                    child: Icon(signInViewModel.getCurrentData().obscurePassword
                         ? Icons.visibility_off
                         : Icons.visibility),
                   ),
                 ),
                 style: TextStyle(fontSize: textFieldFontSize),
-                obscureText: signInModel.obscurePassword,
+                obscureText: signInViewModel.getCurrentData().obscurePassword,
                 textInputAction: TextInputAction.done,
                 enableInteractiveSelection: false,
                 controller: _passwordController,

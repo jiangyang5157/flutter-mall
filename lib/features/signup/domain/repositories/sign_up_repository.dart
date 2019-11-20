@@ -12,18 +12,18 @@ abstract class SignUpRepository {
       String emailAddress,
       bool obscurePassword);
 
-  Future<Either<Failure, void>> setUsername(
+  Future<Either<Failure, SignUpEntity>> setUsername(
       SignUpEntity entity, String username);
 
-  Future<Either<Failure, void>> setPassword(
+  Future<Either<Failure, SignUpEntity>> setPassword(
       SignUpEntity entity, String password);
 
-  Future<Either<Failure, void>> setRepeatPassword(
+  Future<Either<Failure, SignUpEntity>> setRepeatPassword(
       SignUpEntity entity, String repeatPassword);
 
-  Future<Either<Failure, void>> setEmailAddress(
+  Future<Either<Failure, SignUpEntity>> setEmailAddress(
       SignUpEntity entity, String emailAddress);
 
-  Future<Either<Failure, void>> setObscurePassword(
+  Future<Either<Failure, SignUpEntity>> setObscurePassword(
       SignUpEntity entity, bool obscurePassword);
 }
