@@ -13,7 +13,7 @@ import 'package:mall/core/util/validation/username_validator.dart';
 import 'package:mall/core/util/widgets/text_editing_controller_workaround.dart';
 import 'package:mall/core/util/widgets/three_size_dot.dart';
 import 'package:mall/features/signup/presentation/sign_up_view_model.dart';
-import 'package:mall/models/user/user_model.dart';
+import 'package:mall/models/user_model.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 

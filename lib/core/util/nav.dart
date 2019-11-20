@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mall/features/auth/presentation/pages/auth_page.dart';
 import 'package:mall/features/signup/presentation/pages/sign_up_page.dart';
-import 'package:mall/features/splash/presentation/pages/splash_page.dart';
-import 'package:mall/pages/home/home_page.dart';
-import 'package:mall/pages/settings/change_display_picture_page.dart';
-import 'package:mall/pages/settings/change_email_page.dart';
-import 'package:mall/pages/settings/change_password_page.dart';
-import 'package:mall/pages/settings/change_username_page.dart';
-import 'package:mall/pages/settings/settings_page.dart';
+import 'package:mall/features/startup/presentation/pages/splash_page.dart';
+import 'package:mall/features/home/presentation/home_page.dart';
+import 'package:mall/pages/change_display_picture_page.dart';
+import 'package:mall/pages/change_email_page.dart';
+import 'package:mall/pages/change_password_page.dart';
+import 'package:mall/pages/change_username_page.dart';
+import 'package:mall/pages/settings_page.dart';
 
 class Nav {
   Router _router;

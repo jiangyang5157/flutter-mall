@@ -1,9 +1,9 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:mall/core/util/nav.dart';
-import 'package:mall/features/splash/presentation/splash_view_model.dart';
+import 'package:mall/features/startup/presentation/startup_view_model.dart';
 import 'package:mall/injection.dart';
-import 'package:mall/models/user/user_model.dart';
+import 'package:mall/models/user_model.dart';
 import 'package:provider/provider.dart';
 
 class SplashPage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _init() async {
-    if (await locator<SplashViewModel>().initialization()) {
+    if (await locator<StartupViewModel>().initialization()) {
       UserModel userModel = Provider.of<UserModel>(context);
       await userModel.sync(fromServer: true);
       if (userModel.hasUser()) {

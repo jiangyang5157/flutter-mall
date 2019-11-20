@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mall/core/usecase/usecase.dart';
-import 'package:mall/features/splash/domain/usecases/usecases.dart' as Splash;
+import 'package:mall/features/startup/domain/usecases/usecases.dart' as Startup;
 
-class SplashViewModel extends ChangeNotifier {
-  final Splash.Initialization _initialization;
+class StartupViewModel extends ChangeNotifier {
+  final Startup.Initialization _initialization;
 
-  SplashViewModel({
-    @required Splash.Initialization initialization,
+  StartupViewModel({
+    @required Startup.Initialization initialization,
   })  : assert(initialization != null),
         _initialization = initialization {
-    print('#### SplashViewModel - constructor');
+    print('#### StartupViewModel - constructor');
   }
 
   @override
   void dispose() {
     super.dispose();
-    print('#### SplashViewModel - dispose');
+    print('#### StartupViewModel - dispose');
   }
 
   Future<bool> initialization() async {

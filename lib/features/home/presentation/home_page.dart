@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/nav.dart';
 import 'package:mall/injection.dart';
-import 'package:mall/models/user/user_model.dart';
+import 'package:mall/models/user_model.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {

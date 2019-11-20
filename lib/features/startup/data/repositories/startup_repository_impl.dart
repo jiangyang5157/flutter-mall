@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:mall/constant.dart';
 import 'package:mall/core/error/failures.dart';
-import 'package:mall/features/splash/domain/repositories/theme_repository.dart';
+import 'package:mall/features/startup/domain/repositories/startup_repository.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
-class SplashRepositoryImpl implements SplashRepository {
+class StartupRepositoryImpl implements StartupRepository {
   @override
   Future<Either<Failure, void>> initialization() async {
     try {
@@ -16,7 +16,9 @@ class SplashRepositoryImpl implements SplashRepository {
           debug: true);
       return Right(null);
     } catch (error) {
-      return Left(ServerFailure());
+      return Left(ParseFailure());
     }
   }
 }
+
+class ParseFailure extends Failure {}

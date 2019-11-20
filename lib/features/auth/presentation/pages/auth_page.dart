@@ -14,7 +14,7 @@ import 'package:mall/features/signin/presentation/widgets/sign_in_form.dart';
 import 'package:mall/features/signup/presentation/sign_up_view_model.dart';
 import 'package:mall/features/signup/presentation/widgets/sign_up_form.dart';
 import 'package:mall/injection.dart';
-import 'package:mall/models/user/user_model.dart';
+import 'package:mall/models/user_model.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
