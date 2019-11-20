@@ -2,6 +2,11 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mall/core/network/network_info.dart';
 import 'package:mall/core/util/nav.dart';
+import 'package:mall/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:mall/features/auth/data/sources/auth_local_data_source.dart';
+import 'package:mall/features/auth/domain/repositories/auth_repository.dart';
+import 'package:mall/features/auth/domain/usecases/usecases.dart' as Auth;
+import 'package:mall/features/auth/presentation/auth_view_model.dart';
 import 'package:mall/features/signin/data/repositories/sign_in_repository_impl.dart';
 import 'package:mall/features/signin/data/sources/sign_in_local_data_source.dart';
 import 'package:mall/features/signin/domain/repositories/sign_in_repository.dart';
@@ -40,6 +45,8 @@ Future<void> init() async {
       () => SignInLocalDataSourceImpl());
   locator.registerLazySingleton<SignUpLocalDataSource>(
       () => SignUpLocalDataSourceImpl());
+  locator.registerLazySingleton<AuthLocalDataSource>(
+      () => AuthLocalDataSourceImpl());
 
   // Repository
   locator.registerLazySingleton<ThemeRepository>(
@@ -48,6 +55,8 @@ Future<void> init() async {
       () => SignInRepositoryImpl(localDataSource: locator()));
   locator.registerLazySingleton<SignUpRepository>(
       () => SignUpRepositoryImpl(localDataSource: locator()));
+  locator.registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(localDataSource: locator()));
 
   // Use case
   locator.registerLazySingleton(() => Theme.GetData(locator()));
@@ -64,6 +73,8 @@ Future<void> init() async {
   locator.registerLazySingleton(() => SignUp.SetRepeatPassword(locator()));
   locator.registerLazySingleton(() => SignUp.SetEmailAddress(locator()));
   locator.registerLazySingleton(() => SignUp.SetObscurePassword(locator()));
+  locator.registerLazySingleton(() => Auth.GetData(locator()));
+  locator.registerLazySingleton(() => Auth.SetData(locator()));
 
   // View model
   locator.registerFactory(() => ThemeViewModel(
@@ -85,5 +96,9 @@ Future<void> init() async {
         setRepeatPassword: locator(),
         setEmailAddress: locator(),
         setObscurePassword: locator(),
+      ));
+  locator.registerFactory(() => AuthViewModel(
+        getData: locator(),
+        setData: locator(),
       ));
 }

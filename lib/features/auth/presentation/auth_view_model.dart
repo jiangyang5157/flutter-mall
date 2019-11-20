@@ -1,41 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:mall/core/usecase/usecase.dart';
-import 'package:mall/features/theme/domain/entities/theme_entity.dart';
-import 'package:mall/features/theme/domain/usecases/usecases.dart' as Theme;
+import 'package:mall/features/auth/domain/entities/auth_entity.dart';
+import 'package:mall/features/auth/domain/usecases/usecases.dart' as Auth;
 
-class ThemeViewModel extends ChangeNotifier {
-  final Theme.GetData _getData;
-  final Theme.SetData _setData;
+class AuthViewModel extends ChangeNotifier {
+  final Auth.GetData _getData;
+  final Auth.SetData _setData;
 
-  ThemeEntity _entity;
+  AuthEntity _entity;
 
-  ThemeViewModel({
-    @required Theme.GetData getData,
-    @required Theme.SetData setData,
+  AuthViewModel({
+    @required Auth.GetData getData,
+    @required Auth.SetData setData,
   })  : assert(getData != null),
         assert(setData != null),
         _getData = getData,
         _setData = setData {
-    print('#### ThemeViewModel - constructor');
+    print('#### AuthViewModel - constructor');
   }
 
   @override
   void dispose() {
     super.dispose();
-    print('#### ThemeViewModel - dispose');
+    print('#### AuthViewModel - dispose');
   }
 
-  ThemeEntity getCurrentData() {
+  AuthEntity getCurrentData() {
     if (_entity == null) {
       // returns default first
-      final defaultEntity = ThemeEntity(type: ThemeType.Light);
+      final defaultEntity = AuthEntity(state: AuthState.SignIn);
       _entity = defaultEntity;
 
       _getData.call(NoParams()).then((result) {
         result.fold(
           (failure) {
             // set default if non-exist
-            setCurrentData(defaultEntity.type, notify: false);
+            setCurrentData(defaultEntity.state, notify: false);
           },
           (entity) {
             if (_entity != entity) {
@@ -51,8 +51,8 @@ class ThemeViewModel extends ChangeNotifier {
     return _entity;
   }
 
-  Future<void> setCurrentData(ThemeType type, {@required bool notify}) async {
-    await _setData.call(Theme.SetDataParams(type: type)).then((result) {
+  Future<void> setCurrentData(AuthState state, {@required bool notify}) async {
+    await _setData.call(Auth.SetDataParams(state: state)).then((result) {
       result.fold(
         (failure) => {},
         (entity) => _entity = entity,

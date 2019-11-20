@@ -61,10 +61,10 @@ class _SettingsPageState extends State<SettingsPage> {
             children: _themeTypeWidgets(),
             onPressed: (int index) {
               Provider.of<ThemeViewModel>(context)
-                  .setCurrentTheme(ThemeType.values[index], notify: true);
+                  .setCurrentData(ThemeType.values[index], notify: true);
             },
             isSelected: _themeTypeSelectedStatus(
-                Provider.of<ThemeViewModel>(context).getCurrentTheme().type),
+                Provider.of<ThemeViewModel>(context).getCurrentData().type),
           ),
         ),
       ),

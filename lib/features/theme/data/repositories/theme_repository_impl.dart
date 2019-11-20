@@ -16,8 +16,8 @@ class ThemeRepositoryImpl implements ThemeRepository {
   @override
   Future<Either<Failure, ThemeEntity>> getData() async {
     try {
-      final theme = await localDataSource.getLastTheme();
-      return Right(theme);
+      final last = await localDataSource.getLastData();
+      return Right(last);
     } on CacheException {
       return Left(CacheFailure());
     }
@@ -27,7 +27,7 @@ class ThemeRepositoryImpl implements ThemeRepository {
   Future<Either<Failure, ThemeEntity>> setData(ThemeType type) async {
     final entity = ThemeEntity(type: type);
     try {
-      await localDataSource.cacheTheme(entity);
+      await localDataSource.cacheData(entity);
       return Right(entity);
     } on CacheException {
       return Left(CacheFailure());

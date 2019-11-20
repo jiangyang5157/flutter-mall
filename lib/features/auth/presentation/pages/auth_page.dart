@@ -7,12 +7,13 @@ import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/nav.dart';
 import 'package:mall/core/util/widgets/ext.dart';
 import 'package:mall/core/util/widgets/three_size_dot.dart';
+import 'package:mall/features/auth/domain/entities/auth_entity.dart';
+import 'package:mall/features/auth/presentation/auth_view_model.dart';
 import 'package:mall/features/signin/presentation/sign_in_view_model.dart';
 import 'package:mall/features/signin/presentation/widgets/sign_in_form.dart';
 import 'package:mall/features/signup/presentation/sign_up_view_model.dart';
 import 'package:mall/features/signup/presentation/widgets/sign_up_form.dart';
 import 'package:mall/injection.dart';
-import 'package:mall/models/auth/auth_model.dart';
 import 'package:mall/models/user/user_model.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
@@ -25,12 +26,13 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  AuthModel authModel = AuthModel();
+  AuthViewModel authViewModel = locator<AuthViewModel>();
   SignInViewModel signInViewModel = locator<SignInViewModel>();
   SignUpViewModel signUpViewModel = locator<SignUpViewModel>();
 
   @override
   void dispose() {
+    authViewModel.dispose();
     signInViewModel.dispose();
     signUpViewModel.dispose();
     super.dispose();
@@ -49,10 +51,10 @@ class _AuthPageState extends State<AuthPage> {
 
     return Scaffold(
       body: SafeArea(
-        child: ChangeNotifierProvider<AuthModel>.value(
-          value: authModel,
-          child: Consumer<AuthModel>(
-            builder: (context, authModel, _) {
+        child: ChangeNotifierProvider<AuthViewModel>.value(
+          value: authViewModel,
+          child: Consumer<AuthViewModel>(
+            builder: (context, authViewModel, _) {
               return LayoutBuilder(
                 builder: (context, constraint) {
                   return SingleChildScrollView(
@@ -65,14 +67,14 @@ class _AuthPageState extends State<AuthPage> {
                             FlutterLogo(size: flutterLogoSize),
                             Padding(
                               padding: const EdgeInsets.all(sizeLarge),
-                              child: _buildForm(context, authModel.state),
+                              child: _buildForm(context, authViewModel.getCurrentData().state),
                             ),
                             Spacer(),
                             Container(
                               height: authBottomContainerHeight,
                               alignment: Alignment.topCenter,
                               child:
-                                  _buildFormSelector(context, authModel.state),
+                                  _buildFormSelector(context, authViewModel.getCurrentData().state),
                             ),
                           ],
                         ),
@@ -88,8 +90,8 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
-  Widget _buildForm(BuildContext context, AuthState authState) {
-    switch (authState) {
+  Widget _buildForm(BuildContext context, AuthState state) {
+    switch (state) {
       case AuthState.SignIn:
         return Provider<SignInViewModel>.value(
           value: signInViewModel,
@@ -147,7 +149,7 @@ class _AuthPageState extends State<AuthPage> {
           ),
         );
       default:
-        throw ("$authState is not recognized as an AuthState");
+        throw ("$state is not recognized as an AuthState");
     }
   }
 
@@ -165,7 +167,7 @@ class _AuthPageState extends State<AuthPage> {
                     string(context, 'label_sign_up_action'),
                   ),
                   onPressed: () {
-                    authModel.state = AuthState.SignUp;
+                    authViewModel.setCurrentData(AuthState.SignUp, notify: true);
                   },
                 ),
               ],
@@ -219,7 +221,7 @@ class _AuthPageState extends State<AuthPage> {
                 string(context, 'label_sign_in_action'),
               ),
               onPressed: () {
-                authModel.state = AuthState.SignIn;
+                authViewModel.setCurrentData(AuthState.SignIn, notify: true);
               },
             ),
           ],

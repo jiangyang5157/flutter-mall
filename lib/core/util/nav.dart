@@ -1,6 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:mall/pages/auth/auth_page.dart';
+import 'package:mall/features/auth/presentation/pages/auth_page.dart';
 import 'package:mall/features/signup/presentation/pages/sign_up_page.dart';
 import 'package:mall/pages/home/home_page.dart';
 import 'package:mall/pages/settings/change_display_picture_page.dart';
