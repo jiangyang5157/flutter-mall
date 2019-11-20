@@ -1,14 +1,15 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mall/features/auth/presentation/pages/auth_page.dart';
 import 'package:mall/features/signup/presentation/pages/sign_up_page.dart';
+import 'package:mall/features/splash/presentation/pages/splash_page.dart';
 import 'package:mall/pages/home/home_page.dart';
 import 'package:mall/pages/settings/change_display_picture_page.dart';
 import 'package:mall/pages/settings/change_email_page.dart';
 import 'package:mall/pages/settings/change_password_page.dart';
 import 'package:mall/pages/settings/change_username_page.dart';
 import 'package:mall/pages/settings/settings_page.dart';
-import 'package:mall/pages/splash/splash_page.dart';
 
 class Nav {
   Router _router;
@@ -53,5 +54,9 @@ class Nav {
           handlerFunc: (BuildContext context, Map<String, dynamic> params) {
         return ChangeEmailPage();
       }));
+  }
+
+  void exit() {
+    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
   }
 }

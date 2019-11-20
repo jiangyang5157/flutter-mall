@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/signin/domain/entities/sign_in_entity.dart';
-import 'package:mall/features/signin/domain/usecases/usecases.dart';
+import 'package:mall/features/signin/domain/usecases/usecases.dart' as SignIn;
 
 class SignInViewModel extends ChangeNotifier {
-  final GetData _getData;
-  final SetData _setData;
-  final SetUsername _setUsername;
-  final SetPassword _setPassword;
-  final SetObscurePassword _setObscurePassword;
+  final SignIn.GetData _getData;
+  final SignIn.SetData _setData;
+  final SignIn.SetUsername _setUsername;
+  final SignIn.SetPassword _setPassword;
+  final SignIn.SetObscurePassword _setObscurePassword;
 
   SignInEntity _entity;
 
   SignInViewModel({
-    @required GetData getData,
-    @required SetData setData,
-    @required SetUsername setUsername,
-    @required SetPassword setPassword,
-    @required SetObscurePassword setObscurePassword,
+    @required SignIn.GetData getData,
+    @required SignIn.SetData setData,
+    @required SignIn.SetUsername setUsername,
+    @required SignIn.SetPassword setPassword,
+    @required SignIn.SetObscurePassword setObscurePassword,
   })  : assert(getData != null),
         assert(setData != null),
         assert(setUsername != null),
@@ -70,7 +70,7 @@ class SignInViewModel extends ChangeNotifier {
       String username, String password, bool obscurePassword,
       {@required bool notify}) async {
     await _setData
-        .call(SetDataParams(
+        .call(SignIn.SetDataParams(
             username: username,
             password: password,
             obscurePassword: obscurePassword))
@@ -87,7 +87,7 @@ class SignInViewModel extends ChangeNotifier {
 
   Future<void> setUsername(String username, {@required bool notify}) async {
     await _setUsername
-        .call(SetUsernameParams(entity: _entity, username: username))
+        .call(SignIn.SetUsernameParams(entity: _entity, username: username))
         .then((result) {
       result.fold(
         (failure) => {},
@@ -101,7 +101,7 @@ class SignInViewModel extends ChangeNotifier {
 
   Future<void> setPassword(String password, {@required bool notify}) async {
     await _setPassword
-        .call(SetPasswordParams(entity: _entity, password: password))
+        .call(SignIn.SetPasswordParams(entity: _entity, password: password))
         .then((result) {
       result.fold(
         (failure) => {},
@@ -116,7 +116,7 @@ class SignInViewModel extends ChangeNotifier {
   Future<void> setObscurePassword(bool obscurePassword,
       {@required bool notify}) async {
     await _setObscurePassword
-        .call(SetObscurePasswordParams(
+        .call(SignIn.SetObscurePasswordParams(
             entity: _entity, obscurePassword: obscurePassword))
         .then((result) {
       result.fold(

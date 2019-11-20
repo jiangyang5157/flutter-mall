@@ -5,7 +5,7 @@ import 'package:mall/core/util/nav.dart';
 import 'package:mall/features/theme/presentation/theme_view_model.dart';
 import 'package:mall/injection.dart';
 import 'package:mall/models/user/user_model.dart';
-import 'package:mall/pages/splash/splash_page.dart';
+import 'package:mall/features/splash/presentation/pages/splash_page.dart';
 import 'package:provider/provider.dart';
 
 class AppPage extends StatefulWidget {

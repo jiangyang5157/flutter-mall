@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/signup/domain/entities/sign_up_entity.dart';
-import 'package:mall/features/signup/domain/usecases/usecases.dart';
+import 'package:mall/features/signup/domain/usecases/usecases.dart' as SignUp;
 
 class SignUpViewModel extends ChangeNotifier {
-  final GetData _getData;
-  final SetData _setData;
-  final SetUsername _setUsername;
-  final SetPassword _setPassword;
-  final SetRepeatPassword _setRepeatPassword;
-  final SetEmailAddress _setEmailAddress;
-  final SetObscurePassword _setObscurePassword;
+  final SignUp.GetData _getData;
+  final SignUp.SetData _setData;
+  final SignUp.SetUsername _setUsername;
+  final SignUp.SetPassword _setPassword;
+  final SignUp.SetRepeatPassword _setRepeatPassword;
+  final SignUp.SetEmailAddress _setEmailAddress;
+  final SignUp.SetObscurePassword _setObscurePassword;
 
   SignUpEntity _entity;
 
   SignUpViewModel({
-    @required GetData getData,
-    @required SetData setData,
-    @required SetUsername setUsername,
-    @required SetPassword setPassword,
-    @required SetRepeatPassword setRepeatPassword,
-    @required SetEmailAddress setEmailAddress,
-    @required SetObscurePassword setObscurePassword,
+    @required SignUp.GetData getData,
+    @required SignUp.SetData setData,
+    @required SignUp.SetUsername setUsername,
+    @required SignUp.SetPassword setPassword,
+    @required SignUp.SetRepeatPassword setRepeatPassword,
+    @required SignUp.SetEmailAddress setEmailAddress,
+    @required SignUp.SetObscurePassword setObscurePassword,
   })  : assert(getData != null),
         assert(setData != null),
         assert(setUsername != null),
@@ -86,7 +86,7 @@ class SignUpViewModel extends ChangeNotifier {
       String repeatPassword, String emailAddress, bool obscurePassword,
       {@required bool notify}) async {
     await _setData
-        .call(SetDataParams(
+        .call(SignUp.SetDataParams(
             username: username,
             password: password,
             repeatPassword: repeatPassword,
@@ -105,7 +105,7 @@ class SignUpViewModel extends ChangeNotifier {
 
   Future<void> setUsername(String username, {@required bool notify}) async {
     await _setUsername
-        .call(SetUsernameParams(entity: _entity, username: username))
+        .call(SignUp.SetUsernameParams(entity: _entity, username: username))
         .then((result) {
       result.fold(
         (failure) => {},
@@ -119,7 +119,7 @@ class SignUpViewModel extends ChangeNotifier {
 
   Future<void> setPassword(String password, {@required bool notify}) async {
     await _setPassword
-        .call(SetPasswordParams(entity: _entity, password: password))
+        .call(SignUp.SetPasswordParams(entity: _entity, password: password))
         .then((result) {
       result.fold(
         (failure) => {},
@@ -134,7 +134,7 @@ class SignUpViewModel extends ChangeNotifier {
   Future<void> setRepeatPassword(String repeatPassword,
       {@required bool notify}) async {
     await _setRepeatPassword
-        .call(SetRepeatPasswordParams(
+        .call(SignUp.SetRepeatPasswordParams(
             entity: _entity, repeatPassword: repeatPassword))
         .then((result) {
       result.fold(
@@ -150,8 +150,8 @@ class SignUpViewModel extends ChangeNotifier {
   Future<void> setEmailAddress(String emailAddress,
       {@required bool notify}) async {
     await _setEmailAddress
-        .call(
-            SetEmailAddressParams(entity: _entity, emailAddress: emailAddress))
+        .call(SignUp.SetEmailAddressParams(
+            entity: _entity, emailAddress: emailAddress))
         .then((result) {
       result.fold(
         (failure) => {},
@@ -166,7 +166,7 @@ class SignUpViewModel extends ChangeNotifier {
   Future<void> setObscurePassword(bool obscurePassword,
       {@required bool notify}) async {
     await _setObscurePassword
-        .call(SetObscurePasswordParams(
+        .call(SignUp.SetObscurePasswordParams(
             entity: _entity, obscurePassword: obscurePassword))
         .then((result) {
       result.fold(

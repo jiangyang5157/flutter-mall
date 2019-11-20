@@ -17,6 +17,10 @@ import 'package:mall/features/signup/data/sources/sign_up_local_data_source.dart
 import 'package:mall/features/signup/domain/repositories/sign_up_repository.dart';
 import 'package:mall/features/signup/domain/usecases/usecases.dart' as SignUp;
 import 'package:mall/features/signup/presentation/sign_up_view_model.dart';
+import 'package:mall/features/splash/data/repositories/splash_repository_impl.dart';
+import 'package:mall/features/splash/domain/repositories/theme_repository.dart';
+import 'package:mall/features/splash/domain/usecases/usecases.dart' as Splash;
+import 'package:mall/features/splash/presentation/splash_view_model.dart';
 import 'package:mall/features/theme/data/repositories/theme_repository_impl.dart';
 import 'package:mall/features/theme/data/sources/theme_local_data_source.dart';
 import 'package:mall/features/theme/domain/repositories/theme_repository.dart';
@@ -57,6 +61,7 @@ Future<void> init() async {
       () => SignUpRepositoryImpl(localDataSource: locator()));
   locator.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(localDataSource: locator()));
+  locator.registerLazySingleton<SplashRepository>(() => SplashRepositoryImpl());
 
   // Use case
   locator.registerLazySingleton(() => Theme.GetData(locator()));
@@ -75,6 +80,7 @@ Future<void> init() async {
   locator.registerLazySingleton(() => SignUp.SetObscurePassword(locator()));
   locator.registerLazySingleton(() => Auth.GetData(locator()));
   locator.registerLazySingleton(() => Auth.SetData(locator()));
+  locator.registerLazySingleton(() => Splash.Initialization(locator()));
 
   // View model
   locator.registerFactory(() => ThemeViewModel(
@@ -100,5 +106,8 @@ Future<void> init() async {
   locator.registerFactory(() => AuthViewModel(
         getData: locator(),
         setData: locator(),
+      ));
+  locator.registerFactory(() => SplashViewModel(
+        initialization: locator(),
       ));
 }
