@@ -20,5 +20,3 @@ class StartupRepositoryImpl implements StartupRepository {
     }
   }
 }
-
-class ParseFailure extends Failure {}
