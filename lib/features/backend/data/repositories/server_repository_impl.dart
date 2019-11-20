@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:mall/constant.dart';
 import 'package:mall/core/error/failures.dart';
-import 'package:mall/features/startup/domain/repositories/startup_repository.dart';
+import 'package:mall/features/backend/data/error/failures.dart';
+import 'package:mall/features/backend/domain/repositories/server_repository.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
-class StartupRepositoryImpl implements StartupRepository {
+class ServerRepositoryImpl implements ServerRepository {
   @override
   Future<Either<Failure, void>> initialization() async {
     try {

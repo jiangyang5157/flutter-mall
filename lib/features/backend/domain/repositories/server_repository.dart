@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mall/core/error/failures.dart';
 
-abstract class StartupRepository {
+abstract class ServerRepository {
   Future<Either<Failure, void>> initialization();
 }

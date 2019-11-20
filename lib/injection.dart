@@ -7,6 +7,8 @@ import 'package:mall/features/auth/data/sources/auth_local_data_source.dart';
 import 'package:mall/features/auth/domain/repositories/auth_repository.dart';
 import 'package:mall/features/auth/domain/usecases/usecases.dart' as Auth;
 import 'package:mall/features/auth/presentation/auth_view_model.dart';
+import 'package:mall/features/backend/data/repositories/server_repository_impl.dart';
+import 'package:mall/features/backend/domain/repositories/server_repository.dart';
 import 'package:mall/features/signin/data/repositories/sign_in_repository_impl.dart';
 import 'package:mall/features/signin/data/sources/sign_in_local_data_source.dart';
 import 'package:mall/features/signin/domain/repositories/sign_in_repository.dart';
@@ -17,9 +19,7 @@ import 'package:mall/features/signup/data/sources/sign_up_local_data_source.dart
 import 'package:mall/features/signup/domain/repositories/sign_up_repository.dart';
 import 'package:mall/features/signup/domain/usecases/usecases.dart' as SignUp;
 import 'package:mall/features/signup/presentation/sign_up_view_model.dart';
-import 'package:mall/features/startup/data/repositories/startup_repository_impl.dart';
-import 'package:mall/features/startup/domain/repositories/startup_repository.dart';
-import 'package:mall/features/startup/domain/usecases/usecases.dart' as Startup;
+import 'package:mall/features/backend/domain/usecases/usecases.dart' as Backend;
 import 'package:mall/features/startup/presentation/startup_view_model.dart';
 import 'package:mall/features/theme/data/repositories/theme_repository_impl.dart';
 import 'package:mall/features/theme/data/sources/theme_local_data_source.dart';
@@ -62,7 +62,7 @@ Future<void> init() async {
   locator.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(localDataSource: locator()));
   locator
-      .registerLazySingleton<StartupRepository>(() => StartupRepositoryImpl());
+      .registerLazySingleton<ServerRepository>(() => ServerRepositoryImpl());
 
   // Use case
   locator.registerLazySingleton(() => Theme.GetData(locator()));
@@ -81,7 +81,7 @@ Future<void> init() async {
   locator.registerLazySingleton(() => SignUp.SetObscurePassword(locator()));
   locator.registerLazySingleton(() => Auth.GetData(locator()));
   locator.registerLazySingleton(() => Auth.SetData(locator()));
-  locator.registerLazySingleton(() => Startup.Initialization(locator()));
+  locator.registerLazySingleton(() => Backend.Initialization(locator()));
 
   // View model
   locator.registerFactory(() => ThemeViewModel(
