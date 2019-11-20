@@ -19,10 +19,11 @@ class SplashViewModel extends ChangeNotifier {
   }
 
   Future<bool> initialization() async {
-    final ret = await _initialization.call(NoParams()).then((result) {
+    bool ret;
+    await _initialization.call(NoParams()).then((result) {
       result.fold(
-        (failure) => false,
-        (_) => true,
+        (failure) => ret = false,
+        (_) => ret = true,
       );
     });
     return ret;

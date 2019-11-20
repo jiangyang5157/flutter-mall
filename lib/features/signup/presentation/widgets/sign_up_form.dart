@@ -84,8 +84,6 @@ class _SignUpFormState extends State<SignUpForm> {
     print('#### _SignUpFormState - build');
 
     SignUpViewModel signUpViewModel = Provider.of<SignUpViewModel>(context);
-
-    print('#### ${signUpViewModel.getCurrentData()}');
     _usernameController
         .setTextAndPosition(signUpViewModel.getCurrentData().username);
     _passwordController
