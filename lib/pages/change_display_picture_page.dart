@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mall/constant.dart';
+import 'package:mall/core/constant.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/widgets/three_size_dot.dart';
 

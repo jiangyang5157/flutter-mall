@@ -6,7 +6,7 @@ import 'package:mall/core/util/nav.dart';
 import 'package:mall/core/util/widgets/ext.dart';
 import 'package:mall/features/signup/presentation/sign_up_view_model.dart';
 import 'package:mall/features/signup/presentation/widgets/sign_up_form.dart';
-import 'package:mall/injection.dart';
+import 'package:mall/core/injection.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {

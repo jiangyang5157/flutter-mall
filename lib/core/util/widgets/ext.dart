@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:mall/constant.dart';
+import 'package:mall/core/constant.dart';
 import 'package:mall/core/util/nav.dart';
-import 'package:mall/injection.dart';
+import 'package:mall/core/injection.dart';
 
 void runOnWidgetDidBuild(Function func) {
   WidgetsBinding.instance.addPostFrameCallback((_) {

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
-import 'package:mall/constant.dart';
+import 'package:mall/core/constant.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/validation/password_input_formatter.dart';
 import 'package:mall/core/util/validation/password_validator.dart';

@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:mall/constant.dart';
+import 'package:mall/core/constant.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/features/backend/data/error/failures.dart';
 import 'package:mall/features/backend/domain/repositories/server_repository.dart';

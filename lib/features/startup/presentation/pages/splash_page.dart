@@ -2,7 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:mall/core/util/nav.dart';
 import 'package:mall/features/startup/presentation/startup_view_model.dart';
-import 'package:mall/injection.dart';
+import 'package:mall/core/injection.dart';
 import 'package:mall/models/user_model.dart';
 import 'package:provider/provider.dart';
 
