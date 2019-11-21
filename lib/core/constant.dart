@@ -1,3 +1,7 @@
+/// String
+const String localizedValuesPath = 'res/values/strings.json';
+const String englishLanguageCode = 'en';
+
 /// Backend
 const String parseApplicationName = 'MyApp';
 const String parseApplicationId = 'myAppId';
