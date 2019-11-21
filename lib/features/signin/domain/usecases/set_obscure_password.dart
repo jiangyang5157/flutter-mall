@@ -16,7 +16,9 @@ class SetObscurePassword
   Future<Either<Failure, SignInEntity>> call(
       SetObscurePasswordParams params) async {
     return await repository.setObscurePassword(
-        params.entity, params.obscurePassword);
+      params.entity,
+      params.obscurePassword,
+    );
   }
 }
 

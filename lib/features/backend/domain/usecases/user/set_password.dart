@@ -3,16 +3,16 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
-import 'package:mall/features/signin/domain/entities/sign_in_entity.dart';
-import 'package:mall/features/signin/domain/repositories/sign_in_repository.dart';
+import 'package:mall/features/backend/domain/entities/user_entity.dart';
+import 'package:mall/features/backend/domain/repositories/user_repository.dart';
 
-class SetPassword implements UseCase<SignInEntity, SetPasswordParams> {
-  final SignInRepository repository;
+class SetPassword implements UseCase<UserEntity, SetPasswordParams> {
+  final UserRepository repository;
 
   SetPassword(this.repository);
 
   @override
-  Future<Either<Failure, SignInEntity>> call(SetPasswordParams params) async {
+  Future<Either<Failure, UserEntity>> call(SetPasswordParams params) async {
     return await repository.setPassword(
       params.entity,
       params.password,
@@ -21,7 +21,7 @@ class SetPassword implements UseCase<SignInEntity, SetPasswordParams> {
 }
 
 class SetPasswordParams extends Equatable {
-  final SignInEntity entity;
+  final UserEntity entity;
   final String password;
 
   SetPasswordParams({

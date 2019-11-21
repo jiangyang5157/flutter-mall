@@ -13,8 +13,13 @@ class SetData implements UseCase<SignUpEntity, SetDataParams> {
 
   @override
   Future<Either<Failure, SignUpEntity>> call(SetDataParams params) async {
-    return await repository.setData(params.username, params.password,
-        params.repeatPassword, params.emailAddress, params.obscurePassword);
+    return await repository.setData(
+      params.username,
+      params.password,
+      params.repeatPassword,
+      params.emailAddress,
+      params.obscurePassword,
+    );
   }
 }
 

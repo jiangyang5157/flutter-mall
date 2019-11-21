@@ -13,7 +13,10 @@ class SetUsername implements UseCase<SignInEntity, SetUsernameParams> {
 
   @override
   Future<Either<Failure, SignInEntity>> call(SetUsernameParams params) async {
-    return await repository.setUsername(params.entity, params.username);
+    return await repository.setUsername(
+      params.entity,
+      params.username,
+    );
   }
 }
 

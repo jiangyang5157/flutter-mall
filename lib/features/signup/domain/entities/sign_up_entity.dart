@@ -3,13 +3,9 @@ import 'package:flutter/material.dart';
 
 class SignUpEntity extends Equatable {
   final String username;
-
   final String password;
-
   final String repeatPassword;
-
   final String emailAddress;
-
   final bool obscurePassword;
 
   SignUpEntity({

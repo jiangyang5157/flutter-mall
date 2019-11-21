@@ -3,17 +3,16 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
-import 'package:mall/features/signup/domain/entities/sign_up_entity.dart';
-import 'package:mall/features/signup/domain/repositories/sign_up_repository.dart';
+import 'package:mall/features/backend/domain/entities/user_entity.dart';
+import 'package:mall/features/backend/domain/repositories/user_repository.dart';
 
-class SetEmailAddress implements UseCase<SignUpEntity, SetEmailAddressParams> {
-  final SignUpRepository repository;
+class SetEmailAddress implements UseCase<UserEntity, SetEmailAddressParams> {
+  final UserRepository repository;
 
   SetEmailAddress(this.repository);
 
   @override
-  Future<Either<Failure, SignUpEntity>> call(
-      SetEmailAddressParams params) async {
+  Future<Either<Failure, UserEntity>> call(SetEmailAddressParams params) async {
     return await repository.setEmailAddress(
       params.entity,
       params.emailAddress,
@@ -22,7 +21,7 @@ class SetEmailAddress implements UseCase<SignUpEntity, SetEmailAddressParams> {
 }
 
 class SetEmailAddressParams extends Equatable {
-  final SignUpEntity entity;
+  final UserEntity entity;
   final String emailAddress;
 
   SetEmailAddressParams({

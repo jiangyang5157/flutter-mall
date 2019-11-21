@@ -16,7 +16,9 @@ class SetRepeatPassword
   Future<Either<Failure, SignUpEntity>> call(
       SetRepeatPasswordParams params) async {
     return await repository.setRepeatPassword(
-        params.entity, params.repeatPassword);
+      params.entity,
+      params.repeatPassword,
+    );
   }
 }
 

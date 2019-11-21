@@ -25,82 +25,99 @@ class SignUpRepositoryImpl implements SignUpRepository {
 
   @override
   Future<Either<Failure, SignUpEntity>> setData(
-      String username,
-      String password,
-      String repeatPassword,
-      String emailAddress,
-      bool obscurePassword) async {
+    String username,
+    String password,
+    String repeatPassword,
+    String emailAddress,
+    bool obscurePassword,
+  ) async {
     final entity = SignUpEntity(
-        username: username,
-        password: password,
-        repeatPassword: repeatPassword,
-        emailAddress: emailAddress,
-        obscurePassword: obscurePassword);
+      username: username,
+      password: password,
+      repeatPassword: repeatPassword,
+      emailAddress: emailAddress,
+      obscurePassword: obscurePassword,
+    );
     localDataSource.cacheData(entity);
     return Right(entity);
   }
 
   @override
   Future<Either<Failure, SignUpEntity>> setEmailAddress(
-      SignUpEntity entity, String emailAddress) async {
+    SignUpEntity entity,
+    String emailAddress,
+  ) async {
     final ret = SignUpEntity(
-        username: entity.username,
-        password: entity.password,
-        repeatPassword: entity.repeatPassword,
-        emailAddress: emailAddress,
-        obscurePassword: entity.obscurePassword);
+      username: entity.username,
+      password: entity.password,
+      repeatPassword: entity.repeatPassword,
+      emailAddress: emailAddress,
+      obscurePassword: entity.obscurePassword,
+    );
     localDataSource.cacheData(ret);
     return Right(ret);
   }
 
   @override
   Future<Either<Failure, SignUpEntity>> setObscurePassword(
-      SignUpEntity entity, bool obscurePassword) async {
+    SignUpEntity entity,
+    bool obscurePassword,
+  ) async {
     final ret = SignUpEntity(
-        username: entity.username,
-        password: entity.password,
-        repeatPassword: entity.repeatPassword,
-        emailAddress: entity.emailAddress,
-        obscurePassword: obscurePassword);
+      username: entity.username,
+      password: entity.password,
+      repeatPassword: entity.repeatPassword,
+      emailAddress: entity.emailAddress,
+      obscurePassword: obscurePassword,
+    );
     localDataSource.cacheData(ret);
     return Right(ret);
   }
 
   @override
   Future<Either<Failure, SignUpEntity>> setPassword(
-      SignUpEntity entity, String password) async {
+    SignUpEntity entity,
+    String password,
+  ) async {
     final ret = SignUpEntity(
-        username: entity.username,
-        password: password,
-        repeatPassword: entity.repeatPassword,
-        emailAddress: entity.emailAddress,
-        obscurePassword: entity.obscurePassword);
+      username: entity.username,
+      password: password,
+      repeatPassword: entity.repeatPassword,
+      emailAddress: entity.emailAddress,
+      obscurePassword: entity.obscurePassword,
+    );
     localDataSource.cacheData(ret);
     return Right(ret);
   }
 
   @override
   Future<Either<Failure, SignUpEntity>> setRepeatPassword(
-      SignUpEntity entity, String repeatPassword) async {
+    SignUpEntity entity,
+    String repeatPassword,
+  ) async {
     final ret = SignUpEntity(
-        username: entity.username,
-        password: entity.password,
-        repeatPassword: repeatPassword,
-        emailAddress: entity.emailAddress,
-        obscurePassword: entity.obscurePassword);
+      username: entity.username,
+      password: entity.password,
+      repeatPassword: repeatPassword,
+      emailAddress: entity.emailAddress,
+      obscurePassword: entity.obscurePassword,
+    );
     localDataSource.cacheData(ret);
     return Right(ret);
   }
 
   @override
   Future<Either<Failure, SignUpEntity>> setUsername(
-      SignUpEntity entity, String username) async {
+    SignUpEntity entity,
+    String username,
+  ) async {
     final ret = SignUpEntity(
-        username: username,
-        password: entity.password,
-        repeatPassword: entity.repeatPassword,
-        emailAddress: entity.emailAddress,
-        obscurePassword: entity.obscurePassword);
+      username: username,
+      password: entity.password,
+      repeatPassword: entity.repeatPassword,
+      emailAddress: entity.emailAddress,
+      obscurePassword: entity.obscurePassword,
+    );
     localDataSource.cacheData(ret);
     return Right(ret);
   }

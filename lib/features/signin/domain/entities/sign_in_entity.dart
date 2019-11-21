@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 
 class SignInEntity extends Equatable {
   final String username;
-
   final String password;
-
   final bool obscurePassword;
 
   SignInEntity({

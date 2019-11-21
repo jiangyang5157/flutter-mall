@@ -6,14 +6,23 @@ abstract class SignInRepository {
   Future<Either<Failure, SignInEntity>> getData();
 
   Future<Either<Failure, SignInEntity>> setData(
-      String username, String password, bool obscurePassword);
+    String username,
+    String password,
+    bool obscurePassword,
+  );
 
   Future<Either<Failure, SignInEntity>> setUsername(
-      SignInEntity entity, String username);
+    SignInEntity entity,
+    String username,
+  );
 
   Future<Either<Failure, SignInEntity>> setPassword(
-      SignInEntity entity, String password);
+    SignInEntity entity,
+    String password,
+  );
 
   Future<Either<Failure, SignInEntity>> setObscurePassword(
-      SignInEntity entity, bool obscurePassword);
+    SignInEntity entity,
+    bool obscurePassword,
+  );
 }

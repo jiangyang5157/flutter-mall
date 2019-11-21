@@ -9,12 +9,15 @@ class ServerRepositoryImpl implements ServerRepository {
   @override
   Future<Either<Failure, void>> initialization() async {
     try {
-      await Parse().initialize(parseApplicationId, parseServerUrl,
-          appName: parseApplicationName,
-          masterKey: parseMasterKey,
-          autoSendSessionId: true,
-          coreStore: await CoreStoreSembastImp.getInstance(),
-          debug: true);
+      await Parse().initialize(
+        parseApplicationId,
+        parseServerUrl,
+        appName: parseApplicationName,
+        masterKey: parseMasterKey,
+        autoSendSessionId: true,
+        coreStore: await CoreStoreSembastImp.getInstance(),
+        debug: true,
+      );
       return Right(null);
     } catch (error) {
       return Left(ParseFailure());

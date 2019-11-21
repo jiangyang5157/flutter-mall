@@ -49,11 +49,12 @@ class SignUpViewModel extends ChangeNotifier {
     if (_entity == null) {
       // returns default first
       final defaultEntity = SignUpEntity(
-          username: '',
-          password: '',
-          repeatPassword: '',
-          emailAddress: '',
-          obscurePassword: true);
+        username: '',
+        password: '',
+        repeatPassword: '',
+        emailAddress: '',
+        obscurePassword: true,
+      );
       _entity = defaultEntity;
 
       _getData.call(NoParams()).then((result) {
@@ -61,12 +62,13 @@ class SignUpViewModel extends ChangeNotifier {
           (failure) {
             // set default if non-exist
             setCurrentData(
-                defaultEntity.username,
-                defaultEntity.password,
-                defaultEntity.repeatPassword,
-                defaultEntity.emailAddress,
-                defaultEntity.obscurePassword,
-                notify: false);
+              defaultEntity.username,
+              defaultEntity.password,
+              defaultEntity.repeatPassword,
+              defaultEntity.emailAddress,
+              defaultEntity.obscurePassword,
+              notify: false,
+            );
           },
           (entity) {
             if (_entity != entity) {
