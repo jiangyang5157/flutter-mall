@@ -28,7 +28,7 @@ class UserEntity extends Equatable {
     @required this.password,
     @required this.emailAddress,
     @required this.displayImagePath,
-  }) : super([type, name, password, emailAddress, displayImagePath,]);
+  }) : super([type, name, password, emailAddress, displayImagePath]);
 
   @override
   String toString() {
