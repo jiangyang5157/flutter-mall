@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:mall/core/error/exceptions.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/network/network_info.dart';
 import 'package:mall/features/backend/data/sources/user_local_data_source.dart';
@@ -20,9 +21,23 @@ class UserRepositoryImpl implements UserRepository {
   });
 
   @override
-  Future<Either<Failure, UserEntity>> getData() {
-    // TODO: implement getData
-    return null;
+  Future<Either<Failure, UserEntity>> getData() async {
+    try {
+      final local = await localDataSource.getLastData();
+      return Right(local);
+    } on CacheException {
+      if (await networkInfo.isConnected) {
+        try {
+          final remote = await remoteDataSource.getLastData();
+          localDataSource.cacheData(remote);
+          return Right(remote);
+        } on ServerException {
+          return Left(ServerFailure());
+        }
+      } else {
+        return Left(ServerFailure());
+      }
+    }
   }
 
   @override
