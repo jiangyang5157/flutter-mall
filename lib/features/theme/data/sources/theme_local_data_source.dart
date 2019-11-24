@@ -7,7 +7,7 @@ abstract class ThemeLocalDataSource {
   /// Throws [CacheException] if no cached data is present.
   Future<ThemeEntity> getLastData();
 
-  /// Throws [CacheException] if failed to cache the data.
+  /// Throws [CacheException]
   Future<void> cacheData(ThemeEntity entity);
 }
 

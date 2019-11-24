@@ -7,7 +7,7 @@ class AuthViewModel extends ChangeNotifier {
   final Auth.GetData _getData;
   final Auth.SetData _setData;
 
-  AuthEntity _entity;
+  AuthEntity _currentAuthEntity;
 
   AuthViewModel({
     @required Auth.GetData getData,
@@ -26,10 +26,10 @@ class AuthViewModel extends ChangeNotifier {
   }
 
   AuthEntity getCurrentData() {
-    if (_entity == null) {
+    if (_currentAuthEntity == null) {
       // returns default first
       final defaultEntity = AuthEntity(state: AuthState.SignIn);
-      _entity = defaultEntity;
+      _currentAuthEntity = defaultEntity;
 
       _getData.call(NoParams()).then((result) {
         result.fold(
@@ -38,8 +38,8 @@ class AuthViewModel extends ChangeNotifier {
             setCurrentData(defaultEntity.state, notify: false);
           },
           (entity) {
-            if (_entity != entity) {
-              _entity = entity;
+            if (_currentAuthEntity != entity) {
+              _currentAuthEntity = entity;
 
               // notify only if the value is different from the default
               notifyListeners();
@@ -48,14 +48,14 @@ class AuthViewModel extends ChangeNotifier {
         );
       });
     }
-    return _entity;
+    return _currentAuthEntity;
   }
 
   Future<void> setCurrentData(AuthState state, {@required bool notify}) async {
     await _setData.call(Auth.SetDataParams(state: state)).then((result) {
       result.fold(
         (failure) => {},
-        (entity) => _entity = entity,
+            (entity) => _currentAuthEntity = entity,
       );
     });
     if (notify) {

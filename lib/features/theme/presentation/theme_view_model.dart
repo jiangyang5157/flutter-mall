@@ -7,7 +7,7 @@ class ThemeViewModel extends ChangeNotifier {
   final Theme.GetData _getData;
   final Theme.SetData _setData;
 
-  ThemeEntity _entity;
+  ThemeEntity _currentThemeEntity;
 
   ThemeViewModel({
     @required Theme.GetData getData,
@@ -26,10 +26,10 @@ class ThemeViewModel extends ChangeNotifier {
   }
 
   ThemeEntity getCurrentData() {
-    if (_entity == null) {
+    if (_currentThemeEntity == null) {
       // returns default first
       final defaultEntity = ThemeEntity(type: ThemeType.Light);
-      _entity = defaultEntity;
+      _currentThemeEntity = defaultEntity;
 
       _getData.call(NoParams()).then((result) {
         result.fold(
@@ -38,8 +38,8 @@ class ThemeViewModel extends ChangeNotifier {
             setCurrentData(defaultEntity.type, notify: false);
           },
           (entity) {
-            if (_entity != entity) {
-              _entity = entity;
+            if (_currentThemeEntity != entity) {
+              _currentThemeEntity = entity;
 
               // notify only if the value is different from the default
               notifyListeners();
@@ -48,14 +48,14 @@ class ThemeViewModel extends ChangeNotifier {
         );
       });
     }
-    return _entity;
+    return _currentThemeEntity;
   }
 
   Future<void> setCurrentData(ThemeType type, {@required bool notify}) async {
     await _setData.call(Theme.SetDataParams(type: type)).then((result) {
       result.fold(
         (failure) => {},
-        (entity) => _entity = entity,
+            (entity) => _currentThemeEntity = entity,
       );
     });
     if (notify) {

@@ -8,8 +8,16 @@ import 'package:mall/features/auth/domain/repositories/auth_repository.dart';
 import 'package:mall/features/auth/domain/usecases/usecases.dart' as Auth;
 import 'package:mall/features/auth/presentation/auth_view_model.dart';
 import 'package:mall/features/backend/data/repositories/server_repository_impl.dart';
+import 'package:mall/features/backend/data/repositories/user_repository_impl.dart';
+import 'package:mall/features/backend/data/sources/user_local_data_source.dart';
+import 'package:mall/features/backend/data/sources/user_remote_data_source.dart';
 import 'package:mall/features/backend/domain/repositories/server_repository.dart';
-import 'package:mall/features/backend/domain/usecases/server/usecases.dart' as Server;
+import 'package:mall/features/backend/domain/repositories/user_repository.dart';
+import 'package:mall/features/backend/domain/usecases/server/usecases.dart'
+as Server;
+import 'package:mall/features/backend/domain/usecases/user/usecases.dart'
+as User;
+import 'package:mall/features/backend/presentation/user_view_model.dart';
 import 'package:mall/features/signin/data/repositories/sign_in_repository_impl.dart';
 import 'package:mall/features/signin/data/sources/sign_in_local_data_source.dart';
 import 'package:mall/features/signin/domain/repositories/sign_in_repository.dart';
@@ -55,6 +63,12 @@ Future<void> init() async {
   locator.registerLazySingleton<AuthLocalDataSource>(
     () => AuthLocalDataSourceImpl(),
   );
+  locator.registerLazySingleton<UserLocalDataSource>(
+        () => UserLocalDataSourceImpl(),
+  );
+  locator.registerLazySingleton<UserRemoteDataSource>(
+        () => UserRemoteDataSourceImpl(),
+  );
 
   /// Repositories
   locator.registerLazySingleton<ThemeRepository>(
@@ -71,6 +85,9 @@ Future<void> init() async {
   );
   locator.registerLazySingleton<ServerRepository>(
     () => ServerRepositoryImpl(),
+  );
+  locator.registerLazySingleton<UserRepository>(
+        () => UserRepositoryImpl(),
   );
 
   /// View models
@@ -101,6 +118,21 @@ Future<void> init() async {
   locator.registerFactory(() => StartupViewModel(
         initialization: locator(),
       ));
+  locator.registerFactory(() =>
+      UserViewModel(
+        getData: locator(),
+        setDisplayImagePath: locator(),
+        setEmailAddress: locator(),
+        setName: locator(),
+        setPassword: locator(),
+        setType: locator(),
+        destroy: locator(),
+        save: locator(),
+        signIn: locator(),
+        signInAnonymous: locator(),
+        signOut: locator(),
+        signUp: locator(),
+      ));
 
   /// Use cases
   locator.registerLazySingleton(() => Theme.GetData(locator()));
@@ -120,4 +152,16 @@ Future<void> init() async {
   locator.registerLazySingleton(() => Auth.GetData(locator()));
   locator.registerLazySingleton(() => Auth.SetData(locator()));
   locator.registerLazySingleton(() => Server.Initialization(locator()));
+  locator.registerLazySingleton(() => User.GetData(locator()));
+  locator.registerLazySingleton(() => User.SetDisplayImagePath(locator()));
+  locator.registerLazySingleton(() => User.SetEmailAddress(locator()));
+  locator.registerLazySingleton(() => User.SetName(locator()));
+  locator.registerLazySingleton(() => User.SetPassword(locator()));
+  locator.registerLazySingleton(() => User.SetType(locator()));
+  locator.registerLazySingleton(() => User.Destroy(locator()));
+  locator.registerLazySingleton(() => User.Save(locator()));
+  locator.registerLazySingleton(() => User.SignIn(locator()));
+  locator.registerLazySingleton(() => User.SignInAnonymous(locator()));
+  locator.registerLazySingleton(() => User.SignOut(locator()));
+  locator.registerLazySingleton(() => User.SignUp(locator()));
 }

@@ -30,7 +30,6 @@ class UserRepositoryImpl implements UserRepository {
       if (await networkInfo.isConnected) {
         try {
           final remote = await remoteDataSource.getLastData();
-          localDataSource.cacheData(remote);
           return Right(remote);
         } on ServerException {
           return Left(ServerFailure());
@@ -48,8 +47,12 @@ class UserRepositoryImpl implements UserRepository {
   ) async {
     UserModel model = entity as UserModel;
     model.displayImagePath = displayImagePath;
-    localDataSource.cacheData(model);
-    return Right(model);
+    try {
+      await remoteDataSource.save(model);
+      return Right(model);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
   }
 
   @override
@@ -59,8 +62,12 @@ class UserRepositoryImpl implements UserRepository {
   ) async {
     UserModel model = entity as UserModel;
     model.emailAddress = emailAddress;
-    localDataSource.cacheData(model);
-    return Right(model);
+    try {
+      await remoteDataSource.save(model);
+      return Right(model);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
   }
 
   @override
@@ -68,8 +75,12 @@ class UserRepositoryImpl implements UserRepository {
       UserEntity entity, String password) async {
     UserModel model = entity as UserModel;
     model.password = password;
-    localDataSource.cacheData(model);
-    return Right(model);
+    try {
+      await remoteDataSource.save(model);
+      return Right(model);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
   }
 
   @override
@@ -79,8 +90,12 @@ class UserRepositoryImpl implements UserRepository {
   ) async {
     UserModel model = entity as UserModel;
     model.type = type;
-    localDataSource.cacheData(model);
-    return Right(model);
+    try {
+      await remoteDataSource.save(model);
+      return Right(model);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
   }
 
   @override
@@ -90,7 +105,77 @@ class UserRepositoryImpl implements UserRepository {
   ) async {
     UserModel model = entity as UserModel;
     model.name = name;
-    localDataSource.cacheData(model);
-    return Right(model);
+    try {
+      await remoteDataSource.save(model);
+      return Right(model);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> destroy(UserEntity entity) async {
+    UserModel model = entity as UserModel;
+    try {
+      await remoteDataSource.destroy(model);
+      return Right(model);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> save(UserEntity entity) async {
+    UserModel model = entity as UserModel;
+    try {
+      await remoteDataSource.save(model);
+      return Right(model);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> signIn(UserEntity entity) async {
+    UserModel model = entity as UserModel;
+    try {
+      await remoteDataSource.signIn(model);
+      return Right(model);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> signInAnonymous(UserEntity entity) async {
+    UserModel model = entity as UserModel;
+    try {
+      await remoteDataSource.signInAnonymous(model);
+      return Right(model);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> signOut(UserEntity entity) async {
+    UserModel model = entity as UserModel;
+    try {
+      await remoteDataSource.signOut(model);
+      return Right(model);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> signUp(UserEntity entity) async {
+    UserModel model = entity as UserModel;
+    try {
+      await remoteDataSource.signUp(model);
+      return Right(model);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
   }
 }

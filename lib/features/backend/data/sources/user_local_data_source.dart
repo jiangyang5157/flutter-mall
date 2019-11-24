@@ -6,13 +6,17 @@ abstract class UserLocalDataSource {
   /// Throws [CacheException] if no cached data is present.
   Future<UserModel> getLastData();
 
+  /// Throws [CacheException]
   Future<void> cacheData(UserModel model);
 }
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
   @override
-  Future<void> cacheData(UserModel model) {
-    return model.user.save();
+  Future<void> cacheData(UserModel model) async {
+    bool result = await model.user.pin();
+    if (!result) {
+      throw CacheException();
+    }
   }
 
   @override

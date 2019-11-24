@@ -1,5 +1,12 @@
+export 'destroy.dart';
 export 'get_data.dart';
+export 'save.dart';
 export 'set_display_image_path.dart';
 export 'set_email_address.dart';
-export 'set_password.dart';
 export 'set_name.dart';
+export 'set_password.dart';
+export 'set_type.dart';
+export 'sign_in.dart';
+export 'sign_in_anonymous.dart';
+export 'sign_out.dart';
+export 'sign_up.dart';

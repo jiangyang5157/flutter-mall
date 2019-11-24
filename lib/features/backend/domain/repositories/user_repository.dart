@@ -29,4 +29,16 @@ abstract class UserRepository {
     UserEntity entity,
     String displayImagePath,
   );
+
+  Future<Either<Failure, UserEntity>> destroy(UserEntity entity);
+
+  Future<Either<Failure, UserEntity>> save(UserEntity entity);
+
+  Future<Either<Failure, UserEntity>> signIn(UserEntity entity);
+
+  Future<Either<Failure, UserEntity>> signInAnonymous(UserEntity entity);
+
+  Future<Either<Failure, UserEntity>> signOut(UserEntity entity);
+
+  Future<Either<Failure, UserEntity>> signUp(UserEntity entity);
 }
