@@ -14,9 +14,9 @@ import 'package:mall/features/backend/data/sources/user_remote_data_source.dart'
 import 'package:mall/features/backend/domain/repositories/server_repository.dart';
 import 'package:mall/features/backend/domain/repositories/user_repository.dart';
 import 'package:mall/features/backend/domain/usecases/server/usecases.dart'
-as Server;
+    as Server;
 import 'package:mall/features/backend/domain/usecases/user/usecases.dart'
-as User;
+    as User;
 import 'package:mall/features/backend/presentation/user_view_model.dart';
 import 'package:mall/features/signin/data/repositories/sign_in_repository_impl.dart';
 import 'package:mall/features/signin/data/sources/sign_in_local_data_source.dart';
@@ -64,10 +64,10 @@ Future<void> init() async {
     () => AuthLocalDataSourceImpl(),
   );
   locator.registerLazySingleton<UserLocalDataSource>(
-        () => UserLocalDataSourceImpl(),
+    () => UserLocalDataSourceImpl(),
   );
   locator.registerLazySingleton<UserRemoteDataSource>(
-        () => UserRemoteDataSourceImpl(),
+    () => UserRemoteDataSourceImpl(),
   );
 
   /// Repositories
@@ -84,10 +84,14 @@ Future<void> init() async {
     () => AuthRepositoryImpl(localDataSource: locator()),
   );
   locator.registerLazySingleton<ServerRepository>(
-    () => ServerRepositoryImpl(),
+    () => ServerRepositoryImpl(networkInfo: locator()),
   );
   locator.registerLazySingleton<UserRepository>(
-        () => UserRepositoryImpl(),
+    () => UserRepositoryImpl(
+      localDataSource: locator(),
+      remoteDataSource: locator(),
+      networkInfo: locator(),
+    ),
   );
 
   /// View models
@@ -118,8 +122,7 @@ Future<void> init() async {
   locator.registerFactory(() => StartupViewModel(
         initialization: locator(),
       ));
-  locator.registerFactory(() =>
-      UserViewModel(
+  locator.registerFactory(() => UserViewModel(
         getData: locator(),
         setDisplayImagePath: locator(),
         setEmailAddress: locator(),
