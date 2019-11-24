@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mall/core/error/exceptions.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/network/network_info.dart';
+import 'package:mall/features/backend/data/models/user_model.dart';
 import 'package:mall/features/backend/data/sources/user_local_data_source.dart';
 import 'package:mall/features/backend/data/sources/user_remote_data_source.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
@@ -44,42 +45,52 @@ class UserRepositoryImpl implements UserRepository {
   Future<Either<Failure, UserEntity>> setDisplayImagePath(
     UserEntity entity,
     String displayImagePath,
-  ) {
-    // TODO: implement setDisplayImagePath
-    return null;
+  ) async {
+    UserModel model = entity as UserModel;
+    model.displayImagePath = displayImagePath;
+    localDataSource.cacheData(model);
+    return Right(model);
   }
 
   @override
   Future<Either<Failure, UserEntity>> setEmailAddress(
     UserEntity entity,
     String emailAddress,
-  ) {
-    // TODO: implement setEmailAddress
-    return null;
+  ) async {
+    UserModel model = entity as UserModel;
+    model.emailAddress = emailAddress;
+    localDataSource.cacheData(model);
+    return Right(model);
   }
 
   @override
   Future<Either<Failure, UserEntity>> setPassword(
-      UserEntity entity, String password) {
-    // TODO: implement setPassword
-    return null;
+      UserEntity entity, String password) async {
+    UserModel model = entity as UserModel;
+    model.password = password;
+    localDataSource.cacheData(model);
+    return Right(model);
   }
 
   @override
-  Future<Either<Failure, UserEntity>> setUserType(
+  Future<Either<Failure, UserEntity>> setType(
     UserEntity entity,
     UserType type,
-  ) {
-    // TODO: implement setUserType
-    return null;
+  ) async {
+    UserModel model = entity as UserModel;
+    model.type = type;
+    localDataSource.cacheData(model);
+    return Right(model);
   }
 
   @override
-  Future<Either<Failure, UserEntity>> setUsername(
+  Future<Either<Failure, UserEntity>> setName(
     UserEntity entity,
-    String username,
-  ) {
-    // TODO: implement setUsername
-    return null;
+    String name,
+  ) async {
+    UserModel model = entity as UserModel;
+    model.name = name;
+    localDataSource.cacheData(model);
+    return Right(model);
   }
 }

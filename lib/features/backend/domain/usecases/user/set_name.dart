@@ -6,26 +6,26 @@ import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
 import 'package:mall/features/backend/domain/repositories/user_repository.dart';
 
-class SetUsername implements UseCase<UserEntity, SetUsernameParams> {
+class SetName implements UseCase<UserEntity, SetNameParams> {
   final UserRepository repository;
 
-  SetUsername(this.repository);
+  SetName(this.repository);
 
   @override
-  Future<Either<Failure, UserEntity>> call(SetUsernameParams params) async {
-    return await repository.setUsername(
+  Future<Either<Failure, UserEntity>> call(SetNameParams params) async {
+    return await repository.setName(
       params.entity,
-      params.username,
+      params.name,
     );
   }
 }
 
-class SetUsernameParams extends Equatable {
+class SetNameParams extends Equatable {
   final UserEntity entity;
-  final String username;
+  final String name;
 
-  SetUsernameParams({
+  SetNameParams({
     @required this.entity,
-    @required this.username,
-  }) : super([entity, username]);
+    @required this.name,
+  }) : super([entity, name]);
 }
