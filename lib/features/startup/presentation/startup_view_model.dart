@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mall/core/usecase/usecase.dart';
-import 'package:mall/features/backend/domain/usecases/usecases.dart' as Backend;
+import 'package:mall/features/backend/domain/usecases/server/usecases.dart' as Server;
 
 class StartupViewModel extends ChangeNotifier {
-  final Backend.Initialization _initialization;
+  final Server.Initialization _initialization;
 
   StartupViewModel({
-    @required Backend.Initialization initialization,
+    @required Server.Initialization initialization,
   })  : assert(initialization != null),
         _initialization = initialization {
     print('#### StartupViewModel - constructor');

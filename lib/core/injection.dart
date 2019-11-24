@@ -9,7 +9,7 @@ import 'package:mall/features/auth/domain/usecases/usecases.dart' as Auth;
 import 'package:mall/features/auth/presentation/auth_view_model.dart';
 import 'package:mall/features/backend/data/repositories/server_repository_impl.dart';
 import 'package:mall/features/backend/domain/repositories/server_repository.dart';
-import 'package:mall/features/backend/domain/usecases/usecases.dart' as Backend;
+import 'package:mall/features/backend/domain/usecases/server/usecases.dart' as Server;
 import 'package:mall/features/signin/data/repositories/sign_in_repository_impl.dart';
 import 'package:mall/features/signin/data/sources/sign_in_local_data_source.dart';
 import 'package:mall/features/signin/domain/repositories/sign_in_repository.dart';
@@ -119,5 +119,5 @@ Future<void> init() async {
   locator.registerLazySingleton(() => SignUp.SetObscurePassword(locator()));
   locator.registerLazySingleton(() => Auth.GetData(locator()));
   locator.registerLazySingleton(() => Auth.SetData(locator()));
-  locator.registerLazySingleton(() => Backend.Initialization(locator()));
+  locator.registerLazySingleton(() => Server.Initialization(locator()));
 }
