@@ -41,18 +41,6 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> setData(
-    UserType type,
-    String username,
-    String password,
-    String emailAddress,
-    String displayImagePath,
-  ) {
-    // TODO: implement setData
-    return null;
-  }
-
-  @override
   Future<Either<Failure, UserEntity>> setDisplayImagePath(
     UserEntity entity,
     String displayImagePath,

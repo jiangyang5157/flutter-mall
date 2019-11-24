@@ -5,14 +5,6 @@ import 'package:mall/features/backend/domain/entities/user_entity.dart';
 abstract class UserRepository {
   Future<Either<Failure, UserEntity>> getData();
 
-  Future<Either<Failure, UserEntity>> setData(
-    UserType type,
-    String username,
-    String password,
-    String emailAddress,
-    String displayImagePath,
-  );
-
   Future<Either<Failure, UserEntity>> setUserType(
     UserEntity entity,
     UserType type,
