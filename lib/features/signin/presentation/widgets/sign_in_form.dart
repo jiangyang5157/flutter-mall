@@ -149,8 +149,14 @@ class _SignInFormState extends State<SignInForm> {
                       UserViewModel userViewModel =
                           Provider.of<UserViewModel>(context);
                       final failure = await userViewModel.signIn(
-                          username: _usernameController.text,
-                          password: _passwordController.text);
+                        username: _usernameController.text,
+                        password: _passwordController.text,
+                      );
+                      if (failure == null) {
+                        await userViewModel.save();
+                        // TODO
+//                        await userViewModel.syncCurrentData();
+                      }
                       return () {
                         _passwordController.clear();
                         widget.onSubmitted(failure);

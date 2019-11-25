@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:mall/core/constant.dart';
+import 'package:mall/core/injection.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/nav.dart';
 import 'package:mall/core/util/validation/email_address_input_formatter.dart';
@@ -10,9 +11,8 @@ import 'package:mall/core/util/validation/email_address_validator.dart';
 import 'package:mall/core/util/widgets/ext.dart';
 import 'package:mall/core/util/widgets/text_editing_controller_workaround.dart';
 import 'package:mall/core/util/widgets/three_size_dot.dart';
-import 'package:mall/core/injection.dart';
-import 'package:mall/models/user_model.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:mall/features/backend/data/models/user_model.dart';
+import 'package:mall/features/backend/presentation/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ChangeEmailPage extends StatefulWidget {
@@ -47,7 +47,8 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
   Widget build(BuildContext context) {
     print('#### _ChangeEmailPageState - build');
 
-    UserModel userModel = Provider.of<UserModel>(context);
+    UserViewModel userViewModel = Provider.of<UserViewModel>(context);
+    UserModel userModel = userViewModel.getCurrentData();
     if (_emailAddressBefore == null) {
       _emailAddressBefore = userModel.emailAddress;
       _emailAddressController.setTextAndPosition(_emailAddressBefore);
@@ -106,21 +107,22 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
                             onPressed: () async {
                               FocusScope.of(context).unfocus();
                               if (_formKey.currentState.validate()) {
-                                userModel.emailAddress =
-                                    _emailAddressController.text;
-                                ParseResponse response = await userModel.save();
-                                if (!response.success) {
-                                  userModel.emailAddress = _emailAddressBefore;
+                                await userViewModel.setEmailAddress(
+                                    _emailAddressController.text);
+                                final failure = await userViewModel.save();
+                                if (failure != null) {
+                                  userViewModel
+                                      .setEmailAddress(_emailAddressBefore);
                                 }
                                 return () {
-                                  if (response.success) {
+                                  if (failure == null) {
                                     locator<Nav>().router.navigateTo(
                                         context, 'HomePage',
                                         clearStack: true,
                                         transition: TransitionType.fadeIn);
                                   } else {
                                     showSimpleSnackBar(Scaffold.of(context),
-                                        response.error.message);
+                                        failure.toString());
                                   }
                                 };
                               } else {

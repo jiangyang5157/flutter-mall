@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:mall/core/constant.dart';
+import 'package:mall/core/injection.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/nav.dart';
 import 'package:mall/core/util/validation/password_input_formatter.dart';
@@ -11,9 +12,8 @@ import 'package:mall/core/util/validation/repeat_password_validator.dart';
 import 'package:mall/core/util/widgets/ext.dart';
 import 'package:mall/core/util/widgets/text_editing_controller_workaround.dart';
 import 'package:mall/core/util/widgets/three_size_dot.dart';
-import 'package:mall/core/injection.dart';
-import 'package:mall/models/user_model.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:mall/features/backend/data/models/user_model.dart';
+import 'package:mall/features/backend/presentation/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ChangePasswordPage extends StatefulWidget {
@@ -56,7 +56,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   Widget build(BuildContext context) {
     print('#### _ChangePasswordPageState - build');
 
-    UserModel userModel = Provider.of<UserModel>(context);
+    UserViewModel userViewModel = Provider.of<UserViewModel>(context);
+    UserModel userModel = userViewModel.getCurrentData();
     if (_passwordBefore == null) {
       _passwordBefore = userModel.password;
     }
@@ -155,23 +156,24 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             onPressed: () async {
                               FocusScope.of(context).unfocus();
                               if (_formKey.currentState.validate()) {
-                                userModel.password = _passwordController.text;
-                                ParseResponse response = await userModel.save();
-                                if (!response.success) {
-                                  userModel.password = _passwordBefore;
+                                await userViewModel
+                                    .setPassword(_passwordController.text);
+                                final failure = await userViewModel.save();
+                                if (failure != null) {
+                                  userViewModel.setPassword(_passwordBefore);
                                 }
                                 return () {
                                   _passwordController.clear();
                                   _repeatPasswordController.clear();
 
-                                  if (response.success) {
+                                  if (failure == null) {
                                     locator<Nav>().router.navigateTo(
                                         context, 'HomePage',
                                         clearStack: true,
                                         transition: TransitionType.fadeIn);
                                   } else {
                                     showSimpleSnackBar(Scaffold.of(context),
-                                        response.error.message);
+                                        failure.toString());
                                   }
                                 };
                               } else {

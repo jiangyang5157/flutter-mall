@@ -5,9 +5,11 @@ import 'package:mall/core/constant.dart';
 import 'package:mall/core/injection.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/nav.dart';
+import 'package:mall/features/backend/data/models/user_model.dart';
+import 'package:mall/features/backend/domain/entities/user_entity.dart';
+import 'package:mall/features/backend/presentation/user_view_model.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 import 'package:mall/features/theme/presentation/theme_view_model.dart';
-import 'package:mall/models/user_model.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -48,7 +50,8 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   List<Widget> _buildSettingsList(BuildContext context) {
-    UserModel userModel = Provider.of<UserModel>(context);
+    UserViewModel userViewModel = Provider.of<UserViewModel>(context);
+    UserModel userModel = userViewModel.getCurrentData();
     var ret = List<Widget>();
     ret.addAll(_buildProfileList(context, userModel.type));
     ret.add(Divider());
@@ -74,7 +77,7 @@ class _SettingsPageState extends State<SettingsPage> {
       ListTile(
         title: Text(string(context, 'label_sign_out')),
         onTap: () async {
-          await userModel.signOut();
+          await userViewModel.signOut();
           locator<Nav>().router.navigateTo(context, 'AuthPage',
               clearStack: true, transition: TransitionType.fadeIn);
         },
@@ -128,9 +131,9 @@ class _SettingsPageState extends State<SettingsPage> {
     return ret;
   }
 
-  List<Widget> _buildProfileList(BuildContext context, UserType userType) {
+  List<Widget> _buildProfileList(BuildContext context, UserType type) {
     var ret = List<Widget>();
-    if (userType == UserType.Anonymous) {
+    if (type == UserType.Anonymous) {
       ret.add(
         ListTile(
           title: Text(string(context, 'title_sign_up_page')),
