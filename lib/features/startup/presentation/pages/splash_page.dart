@@ -28,7 +28,8 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _init() async {
-    final failure = await locator<StartupViewModel>().initialization();
+    StartupViewModel startupViewModel = locator<StartupViewModel>();
+    final failure = await startupViewModel.initialization();
     if (failure == null) {
       UserViewModel userViewModel = Provider.of<UserViewModel>(context);
       await userViewModel.syncCurrentData();

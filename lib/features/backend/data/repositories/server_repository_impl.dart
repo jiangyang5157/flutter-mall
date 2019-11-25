@@ -23,8 +23,10 @@ class ServerRepositoryImpl implements ServerRepository {
           appName: parseApplicationName,
           masterKey: parseMasterKey,
           autoSendSessionId: true,
+          // Required for authentication and ACL
           coreStore: await CoreStoreSembastImp.getInstance(),
-          debug: true,
+          // Local data storage method. Will use SharedPreferences instead of Sembast as an internal DB
+          debug: true, // When enabled, prints logs to console
         );
         return Right(null);
       } catch (error) {
