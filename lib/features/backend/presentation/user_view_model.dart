@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mall/core/usecase/usecase.dart';
+import 'package:mall/core/error/failures.dart';
 import 'package:mall/features/backend/data/models/user_model.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
 import 'package:mall/features/backend/domain/usecases/user/usecases.dart'
-as User;
+    as User;
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 class UserViewModel extends ChangeNotifier {
@@ -20,7 +20,7 @@ class UserViewModel extends ChangeNotifier {
   final User.SignOut _signOut;
   final User.SignUp _signUp;
 
-  UserModel _currentUserModel;
+  UserModel _currentEntity;
 
   UserViewModel({
     @required User.GetData getData,
@@ -35,8 +35,7 @@ class UserViewModel extends ChangeNotifier {
     @required User.SignInAnonymous signInAnonymous,
     @required User.SignOut signOut,
     @required User.SignUp signUp,
-  })
-      : assert(getData != null),
+  })  : assert(getData != null),
         assert(setDisplayImagePath != null),
         assert(setEmailAddress != null),
         assert(setName != null),
@@ -69,137 +68,168 @@ class UserViewModel extends ChangeNotifier {
     print('#### UserViewModel - dispose');
   }
 
-  Future<UserModel> getCurrentData() async {
-    if (_currentUserModel == null) {
-      await _getData.call(NoParams()).then((result) {
-        result.fold(
-              (failure) => {},
-              (entity) => _currentUserModel = entity,
-        );
-      });
-    }
-    return _currentUserModel;
+  UserModel getCurrentData() {
+    return _currentEntity;
   }
 
-  Future<void> setDisplayImagePath(String displayImagePath, {
-    @required bool notify,
+  Future<Failure> syncCurrentData({
+    bool forceRemote = false,
+    bool notify = false,
   }) async {
+    Failure ret;
+    await _getData
+        .call(User.GetDataParams(forceRemote: forceRemote))
+        .then((result) {
+      result.fold(
+        (failure) => ret = failure,
+        (entity) => _currentEntity = entity,
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+    return ret;
+  }
+
+  Future<Failure> setDisplayImagePath(
+    String displayImagePath, {
+    bool notify = false,
+  }) async {
+    Failure ret;
     await _setDisplayImagePath
         .call(User.SetDisplayImagePathParams(
-        entity: _currentUserModel, displayImagePath: displayImagePath))
+            entity: _currentEntity, displayImagePath: displayImagePath))
         .then((result) {
       result.fold(
-            (failure) => {},
-            (entity) => _currentUserModel = entity,
+        (failure) => ret = failure,
+        (entity) => _currentEntity = entity,
       );
     });
     if (notify) {
       notifyListeners();
     }
+    return ret;
   }
 
-  Future<void> setEmailAddress(String emailAddress, {
-    @required bool notify,
+  Future<Failure> setEmailAddress(
+    String emailAddress, {
+    bool notify = false,
   }) async {
+    Failure ret;
     await _setEmailAddress
         .call(User.SetEmailAddressParams(
-        entity: _currentUserModel, emailAddress: emailAddress))
+            entity: _currentEntity, emailAddress: emailAddress))
         .then((result) {
       result.fold(
-            (failure) => {},
-            (entity) => _currentUserModel = entity,
+        (failure) => ret = failure,
+        (entity) => _currentEntity = entity,
       );
     });
     if (notify) {
       notifyListeners();
     }
+    return ret;
   }
 
-  Future<void> setName(String name, {
-    @required bool notify,
+  Future<Failure> setName(
+    String name, {
+    bool notify = false,
   }) async {
+    Failure ret;
     await _setName
-        .call(User.SetNameParams(entity: _currentUserModel, name: name))
+        .call(User.SetNameParams(entity: _currentEntity, name: name))
         .then((result) {
       result.fold(
-            (failure) => {},
-            (entity) => _currentUserModel = entity,
+        (failure) => ret = failure,
+        (entity) => _currentEntity = entity,
       );
     });
     if (notify) {
       notifyListeners();
     }
+    return ret;
   }
 
-  Future<void> setPassword(String password, {
-    @required bool notify,
+  Future<Failure> setPassword(
+    String password, {
+    bool notify = false,
   }) async {
+    Failure ret;
     await _setPassword
-        .call(User.SetPasswordParams(
-        entity: _currentUserModel, password: password))
+        .call(
+            User.SetPasswordParams(entity: _currentEntity, password: password))
         .then((result) {
       result.fold(
-            (failure) => {},
-            (entity) => _currentUserModel = entity,
+        (failure) => ret = failure,
+        (entity) => _currentEntity = entity,
       );
     });
     if (notify) {
       notifyListeners();
     }
+    return ret;
   }
 
-  Future<void> setType(UserType type, {
-    @required bool notify,
+  Future<Failure> setType(
+    UserType type, {
+    bool notify = false,
   }) async {
+    Failure ret;
     await _setType
-        .call(User.SetTypeParams(entity: _currentUserModel, type: type))
+        .call(User.SetTypeParams(entity: _currentEntity, type: type))
         .then((result) {
       result.fold(
-            (failure) => {},
-            (entity) => _currentUserModel = entity,
+        (failure) => ret = failure,
+        (entity) => _currentEntity = entity,
       );
     });
     if (notify) {
       notifyListeners();
     }
+    return ret;
   }
 
-  Future<void> destroy({@required bool notify}) async {
+  Future<Failure> destroy({bool notify = false}) async {
+    Failure ret;
     await _destroy
-        .call(User.DestroyParams(entity: _currentUserModel))
+        .call(User.DestroyParams(entity: _currentEntity))
         .then((result) {
       result.fold(
-            (failure) => {},
-            (entity) => _currentUserModel = null,
+        (failure) => ret = failure,
+        (entity) => _currentEntity = entity,
       );
     });
     if (notify) {
       notifyListeners();
     }
+    return ret;
   }
 
-  Future<void> save({@required bool notify}) async {
-    await _save.call(User.SaveParams(entity: _currentUserModel)).then((result) {
+  Future<Failure> save({bool notify = false}) async {
+    Failure ret;
+    await _save.call(User.SaveParams(entity: _currentEntity)).then((result) {
       result.fold(
-            (failure) => {},
-            (entity) => _currentUserModel = entity,
+        (failure) => ret = failure,
+        (entity) => _currentEntity = entity,
       );
     });
     if (notify) {
       notifyListeners();
     }
+    return ret;
   }
 
-  Future<void> signOut({@required bool notify}) async {
+  Future<Failure> signOut({bool notify = false}) async {
+    Failure ret;
     await _signOut
-        .call(User.SignOutParams(entity: _currentUserModel))
+        .call(User.SignOutParams(entity: _currentEntity))
         .then((result) {
       result.fold(
-            (failure) => {},
-            (entity) async {
-          _currentUserModel = entity;
-          if (_currentUserModel.type == UserType.Anonymous) {
-            await destroy(notify: false);
+        (failure) => ret = failure,
+        (entity) async {
+          _currentEntity = entity;
+          if (_currentEntity.type == UserType.Anonymous) {
+            await destroy();
           }
         },
       );
@@ -207,58 +237,72 @@ class UserViewModel extends ChangeNotifier {
     if (notify) {
       notifyListeners();
     }
+    return ret;
   }
 
-  Future<void> signIn({
+  Future<Failure> signIn({
     String username,
     String password,
     String emailAddress,
-    @required bool notify,
+    bool notify = false,
   }) async {
     UserModel newUserModel =
-    UserModel(user: ParseUser.createUser(username, password, emailAddress));
+        UserModel(user: ParseUser.createUser(username, password, emailAddress));
+    Failure ret;
     await _signIn.call(User.SignInParams(entity: newUserModel)).then((result) {
       result.fold(
-            (failure) => {},
-            (entity) => _currentUserModel = entity,
+        (failure) => ret = failure,
+        (entity) => _currentEntity = entity,
       );
     });
     if (notify) {
       notifyListeners();
     }
+    return ret;
   }
 
-  Future<void> signInAnonymous({@required bool notify}) async {
+  Future<Failure> signInAnonymous({bool notify = false}) async {
     UserModel newUserModel = UserModel(user: ParseUser.createUser());
+    Failure ret;
     await _signInAnonymous
         .call(User.SignInAnonymousParams(entity: newUserModel))
         .then((result) {
       result.fold(
-            (failure) => {},
-            (entity) => _currentUserModel = entity,
+        (failure) => ret = failure,
+        (entity) async {
+          _currentEntity = entity;
+          await setType(UserType.Anonymous);
+        },
       );
     });
     if (notify) {
       notifyListeners();
     }
+    return ret;
   }
 
-  Future<void> signUp({
+  Future<Failure> signUp({
+    UserType type,
     String username,
     String password,
     String emailAddress,
-    @required bool notify,
+    bool notify = false,
   }) async {
     UserModel newUserModel =
-    UserModel(user: ParseUser.createUser(username, password, emailAddress));
+        UserModel(user: ParseUser.createUser(username, password, emailAddress));
+    Failure ret;
     await _signUp.call(User.SignUpParams(entity: newUserModel)).then((result) {
       result.fold(
-            (failure) => {},
-            (entity) => _currentUserModel = entity,
+        (failure) => ret = failure,
+        (entity) async {
+          _currentEntity = entity;
+          await setType(type);
+        },
       );
     });
     if (notify) {
       notifyListeners();
     }
+    return ret;
   }
 }

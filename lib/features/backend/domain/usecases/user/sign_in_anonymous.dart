@@ -13,7 +13,7 @@ class SignInAnonymous implements UseCase<UserEntity, SignInAnonymousParams> {
 
   @override
   Future<Either<Failure, UserEntity>> call(SignInAnonymousParams params) async {
-    return await repository.destroy(params.entity);
+    return await repository.signInAnonymous(params.entity);
   }
 }
 

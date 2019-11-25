@@ -22,21 +22,25 @@ class UserRepositoryImpl implements UserRepository {
   });
 
   @override
-  Future<Either<Failure, UserEntity>> getData() async {
-    try {
-      final local = await localDataSource.getLastData();
-      return Right(local);
-    } on CacheException {
-      if (await networkInfo.isConnected) {
-        try {
-          final remote = await remoteDataSource.getLastData();
-          return Right(remote);
-        } on ServerException {
-          return Left(ServerFailure());
-        }
-      } else {
-        return Left(ServerFailure());
+  Future<Either<Failure, UserEntity>> getData(bool forceRemote) async {
+    if (!forceRemote) {
+      try {
+        final local = await localDataSource.getLastData();
+        return Right(local);
+      } on CacheException {
+        // ignore
       }
+    }
+
+    if (await networkInfo.isConnected) {
+      try {
+        final remote = await remoteDataSource.getLastData();
+        return Right(remote);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      }
+    } else {
+      return Left(ServerFailure("Network is not connected."));
     }
   }
 
@@ -50,8 +54,8 @@ class UserRepositoryImpl implements UserRepository {
     try {
       await remoteDataSource.save(model);
       return Right(model);
-    } on ServerException {
-      return Left(ServerFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -65,8 +69,8 @@ class UserRepositoryImpl implements UserRepository {
     try {
       await remoteDataSource.save(model);
       return Right(model);
-    } on ServerException {
-      return Left(ServerFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -78,8 +82,8 @@ class UserRepositoryImpl implements UserRepository {
     try {
       await remoteDataSource.save(model);
       return Right(model);
-    } on ServerException {
-      return Left(ServerFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -93,8 +97,8 @@ class UserRepositoryImpl implements UserRepository {
     try {
       await remoteDataSource.save(model);
       return Right(model);
-    } on ServerException {
-      return Left(ServerFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -108,8 +112,8 @@ class UserRepositoryImpl implements UserRepository {
     try {
       await remoteDataSource.save(model);
       return Right(model);
-    } on ServerException {
-      return Left(ServerFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -119,8 +123,8 @@ class UserRepositoryImpl implements UserRepository {
     try {
       await remoteDataSource.destroy(model);
       return Right(model);
-    } on ServerException {
-      return Left(ServerFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -130,8 +134,8 @@ class UserRepositoryImpl implements UserRepository {
     try {
       await remoteDataSource.save(model);
       return Right(model);
-    } on ServerException {
-      return Left(ServerFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -141,8 +145,8 @@ class UserRepositoryImpl implements UserRepository {
     try {
       await remoteDataSource.signIn(model);
       return Right(model);
-    } on ServerException {
-      return Left(ServerFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -152,8 +156,8 @@ class UserRepositoryImpl implements UserRepository {
     try {
       await remoteDataSource.signInAnonymous(model);
       return Right(model);
-    } on ServerException {
-      return Left(ServerFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -163,8 +167,8 @@ class UserRepositoryImpl implements UserRepository {
     try {
       await remoteDataSource.signOut(model);
       return Right(model);
-    } on ServerException {
-      return Left(ServerFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -174,8 +178,8 @@ class UserRepositoryImpl implements UserRepository {
     try {
       await remoteDataSource.signUp(model);
       return Right(model);
-    } on ServerException {
-      return Left(ServerFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 }

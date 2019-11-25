@@ -30,13 +30,12 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<UserModel> getLastData() async {
     ParseResponse result = await ParseUser.getCurrentUserFromServer();
     if (result == null) {
-      print('#### current user not found from server.');
-      throw ServerException();
+      throw ServerException("Current user cannot be found from server.");
     }
 
     if (!result.success) {
-      print('#### current user not found from server: ${result.error.message}');
-      throw ServerException();
+      throw ServerException(
+          "Current user cannot be found from server: ${result.error.message}");
     }
     return UserModel(user: result.result);
   }
@@ -45,8 +44,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<void> destroy(UserModel model) async {
     ParseResponse result = await model.user.destroy();
     if (!result.success) {
-      print('#### destroy user failed: ${result.error.message}');
-      throw ServerException();
+      throw ServerException("Destroy user failed: ${result.error.message}");
     }
   }
 
@@ -54,8 +52,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<void> save(UserModel model) async {
     ParseResponse result = await model.user.save();
     if (!result.success) {
-      print('#### save user failed: ${result.error.message}');
-      throw ServerException();
+      throw ServerException("Save user failed: ${result.error.message}");
     }
   }
 
@@ -63,8 +60,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<void> signIn(UserModel model) async {
     ParseResponse result = await model.user.login();
     if (!result.success) {
-      print('#### sign in user failed: ${result.error.message}');
-      throw ServerException();
+      throw ServerException("Sign in user failed: ${result.error.message}");
     }
   }
 
@@ -72,8 +68,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<void> signInAnonymous(UserModel model) async {
     ParseResponse result = await model.user.loginAnonymous();
     if (!result.success) {
-      print('#### sign in anonymous user failed: ${result.error.message}');
-      throw ServerException();
+      throw ServerException(
+          "Sign in anonymous user failed: ${result.error.message}");
     }
   }
 
@@ -81,8 +77,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<void> signOut(UserModel model) async {
     ParseResponse result = await model.user.logout(deleteLocalUserData: true);
     if (!result.success) {
-      print('#### sign out user failed: ${result.error.message}');
-      throw ServerException();
+      throw ServerException("Sign out user failed: ${result.error.message}");
     }
   }
 
@@ -90,8 +85,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<void> signUp(UserModel model) async {
     ParseResponse result = await model.user.signUp();
     if (!result.success) {
-      print('#### sign up user failed: ${result.error.message}');
-      throw ServerException();
+      throw ServerException("Sign up user failed: ${result.error.message}");
     }
   }
 }

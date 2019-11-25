@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 import 'package:mall/features/theme/domain/usecases/usecases.dart' as Theme;
@@ -7,7 +8,7 @@ class ThemeViewModel extends ChangeNotifier {
   final Theme.GetData _getData;
   final Theme.SetData _setData;
 
-  ThemeEntity _currentThemeEntity;
+  ThemeEntity _currentEntity;
 
   ThemeViewModel({
     @required Theme.GetData getData,
@@ -26,20 +27,18 @@ class ThemeViewModel extends ChangeNotifier {
   }
 
   ThemeEntity getCurrentData() {
-    if (_currentThemeEntity == null) {
+    if (_currentEntity == null) {
       // returns default first
       final defaultEntity = ThemeEntity(type: ThemeType.Light);
-      _currentThemeEntity = defaultEntity;
+      _currentEntity = defaultEntity;
 
       _getData.call(NoParams()).then((result) {
         result.fold(
-          (failure) {
-            // set default if non-exist
-            setCurrentData(defaultEntity.type, notify: false);
-          },
+          // set default if non-exist
+          (failure) => setCurrentData(defaultEntity.type),
           (entity) {
-            if (_currentThemeEntity != entity) {
-              _currentThemeEntity = entity;
+            if (_currentEntity != entity) {
+              _currentEntity = entity;
 
               // notify only if the value is different from the default
               notifyListeners();
@@ -48,18 +47,23 @@ class ThemeViewModel extends ChangeNotifier {
         );
       });
     }
-    return _currentThemeEntity;
+    return _currentEntity;
   }
 
-  Future<void> setCurrentData(ThemeType type, {@required bool notify}) async {
+  Future<Failure> setCurrentData(
+    ThemeType type, {
+    bool notify = false,
+  }) async {
+    Failure ret;
     await _setData.call(Theme.SetDataParams(type: type)).then((result) {
       result.fold(
-        (failure) => {},
-            (entity) => _currentThemeEntity = entity,
+        (failure) => ret = failure,
+        (entity) => _currentEntity = entity,
       );
     });
     if (notify) {
       notifyListeners();
     }
+    return ret;
   }
 }

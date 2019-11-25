@@ -13,7 +13,7 @@ class SignOut implements UseCase<UserEntity, SignOutParams> {
 
   @override
   Future<Either<Failure, UserEntity>> call(SignOutParams params) async {
-    return await repository.destroy(params.entity);
+    return await repository.signOut(params.entity);
   }
 }
 

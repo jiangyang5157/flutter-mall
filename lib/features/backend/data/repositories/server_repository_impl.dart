@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mall/core/constant.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/network/network_info.dart';
-import 'package:mall/features/backend/data/error/failures.dart';
 import 'package:mall/features/backend/domain/repositories/server_repository.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
@@ -29,10 +28,10 @@ class ServerRepositoryImpl implements ServerRepository {
         );
         return Right(null);
       } catch (error) {
-        return Left(ParseFailure());
+        return Left(ServerFailure(error.toString()));
       }
     } else {
-      return Left(ServerFailure());
+      return Left(ServerFailure("Network is not connected."));
     }
   }
 }

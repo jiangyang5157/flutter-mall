@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mall/core/injection.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/nav.dart';
+import 'package:mall/features/backend/presentation/user_view_model.dart';
 import 'package:mall/features/startup/presentation/pages/splash_page.dart';
 import 'package:mall/features/theme/presentation/theme_view_model.dart';
-import 'package:mall/core/injection.dart';
-import 'package:mall/models/user_model.dart';
 import 'package:provider/provider.dart';
 
 class AppPage extends StatefulWidget {
@@ -17,12 +17,12 @@ class AppPage extends StatefulWidget {
 
 class _AppPageState extends State<AppPage> {
   ThemeViewModel themeViewModel = locator<ThemeViewModel>();
-  UserModel userModel = UserModel();
+  UserViewModel userViewModel = locator<UserViewModel>();
 
   @override
   void dispose() {
     themeViewModel.dispose();
-    userModel.dispose();
+    userViewModel.dispose();
     super.dispose();
     print('#### _AppPageState - dispose');
   }
@@ -41,9 +41,10 @@ class _AppPageState extends State<AppPage> {
       providers: [
         ChangeNotifierProvider<ThemeViewModel>(
             builder: (context) => themeViewModel),
-        ChangeNotifierProvider<UserModel>(builder: (context) => userModel),
+        ChangeNotifierProvider<UserViewModel>(
+            builder: (context) => userViewModel),
       ],
-      child: Consumer2<ThemeViewModel, UserModel>(
+      child: Consumer2<ThemeViewModel, UserViewModel>(
         builder: (context, themeViewModel, userModel, _) {
           return MaterialApp(
             localizationsDelegates: [

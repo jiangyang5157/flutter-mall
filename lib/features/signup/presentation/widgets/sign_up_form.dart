@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:mall/core/constant.dart';
+import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/validation/email_address_input_formatter.dart';
 import 'package:mall/core/util/validation/email_address_validator.dart';
@@ -12,15 +13,15 @@ import 'package:mall/core/util/validation/username_input_formatter.dart';
 import 'package:mall/core/util/validation/username_validator.dart';
 import 'package:mall/core/util/widgets/text_editing_controller_workaround.dart';
 import 'package:mall/core/util/widgets/three_size_dot.dart';
+import 'package:mall/features/backend/domain/entities/user_entity.dart';
+import 'package:mall/features/backend/presentation/user_view_model.dart';
 import 'package:mall/features/signup/presentation/sign_up_view_model.dart';
-import 'package:mall/models/user_model.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
 class SignUpForm extends StatefulWidget {
-  final Function(ParseResponse response) onResponse;
+  final Function(Failure failure) onSubmitted;
 
-  SignUpForm({Key key, @required this.onResponse}) : super(key: key);
+  SignUpForm({Key key, @required this.onSubmitted}) : super(key: key);
 
   @override
   _SignUpFormState createState() => _SignUpFormState();
@@ -63,19 +64,19 @@ class _SignUpFormState extends State<SignUpForm> {
 
     _usernameController.addListener(() {
       Provider.of<SignUpViewModel>(context)
-          .setUsername(_usernameController.text, notify: false);
+          .setUsername(_usernameController.text);
     });
     _passwordController.addListener(() {
       Provider.of<SignUpViewModel>(context)
-          .setPassword(_passwordController.text, notify: false);
+          .setPassword(_passwordController.text);
     });
     _repeatPasswordController.addListener(() {
       Provider.of<SignUpViewModel>(context)
-          .setRepeatPassword(_repeatPasswordController.text, notify: false);
+          .setRepeatPassword(_repeatPasswordController.text);
     });
     _emailAddressController.addListener(() {
       Provider.of<SignUpViewModel>(context)
-          .setEmailAddress(_emailAddressController.text, notify: false);
+          .setEmailAddress(_emailAddressController.text);
     });
   }
 
@@ -137,8 +138,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     onTap: () {
                       setState(() {
                         signUpViewModel.setObscurePassword(
-                            !signUpViewModel.getCurrentData().obscurePassword,
-                            notify: false);
+                            !signUpViewModel.getCurrentData().obscurePassword);
                       });
                     },
                     child: Icon(signUpViewModel.getCurrentData().obscurePassword
@@ -225,25 +225,20 @@ class _SignUpFormState extends State<SignUpForm> {
                   onPressed: () async {
                     FocusScope.of(context).unfocus();
                     if (_formKey.currentState.validate()) {
-                      UserModel newUserModel = UserModel.create(
+                      UserViewModel userViewModel =
+                          Provider.of<UserViewModel>(context);
+                      final failure = await userViewModel.signUp(
+                          type: _usernameController.text ==
+                                  typeToString(UserType.Master)
+                              ? UserType.Master
+                              : UserType.Normal,
                           username: _usernameController.text,
                           password: _passwordController.text,
                           emailAddress: _emailAddressController.text);
-                      ParseResponse response = await newUserModel.signUp();
-                      if (response.success) {
-                        if (newUserModel.name ==
-                            UserModel.typeToString(UserType.Master)) {
-                          newUserModel.type = UserType.Master;
-                        } else {
-                          newUserModel.type = UserType.Normal;
-                        }
-                        await newUserModel.save();
-                        await Provider.of<UserModel>(context).sync();
-                      }
                       return () {
                         _passwordController.clear();
                         _repeatPasswordController.clear();
-                        widget.onResponse(response);
+                        widget.onSubmitted(failure);
                       };
                     } else {
                       return null;

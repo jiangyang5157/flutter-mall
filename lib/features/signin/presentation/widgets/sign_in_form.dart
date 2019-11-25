@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:mall/core/constant.dart';
+import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/validation/password_input_formatter.dart';
 import 'package:mall/core/util/validation/password_validator.dart';
@@ -9,15 +10,14 @@ import 'package:mall/core/util/validation/username_input_formatter.dart';
 import 'package:mall/core/util/validation/username_validator.dart';
 import 'package:mall/core/util/widgets/text_editing_controller_workaround.dart';
 import 'package:mall/core/util/widgets/three_size_dot.dart';
+import 'package:mall/features/backend/presentation/user_view_model.dart';
 import 'package:mall/features/signin/presentation/sign_in_view_model.dart';
-import 'package:mall/models/user_model.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
-  final Function(ParseResponse response) onResponse;
+  final Function(Failure failure) onSubmitted;
 
-  SignInForm({Key key, @required this.onResponse}) : super(key: key);
+  SignInForm({Key key, @required this.onSubmitted}) : super(key: key);
 
   @override
   _SignInFormState createState() => _SignInFormState();
@@ -50,11 +50,11 @@ class _SignInFormState extends State<SignInForm> {
 
     _usernameController.addListener(() {
       Provider.of<SignInViewModel>(context)
-          .setUsername(_usernameController.text, notify: false);
+          .setUsername(_usernameController.text);
     });
     _passwordController.addListener(() {
       Provider.of<SignInViewModel>(context)
-          .setPassword(_passwordController.text, notify: false);
+          .setPassword(_passwordController.text);
     });
   }
 
@@ -112,8 +112,7 @@ class _SignInFormState extends State<SignInForm> {
                     onTap: () {
                       setState(() {
                         signInViewModel.setObscurePassword(
-                            !signInViewModel.getCurrentData().obscurePassword,
-                            notify: false);
+                            !signInViewModel.getCurrentData().obscurePassword);
                       });
                     },
                     child: Icon(signInViewModel.getCurrentData().obscurePassword
@@ -147,16 +146,14 @@ class _SignInFormState extends State<SignInForm> {
                   onPressed: () async {
                     FocusScope.of(context).unfocus();
                     if (_formKey.currentState.validate()) {
-                      UserModel newUserModel = UserModel.create(
+                      UserViewModel userViewModel =
+                          Provider.of<UserViewModel>(context);
+                      final failure = await userViewModel.signIn(
                           username: _usernameController.text,
                           password: _passwordController.text);
-                      ParseResponse response = await newUserModel.signIn();
-                      if (response.success) {
-                        await Provider.of<UserModel>(context).sync();
-                      }
                       return () {
                         _passwordController.clear();
-                        widget.onResponse(response);
+                        widget.onSubmitted(failure);
                       };
                     } else {
                       return null;

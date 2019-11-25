@@ -13,7 +13,7 @@ class SignUp implements UseCase<UserEntity, SignUpParams> {
 
   @override
   Future<Either<Failure, UserEntity>> call(SignUpParams params) async {
-    return await repository.destroy(params.entity);
+    return await repository.signUp(params.entity);
   }
 }
 

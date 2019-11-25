@@ -1,10 +1,11 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mall/core/injection.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/nav.dart';
-import 'package:mall/core/injection.dart';
-import 'package:mall/models/user_model.dart';
+import 'package:mall/features/backend/data/models/user_model.dart';
+import 'package:mall/features/backend/presentation/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -58,7 +59,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildDrawerHeader(BuildContext context) {
-    UserModel userModel = Provider.of<UserModel>(context);
+    UserViewModel userViewModel = Provider.of<UserViewModel>(context);
+    UserModel userModel = userViewModel.getCurrentData();
     return UserAccountsDrawerHeader(
       accountName: Text(userModel.name),
       accountEmail: Text(userModel.emailAddress ?? ''),

@@ -3,19 +3,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:mall/core/constant.dart';
+import 'package:mall/core/injection.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/nav.dart';
 import 'package:mall/core/util/widgets/ext.dart';
 import 'package:mall/core/util/widgets/three_size_dot.dart';
 import 'package:mall/features/auth/domain/entities/auth_entity.dart';
 import 'package:mall/features/auth/presentation/auth_view_model.dart';
+import 'package:mall/features/backend/presentation/user_view_model.dart';
 import 'package:mall/features/signin/presentation/sign_in_view_model.dart';
 import 'package:mall/features/signin/presentation/widgets/sign_in_form.dart';
 import 'package:mall/features/signup/presentation/sign_up_view_model.dart';
 import 'package:mall/features/signup/presentation/widgets/sign_up_form.dart';
-import 'package:mall/core/injection.dart';
-import 'package:mall/models/user_model.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
 class AuthPage extends StatefulWidget {
@@ -67,14 +66,15 @@ class _AuthPageState extends State<AuthPage> {
                             FlutterLogo(size: flutterLogoSize),
                             Padding(
                               padding: const EdgeInsets.all(sizeLarge),
-                              child: _buildForm(context, authViewModel.getCurrentData().state),
+                              child: _buildForm(context,
+                                  authViewModel.getCurrentData().state),
                             ),
                             Spacer(),
                             Container(
                               height: authBottomContainerHeight,
                               alignment: Alignment.topCenter,
-                              child:
-                                  _buildFormSelector(context, authViewModel.getCurrentData().state),
+                              child: _buildFormSelector(context,
+                                  authViewModel.getCurrentData().state),
                             ),
                           ],
                         ),
@@ -106,13 +106,13 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                 ),
                 SignInForm(
-                  onResponse: (response) {
-                    if (response.success) {
+                  onSubmitted: (failure) {
+                    if (failure == null) {
                       locator<Nav>().router.navigateTo(context, 'HomePage',
                           clearStack: true, transition: TransitionType.fadeIn);
                     } else {
                       showSimpleSnackBar(
-                          Scaffold.of(context), response.error.message);
+                          Scaffold.of(context), failure.toString());
                     }
                   },
                 ),
@@ -134,13 +134,13 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                 ),
                 SignUpForm(
-                  onResponse: (response) {
-                    if (response.success) {
+                  onSubmitted: (failure) {
+                    if (failure == null) {
                       locator<Nav>().router.navigateTo(context, 'HomePage',
                           clearStack: true, transition: TransitionType.fadeIn);
                     } else {
                       showSimpleSnackBar(
-                          Scaffold.of(context), response.error.message);
+                          Scaffold.of(context), failure.toString());
                     }
                   },
                 ),
@@ -167,7 +167,10 @@ class _AuthPageState extends State<AuthPage> {
                     string(context, 'label_sign_up_action'),
                   ),
                   onPressed: () {
-                    authViewModel.setCurrentData(AuthState.SignUp, notify: true);
+                    authViewModel.setCurrentData(
+                      AuthState.SignUp,
+                      notify: true,
+                    );
                   },
                 ),
               ],
@@ -187,22 +190,17 @@ class _AuthPageState extends State<AuthPage> {
                   width: 148,
                   animate: false,
                   onPressed: () async {
-                    UserModel newUserModel = UserModel.create();
-                    ParseResponse response =
-                        await newUserModel.signInAnonymous();
-                    if (response.success) {
-                      newUserModel.type = UserType.Anonymous;
-                      await newUserModel.save();
-                      await Provider.of<UserModel>(context).sync();
-                    }
+                    UserViewModel userViewModel =
+                        Provider.of<UserViewModel>(context);
+                    final failure = await userViewModel.signInAnonymous();
                     return () {
-                      if (response.success) {
+                      if (failure == null) {
                         locator<Nav>().router.navigateTo(context, 'HomePage',
                             clearStack: true,
                             transition: TransitionType.fadeIn);
                       } else {
                         showSimpleSnackBar(
-                            Scaffold.of(context), response.error.message);
+                            Scaffold.of(context), failure.toString());
                       }
                     };
                   },
@@ -220,9 +218,8 @@ class _AuthPageState extends State<AuthPage> {
               child: Text(
                 string(context, 'label_sign_in_action'),
               ),
-              onPressed: () {
-                authViewModel.setCurrentData(AuthState.SignIn, notify: true);
-              },
+              onPressed: () =>
+                  authViewModel.setCurrentData(AuthState.SignIn, notify: true),
             ),
           ],
         );

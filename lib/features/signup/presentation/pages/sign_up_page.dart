@@ -1,12 +1,12 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mall/core/injection.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
 import 'package:mall/core/util/nav.dart';
 import 'package:mall/core/util/widgets/ext.dart';
 import 'package:mall/features/signup/presentation/sign_up_view_model.dart';
 import 'package:mall/features/signup/presentation/widgets/sign_up_form.dart';
-import 'package:mall/core/injection.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -50,13 +50,13 @@ class _SignUpPageState extends State<SignUpPage> {
                   minHeight: constraints.maxHeight,
                 ),
                 child: SignUpForm(
-                  onResponse: (response) {
-                    if (response.success) {
+                  onSubmitted: (failure) {
+                    if (failure == null) {
                       locator<Nav>().router.navigateTo(context, 'HomePage',
                           clearStack: true, transition: TransitionType.fadeIn);
                     } else {
                       showSimpleSnackBar(
-                          Scaffold.of(context), response.error.message);
+                          Scaffold.of(context), failure.toString());
                     }
                   },
                 ),

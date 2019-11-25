@@ -13,7 +13,7 @@ class SignIn implements UseCase<UserEntity, SignInParams> {
 
   @override
   Future<Either<Failure, UserEntity>> call(SignInParams params) async {
-    return await repository.destroy(params.entity);
+    return await repository.signIn(params.entity);
   }
 }
 

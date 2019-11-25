@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
-import 'package:mall/features/backend/domain/usecases/server/usecases.dart' as Server;
+import 'package:mall/features/backend/domain/usecases/server/usecases.dart'
+    as Server;
 
 class StartupViewModel extends ChangeNotifier {
   final Server.Initialization _initialization;
@@ -18,12 +20,12 @@ class StartupViewModel extends ChangeNotifier {
     print('#### StartupViewModel - dispose');
   }
 
-  Future<bool> initialization() async {
-    bool ret;
+  Future<Failure> initialization() async {
+    Failure ret;
     await _initialization.call(NoParams()).then((result) {
       result.fold(
-        (failure) => ret = false,
-        (_) => ret = true,
+        (failure) => ret = failure,
+        (entity) {},
       );
     });
     return ret;

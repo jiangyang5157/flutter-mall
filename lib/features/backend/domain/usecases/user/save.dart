@@ -13,7 +13,7 @@ class Save implements UseCase<UserEntity, SaveParams> {
 
   @override
   Future<Either<Failure, UserEntity>> call(SaveParams params) async {
-    return await repository.destroy(params.entity);
+    return await repository.save(params.entity);
   }
 }
 
