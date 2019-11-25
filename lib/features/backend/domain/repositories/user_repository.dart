@@ -3,7 +3,7 @@ import 'package:mall/core/error/failures.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
 
 abstract class UserRepository {
-  Future<Either<Failure, UserEntity>> getData(bool forceRemote);
+  Future<Either<Failure, UserEntity>> getData();
 
   Future<Either<Failure, UserEntity>> setType(
     UserEntity entity,

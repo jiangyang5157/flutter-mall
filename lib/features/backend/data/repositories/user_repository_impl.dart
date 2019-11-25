@@ -22,14 +22,12 @@ class UserRepositoryImpl implements UserRepository {
   });
 
   @override
-  Future<Either<Failure, UserEntity>> getData(bool forceRemote) async {
-    if (!forceRemote) {
-      try {
-        final local = await localDataSource.getLastData();
-        return Right(local);
-      } on CacheException {
-        // ignore
-      }
+  Future<Either<Failure, UserEntity>> getData() async {
+    try {
+      final local = await localDataSource.getLastData();
+      return Right(local);
+    } on CacheException {
+      // ignore
     }
 
     if (await networkInfo.isConnected) {

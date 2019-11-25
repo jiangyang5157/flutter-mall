@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
+import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/backend/data/models/user_model.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
 import 'package:mall/features/backend/domain/usecases/user/usecases.dart'
@@ -72,14 +73,9 @@ class UserViewModel extends ChangeNotifier {
     return _currentEntity;
   }
 
-  Future<Failure> syncCurrentData({
-    bool forceRemote = false,
-    bool notify = false,
-  }) async {
+  Future<Failure> syncCurrentData({bool notify = false}) async {
     Failure ret;
-    await _getData
-        .call(User.GetDataParams(forceRemote: forceRemote))
-        .then((result) {
+    await _getData.call(NoParams()).then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) => _currentEntity = entity,
@@ -221,6 +217,9 @@ class UserViewModel extends ChangeNotifier {
 
   Future<Failure> signOut({bool notify = false}) async {
     Failure ret;
+    if (_currentEntity.type == UserType.Anonymous) {
+      await destroy();
+    }
     await _signOut
         .call(User.SignOutParams(entity: _currentEntity))
         .then((result) {
@@ -228,9 +227,6 @@ class UserViewModel extends ChangeNotifier {
         (failure) => ret = failure,
         (entity) async {
           _currentEntity = entity;
-          if (_currentEntity.type == UserType.Anonymous) {
-            await destroy();
-          }
         },
       );
     });
