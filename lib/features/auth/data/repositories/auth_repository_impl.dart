@@ -14,19 +14,18 @@ class AuthRepositoryImpl implements AuthRepository {
   });
 
   @override
-  Future<Either<Failure, AuthEntity>> getData() async {
+  Future<Either<Failure, AuthEntity>> getLastAuth() async {
     try {
-      final last = await localDataSource.getLastData();
-      return Right(last);
+      return Right(await localDataSource.getLastAuth());
     } on CacheException {
       return Left(CacheFailure());
     }
   }
 
   @override
-  Future<Either<Failure, AuthEntity>> setData(AuthState state) async {
+  Future<Either<Failure, AuthEntity>> setAuth(AuthState state) async {
     final entity = AuthEntity(state: state);
-    localDataSource.cacheData(entity);
+    localDataSource.setAuth(entity);
     return Right(entity);
   }
 }

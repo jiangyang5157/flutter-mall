@@ -5,18 +5,18 @@ import 'package:mall/features/auth/domain/entities/auth_entity.dart';
 import 'package:mall/features/auth/domain/usecases/usecases.dart' as Auth;
 
 class AuthViewModel extends ChangeNotifier {
-  final Auth.GetData _getData;
-  final Auth.SetData _setData;
+  final Auth.GetLastAuth _gla;
+  final Auth.SetAuth _sa;
 
-  AuthEntity _currentEntity;
+  AuthEntity _lastAuth;
 
   AuthViewModel({
-    @required Auth.GetData getData,
-    @required Auth.SetData setData,
-  })  : assert(getData != null),
-        assert(setData != null),
-        _getData = getData,
-        _setData = setData {
+    @required Auth.GetLastAuth gla,
+    @required Auth.SetAuth sa,
+  })  : assert(gla != null),
+        assert(sa != null),
+        _gla = gla,
+        _sa = sa {
     print('#### AuthViewModel - constructor');
   }
 
@@ -26,19 +26,19 @@ class AuthViewModel extends ChangeNotifier {
     print('#### AuthViewModel - dispose');
   }
 
-  AuthEntity getCurrentData() {
-    if (_currentEntity == null) {
+  AuthEntity getLastAuth() {
+    if (_lastAuth == null) {
       // returns default first
       final defaultEntity = AuthEntity(state: AuthState.SignIn);
-      _currentEntity = defaultEntity;
+      _lastAuth = defaultEntity;
 
-      _getData.call(NoParams()).then((result) {
+      _gla.call(NoParams()).then((result) {
         result.fold(
           // set default if non-exist
-          (failure) => setCurrentData(defaultEntity.state),
+          (failure) => setAuth(defaultEntity.state),
           (entity) {
-            if (_currentEntity != entity) {
-              _currentEntity = entity;
+            if (_lastAuth != entity) {
+              _lastAuth = entity;
 
               // notify only if the value is different from the default
               notifyListeners();
@@ -47,18 +47,18 @@ class AuthViewModel extends ChangeNotifier {
         );
       });
     }
-    return _currentEntity;
+    return _lastAuth;
   }
 
-  Future<Failure> setCurrentData(
+  Future<Failure> setAuth(
     AuthState state, {
     bool notify = false,
   }) async {
     Failure ret;
-    await _setData.call(Auth.SetDataParams(state: state)).then((result) {
+    await _sa.call(Auth.SetAuthParams(state: state)).then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _currentEntity = entity,
+        (entity) => _lastAuth = entity,
       );
     });
     if (notify) {

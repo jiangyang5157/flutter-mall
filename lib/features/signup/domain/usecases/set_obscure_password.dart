@@ -15,19 +15,13 @@ class SetObscurePassword
   @override
   Future<Either<Failure, SignUpEntity>> call(
       SetObscurePasswordParams params) async {
-    return await repository.setObscurePassword(
-      params.entity,
-      params.obscurePassword,
-    );
+    return await repository.setObscurePassword(params.obscurePassword);
   }
 }
 
 class SetObscurePasswordParams extends Equatable {
-  final SignUpEntity entity;
   final bool obscurePassword;
 
-  SetObscurePasswordParams({
-    @required this.entity,
-    @required this.obscurePassword,
-  }) : super([entity, obscurePassword]);
+  SetObscurePasswordParams({@required this.obscurePassword})
+      : super([obscurePassword]);
 }

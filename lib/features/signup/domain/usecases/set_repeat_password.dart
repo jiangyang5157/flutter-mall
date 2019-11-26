@@ -15,19 +15,13 @@ class SetRepeatPassword
   @override
   Future<Either<Failure, SignUpEntity>> call(
       SetRepeatPasswordParams params) async {
-    return await repository.setRepeatPassword(
-      params.entity,
-      params.repeatPassword,
-    );
+    return await repository.setRepeatPassword(params.repeatPassword);
   }
 }
 
 class SetRepeatPasswordParams extends Equatable {
-  final SignUpEntity entity;
   final String repeatPassword;
 
-  SetRepeatPasswordParams({
-    @required this.entity,
-    @required this.repeatPassword,
-  }) : super([entity, repeatPassword]);
+  SetRepeatPasswordParams({@required this.repeatPassword})
+      : super([repeatPassword]);
 }

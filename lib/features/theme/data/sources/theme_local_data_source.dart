@@ -5,33 +5,40 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ThemeLocalDataSource {
   /// Throws [CacheException] if no cached data is present.
-  Future<ThemeEntity> getLastData();
+  Future<ThemeEntity> getLastTheme();
 
   /// Throws [CacheException]
-  Future<void> cacheData(ThemeEntity entity);
+  Future<ThemeEntity> setTheme(ThemeEntity entity);
 }
 
 const _prefs_theme = 'key_prefs_theme';
 
 class ThemeLocalDataSourceImpl implements ThemeLocalDataSource {
   final SharedPreferences prefs;
+  ThemeEntity entity;
 
   ThemeLocalDataSourceImpl({@required this.prefs});
 
   @override
-  Future<void> cacheData(ThemeEntity theme) async {
-    final result = await prefs.setString(_prefs_theme, theme.toString());
-    if (!result) {
+  Future<ThemeEntity> setTheme(ThemeEntity theme) async {
+    if (await prefs.setString(_prefs_theme, theme.toString())) {
+      entity = theme;
+    } else {
       throw CacheException();
     }
+    return entity;
   }
 
   @override
-  Future<ThemeEntity> getLastData() async {
-    final s = prefs.getString(_prefs_theme);
-    if (s == null) {
-      throw CacheException();
+  Future<ThemeEntity> getLastTheme() async {
+    if (entity == null) {
+      final s = prefs.getString(_prefs_theme);
+      if (s == null) {
+        throw CacheException();
+      } else {
+        entity = ThemeEntity.fromString(s);
+      }
     }
-    return ThemeEntity.fromString(s);
+    return entity;
   }
 }

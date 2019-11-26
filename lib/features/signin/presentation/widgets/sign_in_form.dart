@@ -50,11 +50,11 @@ class _SignInFormState extends State<SignInForm> {
 
     _usernameController.addListener(() {
       Provider.of<SignInViewModel>(context)
-          .setUsername(_usernameController.text);
+          .setCurrentUsername(_usernameController.text);
     });
     _passwordController.addListener(() {
       Provider.of<SignInViewModel>(context)
-          .setPassword(_passwordController.text);
+          .setCurrentPassword(_passwordController.text);
     });
   }
 
@@ -64,9 +64,9 @@ class _SignInFormState extends State<SignInForm> {
 
     SignInViewModel signInViewModel = Provider.of<SignInViewModel>(context);
     _usernameController
-        .setTextAndPosition(signInViewModel.getCurrentData().username);
+        .setTextAndPosition(signInViewModel.getLastData().username);
     _passwordController
-        .setTextAndPosition(signInViewModel.getCurrentData().password);
+        .setTextAndPosition(signInViewModel.getLastData().password);
 
     return Form(
       key: _formKey,
@@ -111,17 +111,17 @@ class _SignInFormState extends State<SignInForm> {
                   suffixIcon: GestureDetector(
                     onTap: () {
                       setState(() {
-                        signInViewModel.setObscurePassword(
-                            !signInViewModel.getCurrentData().obscurePassword);
+                        signInViewModel.setCurrentObscurePassword(
+                            !signInViewModel.getLastData().obscurePassword);
                       });
                     },
-                    child: Icon(signInViewModel.getCurrentData().obscurePassword
+                    child: Icon(signInViewModel.getLastData().obscurePassword
                         ? Icons.visibility_off
                         : Icons.visibility),
                   ),
                 ),
                 style: TextStyle(fontSize: textFieldFontSize),
-                obscureText: signInViewModel.getCurrentData().obscurePassword,
+                obscureText: signInViewModel.getLastData().obscurePassword,
                 textInputAction: TextInputAction.done,
                 enableInteractiveSelection: false,
                 controller: _passwordController,

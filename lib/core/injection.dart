@@ -96,28 +96,28 @@ Future<void> init() async {
 
   /// View models
   locator.registerFactory(() => ThemeViewModel(
-        getData: locator(),
-        setData: locator(),
+        glt: locator(),
+        st: locator(),
       ));
   locator.registerFactory(() => SignInViewModel(
-        getData: locator(),
-        setData: locator(),
-        setUsername: locator(),
-        setPassword: locator(),
-        setObscurePassword: locator(),
+        gd: locator(),
+        sd: locator(),
+        su: locator(),
+        sp: locator(),
+        sop: locator(),
       ));
   locator.registerFactory(() => SignUpViewModel(
-        getData: locator(),
-        setData: locator(),
-        setUsername: locator(),
-        setPassword: locator(),
-        setRepeatPassword: locator(),
-        setEmailAddress: locator(),
-        setObscurePassword: locator(),
+        gd: locator(),
+        sd: locator(),
+        su: locator(),
+        sp: locator(),
+        srp: locator(),
+        sea: locator(),
+        sop: locator(),
       ));
   locator.registerFactory(() => AuthViewModel(
-        getData: locator(),
-        setData: locator(),
+        gla: locator(),
+        sa: locator(),
       ));
   locator.registerFactory(() => StartupViewModel(
         initialization: locator(),
@@ -138,8 +138,8 @@ Future<void> init() async {
       ));
 
   /// Use cases
-  locator.registerFactory(() => Theme.GetData(locator()));
-  locator.registerFactory(() => Theme.SetData(locator()));
+  locator.registerFactory(() => Theme.GetLastTheme(locator()));
+  locator.registerFactory(() => Theme.SetTheme(locator()));
   locator.registerFactory(() => SignIn.GetData(locator()));
   locator.registerFactory(() => SignIn.SetData(locator()));
   locator.registerFactory(() => SignIn.SetUsername(locator()));
@@ -152,8 +152,8 @@ Future<void> init() async {
   locator.registerFactory(() => SignUp.SetRepeatPassword(locator()));
   locator.registerFactory(() => SignUp.SetEmailAddress(locator()));
   locator.registerFactory(() => SignUp.SetObscurePassword(locator()));
-  locator.registerFactory(() => Auth.GetData(locator()));
-  locator.registerFactory(() => Auth.SetData(locator()));
+  locator.registerFactory(() => Auth.GetLastAuth(locator()));
+  locator.registerFactory(() => Auth.SetAuth(locator()));
   locator.registerFactory(() => Server.Initialization(locator()));
   locator.registerFactory(() => User.GetData(locator()));
   locator.registerFactory(() => User.SetDisplayImagePath(locator()));

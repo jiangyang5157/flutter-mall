@@ -14,19 +14,12 @@ class SetEmailAddress implements UseCase<SignUpEntity, SetEmailAddressParams> {
   @override
   Future<Either<Failure, SignUpEntity>> call(
       SetEmailAddressParams params) async {
-    return await repository.setEmailAddress(
-      params.entity,
-      params.emailAddress,
-    );
+    return await repository.setEmailAddress(params.emailAddress);
   }
 }
 
 class SetEmailAddressParams extends Equatable {
-  final SignUpEntity entity;
   final String emailAddress;
 
-  SetEmailAddressParams({
-    @required this.entity,
-    @required this.emailAddress,
-  }) : super([entity, emailAddress]);
+  SetEmailAddressParams({@required this.emailAddress}) : super([emailAddress]);
 }

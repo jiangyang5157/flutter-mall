@@ -6,19 +6,19 @@ import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/auth/domain/entities/auth_entity.dart';
 import 'package:mall/features/auth/domain/repositories/auth_repository.dart';
 
-class SetData implements UseCase<AuthEntity, SetDataParams> {
+class SetAuth implements UseCase<AuthEntity, SetAuthParams> {
   final AuthRepository repository;
 
-  SetData(this.repository);
+  SetAuth(this.repository);
 
   @override
-  Future<Either<Failure, AuthEntity>> call(SetDataParams params) async {
-    return await repository.setData(params.state);
+  Future<Either<Failure, AuthEntity>> call(SetAuthParams params) async {
+    return await repository.setAuth(params.state);
   }
 }
 
-class SetDataParams extends Equatable {
+class SetAuthParams extends Equatable {
   final AuthState state;
 
-  SetDataParams({@required this.state}) : super([state]);
+  SetAuthParams({@required this.state}) : super([state]);
 }

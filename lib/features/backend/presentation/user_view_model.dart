@@ -284,6 +284,11 @@ class UserViewModel extends ChangeNotifier {
     String emailAddress,
     bool notify = false,
   }) async {
+    UserModel oldUserModel;
+    if (_currentEntity != null && _currentEntity.type == UserType.Anonymous) {
+      oldUserModel = UserModel(user: await ParseUser.currentUser());
+    }
+
     UserModel newUserModel =
         UserModel(user: ParseUser.createUser(username, password, emailAddress));
     Failure ret;
@@ -293,6 +298,9 @@ class UserViewModel extends ChangeNotifier {
         (entity) async {
           _currentEntity = entity;
           await setType(type);
+          if (oldUserModel != null) {
+            await oldUserModel.user.destroy();
+          }
         },
       );
     });

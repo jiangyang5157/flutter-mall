@@ -13,19 +13,12 @@ class SetPassword implements UseCase<SignInEntity, SetPasswordParams> {
 
   @override
   Future<Either<Failure, SignInEntity>> call(SetPasswordParams params) async {
-    return await repository.setPassword(
-      params.entity,
-      params.password,
-    );
+    return await repository.setPassword(params.password);
   }
 }
 
 class SetPasswordParams extends Equatable {
-  final SignInEntity entity;
   final String password;
 
-  SetPasswordParams({
-    @required this.entity,
-    @required this.password,
-  }) : super([entity, password]);
+  SetPasswordParams({@required this.password}) : super([password]);
 }

@@ -38,15 +38,14 @@ class SignUpRepositoryImpl implements SignUpRepository {
       emailAddress: emailAddress,
       obscurePassword: obscurePassword,
     );
-    localDataSource.cacheData(entity);
+    localDataSource.setData(entity);
     return Right(entity);
   }
 
   @override
   Future<Either<Failure, SignUpEntity>> setEmailAddress(
-    SignUpEntity entity,
-    String emailAddress,
-  ) async {
+      String emailAddress) async {
+    SignUpEntity entity = await localDataSource.getLastData();
     final ret = SignUpEntity(
       username: entity.username,
       password: entity.password,
@@ -54,15 +53,14 @@ class SignUpRepositoryImpl implements SignUpRepository {
       emailAddress: emailAddress,
       obscurePassword: entity.obscurePassword,
     );
-    localDataSource.cacheData(ret);
+    localDataSource.setData(ret);
     return Right(ret);
   }
 
   @override
   Future<Either<Failure, SignUpEntity>> setObscurePassword(
-    SignUpEntity entity,
-    bool obscurePassword,
-  ) async {
+      bool obscurePassword) async {
+    SignUpEntity entity = await localDataSource.getLastData();
     final ret = SignUpEntity(
       username: entity.username,
       password: entity.password,
@@ -70,15 +68,13 @@ class SignUpRepositoryImpl implements SignUpRepository {
       emailAddress: entity.emailAddress,
       obscurePassword: obscurePassword,
     );
-    localDataSource.cacheData(ret);
+    localDataSource.setData(ret);
     return Right(ret);
   }
 
   @override
-  Future<Either<Failure, SignUpEntity>> setPassword(
-    SignUpEntity entity,
-    String password,
-  ) async {
+  Future<Either<Failure, SignUpEntity>> setPassword(String password) async {
+    SignUpEntity entity = await localDataSource.getLastData();
     final ret = SignUpEntity(
       username: entity.username,
       password: password,
@@ -86,15 +82,14 @@ class SignUpRepositoryImpl implements SignUpRepository {
       emailAddress: entity.emailAddress,
       obscurePassword: entity.obscurePassword,
     );
-    localDataSource.cacheData(ret);
+    localDataSource.setData(ret);
     return Right(ret);
   }
 
   @override
   Future<Either<Failure, SignUpEntity>> setRepeatPassword(
-    SignUpEntity entity,
-    String repeatPassword,
-  ) async {
+      String repeatPassword) async {
+    SignUpEntity entity = await localDataSource.getLastData();
     final ret = SignUpEntity(
       username: entity.username,
       password: entity.password,
@@ -102,15 +97,13 @@ class SignUpRepositoryImpl implements SignUpRepository {
       emailAddress: entity.emailAddress,
       obscurePassword: entity.obscurePassword,
     );
-    localDataSource.cacheData(ret);
+    localDataSource.setData(ret);
     return Right(ret);
   }
 
   @override
-  Future<Either<Failure, SignUpEntity>> setUsername(
-    SignUpEntity entity,
-    String username,
-  ) async {
+  Future<Either<Failure, SignUpEntity>> setUsername(String username) async {
+    SignUpEntity entity = await localDataSource.getLastData();
     final ret = SignUpEntity(
       username: username,
       password: entity.password,
@@ -118,7 +111,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
       emailAddress: entity.emailAddress,
       obscurePassword: entity.obscurePassword,
     );
-    localDataSource.cacheData(ret);
+    localDataSource.setData(ret);
     return Right(ret);
   }
 }

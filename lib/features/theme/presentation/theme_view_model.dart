@@ -5,18 +5,18 @@ import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 import 'package:mall/features/theme/domain/usecases/usecases.dart' as Theme;
 
 class ThemeViewModel extends ChangeNotifier {
-  final Theme.GetData _getData;
-  final Theme.SetData _setData;
+  final Theme.GetLastTheme _glt;
+  final Theme.SetTheme _st;
 
-  ThemeEntity _currentEntity;
+  ThemeEntity _lastTheme;
 
   ThemeViewModel({
-    @required Theme.GetData getData,
-    @required Theme.SetData setData,
-  })  : assert(getData != null),
-        assert(setData != null),
-        _getData = getData,
-        _setData = setData {
+    @required Theme.GetLastTheme glt,
+    @required Theme.SetTheme st,
+  })  : assert(glt != null),
+        assert(st != null),
+        _glt = glt,
+        _st = st {
     print('#### ThemeViewModel - constructor');
   }
 
@@ -26,19 +26,19 @@ class ThemeViewModel extends ChangeNotifier {
     print('#### ThemeViewModel - dispose');
   }
 
-  ThemeEntity getCurrentData() {
-    if (_currentEntity == null) {
+  ThemeEntity getLastTheme() {
+    if (_lastTheme == null) {
       // returns default first
-      final defaultEntity = ThemeEntity(type: ThemeType.Light);
-      _currentEntity = defaultEntity;
+      final defaultTheme = ThemeEntity(type: ThemeType.Light);
+      _lastTheme = defaultTheme;
 
-      _getData.call(NoParams()).then((result) {
+      _glt.call(NoParams()).then((result) {
         result.fold(
           // set default if non-exist
-          (failure) => setCurrentData(defaultEntity.type),
+          (failure) => setTheme(defaultTheme.type),
           (entity) {
-            if (_currentEntity != entity) {
-              _currentEntity = entity;
+            if (_lastTheme != entity) {
+              _lastTheme = entity;
 
               // notify only if the value is different from the default
               notifyListeners();
@@ -47,18 +47,18 @@ class ThemeViewModel extends ChangeNotifier {
         );
       });
     }
-    return _currentEntity;
+    return _lastTheme;
   }
 
-  Future<Failure> setCurrentData(
+  Future<Failure> setTheme(
     ThemeType type, {
     bool notify = false,
   }) async {
     Failure ret;
-    await _setData.call(Theme.SetDataParams(type: type)).then((result) {
+    await _st.call(Theme.SetThemeParams(type: type)).then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _currentEntity = entity,
+        (entity) => _lastTheme = entity,
       );
     });
     if (notify) {

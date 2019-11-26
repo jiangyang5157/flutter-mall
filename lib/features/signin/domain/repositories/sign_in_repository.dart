@@ -12,17 +12,14 @@ abstract class SignInRepository {
   );
 
   Future<Either<Failure, SignInEntity>> setUsername(
-    SignInEntity entity,
     String username,
   );
 
   Future<Either<Failure, SignInEntity>> setPassword(
-    SignInEntity entity,
     String password,
   );
 
   Future<Either<Failure, SignInEntity>> setObscurePassword(
-    SignInEntity entity,
     bool obscurePassword,
   );
 }

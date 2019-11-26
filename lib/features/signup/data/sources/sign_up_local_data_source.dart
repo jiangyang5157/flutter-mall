@@ -5,15 +5,16 @@ abstract class SignUpLocalDataSource {
   /// Throws [CacheException] if no cached data is present.
   Future<SignUpEntity> getLastData();
 
-  Future<void> cacheData(SignUpEntity entity);
+  Future<SignUpEntity> setData(SignUpEntity entity);
 }
 
 class SignUpLocalDataSourceImpl implements SignUpLocalDataSource {
   SignUpEntity _entity;
 
   @override
-  Future<void> cacheData(SignUpEntity entity) async {
+  Future<SignUpEntity> setData(SignUpEntity entity) async {
     _entity = entity;
+    return _entity;
   }
 
   @override

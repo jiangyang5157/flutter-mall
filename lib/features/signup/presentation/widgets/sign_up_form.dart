@@ -64,19 +64,19 @@ class _SignUpFormState extends State<SignUpForm> {
 
     _usernameController.addListener(() {
       Provider.of<SignUpViewModel>(context)
-          .setUsername(_usernameController.text);
+          .setCurrentUsername(_usernameController.text);
     });
     _passwordController.addListener(() {
       Provider.of<SignUpViewModel>(context)
-          .setPassword(_passwordController.text);
+          .setCurrentPassword(_passwordController.text);
     });
     _repeatPasswordController.addListener(() {
       Provider.of<SignUpViewModel>(context)
-          .setRepeatPassword(_repeatPasswordController.text);
+          .setCurrentRepeatPassword(_repeatPasswordController.text);
     });
     _emailAddressController.addListener(() {
       Provider.of<SignUpViewModel>(context)
-          .setEmailAddress(_emailAddressController.text);
+          .setCurrentEmailAddress(_emailAddressController.text);
     });
   }
 
@@ -137,7 +137,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   suffixIcon: GestureDetector(
                     onTap: () {
                       setState(() {
-                        signUpViewModel.setObscurePassword(
+                        signUpViewModel.setCurrentObscurePassword(
                             !signUpViewModel.getCurrentData().obscurePassword);
                       });
                     },

@@ -11,6 +11,6 @@ class GetData implements UseCase<UserEntity, NoParams> {
 
   @override
   Future<Either<Failure, UserEntity>> call(NoParams params) async {
-    return await repository.getData();
+    return await repository.getCurrentUser();
   }
 }

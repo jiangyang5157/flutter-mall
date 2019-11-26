@@ -5,15 +5,16 @@ abstract class SignInLocalDataSource {
   /// Throws [CacheException] if no cached data is present.
   Future<SignInEntity> getLastData();
 
-  Future<void> cacheData(SignInEntity entity);
+  Future<SignInEntity> setData(SignInEntity entity);
 }
 
 class SignInLocalDataSourceImpl implements SignInLocalDataSource {
   SignInEntity _entity;
 
   @override
-  Future<void> cacheData(SignInEntity entity) async {
+  Future<SignInEntity> setData(SignInEntity entity) async {
     _entity = entity;
+    return _entity;
   }
 
   @override

@@ -14,7 +14,7 @@ class ServerRepositoryImpl implements ServerRepository {
   });
 
   @override
-  Future<Either<Failure, void>> initialization() async {
+  Future<Either<Failure, String>> initialization() async {
     if (await networkInfo.isConnected) {
       try {
         await Parse().initialize(
@@ -28,7 +28,7 @@ class ServerRepositoryImpl implements ServerRepository {
           // Local data storage method. Will use SharedPreferences instead of Sembast as an internal DB
           debug: true, // When enabled, prints logs to console
         );
-        return Right(null);
+        return Right(parseServerUrl);
       } catch (error) {
         return Left(ServerFailure(error.toString()));
       }

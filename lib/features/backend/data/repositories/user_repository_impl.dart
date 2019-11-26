@@ -8,6 +8,7 @@ import 'package:mall/features/backend/data/sources/user_local_data_source.dart';
 import 'package:mall/features/backend/data/sources/user_remote_data_source.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
 import 'package:mall/features/backend/domain/repositories/user_repository.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final UserLocalDataSource localDataSource;
@@ -22,7 +23,7 @@ class UserRepositoryImpl implements UserRepository {
   });
 
   @override
-  Future<Either<Failure, UserEntity>> getData() async {
+  Future<Either<Failure, UserEntity>> getCurrentUser() async {
     try {
       final local = await localDataSource.getLastData();
       return Right(local);
@@ -49,11 +50,11 @@ class UserRepositoryImpl implements UserRepository {
   ) async {
     UserModel model = entity as UserModel;
     model.displayImagePath = displayImagePath;
-    try {
-      await remoteDataSource.save(model);
+    ParseResponse result = await model.save();
+    if (result.success) {
       return Right(model);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+    } else {
+      return Left(ServerFailure(result.error.message));
     }
   }
 
@@ -64,11 +65,11 @@ class UserRepositoryImpl implements UserRepository {
   ) async {
     UserModel model = entity as UserModel;
     model.emailAddress = emailAddress;
-    try {
-      await remoteDataSource.save(model);
+    ParseResponse result = await model.save();
+    if (result.success) {
       return Right(model);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+    } else {
+      return Left(ServerFailure(result.error.message));
     }
   }
 
@@ -77,11 +78,11 @@ class UserRepositoryImpl implements UserRepository {
       UserEntity entity, String password) async {
     UserModel model = entity as UserModel;
     model.password = password;
-    try {
-      await remoteDataSource.save(model);
+    ParseResponse result = await model.save();
+    if (result.success) {
       return Right(model);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+    } else {
+      return Left(ServerFailure(result.error.message));
     }
   }
 
@@ -92,11 +93,11 @@ class UserRepositoryImpl implements UserRepository {
   ) async {
     UserModel model = entity as UserModel;
     model.type = type;
-    try {
-      await remoteDataSource.save(model);
+    ParseResponse result = await model.save();
+    if (result.success) {
       return Right(model);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+    } else {
+      return Left(ServerFailure(result.error.message));
     }
   }
 
@@ -107,77 +108,77 @@ class UserRepositoryImpl implements UserRepository {
   ) async {
     UserModel model = entity as UserModel;
     model.name = name;
-    try {
-      await remoteDataSource.save(model);
+    ParseResponse result = await model.save();
+    if (result.success) {
       return Right(model);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+    } else {
+      return Left(ServerFailure(result.error.message));
     }
   }
 
   @override
   Future<Either<Failure, UserEntity>> destroy(UserEntity entity) async {
     UserModel model = entity as UserModel;
-    try {
-      await remoteDataSource.destroy(model);
+    ParseResponse result = await model.destroy();
+    if (result.success) {
       return Right(model);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+    } else {
+      return Left(ServerFailure(result.error.message));
     }
   }
 
   @override
   Future<Either<Failure, UserEntity>> save(UserEntity entity) async {
     UserModel model = entity as UserModel;
-    try {
-      await remoteDataSource.save(model);
+    ParseResponse result = await model.save();
+    if (result.success) {
       return Right(model);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+    } else {
+      return Left(ServerFailure(result.error.message));
     }
   }
 
   @override
   Future<Either<Failure, UserEntity>> signIn(UserEntity entity) async {
     UserModel model = entity as UserModel;
-    try {
-      await remoteDataSource.signIn(model);
+    ParseResponse result = await model.signIn();
+    if (result.success) {
       return Right(model);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+    } else {
+      return Left(ServerFailure(result.error.message));
     }
   }
 
   @override
   Future<Either<Failure, UserEntity>> signInAnonymous(UserEntity entity) async {
     UserModel model = entity as UserModel;
-    try {
-      await remoteDataSource.signInAnonymous(model);
+    ParseResponse result = await model.signInAnonymous();
+    if (result.success) {
       return Right(model);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+    } else {
+      return Left(ServerFailure(result.error.message));
     }
   }
 
   @override
   Future<Either<Failure, UserEntity>> signOut(UserEntity entity) async {
     UserModel model = entity as UserModel;
-    try {
-      await remoteDataSource.signOut(model);
+    ParseResponse result = await model.signOut();
+    if (result.success) {
       return Right(model);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+    } else {
+      return Left(ServerFailure(result.error.message));
     }
   }
 
   @override
   Future<Either<Failure, UserEntity>> signUp(UserEntity entity) async {
     UserModel model = entity as UserModel;
-    try {
-      await remoteDataSource.signUp(model);
+    ParseResponse result = await model.signUp();
+    if (result.success) {
       return Right(model);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+    } else {
+      return Left(ServerFailure(result.error.message));
     }
   }
 }

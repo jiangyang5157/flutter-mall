@@ -53,4 +53,37 @@ class UserModel implements UserEntity {
 
   @override
   String toString() => user.toString();
+
+  Future<ParseResponse> signUp() async {
+    return await user.signUp();
+  }
+
+  Future<ParseResponse> signIn() async {
+    return await user.login();
+  }
+
+  Future<ParseResponse> signInAnonymous() async {
+    return await user.loginAnonymous();
+  }
+
+  Future<ParseResponse> signOut() async {
+    return await user.logout();
+  }
+
+  Future<ParseResponse> save() async {
+    return await user.save();
+  }
+
+  Future<bool> pin() async {
+    return await user.pin();
+  }
+
+  /// Removes a user from Parse Server locally and online
+  Future<ParseResponse> destroy() async {
+    return await user.destroy();
+  }
+
+  UserModel copy() {
+    return UserModel(user: user.copy());
+  }
 }

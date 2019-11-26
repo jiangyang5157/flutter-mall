@@ -34,49 +34,44 @@ class SignInRepositoryImpl implements SignInRepository {
       password: password,
       obscurePassword: obscurePassword,
     );
-    localDataSource.cacheData(entity);
+    localDataSource.setData(entity);
     return Right(entity);
   }
 
   @override
   Future<Either<Failure, SignInEntity>> setObscurePassword(
-    SignInEntity entity,
-    bool obscurePassword,
-  ) async {
+      bool obscurePassword) async {
+    SignInEntity entity = await localDataSource.getLastData();
     final ret = SignInEntity(
       username: entity.username,
       password: entity.password,
       obscurePassword: obscurePassword,
     );
-    localDataSource.cacheData(ret);
+    localDataSource.setData(ret);
     return Right(ret);
   }
 
   @override
-  Future<Either<Failure, SignInEntity>> setPassword(
-    SignInEntity entity,
-    String password,
-  ) async {
+  Future<Either<Failure, SignInEntity>> setPassword(String password) async {
+    SignInEntity entity = await localDataSource.getLastData();
     final ret = SignInEntity(
       username: entity.username,
       password: password,
       obscurePassword: entity.obscurePassword,
     );
-    localDataSource.cacheData(ret);
+    localDataSource.setData(ret);
     return Right(ret);
   }
 
   @override
-  Future<Either<Failure, SignInEntity>> setUsername(
-    SignInEntity entity,
-    String username,
-  ) async {
+  Future<Either<Failure, SignInEntity>> setUsername(String username) async {
+    SignInEntity entity = await localDataSource.getLastData();
     final ret = SignInEntity(
       username: username,
       password: entity.password,
       obscurePassword: entity.obscurePassword,
     );
-    localDataSource.cacheData(ret);
+    localDataSource.setData(ret);
     return Right(ret);
   }
 }

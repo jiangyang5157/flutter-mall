@@ -67,14 +67,14 @@ class _AuthPageState extends State<AuthPage> {
                             Padding(
                               padding: const EdgeInsets.all(sizeLarge),
                               child: _buildForm(context,
-                                  authViewModel.getCurrentData().state),
+                                  authViewModel.getLastAuth().state),
                             ),
                             Spacer(),
                             Container(
                               height: authBottomContainerHeight,
                               alignment: Alignment.topCenter,
                               child: _buildFormSelector(context,
-                                  authViewModel.getCurrentData().state),
+                                  authViewModel.getLastAuth().state),
                             ),
                           ],
                         ),
@@ -167,7 +167,7 @@ class _AuthPageState extends State<AuthPage> {
                     string(context, 'label_sign_up_action'),
                   ),
                   onPressed: () {
-                    authViewModel.setCurrentData(
+                    authViewModel.setAuth(
                       AuthState.SignUp,
                       notify: true,
                     );
@@ -219,7 +219,7 @@ class _AuthPageState extends State<AuthPage> {
                 string(context, 'label_sign_in_action'),
               ),
               onPressed: () =>
-                  authViewModel.setCurrentData(AuthState.SignIn, notify: true),
+                  authViewModel.setAuth(AuthState.SignIn, notify: true),
             ),
           ],
         );
