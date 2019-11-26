@@ -24,12 +24,12 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     print('#### _SplashPageState - initState');
+
     _init();
   }
 
   Future<void> _init() async {
-    StartupViewModel startupViewModel = locator<StartupViewModel>();
-    final failure = await startupViewModel.initialization();
+    final failure = await locator<StartupViewModel>().initialization();
     if (failure == null) {
       UserViewModel userViewModel = Provider.of<UserViewModel>(context);
       await userViewModel.syncCurrentData();

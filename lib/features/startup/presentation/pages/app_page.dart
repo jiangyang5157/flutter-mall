@@ -45,7 +45,7 @@ class _AppPageState extends State<AppPage> {
             builder: (context) => userViewModel),
       ],
       child: Consumer2<ThemeViewModel, UserViewModel>(
-        builder: (context, themeViewModel, userModel, _) {
+        builder: (context, themeViewModel, userViewModel, _) {
           return MaterialApp(
             localizationsDelegates: [
               const StringDelegate(),
