@@ -107,9 +107,9 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
                             onPressed: () async {
                               FocusScope.of(context).unfocus();
                               if (_formKey.currentState.validate()) {
-                                await userViewModel.setEmailAddress(
-                                    _emailAddressController.text);
-                                final failure = await userViewModel.save();
+                                final failure =
+                                    await userViewModel.setEmailAddress(
+                                        _emailAddressController.text);
                                 if (failure != null) {
                                   userViewModel
                                       .setEmailAddress(_emailAddressBefore);

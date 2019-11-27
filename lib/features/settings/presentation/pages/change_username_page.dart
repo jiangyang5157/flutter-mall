@@ -106,9 +106,8 @@ class _ChangeUsernamePageState extends State<ChangeUsernamePage> {
                             onPressed: () async {
                               FocusScope.of(context).unfocus();
                               if (_formKey.currentState.validate()) {
-                                await userViewModel
+                                final failure = await userViewModel
                                     .setName(_usernameController.text);
-                                final failure = await userViewModel.save();
                                 if (failure != null) {
                                   userViewModel.setName(_usernameBefore);
                                 }

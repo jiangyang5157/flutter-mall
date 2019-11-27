@@ -156,9 +156,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             onPressed: () async {
                               FocusScope.of(context).unfocus();
                               if (_formKey.currentState.validate()) {
-                                await userViewModel
+                                final failure = await userViewModel
                                     .setPassword(_passwordController.text);
-                                final failure = await userViewModel.save();
                                 if (failure != null) {
                                   userViewModel.setPassword(_passwordBefore);
                                 }

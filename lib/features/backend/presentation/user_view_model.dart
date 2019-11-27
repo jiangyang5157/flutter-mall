@@ -97,11 +97,12 @@ class UserViewModel extends ChangeNotifier {
     Failure ret;
     await _sdip
         .call(User.SetDisplayImagePathParams(displayImagePath,
-            entity: model == null ?? _lastUser))
+            entity: model == null ? _lastUser : model))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) {
+          print('#### $model setDisplayImagePath result: $entity');
           if (model == null) {
             _lastUser = entity;
           }
@@ -122,11 +123,12 @@ class UserViewModel extends ChangeNotifier {
     Failure ret;
     await _sea
         .call(User.SetEmailAddressParams(emailAddress,
-            entity: model == null ?? _lastUser))
+            entity: model == null ? _lastUser : model))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) {
+          print('#### $model setEmailAddress result: $entity');
           if (model == null) {
             _lastUser = entity;
           }
@@ -146,11 +148,13 @@ class UserViewModel extends ChangeNotifier {
   }) async {
     Failure ret;
     await _sn
-        .call(User.SetNameParams(name, entity: model == null ?? _lastUser))
+        .call(
+            User.SetNameParams(name, entity: model == null ? _lastUser : model))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) {
+          print('#### $model setName result: $entity');
           if (model == null) {
             _lastUser = entity;
           }
@@ -171,11 +175,12 @@ class UserViewModel extends ChangeNotifier {
     Failure ret;
     await _sp
         .call(User.SetPasswordParams(password,
-            entity: model == null ?? _lastUser))
+            entity: model == null ? _lastUser : model))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) {
+          print('#### $model setPassword result: $entity');
           if (model == null) {
             _lastUser = entity;
           }
@@ -195,11 +200,13 @@ class UserViewModel extends ChangeNotifier {
   }) async {
     Failure ret;
     await _st
-        .call(User.SetTypeParams(type, entity: model == null ?? _lastUser))
+        .call(
+            User.SetTypeParams(type, entity: model == null ? _lastUser : model))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) {
+          print('#### $model setType result: $entity');
           if (model == null) {
             _lastUser = entity;
           }
@@ -284,11 +291,12 @@ class UserViewModel extends ChangeNotifier {
   }) async {
     Failure ret;
     await _s
-        .call(User.SaveParams(entity: model == null ?? _lastUser))
+        .call(User.SaveParams(entity: model == null ? _lastUser : model))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) {
+          print('#### $model save result: $entity');
           if (model == null) {
             _lastUser = entity;
           }
@@ -307,11 +315,12 @@ class UserViewModel extends ChangeNotifier {
   }) async {
     Failure ret;
     await _so
-        .call(User.SignOutParams(entity: model == null ?? _lastUser))
+        .call(User.SignOutParams(entity: model == null ? _lastUser : model))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) {
+          print('#### $model signOut result: $entity');
           if (model == null) {
             _lastUser = entity;
           }
@@ -330,11 +339,12 @@ class UserViewModel extends ChangeNotifier {
   }) async {
     Failure ret;
     await _d
-        .call(User.DestroyParams(entity: model == null ?? _lastUser))
+        .call(User.DestroyParams(entity: model == null ? _lastUser : model))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) {
+          print('#### $model destroy result: $entity');
           if (model == null) {
             _lastUser = entity;
           }

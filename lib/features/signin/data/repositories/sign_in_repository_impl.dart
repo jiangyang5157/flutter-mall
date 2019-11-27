@@ -41,7 +41,13 @@ class SignInRepositoryImpl implements SignInRepository {
   @override
   Future<Either<Failure, SignInEntity>> setObscurePassword(
       bool obscurePassword) async {
-    SignInEntity entity = await localDataSource.getLastData();
+    SignInEntity entity;
+    try {
+      entity = await localDataSource.getLastData();
+    } on CacheException {
+      return Left(CacheFailure());
+    }
+
     final ret = SignInEntity(
       username: entity.username,
       password: entity.password,
@@ -53,7 +59,13 @@ class SignInRepositoryImpl implements SignInRepository {
 
   @override
   Future<Either<Failure, SignInEntity>> setPassword(String password) async {
-    SignInEntity entity = await localDataSource.getLastData();
+    SignInEntity entity;
+    try {
+      entity = await localDataSource.getLastData();
+    } on CacheException {
+      return Left(CacheFailure());
+    }
+
     final ret = SignInEntity(
       username: entity.username,
       password: password,
@@ -65,7 +77,13 @@ class SignInRepositoryImpl implements SignInRepository {
 
   @override
   Future<Either<Failure, SignInEntity>> setUsername(String username) async {
-    SignInEntity entity = await localDataSource.getLastData();
+    SignInEntity entity;
+    try {
+      entity = await localDataSource.getLastData();
+    } on CacheException {
+      return Left(CacheFailure());
+    }
+
     final ret = SignInEntity(
       username: username,
       password: entity.password,

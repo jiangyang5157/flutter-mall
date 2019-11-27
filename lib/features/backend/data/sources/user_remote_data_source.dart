@@ -33,10 +33,9 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     if (_model == null || !fromMemory) {
       ParseResponse result = await ParseUser.getCurrentUserFromServer();
       if (result == null) {
-        throw ServerException("Current user cannot be found from server.");
+        throw ServerException("No response returned from server.");
       } else if (!result.success) {
-        throw ServerException(
-            "Current user cannot be found from server: ${result.error.message}");
+        throw ServerException("${result.error.message}");
       } else {
         _model = UserModel(user: result.result);
       }
@@ -47,55 +46,78 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<UserModel> destroy(UserModel model) async {
     ParseResponse result = await model.user.destroy();
-    if (!result.success) {
-      throw ServerException("Destroy user failed: ${result.error.message}");
+    if (result == null) {
+      throw ServerException("No response returned from server.");
+    } else if (!result.success) {
+      throw ServerException("${result.error.message}");
+    } else {
+      print('#### userremotedata: destroy result: ${result.result}');
+      return UserModel(user: result.result);
     }
-    return result.result;
   }
 
   @override
   Future<UserModel> save(UserModel model) async {
     ParseResponse result = await model.user.save();
-    if (!result.success) {
-      throw ServerException("Save user failed: ${result.error.message}");
+    if (result == null) {
+      throw ServerException("No response returned from server.");
+    } else if (!result.success) {
+      throw ServerException("${result.error.message}");
+    } else {
+      print('#### userremotedata: save result: ${result.result}');
+      return UserModel(user: result.result);
     }
-    return result.result;
   }
 
   @override
   Future<UserModel> signIn(UserModel model) async {
     ParseResponse result = await model.user.login();
-    if (!result.success) {
-      throw ServerException("Sign in user failed: ${result.error.message}");
+    if (result == null) {
+      throw ServerException("No response returned from server.");
+    } else if (!result.success) {
+      throw ServerException("${result.error.message}");
+    } else {
+      print('#### userremotedata: signIn result: ${result.result}');
+      return UserModel(user: result.result);
     }
-    return result.result;
   }
 
   @override
   Future<UserModel> signInAnonymous(UserModel model) async {
     ParseResponse result = await model.user.loginAnonymous();
-    if (!result.success) {
-      throw ServerException(
-          "Sign in anonymous user failed: ${result.error.message}");
+    if (result == null) {
+      throw ServerException("No response returned from server.");
+    } else if (!result.success) {
+      throw ServerException("${result.error.message}");
+    } else {
+      print('#### userremotedata: signInAnonymous result: ${result.result}');
+      return UserModel(user: result.result);
     }
-    return result.result;
   }
 
   @override
   Future<UserModel> signOut(UserModel model) async {
     ParseResponse result = await model.user.logout(deleteLocalUserData: true);
-    if (!result.success) {
-      throw ServerException("Sign out user failed: ${result.error.message}");
+    if (result == null) {
+      throw ServerException("No response returned from server.");
+    } else if (!result.success) {
+      throw ServerException("${result.error.message}");
+    } else {
+      print('#### userremotedata: signOut result: ${result.result}');
+      return UserModel(user: result.result);
     }
-    return result.result;
   }
 
   @override
   Future<UserModel> signUp(UserModel model) async {
     ParseResponse result = await model.user.signUp();
-    if (!result.success) {
-      throw ServerException("Sign up user failed: ${result.error.message}");
+    if (result == null) {
+      throw ServerException("No response returned from server.");
+    } else if (!result.success) {
+      throw ServerException("${result.error.message}");
+    } else {
+      print('#### userremotedata: signUp result: ${result.result}');
+      return UserModel(user: result.result);
     }
-    return result.result;
   }
 }
