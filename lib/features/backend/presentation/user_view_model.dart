@@ -96,11 +96,16 @@ class UserViewModel extends ChangeNotifier {
   }) async {
     Failure ret;
     await _sdip
-        .call(User.SetDisplayImagePathParams(displayImagePath, entity: model))
+        .call(User.SetDisplayImagePathParams(displayImagePath,
+            entity: model == null ?? _lastUser))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _lastUser = entity, // TODO
+        (entity) {
+          if (model == null) {
+            _lastUser = entity;
+          }
+        },
       );
     });
     if (notify) {
@@ -116,11 +121,16 @@ class UserViewModel extends ChangeNotifier {
   }) async {
     Failure ret;
     await _sea
-        .call(User.SetEmailAddressParams(emailAddress, entity: model))
+        .call(User.SetEmailAddressParams(emailAddress,
+            entity: model == null ?? _lastUser))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _lastUser = entity, // TODO
+        (entity) {
+          if (model == null) {
+            _lastUser = entity;
+          }
+        },
       );
     });
     if (notify) {
@@ -135,10 +145,16 @@ class UserViewModel extends ChangeNotifier {
     bool notify = false,
   }) async {
     Failure ret;
-    await _sn.call(User.SetNameParams(name, entity: model)).then((result) {
+    await _sn
+        .call(User.SetNameParams(name, entity: model == null ?? _lastUser))
+        .then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _lastUser = entity, // TODO
+        (entity) {
+          if (model == null) {
+            _lastUser = entity;
+          }
+        },
       );
     });
     if (notify) {
@@ -154,11 +170,16 @@ class UserViewModel extends ChangeNotifier {
   }) async {
     Failure ret;
     await _sp
-        .call(User.SetPasswordParams(password, entity: model))
+        .call(User.SetPasswordParams(password,
+            entity: model == null ?? _lastUser))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _lastUser = entity, // TODO
+        (entity) {
+          if (model == null) {
+            _lastUser = entity;
+          }
+        },
       );
     });
     if (notify) {
@@ -173,102 +194,15 @@ class UserViewModel extends ChangeNotifier {
     bool notify = false,
   }) async {
     Failure ret;
-    await _st.call(User.SetTypeParams(type, entity: model)).then((result) {
-      result.fold(
-        (failure) => ret = failure,
-        (entity) => _lastUser = entity, // TODO
-      );
-    });
-    if (notify) {
-      notifyListeners();
-    }
-    return ret;
-  }
-
-  Future<Failure> destroy({
-    UserModel model,
-    bool notify = false,
-  }) async {
-    Failure ret;
-    await _d.call(User.DestroyParams(entity: model)).then((result) {
-      result.fold(
-        (failure) => ret = failure,
-        (entity) => _lastUser = entity, // TODO is entity null?
-      );
-    });
-    if (notify) {
-      notifyListeners();
-    }
-    return ret;
-  }
-
-  Future<Failure> save({
-    UserModel model,
-    bool notify = false,
-  }) async {
-    Failure ret;
-    await _s.call(User.SaveParams(entity: model)).then((result) {
-      result.fold(
-        (failure) => ret = failure,
-        (entity) => _lastUser = entity, // TODO
-      );
-    });
-    if (notify) {
-      notifyListeners();
-    }
-    return ret;
-  }
-
-  Future<Failure> signOut({
-    UserModel model,
-    bool notify = false,
-  }) async {
-    Failure ret;
-    await _so.call(User.SignOutParams(entity: model)).then((result) {
-      result.fold(
-        (failure) => ret = failure,
-        (entity) => _lastUser = entity, // TODO is entity null?
-      );
-    });
-    if (notify) {
-      notifyListeners();
-    }
-    return ret;
-  }
-
-  Future<Failure> signIn({
-    String username,
-    String password,
-    String emailAddress,
-    bool notify = false,
-  }) async {
-    UserModel newModel =
-        UserModel(user: ParseUser.createUser(username, password, emailAddress));
-    Failure ret;
-    await _si.call(User.SignInParams(entity: newModel)).then((result) {
-      result.fold(
-        (failure) => ret = failure,
-        (entity) => _lastUser = entity, // TODO
-      );
-    });
-    if (notify) {
-      notifyListeners();
-    }
-    return ret;
-  }
-
-  Future<Failure> signInAnonymous({bool notify = false}) async {
-    UserModel newModel = UserModel(user: ParseUser.createUser());
-    Failure ret;
-    await _sia
-        .call(User.SignInAnonymousParams(entity: newModel))
+    await _st
+        .call(User.SetTypeParams(type, entity: model == null ?? _lastUser))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) async {
-          _lastUser = entity; // TODO
-          await setType(UserType.Anonymous, model: entity);
-          _lastUser = entity; // TODO
+        (entity) {
+          if (model == null) {
+            _lastUser = entity;
+          }
         },
       );
     });
@@ -292,9 +226,118 @@ class UserViewModel extends ChangeNotifier {
       result.fold(
         (failure) => ret = failure,
         (entity) async {
-          _lastUser = entity; // TODO
-          await setType(type, model: entity);
-          _lastUser = entity; // TODO
+          _lastUser = entity;
+          await setType(type);
+        },
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+    return ret;
+  }
+
+  Future<Failure> signIn({
+    String username,
+    String password,
+    String emailAddress,
+    bool notify = false,
+  }) async {
+    UserModel newModel =
+        UserModel(user: ParseUser.createUser(username, password, emailAddress));
+    Failure ret;
+    await _si.call(User.SignInParams(entity: newModel)).then((result) {
+      result.fold(
+        (failure) => ret = failure,
+        (entity) => _lastUser = entity,
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+    return ret;
+  }
+
+  Future<Failure> signInAnonymous({bool notify = false}) async {
+    UserModel newModel = UserModel(user: ParseUser.createUser());
+    Failure ret;
+    await _sia
+        .call(User.SignInAnonymousParams(entity: newModel))
+        .then((result) {
+      result.fold(
+        (failure) => ret = failure,
+        (entity) async {
+          _lastUser = entity;
+          await setType(UserType.Anonymous);
+        },
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+    return ret;
+  }
+
+  Future<Failure> save({
+    UserModel model,
+    bool notify = false,
+  }) async {
+    Failure ret;
+    await _s
+        .call(User.SaveParams(entity: model == null ?? _lastUser))
+        .then((result) {
+      result.fold(
+        (failure) => ret = failure,
+        (entity) {
+          if (model == null) {
+            _lastUser = entity;
+          }
+        },
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+    return ret;
+  }
+
+  Future<Failure> signOut({
+    UserModel model,
+    bool notify = false,
+  }) async {
+    Failure ret;
+    await _so
+        .call(User.SignOutParams(entity: model == null ?? _lastUser))
+        .then((result) {
+      result.fold(
+        (failure) => ret = failure,
+        (entity) {
+          if (model == null) {
+            _lastUser = entity;
+          }
+        },
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+    return ret;
+  }
+
+  Future<Failure> destroy({
+    UserModel model,
+    bool notify = false,
+  }) async {
+    Failure ret;
+    await _d
+        .call(User.DestroyParams(entity: model == null ?? _lastUser))
+        .then((result) {
+      result.fold(
+        (failure) => ret = failure,
+        (entity) {
+          if (model == null) {
+            _lastUser = entity;
+          }
         },
       );
     });
