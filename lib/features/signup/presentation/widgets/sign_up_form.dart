@@ -64,19 +64,19 @@ class _SignUpFormState extends State<SignUpForm> {
 
     _usernameController.addListener(() {
       Provider.of<SignUpViewModel>(context)
-          .setCurrentUsername(_usernameController.text);
+          .setUsername(_usernameController.text);
     });
     _passwordController.addListener(() {
       Provider.of<SignUpViewModel>(context)
-          .setCurrentPassword(_passwordController.text);
+          .setPassword(_passwordController.text);
     });
     _repeatPasswordController.addListener(() {
       Provider.of<SignUpViewModel>(context)
-          .setCurrentRepeatPassword(_repeatPasswordController.text);
+          .setRepeatPassword(_repeatPasswordController.text);
     });
     _emailAddressController.addListener(() {
       Provider.of<SignUpViewModel>(context)
-          .setCurrentEmailAddress(_emailAddressController.text);
+          .setEmailAddress(_emailAddressController.text);
     });
   }
 
@@ -86,13 +86,13 @@ class _SignUpFormState extends State<SignUpForm> {
 
     SignUpViewModel signUpViewModel = Provider.of<SignUpViewModel>(context);
     _usernameController
-        .setTextAndPosition(signUpViewModel.getCurrentData().username);
+        .setTextAndPosition(signUpViewModel.getLastData().username);
     _passwordController
-        .setTextAndPosition(signUpViewModel.getCurrentData().password);
+        .setTextAndPosition(signUpViewModel.getLastData().password);
     _repeatPasswordController
-        .setTextAndPosition(signUpViewModel.getCurrentData().repeatPassword);
+        .setTextAndPosition(signUpViewModel.getLastData().repeatPassword);
     _emailAddressController
-        .setTextAndPosition(signUpViewModel.getCurrentData().emailAddress);
+        .setTextAndPosition(signUpViewModel.getLastData().emailAddress);
 
     return Form(
       key: _formKey,
@@ -137,17 +137,17 @@ class _SignUpFormState extends State<SignUpForm> {
                   suffixIcon: GestureDetector(
                     onTap: () {
                       setState(() {
-                        signUpViewModel.setCurrentObscurePassword(
-                            !signUpViewModel.getCurrentData().obscurePassword);
+                        signUpViewModel.setObscurePassword(
+                            !signUpViewModel.getLastData().obscurePassword);
                       });
                     },
-                    child: Icon(signUpViewModel.getCurrentData().obscurePassword
+                    child: Icon(signUpViewModel.getLastData().obscurePassword
                         ? Icons.visibility_off
                         : Icons.visibility),
                   ),
                 ),
                 style: TextStyle(fontSize: textFieldFontSize),
-                obscureText: signUpViewModel.getCurrentData().obscurePassword,
+                obscureText: signUpViewModel.getLastData().obscurePassword,
                 textInputAction: TextInputAction.next,
                 enableInteractiveSelection: false,
                 controller: _passwordController,

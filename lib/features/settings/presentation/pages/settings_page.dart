@@ -51,7 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   List<Widget> _buildSettingsList(BuildContext context) {
     UserViewModel userViewModel = Provider.of<UserViewModel>(context);
-    UserModel userModel = userViewModel.getCurrentData();
+    UserModel userModel = userViewModel.getLastUser();
     var ret = List<Widget>();
     ret.addAll(_buildProfileList(context, userModel.type));
     ret.add(Divider());

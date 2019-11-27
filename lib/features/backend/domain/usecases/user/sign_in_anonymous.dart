@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
@@ -13,14 +12,12 @@ class SignInAnonymous implements UseCase<UserEntity, SignInAnonymousParams> {
 
   @override
   Future<Either<Failure, UserEntity>> call(SignInAnonymousParams params) async {
-    return await repository.signInAnonymous(params.entity);
+    return await repository.signInAnonymous(entity: params.entity);
   }
 }
 
 class SignInAnonymousParams extends Equatable {
   final UserEntity entity;
 
-  SignInAnonymousParams({
-    @required this.entity,
-  }) : super([entity]);
+  SignInAnonymousParams({this.entity}) : super([entity]);
 }

@@ -14,9 +14,10 @@ class AuthRepositoryImpl implements AuthRepository {
   });
 
   @override
-  Future<Either<Failure, AuthEntity>> getLastAuth() async {
+  Future<Either<Failure, AuthEntity>> getLastAuth(
+      {bool fromMemory = true}) async {
     try {
-      return Right(await localDataSource.getLastAuth());
+      return Right(await localDataSource.getLastAuth(fromMemory: fromMemory));
     } on CacheException {
       return Left(CacheFailure());
     }

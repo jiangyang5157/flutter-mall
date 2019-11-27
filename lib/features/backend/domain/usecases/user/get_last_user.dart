@@ -5,19 +5,19 @@ import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
 import 'package:mall/features/backend/domain/repositories/user_repository.dart';
 
-class Save implements UseCase<UserEntity, SaveParams> {
+class GetLastUser implements UseCase<UserEntity, GetLastUserParams> {
   final UserRepository repository;
 
-  Save(this.repository);
+  GetLastUser(this.repository);
 
   @override
-  Future<Either<Failure, UserEntity>> call(SaveParams params) async {
-    return await repository.save(entity: params.entity);
+  Future<Either<Failure, UserEntity>> call(GetLastUserParams params) async {
+    return await repository.getLastUser(fromMemory: params.fromMemory);
   }
 }
 
-class SaveParams extends Equatable {
-  final UserEntity entity;
+class GetLastUserParams extends Equatable {
+  final bool fromMemory;
 
-  SaveParams({this.entity}) : super([entity]);
+  GetLastUserParams({this.fromMemory = true}) : super([fromMemory]);
 }

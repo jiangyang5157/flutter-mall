@@ -57,7 +57,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     print('#### _ChangePasswordPageState - build');
 
     UserViewModel userViewModel = Provider.of<UserViewModel>(context);
-    UserModel userModel = userViewModel.getCurrentData();
+    UserModel userModel = userViewModel.getLastUser();
     if (_passwordBefore == null) {
       _passwordBefore = userModel.password;
     }

@@ -123,18 +123,18 @@ Future<void> init() async {
         initialization: locator(),
       ));
   locator.registerFactory(() => UserViewModel(
-        getData: locator(),
-        setDisplayImagePath: locator(),
-        setEmailAddress: locator(),
-        setName: locator(),
-        setPassword: locator(),
-        setType: locator(),
-        destroy: locator(),
-        save: locator(),
-        signIn: locator(),
-        signInAnonymous: locator(),
-        signOut: locator(),
-        signUp: locator(),
+        glu: locator(),
+        sdip: locator(),
+        sea: locator(),
+        sn: locator(),
+        sp: locator(),
+        st: locator(),
+        d: locator(),
+        s: locator(),
+        si: locator(),
+        sia: locator(),
+        so: locator(),
+        su: locator(),
       ));
 
   /// Use cases
@@ -155,7 +155,7 @@ Future<void> init() async {
   locator.registerFactory(() => Auth.GetLastAuth(locator()));
   locator.registerFactory(() => Auth.SetAuth(locator()));
   locator.registerFactory(() => Server.Initialization(locator()));
-  locator.registerFactory(() => User.GetData(locator()));
+  locator.registerFactory(() => User.GetLastUser(locator()));
   locator.registerFactory(() => User.SetDisplayImagePath(locator()));
   locator.registerFactory(() => User.SetEmailAddress(locator()));
   locator.registerFactory(() => User.SetName(locator()));

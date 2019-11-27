@@ -32,8 +32,8 @@ class _SplashPageState extends State<SplashPage> {
     final failure = await locator<StartupViewModel>().initialization();
     if (failure == null) {
       UserViewModel userViewModel = Provider.of<UserViewModel>(context);
-      await userViewModel.syncCurrentData();
-      if (userViewModel.getCurrentData() != null) {
+      final failure = await userViewModel.fetchLastUser();
+      if (failure == null && userViewModel.getLastUser() != null) {
         locator<Nav>().router.navigateTo(context, 'HomePage',
             clearStack: true, transition: TransitionType.fadeIn);
       } else {

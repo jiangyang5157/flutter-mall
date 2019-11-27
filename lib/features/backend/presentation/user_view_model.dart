@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
-import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/backend/data/models/user_model.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
 import 'package:mall/features/backend/domain/usecases/user/usecases.dart'
@@ -8,58 +7,58 @@ import 'package:mall/features/backend/domain/usecases/user/usecases.dart'
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 class UserViewModel extends ChangeNotifier {
-  final User.GetData _getData;
-  final User.SetDisplayImagePath _setDisplayImagePath;
-  final User.SetEmailAddress _setEmailAddress;
-  final User.SetName _setName;
-  final User.SetPassword _setPassword;
-  final User.SetType _setType;
-  final User.Destroy _destroy;
-  final User.Save _save;
-  final User.SignIn _signIn;
-  final User.SignInAnonymous _signInAnonymous;
-  final User.SignOut _signOut;
-  final User.SignUp _signUp;
+  final User.GetLastUser _glu;
+  final User.SetDisplayImagePath _sdip;
+  final User.SetEmailAddress _sea;
+  final User.SetName _sn;
+  final User.SetPassword _sp;
+  final User.SetType _st;
+  final User.Destroy _d;
+  final User.Save _s;
+  final User.SignIn _si;
+  final User.SignInAnonymous _sia;
+  final User.SignOut _so;
+  final User.SignUp _su;
 
-  UserModel _currentEntity;
+  UserModel _lastUser;
 
   UserViewModel({
-    @required User.GetData getData,
-    @required User.SetDisplayImagePath setDisplayImagePath,
-    @required User.SetEmailAddress setEmailAddress,
-    @required User.SetName setName,
-    @required User.SetPassword setPassword,
-    @required User.SetType setType,
-    @required User.Destroy destroy,
-    @required User.Save save,
-    @required User.SignIn signIn,
-    @required User.SignInAnonymous signInAnonymous,
-    @required User.SignOut signOut,
-    @required User.SignUp signUp,
-  })  : assert(getData != null),
-        assert(setDisplayImagePath != null),
-        assert(setEmailAddress != null),
-        assert(setName != null),
-        assert(setPassword != null),
-        assert(setType != null),
-        assert(destroy != null),
-        assert(save != null),
-        assert(signIn != null),
-        assert(signInAnonymous != null),
-        assert(signOut != null),
-        assert(signUp != null),
-        _getData = getData,
-        _setDisplayImagePath = setDisplayImagePath,
-        _setEmailAddress = setEmailAddress,
-        _setName = setName,
-        _setPassword = setPassword,
-        _destroy = destroy,
-        _save = save,
-        _signIn = signIn,
-        _signInAnonymous = signInAnonymous,
-        _signOut = signOut,
-        _setType = setType,
-        _signUp = signUp {
+    @required User.GetLastUser glu,
+    @required User.SetDisplayImagePath sdip,
+    @required User.SetEmailAddress sea,
+    @required User.SetName sn,
+    @required User.SetPassword sp,
+    @required User.SetType st,
+    @required User.Destroy d,
+    @required User.Save s,
+    @required User.SignIn si,
+    @required User.SignInAnonymous sia,
+    @required User.SignOut so,
+    @required User.SignUp su,
+  })  : assert(glu != null),
+        assert(sdip != null),
+        assert(sea != null),
+        assert(sn != null),
+        assert(sp != null),
+        assert(st != null),
+        assert(d != null),
+        assert(s != null),
+        assert(si != null),
+        assert(sia != null),
+        assert(so != null),
+        assert(su != null),
+        _glu = glu,
+        _sdip = sdip,
+        _sea = sea,
+        _sn = sn,
+        _sp = sp,
+        _d = d,
+        _s = s,
+        _si = si,
+        _sia = sia,
+        _so = so,
+        _st = st,
+        _su = su {
     print('#### UserViewModel - constructor');
   }
 
@@ -69,16 +68,19 @@ class UserViewModel extends ChangeNotifier {
     print('#### UserViewModel - dispose');
   }
 
-  UserModel getCurrentData() {
-    return _currentEntity;
+  UserModel getLastUser() {
+    if (_lastUser == null) {
+      fetchLastUser(notify: true);
+    }
+    return _lastUser;
   }
 
-  Future<Failure> syncCurrentData({bool notify = false}) async {
+  Future<Failure> fetchLastUser({bool notify = false}) async {
     Failure ret;
-    await _getData.call(NoParams()).then((result) {
+    await _glu.call(User.GetLastUserParams()).then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _currentEntity = entity,
+        (entity) => _lastUser = entity,
       );
     });
     if (notify) {
@@ -89,16 +91,16 @@ class UserViewModel extends ChangeNotifier {
 
   Future<Failure> setDisplayImagePath(
     String displayImagePath, {
+    UserEntity entity,
     bool notify = false,
   }) async {
     Failure ret;
-    await _setDisplayImagePath
-        .call(User.SetDisplayImagePathParams(
-            entity: _currentEntity, displayImagePath: displayImagePath))
+    await _sdip
+        .call(User.SetDisplayImagePathParams(displayImagePath, entity: entity))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _currentEntity = entity,
+        (entity) => _lastUser = entity,
       );
     });
     if (notify) {
@@ -109,16 +111,16 @@ class UserViewModel extends ChangeNotifier {
 
   Future<Failure> setEmailAddress(
     String emailAddress, {
+    UserEntity entity,
     bool notify = false,
   }) async {
     Failure ret;
-    await _setEmailAddress
-        .call(User.SetEmailAddressParams(
-            entity: _currentEntity, emailAddress: emailAddress))
+    await _sea
+        .call(User.SetEmailAddressParams(emailAddress, entity: _lastUser))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _currentEntity = entity,
+        (entity) => _lastUser = entity,
       );
     });
     if (notify) {
@@ -129,15 +131,16 @@ class UserViewModel extends ChangeNotifier {
 
   Future<Failure> setName(
     String name, {
+    UserEntity entity,
     bool notify = false,
   }) async {
     Failure ret;
-    await _setName
-        .call(User.SetNameParams(entity: _currentEntity, name: name))
+    await _sn
+        .call(User.SetNameParams(entity: _lastUser, name: name))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _currentEntity = entity,
+        (entity) => _lastUser = entity,
       );
     });
     if (notify) {
@@ -148,16 +151,16 @@ class UserViewModel extends ChangeNotifier {
 
   Future<Failure> setPassword(
     String password, {
+    UserEntity entity,
     bool notify = false,
   }) async {
     Failure ret;
-    await _setPassword
-        .call(
-            User.SetPasswordParams(entity: _currentEntity, password: password))
+    await _sp
+        .call(User.SetPasswordParams(entity: _lastUser, password: password))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _currentEntity = entity,
+        (entity) => _lastUser = entity,
       );
     });
     if (notify) {
@@ -168,15 +171,16 @@ class UserViewModel extends ChangeNotifier {
 
   Future<Failure> setType(
     UserType type, {
+    UserEntity entity,
     bool notify = false,
   }) async {
     Failure ret;
-    await _setType
-        .call(User.SetTypeParams(entity: _currentEntity, type: type))
+    await _st
+        .call(User.SetTypeParams(entity: _lastUser, type: type))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _currentEntity = entity,
+        (entity) => _lastUser = entity,
       );
     });
     if (notify) {
@@ -187,12 +191,10 @@ class UserViewModel extends ChangeNotifier {
 
   Future<Failure> destroy({bool notify = false}) async {
     Failure ret;
-    await _destroy
-        .call(User.DestroyParams(entity: _currentEntity))
-        .then((result) {
+    await _d.call(User.DestroyParams(entity: _lastUser)).then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _currentEntity = entity,
+        (entity) => _lastUser = entity,
       );
     });
     if (notify) {
@@ -203,10 +205,10 @@ class UserViewModel extends ChangeNotifier {
 
   Future<Failure> save({bool notify = false}) async {
     Failure ret;
-    await _save.call(User.SaveParams(entity: _currentEntity)).then((result) {
+    await _s.call(User.SaveParams(entity: _lastUser)).then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _currentEntity = entity,
+        (entity) => _lastUser = entity,
       );
     });
     if (notify) {
@@ -217,16 +219,14 @@ class UserViewModel extends ChangeNotifier {
 
   Future<Failure> signOut({bool notify = false}) async {
     Failure ret;
-    if (_currentEntity.type == UserType.Anonymous) {
+    if (_lastUser.type == UserType.Anonymous) {
       await destroy();
     }
-    await _signOut
-        .call(User.SignOutParams(entity: _currentEntity))
-        .then((result) {
+    await _so.call(User.SignOutParams(entity: _lastUser)).then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) async {
-          _currentEntity = entity;
+          _lastUser = entity;
         },
       );
     });
@@ -245,10 +245,10 @@ class UserViewModel extends ChangeNotifier {
     UserModel newUserModel =
         UserModel(user: ParseUser.createUser(username, password, emailAddress));
     Failure ret;
-    await _signIn.call(User.SignInParams(entity: newUserModel)).then((result) {
+    await _si.call(User.SignInParams(entity: newUserModel)).then((result) {
       result.fold(
         (failure) => ret = failure,
-        (entity) => _currentEntity = entity,
+        (entity) => _lastUser = entity,
       );
     });
     if (notify) {
@@ -260,13 +260,13 @@ class UserViewModel extends ChangeNotifier {
   Future<Failure> signInAnonymous({bool notify = false}) async {
     UserModel newUserModel = UserModel(user: ParseUser.createUser());
     Failure ret;
-    await _signInAnonymous
+    await _sia
         .call(User.SignInAnonymousParams(entity: newUserModel))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) async {
-          _currentEntity = entity;
+          _lastUser = entity;
           await setType(UserType.Anonymous);
         },
       );
@@ -285,18 +285,18 @@ class UserViewModel extends ChangeNotifier {
     bool notify = false,
   }) async {
     UserModel oldUserModel;
-    if (_currentEntity != null && _currentEntity.type == UserType.Anonymous) {
+    if (_lastUser != null && _lastUser.type == UserType.Anonymous) {
       oldUserModel = UserModel(user: await ParseUser.currentUser());
     }
 
     UserModel newUserModel =
         UserModel(user: ParseUser.createUser(username, password, emailAddress));
     Failure ret;
-    await _signUp.call(User.SignUpParams(entity: newUserModel)).then((result) {
+    await _su.call(User.SignUpParams(entity: newUserModel)).then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) async {
-          _currentEntity = entity;
+          _lastUser = entity;
           await setType(type);
           if (oldUserModel != null) {
             await oldUserModel.user.destroy();

@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
@@ -16,18 +15,16 @@ class SetDisplayImagePath
   Future<Either<Failure, UserEntity>> call(
       SetDisplayImagePathParams params) async {
     return await repository.setDisplayImagePath(
-      params.entity,
       params.displayImagePath,
+      entity: params.entity,
     );
   }
 }
 
 class SetDisplayImagePathParams extends Equatable {
-  final UserEntity entity;
   final String displayImagePath;
+  final UserEntity entity;
 
-  SetDisplayImagePathParams({
-    @required this.entity,
-    @required this.displayImagePath,
-  }) : super([entity, displayImagePath]);
+  SetDisplayImagePathParams(this.displayImagePath, {this.entity})
+      : super([displayImagePath, entity]);
 }

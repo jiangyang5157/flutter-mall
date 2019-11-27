@@ -4,27 +4,35 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 abstract class UserLocalDataSource {
   /// Throws [CacheException] if no cached data is present.
-  Future<UserModel> getLastData();
+  Future<UserModel> getLastUser({bool fromMemory = true});
 
   /// Throws [CacheException]
-  Future<void> cacheData(UserModel model);
+  Future<UserModel> setUser(UserModel model);
 }
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
+  UserModel _model;
+
   @override
-  Future<void> cacheData(UserModel model) async {
-    bool result = await model.user.pin();
-    if (!result) {
+  Future<UserModel> setUser(UserModel model) async {
+    if (await model.user.pin()) {
+      _model = model;
+    } else {
       throw CacheException();
     }
+    return _model;
   }
 
   @override
-  Future<UserModel> getLastData() async {
-    ParseUser parseUser = await ParseUser.currentUser();
-    if (parseUser == null) {
-      throw CacheException();
+  Future<UserModel> getLastUser({bool fromMemory = true}) async {
+    if (_model == null || !fromMemory) {
+      final parseUser = await ParseUser.currentUser();
+      if (parseUser == null) {
+        throw CacheException();
+      } else {
+        _model = UserModel(user: parseUser);
+      }
     }
-    return UserModel(user: parseUser);
+    return _model;
   }
 }

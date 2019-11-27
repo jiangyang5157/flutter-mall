@@ -3,7 +3,7 @@ import 'package:mall/features/auth/domain/entities/auth_entity.dart';
 
 abstract class AuthLocalDataSource {
   /// Throws [CacheException] if no cached data is present.
-  Future<AuthEntity> getLastAuth();
+  Future<AuthEntity> getLastAuth({bool fromMemory = true});
 
   Future<AuthEntity> setAuth(AuthEntity entity);
 }
@@ -18,8 +18,8 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   }
 
   @override
-  Future<AuthEntity> getLastAuth() async {
-    if (_entity == null) {
+  Future<AuthEntity> getLastAuth({bool fromMemory = true}) async {
+    if (_entity == null || !fromMemory) {
       throw CacheException();
     }
     return _entity;

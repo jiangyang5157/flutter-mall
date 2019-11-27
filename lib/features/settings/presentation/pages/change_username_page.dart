@@ -48,7 +48,7 @@ class _ChangeUsernamePageState extends State<ChangeUsernamePage> {
     print('#### _ChangeUsernamePageState - build');
 
     UserViewModel userViewModel = Provider.of<UserViewModel>(context);
-    UserModel userModel = userViewModel.getCurrentData();
+    UserModel userModel = userViewModel.getLastUser();
     if (_usernameBefore == null) {
       _usernameBefore = userModel.name;
       _usernameController.setTextAndPosition(_usernameBefore);

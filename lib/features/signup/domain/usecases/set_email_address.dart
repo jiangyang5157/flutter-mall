@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/signup/domain/entities/sign_up_entity.dart';
@@ -21,5 +20,5 @@ class SetEmailAddress implements UseCase<SignUpEntity, SetEmailAddressParams> {
 class SetEmailAddressParams extends Equatable {
   final String emailAddress;
 
-  SetEmailAddressParams({@required this.emailAddress}) : super([emailAddress]);
+  SetEmailAddressParams(this.emailAddress) : super([emailAddress]);
 }

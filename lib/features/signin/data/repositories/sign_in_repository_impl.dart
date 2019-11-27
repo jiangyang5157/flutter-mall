@@ -14,10 +14,10 @@ class SignInRepositoryImpl implements SignInRepository {
   });
 
   @override
-  Future<Either<Failure, SignInEntity>> getData() async {
+  Future<Either<Failure, SignInEntity>> getData(
+      {bool fromMemory = true}) async {
     try {
-      final last = await localDataSource.getLastData();
-      return Right(last);
+      return Right(await localDataSource.getLastData(fromMemory: fromMemory));
     } on CacheException {
       return Left(CacheFailure());
     }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
-import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/signup/domain/entities/sign_up_entity.dart';
 import 'package:mall/features/signup/domain/usecases/usecases.dart' as SignUp;
 
@@ -13,6 +12,13 @@ class SignUpViewModel extends ChangeNotifier {
   final SignUp.SetEmailAddress _sea;
   final SignUp.SetObscurePassword _sop;
 
+  final _defaultData = SignUpEntity(
+    username: '',
+    password: '',
+    repeatPassword: '',
+    emailAddress: '',
+    obscurePassword: true,
+  );
   SignUpEntity _lastData;
 
   SignUpViewModel({
@@ -46,40 +52,32 @@ class SignUpViewModel extends ChangeNotifier {
     print('#### SignUpViewModel - dispose');
   }
 
-  SignUpEntity getCurrentData() {
+  SignUpEntity getLastData() {
     if (_lastData == null) {
-      // returns default first
-      final defaultEntity = SignUpEntity(
-        username: '',
-        password: '',
-        repeatPassword: '',
-        emailAddress: '',
-        obscurePassword: true,
-      );
-      _lastData = defaultEntity;
-
-      _gd.call(NoParams()).then((result) {
-        result.fold(
-          // set default if non-exist
-          (failure) => setData(
-            defaultEntity.username,
-            defaultEntity.password,
-            defaultEntity.repeatPassword,
-            defaultEntity.emailAddress,
-            defaultEntity.obscurePassword,
-          ),
-          (entity) {
-            if (_lastData != entity) {
-              _lastData = entity;
-
-              // notify only if the value is different from the default
-              notifyListeners();
-            }
-          },
-        );
-      });
+      _lastData = _defaultData;
+      fetchLastData(notify: true);
     }
     return _lastData;
+  }
+
+  Future<void> fetchLastData({bool notify = false}) async {
+    Failure ret;
+    await _gd.call(SignUp.GetDataParams()).then((result) {
+      result.fold(
+        (failure) => setData(
+          _defaultData.username,
+          _defaultData.password,
+          _defaultData.repeatPassword,
+          _defaultData.emailAddress,
+          _defaultData.obscurePassword,
+        ),
+        (entity) => _lastData = entity,
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+    return ret;
   }
 
   Future<Failure> setData(
@@ -110,12 +108,12 @@ class SignUpViewModel extends ChangeNotifier {
     return ret;
   }
 
-  Future<Failure> setCurrentUsername(
+  Future<Failure> setUsername(
     String username, {
     bool notify = false,
   }) async {
     Failure ret;
-    await _su.call(SignUp.SetUsernameParams(username: username)).then((result) {
+    await _su.call(SignUp.SetUsernameParams(username)).then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) => _lastData = entity,
@@ -127,12 +125,12 @@ class SignUpViewModel extends ChangeNotifier {
     return ret;
   }
 
-  Future<Failure> setCurrentPassword(
+  Future<Failure> setPassword(
     String password, {
     bool notify = false,
   }) async {
     Failure ret;
-    await _sp.call(SignUp.SetPasswordParams(password: password)).then((result) {
+    await _sp.call(SignUp.SetPasswordParams(password)).then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) => _lastData = entity,
@@ -144,13 +142,13 @@ class SignUpViewModel extends ChangeNotifier {
     return ret;
   }
 
-  Future<Failure> setCurrentRepeatPassword(
+  Future<Failure> setRepeatPassword(
     String repeatPassword, {
     bool notify = false,
   }) async {
     Failure ret;
     await _srp
-        .call(SignUp.SetRepeatPasswordParams(repeatPassword: repeatPassword))
+        .call(SignUp.SetRepeatPasswordParams(repeatPassword))
         .then((result) {
       result.fold(
         (failure) => ret = failure,
@@ -163,14 +161,12 @@ class SignUpViewModel extends ChangeNotifier {
     return ret;
   }
 
-  Future<Failure> setCurrentEmailAddress(
+  Future<Failure> setEmailAddress(
     String emailAddress, {
     bool notify = false,
   }) async {
     Failure ret;
-    await _sea
-        .call(SignUp.SetEmailAddressParams(emailAddress: emailAddress))
-        .then((result) {
+    await _sea.call(SignUp.SetEmailAddressParams(emailAddress)).then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) => _lastData = entity,
@@ -182,13 +178,13 @@ class SignUpViewModel extends ChangeNotifier {
     return ret;
   }
 
-  Future<Failure> setCurrentObscurePassword(
+  Future<Failure> setObscurePassword(
     bool obscurePassword, {
     bool notify = false,
   }) async {
     Failure ret;
     await _sop
-        .call(SignUp.SetObscurePasswordParams(obscurePassword: obscurePassword))
+        .call(SignUp.SetObscurePasswordParams(obscurePassword))
         .then((result) {
       result.fold(
         (failure) => ret = failure,

@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
@@ -14,18 +13,16 @@ class SetEmailAddress implements UseCase<UserEntity, SetEmailAddressParams> {
   @override
   Future<Either<Failure, UserEntity>> call(SetEmailAddressParams params) async {
     return await repository.setEmailAddress(
-      params.entity,
       params.emailAddress,
+      entity: params.entity,
     );
   }
 }
 
 class SetEmailAddressParams extends Equatable {
-  final UserEntity entity;
   final String emailAddress;
+  final UserEntity entity;
 
-  SetEmailAddressParams({
-    @required this.entity,
-    @required this.emailAddress,
-  }) : super([entity, emailAddress]);
+  SetEmailAddressParams(this.emailAddress, {this.entity})
+      : super([emailAddress, entity]);
 }

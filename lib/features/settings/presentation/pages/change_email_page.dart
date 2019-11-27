@@ -48,7 +48,7 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
     print('#### _ChangeEmailPageState - build');
 
     UserViewModel userViewModel = Provider.of<UserViewModel>(context);
-    UserModel userModel = userViewModel.getCurrentData();
+    UserModel userModel = userViewModel.getLastUser();
     if (_emailAddressBefore == null) {
       _emailAddressBefore = userModel.emailAddress;
       _emailAddressController.setTextAndPosition(_emailAddressBefore);

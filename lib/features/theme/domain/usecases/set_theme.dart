@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
@@ -20,5 +19,5 @@ class SetTheme implements UseCase<ThemeEntity, SetThemeParams> {
 class SetThemeParams extends Equatable {
   final ThemeType type;
 
-  SetThemeParams({@required this.type}) : super([type]);
+  SetThemeParams(this.type) : super([type]);
 }

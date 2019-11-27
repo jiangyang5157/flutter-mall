@@ -50,11 +50,11 @@ class _SignInFormState extends State<SignInForm> {
 
     _usernameController.addListener(() {
       Provider.of<SignInViewModel>(context)
-          .setCurrentUsername(_usernameController.text);
+          .setUsername(_usernameController.text);
     });
     _passwordController.addListener(() {
       Provider.of<SignInViewModel>(context)
-          .setCurrentPassword(_passwordController.text);
+          .setPassword(_passwordController.text);
     });
   }
 
@@ -111,7 +111,7 @@ class _SignInFormState extends State<SignInForm> {
                   suffixIcon: GestureDetector(
                     onTap: () {
                       setState(() {
-                        signInViewModel.setCurrentObscurePassword(
+                        signInViewModel.setObscurePassword(
                             !signInViewModel.getLastData().obscurePassword);
                       });
                     },

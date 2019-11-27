@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildDrawerHeader(BuildContext context) {
     UserViewModel userViewModel = Provider.of<UserViewModel>(context);
-    UserModel userModel = userViewModel.getCurrentData();
+    UserModel userModel = userViewModel.getLastUser();
     return UserAccountsDrawerHeader(
       accountName: Text(userModel.name),
       accountEmail: Text(userModel.emailAddress ?? ''),

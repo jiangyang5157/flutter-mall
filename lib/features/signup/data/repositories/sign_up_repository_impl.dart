@@ -14,10 +14,9 @@ class SignUpRepositoryImpl implements SignUpRepository {
   });
 
   @override
-  Future<Either<Failure, SignUpEntity>> getData() async {
+  Future<Either<Failure, SignUpEntity>> getData({bool fromMemory = true}) async {
     try {
-      final last = await localDataSource.getLastData();
-      return Right(last);
+      return Right(await localDataSource.getLastData(fromMemory: fromMemory));
     } on CacheException {
       return Left(CacheFailure());
     }

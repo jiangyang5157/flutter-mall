@@ -3,7 +3,7 @@ import 'package:mall/features/signin/domain/entities/sign_in_entity.dart';
 
 abstract class SignInLocalDataSource {
   /// Throws [CacheException] if no cached data is present.
-  Future<SignInEntity> getLastData();
+  Future<SignInEntity> getLastData({bool fromMemory = true});
 
   Future<SignInEntity> setData(SignInEntity entity);
 }
@@ -18,8 +18,8 @@ class SignInLocalDataSourceImpl implements SignInLocalDataSource {
   }
 
   @override
-  Future<SignInEntity> getLastData() async {
-    if (_entity == null) {
+  Future<SignInEntity> getLastData({bool fromMemory = true}) async {
+    if (_entity == null || !fromMemory) {
       throw CacheException();
     }
     return _entity;

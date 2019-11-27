@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/signin/domain/entities/sign_in_entity.dart';
@@ -22,6 +21,5 @@ class SetObscurePassword
 class SetObscurePasswordParams extends Equatable {
   final bool obscurePassword;
 
-  SetObscurePasswordParams({@required this.obscurePassword})
-      : super([obscurePassword]);
+  SetObscurePasswordParams(this.obscurePassword) : super([obscurePassword]);
 }

@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
@@ -14,18 +13,15 @@ class SetPassword implements UseCase<UserEntity, SetPasswordParams> {
   @override
   Future<Either<Failure, UserEntity>> call(SetPasswordParams params) async {
     return await repository.setPassword(
-      params.entity,
       params.password,
+      entity: params.entity,
     );
   }
 }
 
 class SetPasswordParams extends Equatable {
-  final UserEntity entity;
   final String password;
+  final UserEntity entity;
 
-  SetPasswordParams({
-    @required this.entity,
-    @required this.password,
-  }) : super([entity, password]);
+  SetPasswordParams(this.password, {this.entity}) : super([password, entity]);
 }

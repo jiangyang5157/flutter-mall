@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
-import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/signin/domain/entities/sign_in_entity.dart';
 import 'package:mall/features/signin/domain/usecases/usecases.dart' as SignIn;
 
@@ -11,6 +10,11 @@ class SignInViewModel extends ChangeNotifier {
   final SignIn.SetPassword _sp;
   final SignIn.SetObscurePassword _sop;
 
+  final _defaultData = SignInEntity(
+    username: '',
+    password: '',
+    obscurePassword: true,
+  );
   SignInEntity _lastData;
 
   SignInViewModel({
@@ -40,34 +44,28 @@ class SignInViewModel extends ChangeNotifier {
 
   SignInEntity getLastData() {
     if (_lastData == null) {
-      // returns default first
-      final defaultEntity = SignInEntity(
-        username: '',
-        password: '',
-        obscurePassword: true,
-      );
-      _lastData = defaultEntity;
-
-      _gd.call(NoParams()).then((result) {
-        result.fold(
-          // set default if non-exist
-          (failure) => setData(
-            defaultEntity.username,
-            defaultEntity.password,
-            defaultEntity.obscurePassword,
-          ),
-          (entity) {
-            if (_lastData != entity) {
-              _lastData = entity;
-
-              // notify only if the value is different from the default
-              notifyListeners();
-            }
-          },
-        );
-      });
+      _lastData = _defaultData;
+      fetchLastData(notify: true);
     }
     return _lastData;
+  }
+
+  Future<void> fetchLastData({bool notify = false}) async {
+    Failure ret;
+    await _gd.call(SignIn.GetDataParams()).then((result) {
+      result.fold(
+        (failure) => setData(
+          _defaultData.username,
+          _defaultData.password,
+          _defaultData.obscurePassword,
+        ),
+        (entity) => _lastData = entity,
+      );
+    });
+    if (notify) {
+      notifyListeners();
+    }
+    return ret;
   }
 
   Future<Failure> setData(
@@ -94,12 +92,12 @@ class SignInViewModel extends ChangeNotifier {
     return ret;
   }
 
-  Future<Failure> setCurrentUsername(
+  Future<Failure> setUsername(
     String username, {
     bool notify = false,
   }) async {
     Failure ret;
-    await su.call(SignIn.SetUsernameParams(username: username)).then((result) {
+    await su.call(SignIn.SetUsernameParams(username)).then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) => _lastData = entity,
@@ -111,12 +109,12 @@ class SignInViewModel extends ChangeNotifier {
     return ret;
   }
 
-  Future<Failure> setCurrentPassword(
+  Future<Failure> setPassword(
     String password, {
     bool notify = false,
   }) async {
     Failure ret;
-    await _sp.call(SignIn.SetPasswordParams(password: password)).then((result) {
+    await _sp.call(SignIn.SetPasswordParams(password)).then((result) {
       result.fold(
         (failure) => ret = failure,
         (entity) => _lastData = entity,
@@ -128,13 +126,13 @@ class SignInViewModel extends ChangeNotifier {
     return ret;
   }
 
-  Future<Failure> setCurrentObscurePassword(
+  Future<Failure> setObscurePassword(
     bool obscurePassword, {
     bool notify = false,
   }) async {
     Failure ret;
     await _sop
-        .call(SignIn.SetObscurePasswordParams(obscurePassword: obscurePassword))
+        .call(SignIn.SetObscurePasswordParams(obscurePassword))
         .then((result) {
       result.fold(
         (failure) => ret = failure,

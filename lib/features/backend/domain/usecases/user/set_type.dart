@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
@@ -14,18 +13,15 @@ class SetType implements UseCase<UserEntity, SetTypeParams> {
   @override
   Future<Either<Failure, UserEntity>> call(SetTypeParams params) async {
     return await repository.setType(
-      params.entity,
       params.type,
+      entity: params.entity,
     );
   }
 }
 
 class SetTypeParams extends Equatable {
-  final UserEntity entity;
   final UserType type;
+  final UserEntity entity;
 
-  SetTypeParams({
-    @required this.entity,
-    @required this.type,
-  }) : super([entity, type]);
+  SetTypeParams(this.type, {this.entity}) : super([type, entity]);
 }

@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:mall/core/error/failures.dart';
 import 'package:mall/core/usecase/usecase.dart';
 import 'package:mall/features/auth/domain/entities/auth_entity.dart';
@@ -20,5 +19,5 @@ class SetAuth implements UseCase<AuthEntity, SetAuthParams> {
 class SetAuthParams extends Equatable {
   final AuthState state;
 
-  SetAuthParams({@required this.state}) : super([state]);
+  SetAuthParams(this.state) : super([state]);
 }
