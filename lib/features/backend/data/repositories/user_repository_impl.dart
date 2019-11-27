@@ -94,8 +94,12 @@ class UserRepositoryImpl implements UserRepository {
     } else {
       model = entity as UserModel;
     }
-    model.displayImagePath = displayImagePath;
 
+    if (model.displayImagePath == displayImagePath) {
+      return Right(model);
+    }
+
+    model.displayImagePath = displayImagePath;
     try {
       model = await remoteDataSource.save(model);
       if (entity == null) {
@@ -116,8 +120,12 @@ class UserRepositoryImpl implements UserRepository {
     } else {
       model = entity as UserModel;
     }
-    model.emailAddress = emailAddress;
 
+    if (model.emailAddress == emailAddress) {
+      return Right(model);
+    }
+
+    model.emailAddress = emailAddress;
     try {
       model = await remoteDataSource.save(model);
       if (entity == null) {
@@ -138,8 +146,12 @@ class UserRepositoryImpl implements UserRepository {
     } else {
       model = entity as UserModel;
     }
-    model.name = name;
 
+    if (model.name == name) {
+      return Right(model);
+    }
+
+    model.name = name;
     try {
       model = await remoteDataSource.save(model);
       if (entity == null) {
@@ -160,8 +172,12 @@ class UserRepositoryImpl implements UserRepository {
     } else {
       model = entity as UserModel;
     }
-    model.password = password;
 
+    if (model.password == password) {
+      return Right(model);
+    }
+
+    model.password = password;
     try {
       model = await remoteDataSource.save(model);
       if (entity == null) {
@@ -182,8 +198,12 @@ class UserRepositoryImpl implements UserRepository {
     } else {
       model = entity as UserModel;
     }
-    model.type = type;
 
+    if (model.type == type) {
+      return Right(model);
+    }
+
+    model.type = type;
     try {
       model = await remoteDataSource.save(model);
       if (entity == null) {

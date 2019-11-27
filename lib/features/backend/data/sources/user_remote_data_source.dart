@@ -44,27 +44,13 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   @override
-  Future<UserModel> destroy(UserModel model) async {
-    ParseResponse result = await model.user.destroy();
+  Future<UserModel> signUp(UserModel model) async {
+    ParseResponse result = await model.user.signUp();
     if (result == null) {
       throw ServerException("No response returned from server.");
     } else if (!result.success) {
       throw ServerException("${result.error.message}");
     } else {
-      print('#### userremotedata: destroy result: ${result.result}');
-      return UserModel(user: result.result);
-    }
-  }
-
-  @override
-  Future<UserModel> save(UserModel model) async {
-    ParseResponse result = await model.user.save();
-    if (result == null) {
-      throw ServerException("No response returned from server.");
-    } else if (!result.success) {
-      throw ServerException("${result.error.message}");
-    } else {
-      print('#### userremotedata: save result: ${result.result}');
       return UserModel(user: result.result);
     }
   }
@@ -77,7 +63,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     } else if (!result.success) {
       throw ServerException("${result.error.message}");
     } else {
-      print('#### userremotedata: signIn result: ${result.result}');
       return UserModel(user: result.result);
     }
   }
@@ -90,7 +75,18 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     } else if (!result.success) {
       throw ServerException("${result.error.message}");
     } else {
-      print('#### userremotedata: signInAnonymous result: ${result.result}');
+      return UserModel(user: result.result);
+    }
+  }
+
+  @override
+  Future<UserModel> save(UserModel model) async {
+    ParseResponse result = await model.user.save();
+    if (result == null) {
+      throw ServerException("No response returned from server.");
+    } else if (!result.success) {
+      throw ServerException("${result.error.message}");
+    } else {
       return UserModel(user: result.result);
     }
   }
@@ -103,20 +99,18 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     } else if (!result.success) {
       throw ServerException("${result.error.message}");
     } else {
-      print('#### userremotedata: signOut result: ${result.result}');
       return UserModel(user: result.result);
     }
   }
 
   @override
-  Future<UserModel> signUp(UserModel model) async {
-    ParseResponse result = await model.user.signUp();
+  Future<UserModel> destroy(UserModel model) async {
+    ParseResponse result = await model.user.destroy();
     if (result == null) {
       throw ServerException("No response returned from server.");
     } else if (!result.success) {
       throw ServerException("${result.error.message}");
     } else {
-      print('#### userremotedata: signUp result: ${result.result}');
       return UserModel(user: result.result);
     }
   }
