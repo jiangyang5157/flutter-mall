@@ -11,7 +11,12 @@ String stateToString(AuthState state) {
 }
 
 AuthState stringToState(String s) {
-  return AuthState.values.firstWhere((element) => stateToString(element) == s);
+  try {
+    return AuthState.values
+        .firstWhere((element) => stateToString(element) == s);
+  } on StateError {
+    return null;
+  }
 }
 
 class AuthEntity extends Equatable {

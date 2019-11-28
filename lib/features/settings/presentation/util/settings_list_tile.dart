@@ -1,8 +1,75 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:mall/core/constant.dart';
+import 'package:mall/core/injection.dart';
 import 'package:mall/core/util/localization/string_localization.dart';
+import 'package:mall/core/util/nav.dart';
+import 'package:mall/features/backend/presentation/user_view_model.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 import 'package:mall/features/theme/presentation/theme_view_model.dart';
+
+ListTile buildSignUpListTile(BuildContext context) {
+  return ListTile(
+    title: Text(string(context, 'title_sign_up_page')),
+    onTap: () {
+      locator<Nav>()
+          .router
+          .navigateTo(context, 'SignUpPage', transition: TransitionType.fadeIn);
+    },
+  );
+}
+
+ListTile buildChangeDisplayImageListTile(BuildContext context) {
+  return ListTile(
+    title: Text(string(context, 'label_change_display_picture')),
+    onTap: () {
+      locator<Nav>().router.navigateTo(context, 'ChangeDisplayPicturePage',
+          transition: TransitionType.fadeIn);
+    },
+  );
+}
+
+ListTile buildChangeUsernameListTile(BuildContext context) {
+  return ListTile(
+    title: Text(string(context, 'label_change_username')),
+    onTap: () {
+      locator<Nav>().router.navigateTo(context, 'ChangeUsernamePage',
+          transition: TransitionType.fadeIn);
+    },
+  );
+}
+
+ListTile buildChangePasswordListTile(BuildContext context) {
+  return ListTile(
+    title: Text(string(context, 'label_change_password')),
+    onTap: () {
+      locator<Nav>().router.navigateTo(context, 'ChangePasswordPage',
+          transition: TransitionType.fadeIn);
+    },
+  );
+}
+
+ListTile buildChangeEmailAddressListTile(BuildContext context) {
+  return ListTile(
+    title: Text(string(context, 'label_change_email_address')),
+    onTap: () {
+      locator<Nav>().router.navigateTo(context, 'ChangeEmailPage',
+          transition: TransitionType.fadeIn);
+    },
+  );
+}
+
+ListTile buildSignOutListTile(
+    BuildContext context, UserViewModel userViewModel) {
+  return ListTile(
+    title: Text(string(context, 'label_sign_out')),
+    onTap: () async {
+      await userViewModel.signOut();
+      locator<Nav>().router.navigateTo(context, 'AuthPage',
+          clearStack: true, transition: TransitionType.fadeIn);
+    },
+  );
+}
 
 ListTile buildThemeListTile(
     BuildContext context, ThemeViewModel themeViewModel) {
@@ -11,18 +78,17 @@ ListTile buildThemeListTile(
     subtitle: Padding(
       padding: const EdgeInsets.fromLTRB(0, sizeLarge, 0, 0),
       child: ToggleButtons(
-        children: _themeTypeWidgets(context),
+        children: _themeRow(context),
         onPressed: (int index) {
           themeViewModel.setTheme(ThemeType.values[index], notify: true);
         },
-        isSelected:
-            _themeTypeSelectedStatus(themeViewModel.getLastTheme().type),
+        isSelected: _themeSelectedStatus(themeViewModel.getLastTheme().type),
       ),
     ),
   );
 }
 
-List<Widget> _themeTypeWidgets(BuildContext context) {
+List<Widget> _themeRow(BuildContext context) {
   var ret = List<Widget>();
   for (int i = 0; i < ThemeType.values.length; i++) {
     switch (ThemeType.values[i]) {
@@ -55,7 +121,7 @@ List<Widget> _themeTypeWidgets(BuildContext context) {
   return ret;
 }
 
-List<bool> _themeTypeSelectedStatus(ThemeType themeType) {
+List<bool> _themeSelectedStatus(ThemeType themeType) {
   var ret = List<bool>();
   for (int i = 0; i < ThemeType.values.length; i++) {
     if (ThemeType.values[i] == themeType) {

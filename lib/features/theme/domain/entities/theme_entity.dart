@@ -12,7 +12,11 @@ String typeToString(ThemeType type) {
 }
 
 ThemeType stringToType(String s) {
-  return ThemeType.values.firstWhere((element) => typeToString(element) == s);
+  try {
+    return ThemeType.values.firstWhere((element) => typeToString(element) == s);
+  } on StateError {
+    return null;
+  }
 }
 
 class ThemeEntity extends Equatable {

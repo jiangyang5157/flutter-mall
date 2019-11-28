@@ -12,7 +12,11 @@ String typeToString(UserType type) {
 }
 
 UserType stringToType(String s) {
-  return UserType.values.firstWhere((element) => typeToString(element) == s);
+  try {
+    return UserType.values.firstWhere((element) => typeToString(element) == s);
+  } on StateError {
+    return null;
+  }
 }
 
 class UserEntity extends Equatable {
