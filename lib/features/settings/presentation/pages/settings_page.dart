@@ -8,6 +8,7 @@ import 'package:mall/core/util/nav.dart';
 import 'package:mall/features/backend/data/models/user_model.dart';
 import 'package:mall/features/backend/domain/entities/user_entity.dart';
 import 'package:mall/features/backend/presentation/user_view_model.dart';
+import 'package:mall/features/settings/presentation/util/settings_list_tile.dart';
 import 'package:mall/features/theme/domain/entities/theme_entity.dart';
 import 'package:mall/features/theme/presentation/theme_view_model.dart';
 import 'package:provider/provider.dart';
@@ -55,23 +56,7 @@ class _SettingsPageState extends State<SettingsPage> {
     var ret = List<Widget>();
     ret.addAll(_buildProfileList(context, userModel.type));
     ret.add(Divider());
-    ret.add(
-      ListTile(
-        title: Text(string(context, 'label_change_theme')),
-        subtitle: Padding(
-          padding: const EdgeInsets.fromLTRB(0, sizeLarge, 0, 0),
-          child: ToggleButtons(
-            children: _themeTypeWidgets(),
-            onPressed: (int index) {
-              Provider.of<ThemeViewModel>(context)
-                  .setTheme(ThemeType.values[index], notify: true);
-            },
-            isSelected: _themeTypeSelectedStatus(
-                Provider.of<ThemeViewModel>(context).getLastTheme().type),
-          ),
-        ),
-      ),
-    );
+    ret.add(buildThemeListTile(context, Provider.of<ThemeViewModel>(context)));
     ret.add(Divider());
     ret.add(
       ListTile(
@@ -83,51 +68,6 @@ class _SettingsPageState extends State<SettingsPage> {
         },
       ),
     );
-    return ret;
-  }
-
-  List<Widget> _themeTypeWidgets() {
-    var ret = List<Widget>();
-    for (int i = 0; i < ThemeType.values.length; i++) {
-      switch (ThemeType.values[i]) {
-        case ThemeType.Light:
-          ret.add(
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(Icons.brightness_high),
-                SizedBox(width: sizeSmall),
-                Text(string(context, 'label_light_theme')),
-              ],
-            ),
-          );
-          break;
-        case ThemeType.Dark:
-          ret.add(
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(Icons.brightness_low),
-                SizedBox(width: sizeSmall),
-                Text(string(context, 'label_dark_theme')),
-              ],
-            ),
-          );
-          break;
-      }
-    }
-    return ret;
-  }
-
-  List<bool> _themeTypeSelectedStatus(ThemeType themeType) {
-    var ret = List<bool>();
-    for (int i = 0; i < ThemeType.values.length; i++) {
-      if (ThemeType.values[i] == themeType) {
-        ret.add(true);
-      } else {
-        ret.add(false);
-      }
-    }
     return ret;
   }
 
